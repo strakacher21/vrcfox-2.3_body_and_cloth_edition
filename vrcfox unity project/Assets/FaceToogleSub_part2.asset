@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: FaceToogleSub_part2
+  m_EditorClassIdentifier: 
+  controls:
+  - name: Pesos
+    icon: {fileID: 2800000, guid: 709dafdd374fa5646ac8dbde35cdcfb7, type: 3}
+    type: 102
+    parameter:
+      name: FaceInt
+    value: 15
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: Sigma
+    icon: {fileID: 2800000, guid: 41e3d797dde4ba742b8ac598d8b7683f, type: 3}
+    type: 102
+    parameter:
+      name: FaceInt
+    value: 14
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: It's okay! [uncertainty]
+    icon: {fileID: 2800000, guid: 69f505a2de1a55f4099408133fbc78b6, type: 3}
+    type: 102
+    parameter:
+      name: FaceInt
+    value: 13
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: Disgust
+    icon: {fileID: 2800000, guid: 3a615a01060b3424a8b3a08c49900ec8, type: 3}
+    type: 102
+    parameter:
+      name: FaceInt
+    value: 12
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: Flash emotion
+    icon: {fileID: 2800000, guid: 786edd8b50530ec4dbd730c0fe176243, type: 3}
+    type: 102
+    parameter:
+      name: FaceInt
+    value: 11
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: Curiousing stronger
+    icon: {fileID: 2800000, guid: badd2c103768f27449af88081c706ea7, type: 3}
+    type: 102
+    parameter:
+      name: FaceInt
+    value: 9
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: Frown
+    icon: {fileID: 2800000, guid: ae4fd9f8e3fb4464d86ac791860c6b69, type: 3}
+    type: 102
+    parameter:
+      name: FaceInt
+    value: 10
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: Part 3
+    icon: {fileID: 10910, guid: 0000000000000000f000000000000000, type: 0}
+    type: 103
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 11400000, guid: 13db855e87a448f47b1dcfabb48c2c22, type: 2}
+    subParameters: []
+    labels: []

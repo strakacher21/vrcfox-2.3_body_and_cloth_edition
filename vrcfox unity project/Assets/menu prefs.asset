@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: menu prefs
+  m_EditorClassIdentifier: 
+  Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
+  controls:
+  - name: Ears
+    icon: {fileID: 2800000, guid: 155b5019f658d47439983c1858370b5e, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/ears
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: Cheeks
+    icon: {fileID: 2800000, guid: 564323008e7b7a648b9bb9b8f097c464, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/fluff
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: Eyelashes
+    icon: {fileID: 2800000, guid: 7d8e73c8f70216c4290fa0c9251a6f79, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/lashes
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: Hair
+    icon: {fileID: 2800000, guid: c9e77221531f1794d856721e490cdfad, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/hair
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
