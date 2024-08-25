@@ -10,7 +10,7 @@ The project includes the Blend 4.2 file itself and the Unity 2022.3.22f1 project
 
 The easiest way to adjust the colours is to vertex paint rather than using a texture. This works well for solid colours, but is not suitable for fancy patterns. Your avatar file size will stay small and load quickly without texture files. If you prefer to use a texture, the model has a second set of UVs. You will need to change the active UV layer of each mesh to ‘UVMap’ and apply the texture yourself. You will also need to erase all vertex colours, as they will still appear on the default material in the Unity project! 
 
-To properly export the model from blender to unity, you must use the export script attached to blender (otherwise it will ‘fade’ the model and export the clothes to unity incorrectly). Clicking the ':arrow_forward:' button will export the model to Unity.
+To properly export the model from blender to unity, you must use the export script attached to blender (otherwise it will ‘fade’ the model and export the clothes to unity incorrectly). Clicking the '▶' button will export the model to Unity.
 
 **WHAT DOES A UNITY PROJECT INCLUDE?**
 
