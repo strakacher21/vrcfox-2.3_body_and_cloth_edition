@@ -4,6 +4,11 @@
 ## [:arrow_forward:Link to the avatar in VRChat](https://vrchat.com/home/avatar/avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1)<br>[:arrow_forward:Download the modified version](https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition/releases)<br>[:arrow_forward:Download the "vanilla" version](https://github.com/cellomonster/vrcfox/releases/latest)
 ![vrcfox fox edition](vrcfox%20unity%20project/Assets/icons/vrcfox_body_with_background_and_icons.png)
 ---
+# А Request
+I will agree with trev3d and also say 
+>Given the license, I cannot legally stop you, but I will still politely ask - please do not use this model to post pornographic or suggestive content.
+
+I will also be grateful if you indicate my authorship and the authorship of the original
 # Description
 This is a modified vrcfox-2.3 project with added new clothes and also made body geometry
 The project includes the Blend 4.2 file itself and the Unity 2022.3.22f1 project.
