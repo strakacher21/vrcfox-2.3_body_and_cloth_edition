@@ -8,7 +8,7 @@
 I will agree with trev3d and also say 
 >Given the license, I cannot legally stop you, but I will still politely ask - please do not use this model to post pornographic or suggestive content.
 
-I will also be grateful if you indicate my authorship and the authorship of the original
+I will also be grateful if you indicate my authorship and the authorship of the original (and do not indicate authorship in pornographic or suggestive content, if you still want to do it)
 # Description
 This is a modified vrcfox-2.3 project with added new clothes and also made body geometry
 The project includes the Blend 4.2 file itself and the Unity 2022.3.22f1 project.
