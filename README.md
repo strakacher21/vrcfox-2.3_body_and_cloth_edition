@@ -1,5 +1,5 @@
 # **VRCfox** <u>**with body and clothes**</u>
-## Minimalistic optimized furry avatar for vrchat with <u>changeable clothes</u> and <u>FullFaceTracking.</u><br>This is a **modified project** from [**GitHub**](https://github.com/trev3d/vrcfox)<br>The author of the original [trev3d](https://github.com/trev3d)
+## Minimalistic optimized furry avatar for vrchat with <u>changeable clothes</u> and <u>FullFaceTracking.</u><br>This is a **modified project** from [**GitHub**](https://github.com/trev3d/vrcfox)<br>The **author** of the original [trev3d](https://github.com/trev3d)
 # Get this
 ## [:arrow_forward:Link to the avatar in VRChat](https://vrchat.com/home/avatar/avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1)<br>[:arrow_forward:Download the modified version](https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition/releases)<br>[:arrow_forward:Download the "vanilla" version](https://github.com/cellomonster/vrcfox/releases/latest)
 ![vrcfox fox edition](vrcfox%20unity%20project/Assets/icons/vrcfox_body_with_background_and_icons.png)
@@ -14,7 +14,7 @@ To properly export the model from blender to unity, you must use the export scri
 
 **WHAT DOES A UNITY PROJECT INCLUDE?**
 
-- In the unity itself there are two prefabs - one for PC, the other for Quest (Android) version, as well as a single prefab scene settings. Most importantly, all changes in the prefab, say for PC, remain in it and are not transferred to the Quest-version (except for the scene setting prefab)! This is done in order to avoid audio blocking (pressing on the nose plays the ‘squeaker’ sound) on Quest-version (you simply can't upload audio files to Quest-version because of VRChat optimisation policy. When you publish a model, the Quest version will automatically lose the sound audio file).
+- In the unity itself there are two prefabs - one for PC, the other for Quest (Android) version, as well as a single prefab scene settings. Most importantly, all changes in the prefab, say for PC, remain in it and are not transferred to the Quest-version (except for the scene setting prefab)! This is done in order to avoid audio blocking (pressing on the nose plays the ‘squeaker’ sound) on Quest-version (you simply can't upload audio files to Quest-version because of VRChat optimisation podlicy. When you publish a model, the Quest version will automatically lose the sound audio file).
 When exporting for PC use ‘av PC’-scene, and for Quest use ‘av Quest’-scene.
 You can remove the audio file inside the PC prefab and use one prefab for two platforms.
 - Created FullFaceTracking (FFT)
