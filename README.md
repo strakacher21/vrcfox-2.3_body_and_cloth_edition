@@ -27,10 +27,9 @@ You can remove the audio file inside the PC prefab and use one prefab for two pl
 - Different finger expressions on each hand
 - Animation of idle tail as desired by the user
 - Small avatar head customisation (I plan to make more of them in the future, which will extend to clothes!), and colour changes.
-- Gesture mimic off (Gesture mimic off).
+- Gesture mimic off (A setting that disables linking facial expressions to hand positions when enabled).
 - The ‘anim base’ controller, which fixes the ‘crab’ movement bug when the stick angle is small to normal, as well as the ‘Hot Lay Down’ pose when you're lying on your back or ‘gentlemen idle’ pose when you're using an avatar without VR and when it's standing still.
 - Controller ‘anim Sitting’ which allows people with FBT to move their legs when sitting on something (This is to keep tracking going, rather than using the standard animation to do so)
-- Facial expression changes
 - The rest of the things are small things ;)
 # Ways to optimize avatar
 
