@@ -111,12 +111,12 @@ MonoBehaviour:
   - name: v2/EyeLidRight
     valueType: 1
     saved: 0
-    defaultValue: 0
+    defaultValue: 0.7
     networkSynced: 1
   - name: v2/EyeLidLeft
     valueType: 1
     saved: 0
-    defaultValue: 0
+    defaultValue: 0.7
     networkSynced: 1
   - name: pref/toggle/lashes
     valueType: 2
@@ -150,6 +150,11 @@ MonoBehaviour:
     networkSynced: 1
   - name: FaceInt
     valueType: 0
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: reset Face Builder
+    valueType: 2
     saved: 0
     defaultValue: 0
     networkSynced: 1
