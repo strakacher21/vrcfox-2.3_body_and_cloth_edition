@@ -20,6 +20,7 @@ To properly export the model from blender to unity, you must use the export scri
 **WHAT DOES A UNITY PROJECT INCLUDE?**
 - The Unity project has a prefab model, as well as two scenes for PC and Quest. All prefab changes go into changing the scene.
 - Created FullFaceTracking (FFT)
+- A "face constructor" has been made. In fact, this is a manual FFT control
 - A small collection of faces for different facial expressions without using FFT
 - Different finger expressions on each hand
 - Animation of idle tail as desired by the user
@@ -27,20 +28,14 @@ To properly export the model from blender to unity, you must use the export scri
 - Gesture mimic off (A setting that disables linking facial expressions to hand positions when enabled).
 - The ‘anim base’ controller, which fixes the ‘crab’ movement bug when the stick angle is small to normal, as well as the ‘Hot Lay Down’ pose when you're lying on your back or ‘gentlemen idle’ pose when you're using an avatar without VR and when it's standing still.
 - Controller ‘anim Sitting’ which allows people with FBT to move their legs when sitting on something (This is to keep tracking going, rather than using the standard animation to do so)
-- A "face constructor" has been made. In fact, this is a manual FFT control
+- The Unity project also includes a script (attached to the avatar build) that allows you to easily customise facial expressions, player preferences and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
 - The rest of the things are small things ;)
 # Ways to optimize avatar
-
 - If you don't need a ‘collection of faces’, then remove the ‘FaceInt’ variable from ‘param’ (it is responsible for switching facial expressions) and you also need to remove the ‘Face Toogle (menu)’ Layer in the animfx controller
 
-- If you need only one type of clothing (without switching) to save parameters, you can also remove the variables ‘Cloth Upper body’, ‘Cloth Lower body’, ‘Cloth Foot’ from ‘param’. Then go to the fx-controller and change the values of the variables in it as you need. 
+- If you need only one type of clothing (without switching) to save parameters, you can also remove the variables ‘Cloth Upper body’, ‘Cloth Lower body’, ‘Cloth Foot’ from ‘param’. Then go to the fx-controller and change the values of the variables in it as you need. You can also delete a certain clothing mesh in Blender and export it to Unity using a script. This will save you triangles, as there will be no extra clothes.
 
 - There is also a colour change in the avatar. If you only want one colour permanently, go to ‘param’ and remove the variables ‘pref/slider/pcol’ and ‘pref/slider/scol’, then open the fx-controller and remove the ‘pref/slider/pcol’ and ‘pref/slider/scol’ motion field in the ‘vrcfox__tree’->‘master tree’ layer. Then find ‘master material’ and change the ‘offset’ to your liking.
-
-- The Unity project also includes a script (attached to the avatar build) that allows you to easily customise facial expressions, player preferences and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
-
+- You can also delete "audio source" from "VRC Spatial Audio Source" and "contact Receiver [where there is a parameter: nose_contact_sound]" in the "head" of the avatar for the PC version. Next, anim fx, remove the parameter and player "nose_contact_sound". This will remove the sound of tapping on the nose, but will make your avatar rank "Excellent" for PC.
 # Attribution
-- To set up the animation, the following was used [av3-animator-as-code](https://github.com/hai-vr/av3-animator-as-code)<br>
-- Photo bench: https://www.turbosquid.com/ru/3d-models/3d-model-bench01-1982255<br>
-- Animation [spirit's gentalmen idle pose](https://vrcmods.com/download/9473)<br>
-- Animation [Hot Lay Down](https://vrcmods.com/item?id=10697)
+- To set up the animation, the following was used [av3-animator-as-code](https://github.com/hai-vr/av3-animator-as-code)
