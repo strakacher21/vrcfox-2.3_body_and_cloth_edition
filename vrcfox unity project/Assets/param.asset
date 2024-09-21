@@ -13,6 +13,211 @@ MonoBehaviour:
   m_Name: param
   m_EditorClassIdentifier: 
   parameters:
+  - name: FaceInt
+    valueType: 0
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: Cloth Upper body
+    valueType: 0
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: Cloth Lower body
+    valueType: 0
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: Cloth Foot
+    valueType: 0
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: Gesture_mimic_off
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: reset Face Builder
+    valueType: 2
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: tail_wag
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/slider/scol
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/ears[more]
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/ears[less]
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/hair[more]
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/hair[less]
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/lashes
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/fluff
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/muzzle[more]
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/muzzle[less]
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/arms
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/breast[male]
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/breast[female]
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/belly
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/legs
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/tail[more]
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/tail[less]
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/Trbody/coat|coat_v2
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/Trbody/jeans|pants
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/Trbody/shirt
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/Trbody/shorts
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/Trbody/shoes|boots
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/off/coat
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: 'pref/toggle/cl/off/coat_v2 '
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/off/slaps
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/off/pants
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/pants/with/coat|coat_v2|T-Shirt
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/off/jeans
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/jeans/with/coat|coat_v2|T_Shirt
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/off/shorts
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/shorts/with/coat|coat_v2|T-Shirt
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/off/T-Shirt
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/off/shoes
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/toggle/cl/off/boots
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
   - name: v2/enabled
     valueType: 2
     saved: 1
@@ -117,69 +322,4 @@ MonoBehaviour:
     valueType: 1
     saved: 0
     defaultValue: 0.7
-    networkSynced: 1
-  - name: pref/toggle/lashes
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/hair
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/fluff
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/ears
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/slider/pcol
-    valueType: 1
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/slider/scol
-    valueType: 1
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: FaceInt
-    valueType: 0
-    saved: 0
-    defaultValue: 0
-    networkSynced: 1
-  - name: reset Face Builder
-    valueType: 2
-    saved: 0
-    defaultValue: 0
-    networkSynced: 1
-  - name: Gesture_mimic_off
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: tail_wag
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: Cloth Upper body
-    valueType: 0
-    saved: 1
-    defaultValue: 1
-    networkSynced: 1
-  - name: Cloth Lower body
-    valueType: 0
-    saved: 1
-    defaultValue: 1
-    networkSynced: 1
-  - name: Cloth Foot
-    valueType: 0
-    saved: 1
-    defaultValue: 1
     networkSynced: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
   controls:
-  - name: <b>Stone_Jonson
+  - name: <b>Stone Jonson
     icon: {fileID: 2800000, guid: 4b495e767db8b3040ae5aa43778de9da, type: 3}
     type: 102
     parameter:
@@ -25,11 +25,21 @@ MonoBehaviour:
     subParameters: []
     labels: []
   - name: <b>Frown
-    icon: {fileID: 2800000, guid: ae4fd9f8e3fb4464d86ac791860c6b69, type: 3}
+    icon: {fileID: 2800000, guid: eff9a989f4dfe57429c24adf88006e29, type: 3}
     type: 102
     parameter:
       name: FaceInt
     value: 10
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Uhhh man
+    icon: {fileID: 2800000, guid: d80589cf143f0ea43a040f1e580f1b7b, type: 3}
+    type: 102
+    parameter:
+      name: FaceInt
+    value: 20
     style: 0
     subMenu: {fileID: 0}
     subParameters: []

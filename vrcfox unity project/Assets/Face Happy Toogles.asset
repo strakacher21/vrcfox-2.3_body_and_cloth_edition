@@ -14,7 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
   controls:
-  - name: <b>Sigma
+  - name: <b>Open smile [stronger]
+    icon: {fileID: 2800000, guid: 8f138645daf65be49a20ab3f4099bd38, type: 3}
+    type: 102
+    parameter:
+      name: FaceInt
+    value: 23
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Open smile
+    icon: {fileID: 2800000, guid: 5db7e16605b45d740bd7c142c77d5193, type: 3}
+    type: 102
+    parameter:
+      name: FaceInt
+    value: 22
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>A good dream
+    icon: {fileID: 2800000, guid: 79dd9d8ea5a3ffc409111c1bb5b54b0d, type: 3}
+    type: 102
+    parameter:
+      name: FaceInt
+    value: 21
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Conceited
     icon: {fileID: 2800000, guid: 41e3d797dde4ba742b8ac598d8b7683f, type: 3}
     type: 102
     parameter:
