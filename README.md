@@ -1,11 +1,11 @@
 # **VRCfox** <u>**with body and clothes**</u>
 ## Minimalistic optimized furry avatar for vrchat with <u>changeable clothes</u> and <u>FullFaceTracking.</u><br>This is a **modified project** from [**GitHub**](https://github.com/trev3d/vrcfox) **[(trev3d)](https://github.com/trev3d)**
 # Get this
-### [:arrow_forward:Link to the avatar in VRChat](https://vrchat.com/home/avatar/avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1)
-
 ### [:arrow_forward:Download](https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition/releases)
 
-![vrcfox 2.3 B&C edition](thumbnail_v1.2.png)
+### [:arrow_forward:Link to the avatar in VRChat](https://vrchat.com/home/avatar/avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1)
+
+![vrcfox fox edition](https://github.com/user-attachments/assets/8d1e70bf-68d4-401d-a4b9-c471893ad1f3)
 ---
 # А Request
 I will agree with trev3d and also say 
