@@ -18,35 +18,65 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: Cloth Upper body
+  - name: TaillInt
+    valueType: 0
+    saved: 1
+    defaultValue: 2
+    networkSynced: 1
+  - name: cloth/UpperBody
     valueType: 0
     saved: 1
     defaultValue: 1
     networkSynced: 1
-  - name: Cloth Lower body
+  - name: cloth/LowerBody
     valueType: 0
     saved: 1
     defaultValue: 1
     networkSynced: 1
-  - name: Cloth Foot
+  - name: cloth/Foot
     valueType: 0
     saved: 1
     defaultValue: 1
     networkSynced: 1
-  - name: Gesture_mimic_off
+  - name: eye/Control[H]
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: eye/Control[Y]
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: eye/Control
+    valueType: 2
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: exp/facial
     valueType: 2
     saved: 1
-    defaultValue: 0
+    defaultValue: 1
+    networkSynced: 1
+  - name: exp/pet
+    valueType: 2
+    saved: 1
+    defaultValue: 1
     networkSynced: 1
   - name: reset Face Builder
     valueType: 2
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: tail_wag
+  - name: tail/Floor Collider
     valueType: 2
     saved: 1
-    defaultValue: 0
+    defaultValue: 1
+    networkSynced: 1
+  - name: tail/Legs Collider
+    valueType: 2
+    saved: 1
+    defaultValue: 0.7
     networkSynced: 1
   - name: pref/slider/pcol
     valueType: 1
@@ -129,91 +159,6 @@ MonoBehaviour:
     defaultValue: 0
     networkSynced: 1
   - name: pref/toggle/tail[less]
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/Trbody/coat|coat_v2
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/Trbody/jeans|pants
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/Trbody/shirt
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/Trbody/shorts
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/Trbody/shoes|boots
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/off/coat
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: 'pref/toggle/cl/off/coat_v2 '
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/off/slaps
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/off/pants
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/pants/with/coat|coat_v2|T-Shirt
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/off/jeans
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/jeans/with/coat|coat_v2|T_Shirt
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/off/shorts
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/shorts/with/coat|coat_v2|T-Shirt
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/off/T-Shirt
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/off/shoes
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: pref/toggle/cl/off/boots
     valueType: 2
     saved: 1
     defaultValue: 0

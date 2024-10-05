@@ -12,32 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: Cloth Foot
   m_EditorClassIdentifier: 
+  Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
   controls:
-  - name: <color=orange>Slaps
+  - name: <b><color=orange>Slaps
     icon: {fileID: 2800000, guid: bad9afc38c6c3ab4f8744e861261be85, type: 3}
     type: 102
     parameter:
-      name: Cloth Foot
+      name: cloth/Foot
     value: 3
     style: 0
     subMenu: {fileID: 0}
     subParameters: []
     labels: []
-  - name: <color=orange>Boots
+  - name: <b><color=orange>Boots
     icon: {fileID: 2800000, guid: 378ef4bd9b799d043b73abc10fc9b856, type: 3}
     type: 102
     parameter:
-      name: Cloth Foot
+      name: cloth/Foot
     value: 2
     style: 0
     subMenu: {fileID: 0}
     subParameters: []
     labels: []
-  - name: <color=orange>Shoes
+  - name: <b><color=orange>Shoes
     icon: {fileID: 2800000, guid: c8158c5df23a6474fa0e4cd2ad483807, type: 3}
     type: 102
     parameter:
-      name: Cloth Foot
+      name: cloth/Foot
     value: 1
     style: 0
     subMenu: {fileID: 0}

@@ -426,58 +426,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &5095651914017044152
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2168874538880570775}
-  - component: {fileID: 1816121916676517738}
-  m_Layer: 0
-  m_Name: Floor Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2168874538880570775
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5095651914017044152}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 186857242104548132}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1816121916676517738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5095651914017044152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1631200402, guid: 2a2c05204084d904aa4945ccff20d8e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootTransform: {fileID: 0}
-  shapeType: 2
-  insideBounds: 0
-  radius: 0.5
-  height: 2
-  position: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0, w: 1}
-  bonesAsSpheres: 0
 --- !u!1 &6124789151164551984
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,7 +604,6 @@ GameObject:
   - component: {fileID: 4158848567289530126}
   - component: {fileID: 6579534710058795766}
   - component: {fileID: 8956178710111736485}
-  - component: {fileID: 6832196155283744815}
   m_Layer: 0
   m_Name: avatar setup base
   m_TagString: Untagged
@@ -805,27 +752,6 @@ MonoBehaviour:
     minValue: 0
     neutralValue: 0.7
     maxValue: 1
---- !u!95 &6832196155283744815
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6974705988007904448}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4ccdc787e9c386d44989dfd52c7c6836, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7156784885415510145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,6 +1134,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: -1620508094356194258, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 19.285
+      objectReference: {fileID: 0}
+    - target: {fileID: 355735186214189947, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 22.112
+      objectReference: {fileID: 0}
     - target: {fileID: 635547659545568360, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_Icon
@@ -1222,6 +1158,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: avatar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[2]
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
@@ -1243,13 +1189,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -1.5722432e-15
       objectReference: {fileID: 0}
+    - target: {fileID: 7329873763272774051, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 40.145
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2168874538880570775}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
@@ -1259,6 +1206,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 2
       addedObject: {fileID: 7737872136624440742}
+    - targetCorrespondingSourceObject: {fileID: 1427564092133216371, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6380489134133188330}
     - targetCorrespondingSourceObject: {fileID: 3969733803137257870, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       insertIndex: -1
@@ -1275,14 +1226,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1948768082431430220}
-    - targetCorrespondingSourceObject: {fileID: 1256660736965721556, guid: 1a1022667c449ad4ea3340db6aa363c8,
+    - targetCorrespondingSourceObject: {fileID: 447309283742961736, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 9077779909231311431}
-    - targetCorrespondingSourceObject: {fileID: 1883464989273762064, guid: 1a1022667c449ad4ea3340db6aa363c8,
+      addedObject: {fileID: 3173648459536219357}
+    - targetCorrespondingSourceObject: {fileID: -8948940137636725698, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3576444763311342679}
+      addedObject: {fileID: 8111722207386029324}
     - targetCorrespondingSourceObject: {fileID: 2753674900279037599, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       insertIndex: -1
@@ -1312,12 +1263,328 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 368557219134090447}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &227512848687791239 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 447309283742961736, guid: 1a1022667c449ad4ea3340db6aa363c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 368557219134090447}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3173648459536219357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227512848687791239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1661641543, guid: 2a2c05204084d904aa4945ccff20d8e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foldout_transforms: 1
+  foldout_forces: 1
+  foldout_collision: 1
+  foldout_stretchsquish: 1
+  foldout_limits: 1
+  foldout_grabpose: 1
+  foldout_options: 1
+  foldout_gizmos: 0
+  version: 1
+  integrationType: 0
+  rootTransform: {fileID: 2266373983763475509}
+  ignoreTransforms: []
+  endpointPosition: {x: 0, y: 0, z: 0}
+  multiChildType: 0
+  pull: 0.7
+  pullCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spring: 0
+  springCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  stiffness: 0.2
+  stiffnessCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  gravity: 0
+  gravityCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  gravityFalloff: 0
+  gravityFalloffCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  immobileType: 0
+  immobile: 0
+  immobileCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  allowCollision: 1
+  collisionFilter:
+    allowSelf: 1
+    allowOthers: 1
+  radius: 0.0005
+  radiusCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  colliders: []
+  limitType: 0
+  maxAngleX: 45
+  maxAngleXCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxAngleZ: 45
+  maxAngleZCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  limitRotation: {x: 0, y: 0, z: 0}
+  limitRotationXCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  limitRotationYCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  limitRotationZCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  allowGrabbing: 1
+  grabFilter:
+    allowSelf: 1
+    allowOthers: 1
+  allowPosing: 0
+  poseFilter:
+    allowSelf: 1
+    allowOthers: 1
+  snapToHand: 0
+  grabMovement: 0.5
+  maxStretch: 0
+  maxStretchCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxSquish: 0
+  maxSquishCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  stretchMotion: 0
+  stretchMotionCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  isAnimated: 1
+  resetWhenDisabled: 0
+  parameter: 
+  showGizmos: 1
+  boneOpacity: 0.5
+  limitOpacity: 0.5
 --- !u!4 &419453965623154722 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 58357671664579821, guid: 1a1022667c449ad4ea3340db6aa363c8,
     type: 3}
   m_PrefabInstance: {fileID: 368557219134090447}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &491906715601195249 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8948940137636725698, guid: 1a1022667c449ad4ea3340db6aa363c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 368557219134090447}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8111722207386029324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491906715601195249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1661641543, guid: 2a2c05204084d904aa4945ccff20d8e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foldout_transforms: 1
+  foldout_forces: 1
+  foldout_collision: 1
+  foldout_stretchsquish: 1
+  foldout_limits: 1
+  foldout_grabpose: 1
+  foldout_options: 1
+  foldout_gizmos: 0
+  version: 1
+  integrationType: 0
+  rootTransform: {fileID: 6324991587851692904}
+  ignoreTransforms: []
+  endpointPosition: {x: 0, y: 0, z: 0}
+  multiChildType: 0
+  pull: 0.7
+  pullCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spring: 0
+  springCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  stiffness: 0.2
+  stiffnessCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  gravity: 0
+  gravityCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  gravityFalloff: 0
+  gravityFalloffCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  immobileType: 0
+  immobile: 0
+  immobileCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  allowCollision: 1
+  collisionFilter:
+    allowSelf: 1
+    allowOthers: 1
+  radius: 0.0005
+  radiusCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  colliders: []
+  limitType: 0
+  maxAngleX: 45
+  maxAngleXCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxAngleZ: 45
+  maxAngleZCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  limitRotation: {x: 0, y: 0, z: 0}
+  limitRotationXCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  limitRotationYCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  limitRotationZCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  allowGrabbing: 1
+  grabFilter:
+    allowSelf: 1
+    allowOthers: 1
+  allowPosing: 0
+  poseFilter:
+    allowSelf: 1
+    allowOthers: 1
+  snapToHand: 0
+  grabMovement: 0.5
+  maxStretch: 0
+  maxStretchCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxSquish: 0
+  maxSquishCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  stretchMotion: 0
+  stretchMotionCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  isAnimated: 1
+  resetWhenDisabled: 0
+  parameter: 
+  showGizmos: 1
+  boneOpacity: 0.5
+  limitOpacity: 0.5
 --- !u!1 &710452768664031646 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1a1022667c449ad4ea3340db6aa363c8,
@@ -1510,14 +1777,28 @@ MonoBehaviour:
     name: JumpAndFall.RestoreToHop
   - hash: -1176220201
     name: JumpAndFall.QuickLand
-  - hash: -325161766
+  - hash: -561985142
     name: Tail idle
-  - hash: -1739690561
+  - hash: -552639102
+    name: Tail WAG [SLOW]
+  - hash: -1149981574
+    name: Tail WAG [FAST]
+  - hash: 1585962643
     name: Tail WAG
+  - hash: 248229737
+    name: Tail UP
+  - hash: 684589328
+    name: Tail DOWN
   - hash: -105618220
     name: ears idle
   - hash: 870082536
     name: ears_back
+  - hash: 1030841402
+    name: Face Tracked Eye Tracking
+  - hash: 1985322345
+    name: VRC Controlled Eye Tracking
+  - hash: -1162788050
+    name: master tree
   - hash: 601478037
     name: rig_hand 0 neutral
   - hash: 744237656
@@ -1600,28 +1881,28 @@ MonoBehaviour:
     name: oops
   - hash: -1807641810
     name: shadenfreude
-  - hash: -488937569
-    name: Stone_Jonson
+  - hash: -117717155
+    name: Stone Jonson
   - hash: -307215382
     name: warm look
   - hash: 378722351
     name: sleeping
   - hash: -1873817713
     name: happy
-  - hash: -1262212458
-    name: curiousing_stronger
+  - hash: -1679939950
+    name: curiousing stronger
   - hash: -1237614894
     name: frown
-  - hash: 1827894087
-    name: Blitz emotion
+  - hash: 1986234650
+    name: Flash emotion
   - hash: 233063054
     name: disgust
   - hash: -209001821
     name: It's okay! [uncertainty]
   - hash: -1581911482
     name: Pesos
-  - hash: -1214119860
-    name: sigma
+  - hash: -864171699
+    name: Conceited
   - hash: -1295529885
     name: sad
   - hash: -295474465
@@ -1630,22 +1911,38 @@ MonoBehaviour:
     name: shoke
   - hash: -1514540157
     name: fear
+  - hash: -1417002089
+    name: Uhhh man
+  - hash: 784749937
+    name: A good dream
+  - hash: 1690916435
+    name: open smile
+  - hash: 555645585
+    name: open smile stronger
   - hash: 36418886
     name: Face Builder [idle]
   - hash: 1076366878
     name: Face Builder [reset]
-  - hash: 938647298
-    name: idle
+  - hash: 767789207
+    name: Waiting command
   - hash: 287860411
     name: AFK
-  - hash: -69970958
-    name: idle
+  - hash: 442607749
+    name: Waiting command
   - hash: -1068954685
     name: oops
-  - hash: 315835699
-    name: nose_contact_sound
+  - hash: -690423741
+    name: Waiting command
   - hash: -1787772070
     name: nose_contact_sound ON
+  - hash: 460678835
+    name: Tail Floor Collider [ON]
+  - hash: 848220086
+    name: Tail Floor Collider [OFF]
+  - hash: -929655267
+    name: Tail Legs Collider [OFF]
+  - hash: 202485421
+    name: Tail Legs Collider [ON]
   - hash: -111540192
     name: coat
   - hash: 1379486612
@@ -1814,322 +2111,38 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 368557219134090447}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1472095018610135323 stripped
+--- !u!1 &1644615600708828348 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1256660736965721556, guid: 1a1022667c449ad4ea3340db6aa363c8,
+  m_CorrespondingSourceObject: {fileID: 1427564092133216371, guid: 1a1022667c449ad4ea3340db6aa363c8,
     type: 3}
   m_PrefabInstance: {fileID: 368557219134090447}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9077779909231311431
+--- !u!114 &6380489134133188330
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1472095018610135323}
+  m_GameObject: {fileID: 1644615600708828348}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1661641543, guid: 2a2c05204084d904aa4945ccff20d8e5, type: 3}
+  m_Script: {fileID: -1631200402, guid: 2a2c05204084d904aa4945ccff20d8e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foldout_transforms: 1
-  foldout_forces: 1
-  foldout_collision: 1
-  foldout_stretchsquish: 1
-  foldout_limits: 1
-  foldout_grabpose: 1
-  foldout_options: 1
-  foldout_gizmos: 0
-  version: 1
-  integrationType: 0
   rootTransform: {fileID: 0}
-  ignoreTransforms: []
-  endpointPosition: {x: 0, y: 0, z: 0}
-  multiChildType: 0
-  pull: 0.8
-  pullCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spring: 0
-  springCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  stiffness: 0.2
-  stiffnessCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  gravity: 0
-  gravityCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  gravityFalloff: 0
-  gravityFalloffCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  immobileType: 0
-  immobile: 0
-  immobileCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  allowCollision: 1
-  collisionFilter:
-    allowSelf: 1
-    allowOthers: 1
-  radius: 0.0005
-  radiusCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  colliders: []
-  limitType: 0
-  maxAngleX: 45
-  maxAngleXCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxAngleZ: 45
-  maxAngleZCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  limitRotation: {x: 0, y: 0, z: 0}
-  limitRotationXCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  limitRotationYCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  limitRotationZCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  allowGrabbing: 1
-  grabFilter:
-    allowSelf: 1
-    allowOthers: 1
-  allowPosing: 1
-  poseFilter:
-    allowSelf: 1
-    allowOthers: 1
-  snapToHand: 0
-  grabMovement: 0.5
-  maxStretch: 0
-  maxStretchCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxSquish: 0
-  maxSquishCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  stretchMotion: 0
-  stretchMotionCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  isAnimated: 1
-  resetWhenDisabled: 0
-  parameter: 
-  showGizmos: 1
-  boneOpacity: 0.5
-  limitOpacity: 0.5
---- !u!1 &2251247563794056671 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1883464989273762064, guid: 1a1022667c449ad4ea3340db6aa363c8,
+  shapeType: 2
+  insideBounds: 0
+  radius: 0.5
+  height: 2
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
+  bonesAsSpheres: 0
+--- !u!4 &2266373983763475509 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -7318727661179895558, guid: 1a1022667c449ad4ea3340db6aa363c8,
     type: 3}
   m_PrefabInstance: {fileID: 368557219134090447}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3576444763311342679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2251247563794056671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1661641543, guid: 2a2c05204084d904aa4945ccff20d8e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  foldout_transforms: 1
-  foldout_forces: 1
-  foldout_collision: 1
-  foldout_stretchsquish: 1
-  foldout_limits: 1
-  foldout_grabpose: 1
-  foldout_options: 1
-  foldout_gizmos: 0
-  version: 1
-  integrationType: 0
-  rootTransform: {fileID: 0}
-  ignoreTransforms: []
-  endpointPosition: {x: 0, y: 0, z: 0}
-  multiChildType: 0
-  pull: 0.8
-  pullCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spring: 0
-  springCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  stiffness: 0.2
-  stiffnessCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  gravity: 0
-  gravityCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  gravityFalloff: 0
-  gravityFalloffCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  immobileType: 0
-  immobile: 0
-  immobileCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  allowCollision: 1
-  collisionFilter:
-    allowSelf: 1
-    allowOthers: 1
-  radius: 0.0005
-  radiusCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  colliders: []
-  limitType: 0
-  maxAngleX: 45
-  maxAngleXCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxAngleZ: 45
-  maxAngleZCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  limitRotation: {x: 0, y: 0, z: 0}
-  limitRotationXCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  limitRotationYCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  limitRotationZCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  allowGrabbing: 1
-  grabFilter:
-    allowSelf: 1
-    allowOthers: 1
-  allowPosing: 1
-  poseFilter:
-    allowSelf: 1
-    allowOthers: 1
-  snapToHand: 0
-  grabMovement: 0.5
-  maxStretch: 0
-  maxStretchCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxSquish: 0
-  maxSquishCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  stretchMotion: 0
-  stretchMotionCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  isAnimated: 1
-  resetWhenDisabled: 0
-  parameter: 
-  showGizmos: 1
-  boneOpacity: 0.5
-  limitOpacity: 0.5
 --- !u!1 &2266940374692790392 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7320413641165329225, guid: 1a1022667c449ad4ea3340db6aa363c8,
@@ -2217,7 +2230,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   colliders:
-  - {fileID: 1816121916676517738}
+  - {fileID: 6380489134133188330}
   - {fileID: 832457148506859346}
   - {fileID: 8220114656490812864}
   limitType: 0
@@ -2542,7 +2555,7 @@ MonoBehaviour:
   allowOthers: 1
   localOnly: 0
   receiverType: 0
-  parameter: confused_contact
+  parameter: contact/confuse
   minVelocity: 0.05
 --- !u!114 &6813427734237417390
 MonoBehaviour:
@@ -2569,7 +2582,7 @@ MonoBehaviour:
   allowOthers: 1
   localOnly: 0
   receiverType: 0
-  parameter: nose_contact_sound
+  parameter: contact/nose
   minVelocity: 0.05
 --- !u!82 &8051361830333894575
 AudioSource:
@@ -2712,6 +2725,12 @@ Transform:
 --- !u!4 &6186534626256406418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5820793261006941021, guid: 1a1022667c449ad4ea3340db6aa363c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 368557219134090447}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6324991587851692904 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5970509217493108647, guid: 1a1022667c449ad4ea3340db6aa363c8,
     type: 3}
   m_PrefabInstance: {fileID: 368557219134090447}
   m_PrefabAsset: {fileID: 0}

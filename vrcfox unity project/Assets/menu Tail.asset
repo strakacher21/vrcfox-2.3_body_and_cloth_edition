@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: menu Tail
+  m_EditorClassIdentifier: 
+  Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
+  controls:
+  - name: <b><color=green>Tail Floor Collider
+    icon: {fileID: 2800000, guid: 7663ddfd7cdb4724983662b30244eb85, type: 3}
+    type: 102
+    parameter:
+      name: tail/Floor Collider
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b><color=green>Tail Legs Collider
+    icon: {fileID: 2800000, guid: a68733c7bec10b749929bc5966a961a4, type: 3}
+    type: 102
+    parameter:
+      name: tail/Legs Collider
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Tail WAG <color=orange>[SLOW]
+    icon: {fileID: 2800000, guid: 416e100da13df044cb7e91397632d8b7, type: 3}
+    type: 102
+    parameter:
+      name: TaillInt
+    value: 2
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Tail WAG
+    icon: {fileID: 2800000, guid: 416e100da13df044cb7e91397632d8b7, type: 3}
+    type: 102
+    parameter:
+      name: TaillInt
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Tail WAG <color=orange>[FAST]
+    icon: {fileID: 2800000, guid: 416e100da13df044cb7e91397632d8b7, type: 3}
+    type: 102
+    parameter:
+      name: TaillInt
+    value: 3
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Tail UP
+    icon: {fileID: 2800000, guid: 416e100da13df044cb7e91397632d8b7, type: 3}
+    type: 102
+    parameter:
+      name: TaillInt
+    value: 4
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Tail DOWN
+    icon: {fileID: 2800000, guid: 416e100da13df044cb7e91397632d8b7, type: 3}
+    type: 102
+    parameter:
+      name: TaillInt
+    value: 5
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []

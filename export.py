@@ -4,10 +4,10 @@ import os
 
 # Export settings
 export_path = bpy.path.abspath(r"//vrcfox unity project/Assets")
-file_name = "vrc_fox_model.fbx"
+file_name = "vrcfox model.fbx"
 desired_model_name = "Body"
 export_uv_map = "ColorMap"
-export_collection_name = "master"
+export_collection_name = "main"
 exclude_collection_name = "disabled"
 
 # Get collections
