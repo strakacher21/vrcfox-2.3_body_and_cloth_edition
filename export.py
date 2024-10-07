@@ -3,8 +3,8 @@ import bpy
 import os
 
 # Export settings
-export_path = bpy.path.abspath(r"//vrcfox unity project/Assets")
-file_name = "vrcfox model.fbx"
+export_path = bpy.path.abspath(r"//vrcfox unity project (B&C)/Assets")
+file_name = "vrcfox model (B&C).fbx"
 desired_model_name = "Body"
 export_uv_map = "ColorMap"
 export_collection_name = "main"
@@ -55,7 +55,7 @@ if bpy.context.selected_objects:
     else:
         raise ValueError(f"UV map '{export_uv_map}' not found.")
 
-    # Set master collection as active
+    # Set main collection as active
     export_layer_collection = bpy.context.view_layer.layer_collection.children[export_collection_name]
     bpy.context.view_layer.active_layer_collection = export_layer_collection
 
