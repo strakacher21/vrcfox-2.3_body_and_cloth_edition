@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: prefs-2
+  m_EditorClassIdentifier: 
+  Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
+  controls:
+  - name: <b>Arms
+    icon: {fileID: 2800000, guid: 55b60d3a1310ef24a9efdb7a13afd1fb, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/arms
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Breast [male]
+    icon: {fileID: 2800000, guid: 770ff2af001d3cf4cba8639a0dc15f5d, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/breast[male]
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Breast [female]
+    icon: {fileID: 2800000, guid: dcc179fed97128246bcb04791085d8c7, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/breast[female]
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Belly
+    icon: {fileID: 2800000, guid: 941bbe0b630d67744bc128bb0c9176cf, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/belly
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Legs
+    icon: {fileID: 2800000, guid: 7e993c4ac8597714d839313083aac03e, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/legs
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Tail [more]
+    icon: {fileID: 2800000, guid: 222142777a68bad4cb0939714c4d603d, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/tail[more]
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Tail [less]
+    icon: {fileID: 2800000, guid: ff809dd982b613744acea1f94261c41a, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/tail[less]
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Fluff
+    icon: {fileID: 2800000, guid: 564323008e7b7a648b9bb9b8f097c464, type: 3}
+    type: 102
+    parameter:
+      name: pref/toggle/fluff
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
