@@ -35,8 +35,8 @@ The Unity project has a prefab model, as well as two scenes for PC and Quest&IOS
 - The sound of pressing on the nose, as well as the reaction of the avatar's face to the approach of another avatar's hand.
 - It is possible to disable “Facial expressions” and “Pet expressions” in the game.
 - The ‘anim base’ controller, which fixes the ‘crab’ movement bug when the stick angle is small to normal.
-- The ‘anim sitting‘  controller allows FBT users to move their legs when they are sitting on something (such as a chair).
-- Disabling locomotion animation for crouching and prone at the user's request.
+- The ‘anim sitting‘  controller allows FBT users to move their legs when they are sitting on something (such as a chair). It can also be switched at the user's request (i.e. turn on the animation of the sitting or not)
+- Disabling locomotion at the user's request (useful for handtracking).
 - The rest is small stuff :D
 ### Performans Rating
 >**PC: Excellent**<br>
