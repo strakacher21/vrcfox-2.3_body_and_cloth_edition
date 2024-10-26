@@ -1,5 +1,5 @@
 # **VRCfox** **with body and clothes**
-## Minimalistic optimized furry avatar for vrchat with changeable clothes and FullFaceTracking.<br>This is a **modified project** from [**GitHub**](https://github.com/trev3d/vrcfox) **[(trev3d)](https://github.com/trev3d)**
+## Minimalistic optimized furry avatar for vrchat with changeable clothes and FaceTracking.<br>This is a **modified project** from [**GitHub**](https://github.com/trev3d/vrcfox) **[(trev3d)](https://github.com/trev3d)**
 # Get this
 ### [:arrow_forward:Download](https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition/releases)
 
@@ -24,19 +24,20 @@ To properly export the model from blender to unity, you must use the export scri
 
 The Unity project has a prefab model, as well as two scenes for PC and Quest&IOS. All prefab changes go into changing the scene. Аlso includes a script [[av3-animator-as-code]](https://github.com/hai-vr/av3-animator-as-code) that allows you to easily customise facial expressions, player preferences and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
 ### Avatar Features
-- Created FullFaceTracking (FFT).
+- Created FaceTracking (FT).
 - Numerous body prefs have been created (also applies to clothing).
 - A “face builder” was created. In essence, it is a manual FFT control, just like the “eye control”.
 - A collection of faces for different facial expressions without using FFT.
 - Different finger expressions on each hand.
 - Animation of idle tail (tail WAG) as desired by the user. You can also disable  floor/leg colliders in the menu for it.
 - Idle poses for standing still and lying down.
-- Gesture mimic off (A setting that disables linking facial expressions to hand positions when enabled).
+- Facial Expressions (A setting that enables/disables linking facial expressions to hand positions when enabled).
+- Lipsync (The parameter that enables/disables lipsing when using FT)
 - The sound of pressing on the nose, as well as the reaction of the avatar's face to the approach of another avatar's hand.
 - It is possible to disable “Facial expressions” and “Pet expressions” in the game.
 - The ‘anim base’ controller, which fixes the ‘crab’ movement bug when the stick angle is small to normal.
 - The ‘anim sitting‘  controller allows FBT users to move their legs when they are sitting on something (such as a chair). It can also be switched at the user's request (i.e. turn on the animation of the sitting or not)
-- Disabling locomotion at the user's request (useful for handtracking).
+- ~~Disabling locomotion at the user's request (useful for handtracking).~~
 - The rest is small stuff :D
 ### Performans Rating
 >**PC: Excellent**<br>

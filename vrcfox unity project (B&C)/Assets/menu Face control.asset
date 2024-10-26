@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
   controls:
-  - name: <b><color=green>FFT
+  - name: <b><color=green>FaceTracking
     icon: {fileID: 2800000, guid: e13d42b2f8f69ff459fe2a4ba583d2d6, type: 3}
     type: 102
     parameter:
@@ -29,6 +29,16 @@ MonoBehaviour:
     type: 102
     parameter:
       name: exp/facial
+    value: 1
+    style: 0
+    subMenu: {fileID: 11400000, guid: 899ea216176f29548b495e7b41aa9ca4, type: 2}
+    subParameters: []
+    labels: []
+  - name: <b><color=red>LipSync <color=green>[FT]
+    icon: {fileID: 2800000, guid: aee896bbb0d103840912c1bbb14d1a4a, type: 3}
+    type: 102
+    parameter:
+      name: anim/LipSync
     value: 1
     style: 0
     subMenu: {fileID: 11400000, guid: 899ea216176f29548b495e7b41aa9ca4, type: 2}
