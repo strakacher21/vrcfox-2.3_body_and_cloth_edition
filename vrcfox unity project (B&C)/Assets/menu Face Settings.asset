@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: menu Face Settings
+  m_EditorClassIdentifier: 
+  Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
+  controls:
+  - name: <b><color=red>Facial exp
+    icon: {fileID: 2800000, guid: 20b6acfd757881246abc9321be457ece, type: 3}
+    type: 102
+    parameter:
+      name: exp/facial
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b><color=red>EarsMovement <color=green>[FT]
+    icon: {fileID: 2800000, guid: 36349feed06587e479724a1a09c0b267, type: 3}
+    type: 102
+    parameter:
+      name: v2/anim/ears[FT]
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b><color=red>LipSync
+    icon: {fileID: 2800000, guid: a42538ca5756dad4db284c0c854ba23a, type: 3}
+    type: 102
+    parameter:
+      name: anim/LipSync
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b><color=red>Pet exp
+    icon: {fileID: 2800000, guid: 7f9a944825e680b43a1154766857e834, type: 3}
+    type: 102
+    parameter:
+      name: exp/pet
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []

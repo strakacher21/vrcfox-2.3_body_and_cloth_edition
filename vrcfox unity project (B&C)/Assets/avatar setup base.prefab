@@ -1374,10 +1374,10 @@ MonoBehaviour:
   grabFilter:
     allowSelf: 1
     allowOthers: 1
-  allowPosing: 0
+  allowPosing: 2
   poseFilter:
     allowSelf: 1
-    allowOthers: 1
+    allowOthers: 0
   snapToHand: 0
   grabMovement: 0.5
   maxStretch: 0
@@ -1538,10 +1538,10 @@ MonoBehaviour:
   grabFilter:
     allowSelf: 1
     allowOthers: 1
-  allowPosing: 0
+  allowPosing: 2
   poseFilter:
     allowSelf: 1
-    allowOthers: 1
+    allowOthers: 0
   snapToHand: 0
   grabMovement: 0.5
   maxStretch: 0
@@ -2257,10 +2257,10 @@ MonoBehaviour:
   grabFilter:
     allowSelf: 1
     allowOthers: 1
-  allowPosing: 0
+  allowPosing: 2
   poseFilter:
     allowSelf: 1
-    allowOthers: 1
+    allowOthers: 0
   snapToHand: 0
   grabMovement: 1
   maxStretch: 0
@@ -2441,7 +2441,7 @@ MonoBehaviour:
   grabFilter:
     allowSelf: 1
     allowOthers: 1
-  allowPosing: 1
+  allowPosing: 0
   poseFilter:
     allowSelf: 1
     allowOthers: 1
@@ -2535,6 +2535,7 @@ MonoBehaviour:
   position: {x: 0, y: 0.0006, z: 0.0004}
   rotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
   collisionTags:
+  - Head
   - Hand
   - Finger
   allowSelf: 0

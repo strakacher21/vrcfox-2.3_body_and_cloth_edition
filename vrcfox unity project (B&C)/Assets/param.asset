@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: param
   m_EditorClassIdentifier: 
   parameters:
-  - name: FaceInt
+  - name: v2/anim/FacePresets
     valueType: 0
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: TaillInt
+  - name: tail/anim/TaillInt
     valueType: 0
     saved: 1
     defaultValue: 2
@@ -53,6 +53,16 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 1
+  - name: anim/LipSync
+    valueType: 2
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: v2/anim/ears[FT]
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
   - name: exp/facial
     valueType: 2
     saved: 1
@@ -77,16 +87,6 @@ MonoBehaviour:
     valueType: 2
     saved: 1
     defaultValue: 0.7
-    networkSynced: 1
-  - name: anim/LipSync
-    valueType: 2
-    saved: 1
-    defaultValue: 1
-    networkSynced: 1
-  - name: anim/Sitting
-    valueType: 2
-    saved: 1
-    defaultValue: 0
     networkSynced: 1
   - name: pref/slider/pcol
     valueType: 1
