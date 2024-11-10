@@ -15,7 +15,7 @@ MonoBehaviour:
   Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
   controls:
   - name: <b><color=green>FaceTracking
-    icon: {fileID: 2800000, guid: 743878a5117f92540bbee7831acd3530, type: 3}
+    icon: {fileID: 2800000, guid: d97ccbd830a7f044abdafc52c0a827c6, type: 3}
     type: 102
     parameter:
       name: v2/enabled
@@ -32,6 +32,16 @@ MonoBehaviour:
     value: 1
     style: 0
     subMenu: {fileID: 11400000, guid: 554ece4c4cd0e1342a957ca4ccee2731, type: 2}
+    subParameters: []
+    labels: []
+  - name: <b><color=orange>Face Builder <color=red>[Debugger]
+    icon: {fileID: 2800000, guid: 440c67b8a93907a4da5f35d246608145, type: 3}
+    type: 103
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 11400000, guid: 899ea216176f29548b495e7b41aa9ca4, type: 2}
     subParameters: []
     labels: []
   - name: <b><color=yellow>Eye Control
@@ -62,15 +72,5 @@ MonoBehaviour:
     value: 1
     style: 0
     subMenu: {fileID: 11400000, guid: 843910b9e9c70f14897b62e84309e85c, type: 2}
-    subParameters: []
-    labels: []
-  - name: <b><color=orange>Face Builder
-    icon: {fileID: 2800000, guid: 440c67b8a93907a4da5f35d246608145, type: 3}
-    type: 103
-    parameter:
-      name: 
-    value: 1
-    style: 0
-    subMenu: {fileID: 11400000, guid: 899ea216176f29548b495e7b41aa9ca4, type: 2}
     subParameters: []
     labels: []
