@@ -25,6 +25,7 @@ To properly export the model from blender to unity, you must use the export scri
 The Unity project has a prefab model, as well as two scenes for PC and Quest&IOS. All prefab changes go into changing the scene. Аlso includes a script [[av3-animator-as-code]](https://github.com/hai-vr/av3-animator-as-code) that allows you to easily customise facial expressions, player preferences and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
 ### Avatar Features
 - Created FaceTracking (FT).
+- Added [OSCmooth](https://github.com/regzo2/OSCmooth) for better face tracking.
 - Numerous body prefs have been created (also applies to clothing).
 - A ‘face builder‘ was created. In essence, it is a manual FT control, just like the ‘eye control‘. It is also conventionally a part-time debugger.
 - A collection of faces for different facial expressions without using FT.
@@ -43,14 +44,14 @@ The Unity project has a prefab model, as well as two scenes for PC and Quest&IOS
 >**PC: Excellent**<br>
 >**Android&IOS: Good**<br>
 >___
->**Polygons: 9984**<br>
+>**Polygons (Triangles): <10000**<br>
 >**Phys bones: 3**<br>
 >**Material: 1**<br>
 >**Mesh: 1**<br>
 >**Audio Source: 1 (PC)**<br>
 >**Contact Receivers: 2**<br>
 >**Contact Colliders: 3**<br>
->**Download file size: 1,65mb [PC]; 0,85mb[Android/quest]** 
+>**Download file size: 1 mb** 
 
 >[!TIP]
 ># Ways to optimize the avatar for parameters
@@ -65,9 +66,7 @@ The Unity project has a prefab model, as well as two scenes for PC and Quest&IOS
 >- If you do not need ‘Eye Control‘, just remove ‘eye/Control‘ and ‘eye/Control[X/Y]‘ from the parameters, and then go to the ‘anim additive‘ controller and remove the same parameters there and Layer ‘Eye Control‘.
 >- If you want Tail WAG animations, then remove ’tail/anim/TaillInt’ from the parameters, and then go to the ‘anime additive‘ controller and remove the Layer ‘Tail Toogle (menu)‘. If you need only one animation, then replace ‘TaillInt‘ with a bool variable, and make the Layer ‘Tail Toggle (menu)‘ toggle similar to Layer ‘Tail Floor Collider‘ or ‘AFK Emote‘.
 ## TODO:
-- **Better Uv**
 - Better Locomotion anim?
-- **OSCsmooth for FaceTracking**
 - VRM file?
 - **To remove all minor bugs? Maybe...**
 - More presets for faces? Maybe...
