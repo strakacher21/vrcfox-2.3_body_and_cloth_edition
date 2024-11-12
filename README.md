@@ -45,7 +45,7 @@ The Unity project has a prefab model, as well as two scenes for PC and Quest&IOS
 >**Android&IOS: Good**<br>
 >___
 >**Polygons (Triangles): <10000**<br>
->**Phys bones: 3**<br>
+>**Phys bones: 4**<br>
 >**Material: 1**<br>
 >**Mesh: 1**<br>
 >**Audio Source: 1 (PC)**<br>
