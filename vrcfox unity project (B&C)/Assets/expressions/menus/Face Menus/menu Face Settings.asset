@@ -24,21 +24,21 @@ MonoBehaviour:
     subMenu: {fileID: 0}
     subParameters: []
     labels: []
-  - name: <b><color=red>EarsMovement <color=green>[FT]
-    icon: {fileID: 2800000, guid: dd7cbe53dc22dec489fab1f70e695eb9, type: 3}
-    type: 102
-    parameter:
-      name: v2/anim/ears[FT]
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters: []
-    labels: []
   - name: <b><color=red>LipSync
     icon: {fileID: 2800000, guid: a42538ca5756dad4db284c0c854ba23a, type: 3}
     type: 102
     parameter:
       name: anim/LipSync
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b><color=red>EarsMovement <color=green>[FT]
+    icon: {fileID: 2800000, guid: dd7cbe53dc22dec489fab1f70e695eb9, type: 3}
+    type: 102
+    parameter:
+      name: anim/ears[FT]
     value: 1
     style: 0
     subMenu: {fileID: 0}

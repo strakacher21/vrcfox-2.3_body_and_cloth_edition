@@ -281,7 +281,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: anim Sitting
+  m_Name: anim sitting
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Seated
@@ -289,16 +289,16 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: TrackingType
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
-    m_Name: Sitting (With continued FBT tracking)
+    m_Name: Sitting (FBT off anim)
     m_StateMachine: {fileID: 1107681706011699772}
     m_Mask: {fileID: 0}
     m_Motions: []
@@ -645,7 +645,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sitting (With continued FBT tracking)
+  m_Name: Sitting (FBT off anim)
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102075426173825478}
