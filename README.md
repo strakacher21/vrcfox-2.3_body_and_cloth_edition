@@ -15,14 +15,14 @@ I will also be grateful if you indicate my authorship and the authorship of the 
 
 *About all possible mistakes and wishes or criticism write me safely. I will be interested to answer everything or realize that I have created some silly thing :D*
 # Description
-This is a modified vrcfox-2.3 project with added new clothes and also made body geometry
+This is a modified vrcfox-2.3 project with added new clothes and also made body geometry.
 The project includes the **Blend 4.2** file itself and the **Unity 2022.3.22f1** project.
 
 The easiest way to adjust the colours is to vertex paint rather than using a texture. This works well for solid colours, but is not suitable for fancy patterns. Your avatar file size will stay small and load quickly without texture files. If you prefer to use a texture, the model has a second set of UVs. You will need to change the active UV layer of each mesh to ‘UVMap’ and apply the texture yourself. You will also need to erase all vertex colours, as they will still appear on the default material in the Unity project! 
 > [!WARNING]
 To properly export the model from blender to unity, you must use the export script attached to blender (otherwise it will ‘fade’ [exports colors type ‘SRGB‘, instead of ‘LINEAR‘] the model and export the clothes to unity incorrectly[without combining meshes and blendshapes]). Clicking the '▶' button will export the model to Unity.
 
-The Unity project has a prefab model, as well as two scenes for PC and Quest&IOS. All prefab changes go into changing the scene. Аlso includes a script [AnimatorWizard (av3-animator-as-code)](https://github.com/hai-vr/av3-animator-as-code) that allows you to easily customise facial expressions, player preferences and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
+The Unity project has a prefab model, as well as two scenes for **PC** and **Quest&IOS**. All prefab changes go into changing the scene. Аlso includes a script [AnimatorWizard (av3-animator-as-code)](https://github.com/hai-vr/av3-animator-as-code) that allows you to easily customise facial expressions, avatar blend prefs and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
 ### Avatar Features
 - Created FaceTracking (FT) and added [OSCmooth](https://github.com/regzo2/OSCmooth) for better face tracking (and for better Ears Back [FT]).
 - Numerous body prefs have been created (also applies to clothing).
