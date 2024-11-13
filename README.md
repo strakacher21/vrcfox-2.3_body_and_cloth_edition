@@ -1,5 +1,5 @@
 # **VRCfox** **with body and clothes**
-## Minimalistic optimized furry avatar for vrchat with changeable clothes and FaceTracking.<br>This is a **modified project** from [**GitHub**](https://github.com/trev3d/vrcfox) **[(trev3d)](https://github.com/trev3d)**
+## Minimalistic optimized furry avatar for VRChat with changeable clothes and FaceTracking.<br>This is a **modified project** from [**GitHub**](https://github.com/trev3d/vrcfox) **[(trev3d)](https://github.com/trev3d)**.
 # Get this
 ### [:arrow_forward:Download](https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition/archive/refs/heads/main.zip)
 
@@ -13,7 +13,7 @@ I will agree with trev3d and also say
 
 I will also be grateful if you indicate my authorship and the authorship of the original (and do not indicate authorship in pornographic or suggestive content, if you still want to do it).
 
-About all possible mistakes and wishes or criticism write me safely. I will be interested to answer everything or realize that I have created some silly thing :D
+*About all possible mistakes and wishes or criticism write me safely. I will be interested to answer everything or realize that I have created some silly thing :D*
 # Description
 This is a modified vrcfox-2.3 project with added new clothes and also made body geometry
 The project includes the **Blend 4.2** file itself and the **Unity 2022.3.22f1** project.
@@ -22,25 +22,24 @@ The easiest way to adjust the colours is to vertex paint rather than using a tex
 > [!WARNING]
 To properly export the model from blender to unity, you must use the export script attached to blender (otherwise it will ‘fade’ [exports colors type ‘SRGB‘, instead of ‘LINEAR‘] the model and export the clothes to unity incorrectly[without combining meshes and blendshapes]). Clicking the '▶' button will export the model to Unity.
 
-The Unity project has a prefab model, as well as two scenes for PC and Quest&IOS. All prefab changes go into changing the scene. Аlso includes a script [[AnimatorWizard (av3-animator-as-code)]](https://github.com/hai-vr/av3-animator-as-code) that allows you to easily customise facial expressions, player preferences and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
+The Unity project has a prefab model, as well as two scenes for PC and Quest&IOS. All prefab changes go into changing the scene. Аlso includes a script [AnimatorWizard (av3-animator-as-code)](https://github.com/hai-vr/av3-animator-as-code) that allows you to easily customise facial expressions, player preferences and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
 ### Avatar Features
-- Created FaceTracking (FT).
-- Added [OSCmooth](https://github.com/regzo2/OSCmooth) for better face tracking.
+- Created FaceTracking (FT) and added [OSCmooth](https://github.com/regzo2/OSCmooth) for better face tracking (and for better Ears Back [FT]).
 - Numerous body prefs have been created (also applies to clothing).
-- A ‘face builder‘ was created. In essence, it is a manual FT control, just like the ‘eye control‘. It is also conventionally a part-time debugger.
+- A ‘face builder [Debugger]‘ was created. In essence, it is a manual FT control, just like the ‘eye control‘. It is also conventionally a part-time debugger.
 - A collection of faces for different facial expressions without using FT.
-- Different finger expressions on each hand.
-- Animation of idle tail (tail WAG) as desired by the user. You can also disable  floor/leg colliders in the menu for it.
+- Different hand poses on each hand.
+- Animation of idle tail (tail WAG) as desired by the user. You can also disable floor/leg colliders in the menu for it.
 - Idle poses for standing still and lying down.
 - Facial Expressions (A setting that enables/disables linking facial expressions to hand positions when enabled).
-- Lipsync (The parameter that enables/disables it)
+- Lipsync (The parameter that enables/disables it).
 - The sound of pressing on the nose, as well as the reaction of the avatar's face to the approach of another avatar's hand.
 - It is possible to disable ’Facial expressions’ and ’Pet expressions’ in the game.
 - The ‘anim base’ controller, which fixes the ‘crab’ movement bug when the stick angle is small to normal.
 - The ‘anim sitting‘  controller allows FBT users to move their legs when they are sitting on something (such as a chair).
-- The ears move from the position of the eyelids [for FT and turn on at the user's request].
+- The ears move from the position of the eyelids (for FT and turn on at the user's request).
 - The rest is small stuff :D
-### Performans Rating
+### Performans Rating for VRChat
 >**PC: Excellent**<br>
 >**Android&IOS: Good**<br>
 >___
@@ -51,11 +50,11 @@ The Unity project has a prefab model, as well as two scenes for PC and Quest&IOS
 >**Audio Source: 1 (PC)**<br>
 >**Contact Receivers: 2**<br>
 >**Contact Colliders: 3**<br>
->**Download file size: 1 mb** 
+>**Download file size: <1 mb** 
 
 >[!TIP]
 ># Ways to optimize the avatar for parameters
->### Right now 256/256 are occupied, if you want to add something extra to your avatar it's worth thinking about these tips.
+>### Right now **256/256** are occupied, if you want to add something extra to your avatar it's worth thinking about these tips.
 >#### There is no full optimization provided here, it only makes the avatar much lighter in parameters .
 >- If you don't need a ‘collection of faces’, then remove the ’v2/anim/FacePresets’ variable >from ‘param’ (it is responsible for switching facial expressions) and you also >need to remove the ‘Face Toogle (menu)’ Layer in the ‘animfx‘ controller.
 >
