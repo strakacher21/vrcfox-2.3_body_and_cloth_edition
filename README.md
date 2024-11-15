@@ -5,7 +5,7 @@
 
 ### [:arrow_forward:Link to the avatar in VRChat](https://vrchat.com/home/avatar/avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1)
 
-![vrcfox fox edition](https://github.com/user-attachments/assets/8d1e70bf-68d4-401d-a4b9-c471893ad1f3)
+https://github.com/user-attachments/assets/6502836f-7bc8-47b8-aace-60f6a12096f8
 ---
 # А Request
 I will agree with trev3d and also say 
