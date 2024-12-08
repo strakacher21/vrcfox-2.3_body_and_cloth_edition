@@ -6,8 +6,7 @@
 ### [:arrow_forward:Link to the avatar in VRChat](https://vrchat.com/home/avatar/avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1)
 
 ![pre-showcase-cloth](https://github.com/user-attachments/assets/d0bab74a-0902-4086-8fcd-b7249ce140b0)
-
-![pre-showcase-FT](https://github.com/user-attachments/assets/c0e958bf-9fd8-42d8-b7a2-6a0f40922235)
+![vrcfox_FT_showcase](https://github.com/user-attachments/assets/2923e6cc-4414-4ce5-bf1c-98b9995fa9a9)
 ---
 # А Request
 I will agree with trev3d and also say 
