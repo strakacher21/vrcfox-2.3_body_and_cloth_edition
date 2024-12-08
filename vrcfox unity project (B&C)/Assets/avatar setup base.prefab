@@ -643,6 +643,7 @@ MonoBehaviour:
     favourite: {fileID: 0}
     initialPose: 0
     userIndex: 0
+    isOnFriendsList: 0
     loadStored: 0
     isRemote: 0
     vrMode: 0
@@ -673,13 +674,18 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 17e549f94f6d25f4da19e77f85918ec1, type: 2}
   - {fileID: 7400000, guid: be1b6b943c973cc44ba8ca84a47f3273, type: 2}
   createShapePreferences: 1
-  shapeSliderPrefix: pref/slider/
-  shapeTogglesPrefix: pref/toggle/
+  shapePreferenceSliderPrefix: pref/slider/
+  shapePreferenceTogglesPrefix: pref/toggle/
+  createClothCustomization: 1
+  shapeClothTogglesPrefix: cloth/toggle/
+  shapeClothAdjustPrefix: cloth/adjust/
   createColorCustomization: 1
   primaryColor0: {fileID: 7400000, guid: 8421033fab3bd4941a54cc533287898b, type: 2}
   primaryColor1: {fileID: 7400000, guid: 1ee5d60bcc1f77a47b1e79f2944139e3, type: 2}
   secondColor0: {fileID: 7400000, guid: de7942e8683b2d34ea22c50b83f37f9b, type: 2}
   secondColor1: {fileID: 7400000, guid: b7ba98e9f6ffbba43a2ed420efb56037, type: 2}
+  createFacialExpressionsControl: 1
+  facialPrefix: exp/facial
   mouthPrefix: exp/mouth/
   mouthShapeNames:
   - basis
@@ -703,8 +709,6 @@ MonoBehaviour:
   createFaceTracking: 1
   ftPrefix: v2/
   ftShapes:
-  - BrowDownLeft
-  - BrowUpLeft
   - JawOpen
   - LipFunnel
   - LipPucker
@@ -713,6 +717,8 @@ MonoBehaviour:
   - MouthUpperUpLeft
   - MouthLowerDownLeft
   - MouthRaiserLower
+  - TongueOut
+  - EyeSquintLeft
   ftDualShapes:
   - paramName: SmileSad
     minShapeName: MouthSad
@@ -736,7 +742,13 @@ MonoBehaviour:
     minShapeName: EyeClosed
     maxShapeName: EyeWide
     minValue: 0
-    neutralValue: 0.7
+    neutralValue: 0.75
+    maxValue: 1
+  - paramName: CheekPuffSuck
+    minShapeName: CheekSuck
+    maxShapeName: CheekPuff
+    minValue: -1
+    neutralValue: 0
     maxValue: 1
 --- !u!1 &7156784885415510145
 GameObject:
@@ -747,6 +759,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8401531228967075183}
+  - component: {fileID: 1637294361369115897}
   m_Layer: 0
   m_Name: Scene objects (not part of avatar!)
   m_TagString: Untagged
@@ -779,6 +792,101 @@ Transform:
   - {fileID: 5725773037196692869}
   m_Father: {fileID: 5745010746917710464}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1637294361369115897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7156784885415510145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fef40173b344a40bf1466cc9c93393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assetContainer: {fileID: 0}
+  fxMask: {fileID: 0}
+  gestureMask: {fileID: 0}
+  lMask: {fileID: 0}
+  rMask: {fileID: 0}
+  handPoses: []
+  createShapePreferences: 1
+  shapePreferenceSliderPrefix: pref/slider/
+  shapePreferenceTogglesPrefix: pref/toggle/
+  createClothCustomization: 1
+  shapeClothTogglesPrefix: cloth/toggle/
+  shapeClothAdjustPrefix: cloth/adjust/
+  createColorCustomization: 1
+  primaryColor0: {fileID: 0}
+  primaryColor1: {fileID: 0}
+  secondColor0: {fileID: 0}
+  secondColor1: {fileID: 0}
+  createFacialExpressionsControl: 1
+  facialPrefix: exp/facial
+  mouthPrefix: exp/mouth/
+  mouthShapeNames:
+  - basis
+  - frown
+  - smile
+  - grimace
+  - smile
+  - grimace
+  - grimace
+  - frown
+  browPrefix: exp/brows/
+  browShapeNames:
+  - basis
+  - down
+  - up
+  - curious
+  - up
+  - worried
+  - curious
+  - down
+  createFaceTracking: 1
+  ftPrefix: v2/
+  ftShapes:
+  - JawOpen
+  - LipFunnel
+  - LipPucker
+  - MouthClosed
+  - MouthStretch
+  - MouthUpperUpLeft
+  - MouthLowerDownLeft
+  - MouthRaiserLower
+  - TongueOut
+  - EyeSquintLeft
+  ftDualShapes:
+  - paramName: SmileSad
+    minShapeName: MouthSad
+    maxShapeName: MouthSmile
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: JawX
+    minShapeName: JawLeft
+    maxShapeName: JawRight
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: EyeLidLeft
+    minShapeName: EyeClosed
+    maxShapeName: EyeWide
+    minValue: 0
+    neutralValue: 0.75
+    maxValue: 1
+  - paramName: BrowExpressionLeft
+    minShapeName: BrowDown
+    maxShapeName: BrowUp
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: CheekPuffSuck
+    minShapeName: CheekSuck
+    maxShapeName: CheekPuff
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
 --- !u!1 &7319220849408347885
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,7 +1729,7 @@ MonoBehaviour:
   networkIDs: []
   customExpressions: 1
   expressionsMenu: {fileID: 11400000, guid: f01c13e840b714f8288e053a90b13b50, type: 2}
-  expressionParameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a,
+  expressionParameters: {fileID: 11400000, guid: 9717dab5febadb240af488c69ba37be3,
     type: 2}
   enableEyeLook: 1
   customEyeLookSettings:
@@ -1636,12 +1744,12 @@ MonoBehaviour:
       right: {x: 0, y: 0, z: 0, w: 1}
     eyesLookingUp:
       linked: 1
-      left: {x: -0.06975647, y: 0, z: 0, w: 0.9975641}
-      right: {x: -0.06975647, y: 0, z: 0, w: 0.9975641}
+      left: {x: -0.104528464, y: 0, z: 0, w: 0.9945219}
+      right: {x: -0.104528464, y: 0, z: 0, w: 0.9945219}
     eyesLookingDown:
       linked: 1
-      left: {x: 0.06975647, y: 0, z: 0, w: 0.9975641}
-      right: {x: 0.06975647, y: 0, z: 0, w: 0.9975641}
+      left: {x: 0.1564345, y: 0, z: 0, w: 0.98768836}
+      right: {x: 0.1564345, y: 0, z: 0, w: 0.98768836}
     eyesLookingLeft:
       linked: 1
       left: {x: 0, y: -0.08715574, z: 0, w: 0.9961947}
@@ -1709,7 +1817,7 @@ MonoBehaviour:
     isDefault: 0
   - isEnabled: 0
     type: 3
-    animatorController: {fileID: 9100000, guid: 6a31af7b5cfb94d4c98bc8ffa7d80096,
+    animatorController: {fileID: 9100000, guid: ca7b803c79d847847b6a86df302047a4,
       type: 2}
     mask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
     isDefault: 0
@@ -1743,8 +1851,8 @@ MonoBehaviour:
     isDefault: 1
   AnimationPreset: {fileID: 0}
   animationHashSet:
-  - hash: 1127303507
-    name: Prone
+  - hash: -16912933
+    name: Proning
   - hash: -510014593
     name: Standing
   - hash: 1277114970
@@ -1775,16 +1883,20 @@ MonoBehaviour:
     name: Tail UP
   - hash: 684589328
     name: Tail DOWN
-  - hash: -105618220
-    name: ears idle
-  - hash: 870082536
-    name: ears_back
-  - hash: 1030841402
-    name: Face Tracked Eye Tracking
-  - hash: 1985322345
-    name: VRC Controlled Eye Tracking
-  - hash: -1162788050
-    name: master tree
+  - hash: 533631384
+    name: Waiting command
+  - hash: 1285585196
+    name: Ears Back.Ears Back [FT]
+  - hash: -196336429
+    name: Ears Back.Ears Back
+  - hash: -2134222153
+    name: OSCmooth_Local
+  - hash: 675049092
+    name: OSCmooth_Net
+  - hash: -804899448
+    name: VRC Eye Control
+  - hash: -396614963
+    name: Manual Eye Control
   - hash: 601478037
     name: rig_hand 0 neutral
   - hash: 744237656
@@ -1857,6 +1969,14 @@ MonoBehaviour:
     name: face tracking on
   - hash: -576816719
     name: drivers
+  - hash: 1666853253
+    name: OSCmooth_Local
+  - hash: -378687850
+    name: OSCmooth_Net
+  - hash: -1679740001
+    name: Waiting command
+  - hash: 158049870
+    name: LypSync
   - hash: 1784143190
     name: Idle
   - hash: -1710515403
@@ -1905,60 +2025,60 @@ MonoBehaviour:
     name: open smile
   - hash: 555645585
     name: open smile stronger
-  - hash: 36418886
-    name: Face Builder [idle]
-  - hash: 1076366878
-    name: Face Builder [reset]
+  - hash: 1862822351
+    name: Waiting command
+  - hash: -893357683
+    name: Face Builder (reset)
   - hash: 767789207
     name: Waiting command
   - hash: 287860411
     name: AFK
-  - hash: 442607749
+  - hash: 1715603956
     name: Waiting command
-  - hash: -1068954685
-    name: oops
-  - hash: -690423741
+  - hash: 1013542260
+    name: Confused Contact
+  - hash: -276753179
     name: Waiting command
-  - hash: -1787772070
-    name: nose_contact_sound ON
-  - hash: 460678835
-    name: Tail Floor Collider [ON]
-  - hash: 848220086
-    name: Tail Floor Collider [OFF]
-  - hash: -929655267
-    name: Tail Legs Collider [OFF]
-  - hash: 202485421
-    name: Tail Legs Collider [ON]
-  - hash: -111540192
-    name: coat
-  - hash: 1379486612
-    name: coat_v2
-  - hash: 1735835757
-    name: T-Shirt
+  - hash: 1177310478
+    name: Nose Contact Sound
+  - hash: -504291014
+    name: Tail Floor Collider
+  - hash: -1957760162
+    name: Waiting command
+  - hash: 444796514
+    name: Waiting command
+  - hash: -1874490598
+    name: Tail Legs Collider
   - hash: 414375926
     name: Waiting command
+  - hash: 937400508
+    name: Cloth Upper body.coat
+  - hash: 1252259707
+    name: Cloth Upper body.coat_v2
+  - hash: 2146204802
+    name: Cloth Upper body.T-Shirt
   - hash: -1954516829
     name: Waiting command
-  - hash: 2107843667
-    name: Jeans
-  - hash: -1574850875
-    name: pants
-  - hash: -2007612075
-    name: shorts
-  - hash: -726612321
-    name: With coat|coat_v2|T_Shirt [1]
-  - hash: -1957802225
-    name: 'With coat|coat_v2|T_Shirt [2] '
-  - hash: -427383779
-    name: With coat|coat_v2|T_Shirt [3]
-  - hash: 182005959
-    name: shoes
-  - hash: -1198494578
-    name: slaps
+  - hash: 1768406571
+    name: Cloth Lower body.Jeans
+  - hash: -1226492739
+    name: Cloth Lower body.pants
+  - hash: -694388543
+    name: Cloth Lower body.shorts
+  - hash: -1169579543
+    name: With coat|coat_v2|T_Shirt.With coat|coat_v2|T_Shirt [jeans]
+  - hash: -708084348
+    name: 'With coat|coat_v2|T_Shirt.With coat|coat_v2|T_Shirt [pants] '
+  - hash: -69512555
+    name: With coat|coat_v2|T_Shirt.With coat|coat_v2|T_Shirt [shorts]
   - hash: 552093419
     name: Waiting command
-  - hash: -1722313380
-    name: boots
+  - hash: -1514662650
+    name: Cloth Foot.shoes
+  - hash: 401688911
+    name: Cloth Foot.slaps
+  - hash: 909553821
+    name: Cloth Foot.boots
   autoFootsteps: 1
   autoLocomotion: 1
   collider_head:
@@ -2090,7 +2210,7 @@ MonoBehaviour:
   blueprintId: avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1
   contentType: 0
   assetBundleUnityVersion: 
-  fallbackStatus: 0
+  fallbackStatus: 3
 --- !u!137 &1422257553560203677 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,

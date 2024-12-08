@@ -12,8 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: Face Builder-1
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
+  Parameters: {fileID: 11400000, guid: 9717dab5febadb240af488c69ba37be3, type: 2}
   controls:
+  - name: <b>CheekPuffSuck
+    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+    type: 203
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 11400000, guid: 7cec09a80384a9e42b19a3f6f0ef3760, type: 2}
+    subParameters:
+    - name: v2/CheekPuffSuck
+    labels: []
+  - name: <b>TongueOut
+    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+    type: 203
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 11400000, guid: 7cec09a80384a9e42b19a3f6f0ef3760, type: 2}
+    subParameters:
+    - name: v2/TongueOut
+    labels: []
   - name: <b>LipFunnel
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
     type: 203
@@ -25,55 +47,33 @@ MonoBehaviour:
     subParameters:
     - name: v2/LipFunnel
     labels: []
-  - name: <b>BrowUpRight
+  - name: <b>BrowExpressionRight
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
     type: 203
     parameter:
       name: 
     value: 1
     style: 0
-    subMenu: {fileID: 0}
+    subMenu: {fileID: 11400000, guid: 7cec09a80384a9e42b19a3f6f0ef3760, type: 2}
     subParameters:
-    - name: v2/BrowUpRight
+    - name: v2/BrowExpressionRight
     labels: []
-  - name: <b>BrowUpLeft
+  - name: <b>BrowExpressionLeft
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
     type: 203
     parameter:
       name: 
     value: 1
     style: 0
-    subMenu: {fileID: 0}
+    subMenu: {fileID: 11400000, guid: 7cec09a80384a9e42b19a3f6f0ef3760, type: 2}
     subParameters:
-    - name: v2/BrowUpLeft
-    labels: []
-  - name: <b>BrowDownRight
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
-    type: 203
-    parameter:
-      name: 
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters:
-    - name: v2/BrowDownRight
-    labels: []
-  - name: <b>BrowDownLeft
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
-    type: 203
-    parameter:
-      name: 
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters:
-    - name: v2/BrowDownLeft
+    - name: v2/BrowExpressionLeft
     labels: []
   - name: <b>Reset
     icon: {fileID: 2800000, guid: 13ec15f9c10004a419487b89ebd0683b, type: 3}
     type: 101
     parameter:
-      name: reset Face Builder
+      name: v2/reset
     value: 1
     style: 0
     subMenu: {fileID: 11400000, guid: 7cec09a80384a9e42b19a3f6f0ef3760, type: 2}

@@ -12,19 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: Face Builder-3
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
+  Parameters: {fileID: 11400000, guid: 9717dab5febadb240af488c69ba37be3, type: 2}
   controls:
-  - name: <b>EyeLidLeft
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
-    type: 203
-    parameter:
-      name: 
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters:
-    - name: v2/EyeLidLeft
-    labels: []
   - name: <b>EyeLidRight
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
     type: 203
@@ -36,7 +25,7 @@ MonoBehaviour:
     subParameters:
     - name: v2/EyeLidRight
     labels: []
-  - name: <b>BrowExpressionLeft
+  - name: <b>EyeLidLeft
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
     type: 203
     parameter:
@@ -45,9 +34,9 @@ MonoBehaviour:
     style: 0
     subMenu: {fileID: 0}
     subParameters:
-    - name: v2/BrowExpressionLeft
+    - name: v2/EyeLidLeft
     labels: []
-  - name: <b>BrowExpressionRight
+  - name: <b>EyeSquintRight
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
     type: 203
     parameter:
@@ -56,7 +45,18 @@ MonoBehaviour:
     style: 0
     subMenu: {fileID: 0}
     subParameters:
-    - name: v2/BrowExpressionRight
+    - name: v2/EyeSquintRight
+    labels: []
+  - name: <b>EyeSquintLeft
+    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+    type: 203
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters:
+    - name: v2/EyeSquintLeft
     labels: []
   - name: <b>JawOpen
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}

@@ -12,28 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: -1506855854, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: param
   m_EditorClassIdentifier: 
+  isEmpty: 0
   parameters:
   - name: v2/anim/FacePresets
     valueType: 0
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: tail/anim/TaillInt
+  - name: tail/anim/TailCount
     valueType: 0
     saved: 1
     defaultValue: 2
     networkSynced: 1
-  - name: cloth/UpperBody
+  - name: cloth/count/UpperBody
     valueType: 0
     saved: 1
     defaultValue: 1
     networkSynced: 1
-  - name: cloth/LowerBody
+  - name: cloth/count/LowerBody
     valueType: 0
     saved: 1
     defaultValue: 1
     networkSynced: 1
-  - name: cloth/Foot
+  - name: cloth/count/Foot
     valueType: 0
     saved: 1
     defaultValue: 1
@@ -73,7 +74,7 @@ MonoBehaviour:
     saved: 1
     defaultValue: 1
     networkSynced: 1
-  - name: reset Face Builder
+  - name: v2/reset
     valueType: 2
     saved: 0
     defaultValue: 0
@@ -178,26 +179,6 @@ MonoBehaviour:
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: v2/BrowDownRight
-    valueType: 1
-    saved: 0
-    defaultValue: 0
-    networkSynced: 1
-  - name: v2/BrowDownLeft
-    valueType: 1
-    saved: 0
-    defaultValue: 0
-    networkSynced: 1
-  - name: v2/BrowUpRight
-    valueType: 1
-    saved: 0
-    defaultValue: 0
-    networkSynced: 1
-  - name: v2/BrowUpLeft
-    valueType: 1
-    saved: 0
-    defaultValue: 0
-    networkSynced: 1
   - name: v2/JawOpen
     valueType: 1
     saved: 0
@@ -271,10 +252,30 @@ MonoBehaviour:
   - name: v2/EyeLidRight
     valueType: 1
     saved: 0
-    defaultValue: 0.7
+    defaultValue: 0.75
     networkSynced: 1
   - name: v2/EyeLidLeft
     valueType: 1
     saved: 0
-    defaultValue: 0.7
+    defaultValue: 0.75
+    networkSynced: 1
+  - name: v2/EyeSquintLeft
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/EyeSquintRight
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/TongueOut
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/CheekPuffSuck
+    valueType: 1
+    saved: 0
+    defaultValue: 0
     networkSynced: 1

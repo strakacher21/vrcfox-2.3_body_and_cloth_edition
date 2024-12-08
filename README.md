@@ -22,11 +22,11 @@ The easiest way to adjust the colours is to vertex paint rather than using a tex
 > [!WARNING]
 To properly export the model from blender to unity, you must use the export script attached to blender (otherwise it will ‘fade’ [exports colors type ‘SRGB‘, instead of ‘LINEAR‘] the model and export the clothes to unity incorrectly[without combining meshes and blendshapes]). Clicking the '▶' button will export the model to Unity.
 
-The Unity project has a prefab model, as well as two scenes for **PC** and **Quest&IOS**. All prefab changes go into changing the scene. Аlso includes a script [AnimatorWizard (av3-animator-as-code)](https://github.com/hai-vr/av3-animator-as-code) that allows you to easily customise facial expressions, avatar blend prefs and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
+The Unity project has a prefab model, as well as two scenes for **PC** and **Quest&IOS**. All prefab changes go into changing the scene. Аlso includes a script **AnimatorWizard** [(av3-animator-as-code)](https://github.com/hai-vr/av3-animator-as-code) that allows you to easily customise facial expressions, avatar blend prefs and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
 ### Avatar Features
 - Created FaceTracking (FT) and added [OSCmooth](https://github.com/regzo2/OSCmooth) for better face tracking (and for better Ears Back [FT]).
 - Numerous body prefs have been created (also applies to clothing).
-- A ‘face builder [Debugger]‘ was created. In essence, it is a manual FT control, just like the ‘eye control‘. It is also conventionally a part-time debugger.
+- ~~A ‘face builder [Debugger]‘ was created.~~ In essence, it is a manual FT control, just like the ‘eye control‘. ~~It is also conventionally a part-time debugger.~~ -> He is now resetting FaceTracking (in case of possible errors)!
 - A collection of faces for different facial expressions without using FT.
 - Different hand poses on each hand.
 - Animation of idle tail (tail WAG) as desired by the user. You can also disable floor/leg colliders in the menu for it.
@@ -54,7 +54,7 @@ The Unity project has a prefab model, as well as two scenes for **PC** and **Que
 
 >[!TIP]
 ># Ways to optimize the avatar for parameters
->### Right now **256/256** are occupied, if you want to add something extra to your avatar it's worth thinking about these tips.
+>### Right now ~~**256/256**~~ **224/256** are occupied, if you want to add something extra to your avatar it's worth thinking about these tips.
 >#### There is no full optimization provided here, it only makes the avatar much lighter in parameters .
 >- If you don't need a ‘collection of faces’, then remove the ’v2/anim/FacePresets’ variable >from ‘param’ (it is responsible for switching facial expressions) and you also >need to remove the ‘Face Toogle (menu)’ Layer in the ‘animfx‘ controller.
 >

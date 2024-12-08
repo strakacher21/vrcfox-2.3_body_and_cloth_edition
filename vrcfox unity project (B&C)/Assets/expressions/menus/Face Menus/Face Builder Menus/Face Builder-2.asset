@@ -14,17 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
   controls:
-  - name: <b>MouthLowerDownLeft
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
-    type: 203
-    parameter:
-      name: 
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters:
-    - name: v2/MouthLowerDownLeft
-    labels: []
   - name: <b>MouthLowerDownRight
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
     type: 203
@@ -36,7 +25,7 @@ MonoBehaviour:
     subParameters:
     - name: v2/MouthLowerDownRight
     labels: []
-  - name: <b>MouthUpperUpLeft
+  - name: <b>MouthLowerDownLeft
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
     type: 203
     parameter:
@@ -45,7 +34,7 @@ MonoBehaviour:
     style: 0
     subMenu: {fileID: 0}
     subParameters:
-    - name: v2/MouthUpperUpLeft
+    - name: v2/MouthLowerDownLeft
     labels: []
   - name: <b>MouthUpperUpRight
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
@@ -57,6 +46,17 @@ MonoBehaviour:
     subMenu: {fileID: 0}
     subParameters:
     - name: v2/MouthUpperUpRight
+    labels: []
+  - name: <b>MouthUpperUpLeft
+    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+    type: 203
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters:
+    - name: v2/MouthUpperUpLeft
     labels: []
   - name: <b>MouthStretch
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
