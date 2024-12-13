@@ -674,18 +674,13 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 17e549f94f6d25f4da19e77f85918ec1, type: 2}
   - {fileID: 7400000, guid: be1b6b943c973cc44ba8ca84a47f3273, type: 2}
   createShapePreferences: 1
-  shapePreferenceSliderPrefix: pref/slider/
-  shapePreferenceTogglesPrefix: pref/toggle/
-  createClothCustomization: 1
-  shapeClothTogglesPrefix: cloth/toggle/
-  shapeClothAdjustPrefix: cloth/adjust/
+  shapeSliderPrefix: pref/slider/
+  shapeTogglesPrefix: pref/toggle/
   createColorCustomization: 1
   primaryColor0: {fileID: 7400000, guid: 8421033fab3bd4941a54cc533287898b, type: 2}
   primaryColor1: {fileID: 7400000, guid: 1ee5d60bcc1f77a47b1e79f2944139e3, type: 2}
   secondColor0: {fileID: 7400000, guid: de7942e8683b2d34ea22c50b83f37f9b, type: 2}
   secondColor1: {fileID: 7400000, guid: b7ba98e9f6ffbba43a2ed420efb56037, type: 2}
-  createFacialExpressionsControl: 1
-  facialPrefix: exp/facial
   mouthPrefix: exp/mouth/
   mouthShapeNames:
   - basis
@@ -811,18 +806,13 @@ MonoBehaviour:
   rMask: {fileID: 0}
   handPoses: []
   createShapePreferences: 1
-  shapePreferenceSliderPrefix: pref/slider/
-  shapePreferenceTogglesPrefix: pref/toggle/
-  createClothCustomization: 1
-  shapeClothTogglesPrefix: cloth/toggle/
-  shapeClothAdjustPrefix: cloth/adjust/
+  shapeSliderPrefix: pref/slider/
+  shapeTogglesPrefix: pref/toggle/
   createColorCustomization: 1
   primaryColor0: {fileID: 0}
   primaryColor1: {fileID: 0}
   secondColor0: {fileID: 0}
   secondColor1: {fileID: 0}
-  createFacialExpressionsControl: 1
-  facialPrefix: exp/facial
   mouthPrefix: exp/mouth/
   mouthShapeNames:
   - basis
@@ -1751,13 +1741,13 @@ MonoBehaviour:
       left: {x: 0.1564345, y: 0, z: 0, w: 0.98768836}
       right: {x: 0.1564345, y: 0, z: 0, w: 0.98768836}
     eyesLookingLeft:
-      linked: 1
-      left: {x: 0, y: -0.08715574, z: 0, w: 0.9961947}
-      right: {x: 0, y: -0.08715574, z: 0, w: 0.9961947}
+      linked: 0
+      left: {x: 0, y: -0.15643448, z: 0, w: 0.98768836}
+      right: {x: 0, y: -0.104528464, z: 0, w: 0.9945219}
     eyesLookingRight:
-      linked: 1
-      left: {x: 0, y: 0.08715569, z: 0, w: 0.9961947}
-      right: {x: 0, y: 0.08715569, z: 0, w: 0.9961947}
+      linked: 0
+      left: {x: 0, y: 0.104528464, z: 0, w: 0.9945219}
+      right: {x: 0, y: 0.1564345, z: 0, w: 0.98768836}
     eyelidType: 2
     upperLeftEyelid: {fileID: 0}
     upperRightEyelid: {fileID: 0}
