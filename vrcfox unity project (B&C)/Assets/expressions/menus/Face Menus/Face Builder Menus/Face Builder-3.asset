@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: Face Builder-3
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 9717dab5febadb240af488c69ba37be3, type: 2}
+  Parameters: {fileID: 11400000, guid: b43d5b918e2abc846a33fb3d9bdaae0f, type: 2}
   controls:
   - name: <b>EyeLidRight
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
@@ -80,25 +80,14 @@ MonoBehaviour:
     subParameters:
     - name: v2/JawX
     labels: []
-  - name: <b>SmileSad
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
-    type: 203
+  - name: <b>Part 3
+    icon: {fileID: 10906, guid: 0000000000000000f000000000000000, type: 0}
+    type: 103
     parameter:
       name: 
     value: 1
     style: 0
-    subMenu: {fileID: 0}
+    subMenu: {fileID: 11400000, guid: 92177f1aae5f1cb488f8fa621724f615, type: 2}
     subParameters:
-    - name: v2/SmileSad
-    labels: []
-  - name: <b>MouthRaiserLower
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
-    type: 203
-    parameter:
-      name: 
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters:
-    - name: v2/MouthRaiserLower
+    - name: 
     labels: []

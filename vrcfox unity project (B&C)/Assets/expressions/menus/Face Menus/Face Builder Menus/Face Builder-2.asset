@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: Face Builder-2
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
+  Parameters: {fileID: 11400000, guid: b43d5b918e2abc846a33fb3d9bdaae0f, type: 2}
   controls:
   - name: <b>MouthLowerDownRight
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
@@ -58,17 +58,6 @@ MonoBehaviour:
     subParameters:
     - name: v2/MouthUpperUpLeft
     labels: []
-  - name: <b>MouthStretch
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
-    type: 203
-    parameter:
-      name: 
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters:
-    - name: v2/MouthStretch
-    labels: []
   - name: <b>MouthClosed
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
     type: 203
@@ -79,6 +68,17 @@ MonoBehaviour:
     subMenu: {fileID: 0}
     subParameters:
     - name: v2/MouthClosed
+    labels: []
+  - name: <b>MouthRaiserLower
+    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+    type: 203
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters:
+    - name: v2/MouthRaiserLower
     labels: []
   - name: <b>LipPucker
     icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
