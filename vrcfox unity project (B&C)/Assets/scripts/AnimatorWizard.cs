@@ -201,8 +201,8 @@ public class AnimatorWizard : MonoBehaviour
 			.WithWriteDefaultsSetTo(true);
 
 		// FT param (toggles expressions off / on)
-		AacFlBoolParameter ftActiveParam = CreateBoolParam(fxLayer, ftPrefix + "enabled", true, false);
-		AacFlFloatParameter ftBlendParam = fxLayer.FloatParameter(ftPrefix + "enabled-float");
+		AacFlBoolParameter ftActiveParam = CreateBoolParam(fxLayer, ftPrefix + "LipTrackingActive", true, false);
+		AacFlFloatParameter ftBlendParam = fxLayer.FloatParameter(ftPrefix + "LipTrackingActive-float");
 
 		// brow gesture expressions
 		MapHandPosesToShapes("brow expressions", skin, browShapeNames, browPrefix, false, ftActiveParam);

@@ -5,8 +5,8 @@
 
 ### [:arrow_forward:Link to the avatar in VRChat](https://vrchat.com/home/avatar/avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1)
 
-![pre-showcase-cloth](https://github.com/user-attachments/assets/d0bab74a-0902-4086-8fcd-b7249ce140b0)
-![vrcfox_FT_showcase](https://github.com/user-attachments/assets/2923e6cc-4414-4ce5-bf1c-98b9995fa9a9)
+<img src="https://github.com/user-attachments/assets/d0bab74a-0902-4086-8fcd-b7249ce140b0" width="50%"><img src="https://github.com/user-attachments/assets/2923e6cc-4414-4ce5-bf1c-98b9995fa9a9" width="50%">
+
 ---
 # А Request
 I will agree with trev3d and also say 
@@ -23,29 +23,13 @@ The easiest way to adjust the colours is to vertex paint rather than using a tex
 > [!WARNING]
 To properly export the model from blender to unity, you must use the export script attached to blender (otherwise it will ‘fade’ [exports colors type ‘SRGB‘, instead of ‘LINEAR‘] the model and export the clothes to unity incorrectly[without combining meshes and blendshapes]). Clicking the '▶' button will export the model to Unity.
 
-The Unity project has a prefab model, as well as two scenes for **PC** and **Quest&IOS**. All prefab changes go into changing the scene. Аlso includes a script [AnimatorWizard (av3-animator-as-code)](https://github.com/hai-vr/av3-animator-as-code) that allows you to easily customise facial expressions, avatar blend prefs and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
-### Avatar Features
-- Created FaceTracking (FT) and added [OSCmooth](https://github.com/regzo2/OSCmooth) for better face tracking (and for better Ears Back [FT]).
-- Numerous body prefs have been created (also applies to clothing).
-- A ‘face builder [Debugger]‘ was created. In essence, it is a manual FT control, just like the ‘eye control‘. It is also conventionally a part-time debugger.
-- A collection of faces for different facial expressions without using FT.
-- Different hand poses on each hand.
-- Animation of idle tail (tail WAG) as desired by the user. You can also disable floor/leg colliders in the menu for it.
-- Idle poses for standing still and lying down.
-- Facial Expressions (A setting that enables/disables linking facial expressions to hand positions when enabled).
-- Lipsync (The parameter that enables/disables it).
-- The sound of pressing on the nose, as well as the reaction of the avatar's face to the approach of another avatar's hand.
-- It is possible to disable ’Facial expressions’ and ’Pet expressions’ in the game.
-- The ‘anim base’ controller, which fixes the ‘crab’ movement bug when the stick angle is small to normal.
-- The ‘anim sitting‘  controller allows FBT users to move their legs when they are sitting on something (such as a chair).
-- The ears move from the position of the eyelids (for FT and turn on at the user's request).
-- The rest is small stuff :D
+The Unity project has a prefab model, as well as two scenes for **PC** and **Quest&IOS**. All prefab changes go into changing the scene. Аlso includes a script [AnimatorWizard (av3-animator-as-code)](https://github.com/hai-vr/av3-animator-as-code) (*Not pre-modded at the moment, I'll try to find time to make it good*) that allows you to easily customise facial expressions, avatar blend prefs and face tracking features. You can disable some features to save on VRChat settings, or add your own combinations of shapes for facial expressions, shape customisation, clothing switching, face tracking, etc.
+
 ### Performans Rating for VRChat
->**PC: Excellent**<br>
->**Android&IOS: Good**<br>
+>**PC/Android&IOS: Good**<br>
 >___
 >**Polygons (Triangles): <10000**<br>
->**Phys bones: 4**<br>
+>**Phys bones: 5**<br>
 >**Material: 1**<br>
 >**Mesh: 1**<br>
 >**Audio Source: 1 (PC)**<br>
@@ -53,15 +37,14 @@ The Unity project has a prefab model, as well as two scenes for **PC** and **Que
 >**Contact Colliders: 3**<br>
 >**Download file size: <1 mb** 
 
->[!TIP]
-># Ways to optimize the avatar for parameters
->### Right now **256/256** are occupied, if you want to add something extra to your avatar it's worth thinking about these tips.
->#### There is no full optimization provided here, it only makes the avatar much lighter in parameters .
->- If you don't need a ‘collection of faces’, then remove the ’v2/anim/FacePresets’ variable >from ‘param’ (it is responsible for switching facial expressions) and you also >need to remove the ‘Face Toogle (menu)’ Layer in the ‘animfx‘ controller.
->
->- If you need only one type of clothing (without switching) to save parameters, you can also remove the variables ‘cloth/count/UpperBody’, ‘cloth/count/LowerBody’, ‘cloth/count/Foot’ from ‘param’. Then go to the fx-controller and change the values of the variables in it as you need. You can also delete a certain clothing mesh in Blender and export it to Unity using a script. This will save you triangles, as there will be no extra clothes.
->
->- There is also a colour change in the avatar. If you only want one colour permanently, go to ‘param’ and remove the variables ‘pref/slider/pcol’ and ‘pref/slider/scol’, then open the fx-controller and remove the ‘pref/slider/pcol’ and ‘pref/slider/scol’ motion field in the ‘vrcfox__tree’->‘master tree’ layer. Then find ‘master material’ and change the ‘offset’ to your liking.
->
->- If you do not need ‘Eye Control‘, just remove ‘eye/Control‘ and ‘eye/Control[X/Y]‘ from the parameters, and then go to the ‘anim additive‘ controller and remove the same parameters there and Layer ‘Eye Control‘.
->- If you want Tail WAG animations, then remove ’tail/anim/TailCount’ from the parameters, and then go to the ‘anime additive‘ controller and remove the Layer ‘Tail Toogle (menu)‘. If you need only one animation, then replace ‘TailCount’‘ with a bool variable, and make the Layer ‘Tail Toggle (menu)‘ toggle similar to Layer ‘Tail Floor Collider‘ or ‘AFK Emote‘.
+>[!NOTE]
+> - To think about blendshapes **v2/MouthCornerPullLeft** and **v2/MouthCornerPullRight**, as the **v2/SmileSad** and **v2/MouthStretch** splits were expected to perform the same function, but alas in game they maxed out at **30%** of their value. Most likely we should remove the separation (make it as it was) and make separate blendshapes for **v2/MouthCornerPullLeft** and **v2/MouthCornerPullRight**;
+> - Improve blendshapes: **v2/CheekPuff** and **v2/CheekPuffSuck**;
+> - Improve the **eyetracking** system through parameters, and make it create automatically (and see if you need to add OSCmooth to it);
+> - Add a **clothing creation** system to the **Animator Wizard** and the ability to **add new clothing**;
+> - Implement OSCmooth functionality in AnimatorWizard;
+> ___
+> - Add new presets for faces (FaceToggle);
+> - Improve locomotion;
+> - Review the settings of all Physbones, especially about the Physbone tongue;
+> - Revisit some of the weights for the rig.
