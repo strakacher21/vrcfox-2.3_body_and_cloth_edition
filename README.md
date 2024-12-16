@@ -38,7 +38,7 @@ The Unity project has a prefab model, as well as two scenes for **PC** and **Que
 
 >[!NOTE]
 > - To think about blendshapes **v2/MouthCornerPullLeft** and **v2/MouthCornerPullRight**, as the **v2/SmileSad** and **v2/MouthStretch** splits were expected to perform the same function, but alas in game they maxed out at **30%** of their value. Most likely we should remove the separation (make it as it was) and make separate blendshapes for **v2/MouthCornerPullLeft** and **v2/MouthCornerPullRight**;
-> - Improve blendshapes: **v2/CheekPuff** and **v2/CheekPuffSuck**;
+> - Improve blendshapes: **v2/CheekPuff** and **v2/CheekSuck**;
 > - Improve the **eyetracking** system through parameters, and make it create automatically (and see if you need to add OSCmooth to it);
 > - Add a **clothing creation** system to the **Animator Wizard** and the ability to **add new clothing**;
 > - Implement OSCmooth functionality in AnimatorWizard;
