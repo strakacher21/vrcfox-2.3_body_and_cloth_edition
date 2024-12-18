@@ -79,7 +79,7 @@ MonoBehaviour:
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: anim/LipSync
+  - name: LipSyncTrackingActive
     valueType: 2
     saved: 1
     defaultValue: 1
@@ -89,7 +89,7 @@ MonoBehaviour:
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: exp/facial
+  - name: ExpressionTrackingActive
     valueType: 2
     saved: 1
     defaultValue: 1
@@ -194,7 +194,7 @@ MonoBehaviour:
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: v2/reset
+  - name: v2/Reset
     valueType: 2
     saved: 0
     defaultValue: 0
@@ -302,12 +302,12 @@ MonoBehaviour:
   - name: v2/EyeLidRight
     valueType: 1
     saved: 0
-    defaultValue: 0.75
+    defaultValue: 0
     networkSynced: 1
   - name: v2/EyeLidLeft
     valueType: 1
     saved: 0
-    defaultValue: 0.75
+    defaultValue: 0
     networkSynced: 1
   - name: v2/EyeSquintLeft
     valueType: 1

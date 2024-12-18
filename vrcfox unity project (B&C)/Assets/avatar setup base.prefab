@@ -260,8 +260,8 @@ GameObject:
   - component: {fileID: 5635702586115073693}
   - component: {fileID: 6013431148909186106}
   m_Layer: 0
-  m_Name: Hand Camera
-  m_TagString: Hand Camera
+  m_Name: Back FullBody Camera
+  m_TagString: Back FullBody Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -274,13 +274,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4422527842216569329}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1544357, y: -0.12887587, z: 0.008405203, w: 0.9795254}
-  m_LocalPosition: {x: 0.18599999, y: 1.415, z: -0.797}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.9, z: -6.469999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8401531228967075183}
-  m_LocalEulerAnglesHint: {x: 17.741, y: -15.21, z: -1.404}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6013431148909186106
 Camera:
   m_ObjectHideFlags: 0
@@ -290,7 +290,7 @@ Camera:
   m_GameObject: {fileID: 4422527842216569329}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -314,7 +314,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 37.020584
+  field of view: 17
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -685,7 +685,13 @@ MonoBehaviour:
   secondColor0: {fileID: 7400000, guid: de7942e8683b2d34ea22c50b83f37f9b, type: 2}
   secondColor1: {fileID: 7400000, guid: b7ba98e9f6ffbba43a2ed420efb56037, type: 2}
   createFacialExpressionsControl: 1
-  facialPrefix: exp/facial
+  expTrackName: ExpressionTrackingActive
+  createLipSyncControl: 1
+  lipSyncName: LipSyncTrackingActive
+  createFaceToggleControl: 1
+  faceToggleName: FaceToggleActive
+  createParamForResetFaceTracking: 1
+  resetFTName: Reset
   mouthPrefix: exp/mouth/
   mouthShapeNames:
   - basis
@@ -714,19 +720,23 @@ MonoBehaviour:
   - LipPucker
   - MouthClosed
   - MouthStretchLeft
+  - MouthStretchRight
   - MouthUpperUpLeft
+  - MouthUpperUpRight
   - MouthLowerDownLeft
+  - MouthLowerDownRight
   - MouthRaiserLower
   - TongueOut
   - EyeSquintLeft
+  - EyeSquintRight
   ftDualShapes:
-  - paramName: SmileSadL
+  - paramName: SmileSadLeft
     minShapeName: MouthSadLeft
     maxShapeName: MouthSmileLeft
     minValue: -1
     neutralValue: 0
     maxValue: 1
-  - paramName: SmileSadR
+  - paramName: SmileSadRight
     minShapeName: MouthSadRight
     maxShapeName: MouthSmileRight
     minValue: -1
@@ -739,14 +749,26 @@ MonoBehaviour:
     neutralValue: 0
     maxValue: 1
   - paramName: BrowExpressionLeft
-    minShapeName: BrowDown
-    maxShapeName: BrowUp
+    minShapeName: BrowDownLeft
+    maxShapeName: BrowUpLeft
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: BrowExpressionRight
+    minShapeName: BrowDownRight
+    maxShapeName: BrowUpRight
     minValue: -1
     neutralValue: 0
     maxValue: 1
   - paramName: EyeLidLeft
-    minShapeName: EyeClosed
-    maxShapeName: EyeWide
+    minShapeName: EyeClosedLeft
+    maxShapeName: EyeWideLeft
+    minValue: 0
+    neutralValue: 0.75
+    maxValue: 1
+  - paramName: EyeLidRight
+    minShapeName: EyeClosedRight
+    maxShapeName: EyeWideRight
     minValue: 0
     neutralValue: 0.75
     maxValue: 1
@@ -765,7 +787,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8401531228967075183}
-  - component: {fileID: 1637294361369115897}
   m_Layer: 0
   m_Name: Scene objects (not part of avatar!)
   m_TagString: Untagged
@@ -798,101 +819,6 @@ Transform:
   - {fileID: 5725773037196692869}
   m_Father: {fileID: 5745010746917710464}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1637294361369115897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7156784885415510145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6fef40173b344a40bf1466cc9c93393, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  assetContainer: {fileID: 0}
-  fxMask: {fileID: 0}
-  gestureMask: {fileID: 0}
-  lMask: {fileID: 0}
-  rMask: {fileID: 0}
-  handPoses: []
-  createShapePreferences: 1
-  shapePreferenceSliderPrefix: pref/slider/
-  shapePreferenceTogglesPrefix: pref/toggle/
-  createClothCustomization: 1
-  shapeClothTogglesPrefix: cloth/toggle/
-  shapeClothAdjustPrefix: cloth/adjust/
-  createColorCustomization: 1
-  primaryColor0: {fileID: 0}
-  primaryColor1: {fileID: 0}
-  secondColor0: {fileID: 0}
-  secondColor1: {fileID: 0}
-  createFacialExpressionsControl: 1
-  facialPrefix: exp/facial
-  mouthPrefix: exp/mouth/
-  mouthShapeNames:
-  - basis
-  - frown
-  - smile
-  - grimace
-  - smile
-  - grimace
-  - grimace
-  - frown
-  browPrefix: exp/brows/
-  browShapeNames:
-  - basis
-  - down
-  - up
-  - curious
-  - up
-  - worried
-  - curious
-  - down
-  createFaceTracking: 1
-  ftPrefix: v2/
-  ftShapes:
-  - JawOpen
-  - LipFunnel
-  - LipPucker
-  - MouthClosed
-  - MouthStretch
-  - MouthUpperUpLeft
-  - MouthLowerDownLeft
-  - MouthRaiserLower
-  - TongueOut
-  - EyeSquintLeft
-  ftDualShapes:
-  - paramName: SmileSad
-    minShapeName: MouthSad
-    maxShapeName: MouthSmile
-    minValue: -1
-    neutralValue: 0
-    maxValue: 1
-  - paramName: JawX
-    minShapeName: JawLeft
-    maxShapeName: JawRight
-    minValue: -1
-    neutralValue: 0
-    maxValue: 1
-  - paramName: EyeLidLeft
-    minShapeName: EyeClosed
-    maxShapeName: EyeWide
-    minValue: 0
-    neutralValue: 0.75
-    maxValue: 1
-  - paramName: BrowExpressionLeft
-    minShapeName: BrowDown
-    maxShapeName: BrowUp
-    minValue: -1
-    neutralValue: 0
-    maxValue: 1
-  - paramName: CheekPuffSuck
-    minShapeName: CheekSuck
-    maxShapeName: CheekPuff
-    minValue: -1
-    neutralValue: 0
-    maxValue: 1
 --- !u!1 &7319220849408347885
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,16 +1185,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: avatar
       objectReference: {fileID: 0}
-    - target: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_BlendShapeWeights.Array.data[1]
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_BlendShapeWeights.Array.data[2]
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -1454,11 +1370,29 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   colliders: []
-  limitType: 0
-  maxAngleX: 45
+  limitType: 1
+  maxAngleX: 120
   maxAngleXCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1618,11 +1552,29 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   colliders: []
-  limitType: 0
-  maxAngleX: 45
+  limitType: 1
+  maxAngleX: 120
   maxAngleXCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1739,7 +1691,7 @@ MonoBehaviour:
   networkIDs: []
   customExpressions: 1
   expressionsMenu: {fileID: 11400000, guid: f01c13e840b714f8288e053a90b13b50, type: 2}
-  expressionParameters: {fileID: 11400000, guid: 813ca3981145fa046847840958a7301f,
+  expressionParameters: {fileID: 11400000, guid: 81db426d2d57e2649b743a4a6f77e921,
     type: 2}
   enableEyeLook: 1
   customEyeLookSettings:
@@ -1827,7 +1779,7 @@ MonoBehaviour:
     isDefault: 0
   - isEnabled: 0
     type: 3
-    animatorController: {fileID: 9100000, guid: a3d2a9e0370cf28498a2153f4f9eb1b2,
+    animatorController: {fileID: 9100000, guid: 625c8ee951ede7d42b4fe05bba2f2965,
       type: 2}
     mask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
     isDefault: 0
@@ -2915,7 +2867,7 @@ MonoBehaviour:
     allowSelf: 1
     allowOthers: 0
   snapToHand: 0
-  grabMovement: 0.25
+  grabMovement: 0.5
   maxStretch: 0
   maxStretchCurve:
     serializedVersion: 2

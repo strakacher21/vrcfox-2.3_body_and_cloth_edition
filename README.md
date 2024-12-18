@@ -8,7 +8,7 @@
 
 ---
 # А Request
-I will agree with trev3d and also say 
+I agree with trev3d and also say 
 >Given the license, I cannot legally stop you, but I will still politely ask - please do not use this model to post pornographic or suggestive content.
 
 I will also be grateful if you indicate my authorship and the authorship of the original (and do not indicate authorship in pornographic or suggestive content, if you still want to do it).

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: menu Face Settings
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
+  Parameters: {fileID: 11400000, guid: 5ce5794457f03b04691c806ab3d1fdbf, type: 2}
   controls:
   - name: <b><color=red>Facial exp
     icon: {fileID: 2800000, guid: 20b6acfd757881246abc9321be457ece, type: 3}
     type: 102
     parameter:
-      name: exp/facial
+      name: ExpressionTrackingActive
     value: 1
     style: 0
     subMenu: {fileID: 0}
@@ -28,7 +28,7 @@ MonoBehaviour:
     icon: {fileID: 2800000, guid: a42538ca5756dad4db284c0c854ba23a, type: 3}
     type: 102
     parameter:
-      name: anim/LipSync
+      name: LipSyncTrackingActive
     value: 1
     style: 0
     subMenu: {fileID: 0}
