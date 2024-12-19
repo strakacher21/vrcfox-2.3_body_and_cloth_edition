@@ -15,38 +15,6 @@ MonoBehaviour:
   parameters:
   - localSmoothness: 0.1
     remoteSmoothness: 0.7
-    paramName: v2/BrowDownRight
-    flipInputOutput: 0
-    convertToProxy: 1
-    binarySizeSelection: 0
-    combinedParameter: 0
-    isVisible: 0
-  - localSmoothness: 0.1
-    remoteSmoothness: 0.7
-    paramName: v2/BrowDownLeft
-    flipInputOutput: 0
-    convertToProxy: 1
-    binarySizeSelection: 0
-    combinedParameter: 0
-    isVisible: 0
-  - localSmoothness: 0.1
-    remoteSmoothness: 0.7
-    paramName: v2/BrowUpRight
-    flipInputOutput: 0
-    convertToProxy: 1
-    binarySizeSelection: 0
-    combinedParameter: 0
-    isVisible: 0
-  - localSmoothness: 0.1
-    remoteSmoothness: 0.7
-    paramName: v2/BrowUpLeft
-    flipInputOutput: 0
-    convertToProxy: 1
-    binarySizeSelection: 0
-    combinedParameter: 0
-    isVisible: 0
-  - localSmoothness: 0.1
-    remoteSmoothness: 0.7
     paramName: v2/JawOpen
     flipInputOutput: 0
     convertToProxy: 1
@@ -72,14 +40,6 @@ MonoBehaviour:
   - localSmoothness: 0.1
     remoteSmoothness: 0.7
     paramName: v2/MouthClosed
-    flipInputOutput: 0
-    convertToProxy: 1
-    binarySizeSelection: 0
-    combinedParameter: 0
-    isVisible: 0
-  - localSmoothness: 0.1
-    remoteSmoothness: 0.7
-    paramName: v2/MouthStretch
     flipInputOutput: 0
     convertToProxy: 1
     binarySizeSelection: 0
@@ -127,14 +87,6 @@ MonoBehaviour:
     isVisible: 0
   - localSmoothness: 0.1
     remoteSmoothness: 0.7
-    paramName: v2/SmileSad
-    flipInputOutput: 0
-    convertToProxy: 1
-    binarySizeSelection: 0
-    combinedParameter: 0
-    isVisible: 0
-  - localSmoothness: 0.1
-    remoteSmoothness: 0.7
     paramName: v2/JawX
     flipInputOutput: 0
     convertToProxy: 1
@@ -168,6 +120,70 @@ MonoBehaviour:
   - localSmoothness: 0.1
     remoteSmoothness: 0.7
     paramName: v2/EyeLidLeft
+    flipInputOutput: 0
+    convertToProxy: 1
+    binarySizeSelection: 0
+    combinedParameter: 0
+    isVisible: 0
+  - localSmoothness: 0.1
+    remoteSmoothness: 0.7
+    paramName: v2/TongueOut
+    flipInputOutput: 0
+    convertToProxy: 1
+    binarySizeSelection: 0
+    combinedParameter: 0
+    isVisible: 0
+  - localSmoothness: 0.1
+    remoteSmoothness: 0.7
+    paramName: v2/EyeSquintRight
+    flipInputOutput: 0
+    convertToProxy: 1
+    binarySizeSelection: 0
+    combinedParameter: 0
+    isVisible: 0
+  - localSmoothness: 0.1
+    remoteSmoothness: 0.7
+    paramName: v2/EyeSquintLeft
+    flipInputOutput: 0
+    convertToProxy: 1
+    binarySizeSelection: 0
+    combinedParameter: 0
+    isVisible: 0
+  - localSmoothness: 0.1
+    remoteSmoothness: 0.7
+    paramName: v2/CheekPuffSuck
+    flipInputOutput: 0
+    convertToProxy: 1
+    binarySizeSelection: 0
+    combinedParameter: 0
+    isVisible: 0
+  - localSmoothness: 0.1
+    remoteSmoothness: 0.7
+    paramName: v2/MouthStretchRight
+    flipInputOutput: 0
+    convertToProxy: 1
+    binarySizeSelection: 0
+    combinedParameter: 0
+    isVisible: 0
+  - localSmoothness: 0.1
+    remoteSmoothness: 0.7
+    paramName: v2/MouthStretchLeft
+    flipInputOutput: 0
+    convertToProxy: 1
+    binarySizeSelection: 0
+    combinedParameter: 0
+    isVisible: 0
+  - localSmoothness: 0.1
+    remoteSmoothness: 0.7
+    paramName: v2/SmileSadLeft
+    flipInputOutput: 0
+    convertToProxy: 1
+    binarySizeSelection: 0
+    combinedParameter: 0
+    isVisible: 0
+  - localSmoothness: 0.1
+    remoteSmoothness: 0.7
+    paramName: v2/SmileSadRight
     flipInputOutput: 0
     convertToProxy: 1
     binarySizeSelection: 0

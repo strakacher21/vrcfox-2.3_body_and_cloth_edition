@@ -151,10 +151,8 @@ public class AnimatorWizard : MonoBehaviour
 	{
 		SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
 		VRCAvatarDescriptor avatar = GetComponentInChildren<VRCAvatarDescriptor>();
-		if(saveVRCExpressionParameters)
-		{
+
 		_vrcParams = new List<VRCExpressionParameters.Parameter>();
-		}
 
 		_aac = AacV0.Create(new AacConfiguration
 		{
@@ -498,9 +496,13 @@ public class AnimatorWizard : MonoBehaviour
 		}
 
 		
-		// add all the new avatar params to the avatar descriptor
-			avatar.expressionParameters.parameters = _vrcParams.ToArray();
-			EditorUtility.SetDirty(avatar.expressionParameters);
+			// Will save your VRC Expression Parameters if True
+			if(!saveVRCExpressionParameters)
+			{
+				// add all the new avatar params to the avatar descriptor
+				avatar.expressionParameters.parameters = _vrcParams.ToArray();
+				EditorUtility.SetDirty(avatar.expressionParameters);
+			}
 
 	}
 
@@ -649,36 +651,43 @@ public class AnimatorWizard : MonoBehaviour
 
 	private void CreateFloatParamVrcOnly(string paramName, bool save, float val)
 	{
-		// Exclude shapeClothAdjustPrefix
-		if (!paramName.StartsWith(shapeClothAdjustPrefix))
+
 		{
-			_vrcParams.Add(new VRCExpressionParameters.Parameter()
+			// Exclude shapeClothAdjustPrefix
+			if (!paramName.StartsWith(shapeClothAdjustPrefix))
 			{
-				name = paramName,
-				valueType = VRCExpressionParameters.ValueType.Float,
-				saved = save,
-				networkSynced = true,
-				defaultValue = val,
-			});
+				_vrcParams.Add(new VRCExpressionParameters.Parameter()
+				{
+					name = paramName,
+					valueType = VRCExpressionParameters.ValueType.Float,
+					saved = save,
+					networkSynced = true,
+					defaultValue = val,
+				});
+			}
 		}
 	}
 
 
 	private AacFlBoolParameter CreateBoolParam(AacFlLayer layer, string paramName, bool save, bool val)
 	{
-		// Exclude shapeClothAdjustPrefix
-		if (!paramName.StartsWith(shapeClothAdjustPrefix))
+		// Will save your VRC Expression Parameters if True
+		if(!saveVRCExpressionParameters)
 		{
-			_vrcParams.Add(new VRCExpressionParameters.Parameter()
+			// Exclude shapeClothAdjustPrefix
+			if (!paramName.StartsWith(shapeClothAdjustPrefix))
 			{
-				name = paramName,
-				valueType = VRCExpressionParameters.ValueType.Bool,
-				saved = save,
-				networkSynced = true,
-				defaultValue = val ? 1 : 0,
-			});
+				_vrcParams.Add(new VRCExpressionParameters.Parameter()
+				{
+					name = paramName,
+					valueType = VRCExpressionParameters.ValueType.Bool,
+					saved = save,
+					networkSynced = true,
+					defaultValue = val ? 1 : 0,
+				});
+			}
 		}
-
+		
 		return layer.BoolParameter(paramName);
 	}
 
