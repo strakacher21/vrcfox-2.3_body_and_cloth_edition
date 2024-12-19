@@ -686,12 +686,13 @@ MonoBehaviour:
   secondColor1: {fileID: 7400000, guid: b7ba98e9f6ffbba43a2ed420efb56037, type: 2}
   createFacialExpressionsControl: 1
   expTrackName: ExpressionTrackingActive
-  createLipSyncControl: 1
+  createFaceTrackingLipSyncControl: 1
   lipSyncName: LipSyncTrackingActive
   createFaceToggleControl: 1
   faceToggleName: FaceToggleActive
   createParamForResetFaceTracking: 1
   resetFTName: Reset
+  saveVRCExpressionParameters: 1
   mouthPrefix: exp/mouth/
   mouthShapeNames:
   - basis
@@ -787,6 +788,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8401531228967075183}
+  - component: {fileID: 2855190450070424322}
   m_Layer: 0
   m_Name: Scene objects (not part of avatar!)
   m_TagString: Untagged
@@ -819,6 +821,129 @@ Transform:
   - {fileID: 5725773037196692869}
   m_Father: {fileID: 5745010746917710464}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2855190450070424322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7156784885415510145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6fef40173b344a40bf1466cc9c93393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assetContainer: {fileID: 0}
+  fxMask: {fileID: 0}
+  gestureMask: {fileID: 0}
+  lMask: {fileID: 0}
+  rMask: {fileID: 0}
+  handPoses: []
+  createShapePreferences: 1
+  shapePreferenceSliderPrefix: pref/slider/
+  shapePreferenceTogglesPrefix: pref/toggle/
+  createClothCustomization: 1
+  shapeClothTogglesPrefix: cloth/toggle/
+  shapeClothAdjustPrefix: cloth/adjust/
+  createColorCustomization: 1
+  primaryColor0: {fileID: 0}
+  primaryColor1: {fileID: 0}
+  secondColor0: {fileID: 0}
+  secondColor1: {fileID: 0}
+  createFacialExpressionsControl: 1
+  expTrackName: ExpressionTrackingActive
+  createFaceTrackingLipSyncControl: 1
+  lipSyncName: LipSyncTrackingActive
+  createFaceToggleControl: 1
+  faceToggleName: FaceToggleActive
+  createParamForResetFaceTracking: 1
+  resetFTName: Reset
+  saveVRCExpressionParameters: 1
+  mouthPrefix: exp/mouth/
+  mouthShapeNames:
+  - basis
+  - frown
+  - smile
+  - grimace
+  - smile
+  - grimace
+  - grimace
+  - frown
+  browPrefix: exp/brows/
+  browShapeNames:
+  - basis
+  - down
+  - up
+  - curious
+  - up
+  - worried
+  - curious
+  - down
+  createFaceTracking: 1
+  ftPrefix: v2/
+  ftShapes:
+  - JawOpen
+  - LipFunnel
+  - LipPucker
+  - MouthClosed
+  - MouthStretch
+  - MouthUpperUpLeft
+  - MouthUpperUpRight
+  - MouthLowerDownLeft
+  - MouthLowerDownRight
+  - MouthRaiserLower
+  - TongueOut
+  - EyeSquintLeft
+  - EyeSquintRight
+  ftDualShapes:
+  - paramName: SmileSadLeft
+    minShapeName: MouthSadLeft
+    maxShapeName: MouthSmileLeft
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: SmileSadRight
+    minShapeName: MouthSadRight
+    maxShapeName: MouthSmileRight
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: JawX
+    minShapeName: JawLeft
+    maxShapeName: JawRight
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: EyeLidLeft
+    minShapeName: EyeClosedLeft
+    maxShapeName: EyeWideLeft
+    minValue: 0
+    neutralValue: 0.75
+    maxValue: 1
+  - paramName: EyeLidRight
+    minShapeName: EyeClosedRight
+    maxShapeName: EyeWideRight
+    minValue: 0
+    neutralValue: 0.75
+    maxValue: 1
+  - paramName: BrowExpressionLeft
+    minShapeName: BrowDownLeft
+    maxShapeName: BrowUpLeft
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: BrowExpressionRight
+    minShapeName: BrowDownRight
+    maxShapeName: BrowUpRight
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: CheekPuffSuck
+    minShapeName: CheekSuck
+    maxShapeName: CheekPuff
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
 --- !u!1 &7319220849408347885
 GameObject:
   m_ObjectHideFlags: 0
@@ -1779,7 +1904,7 @@ MonoBehaviour:
     isDefault: 0
   - isEnabled: 0
     type: 3
-    animatorController: {fileID: 9100000, guid: 625c8ee951ede7d42b4fe05bba2f2965,
+    animatorController: {fileID: 9100000, guid: 33710b9233ac4bd498674a3ca0545c65,
       type: 2}
     mask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
     isDefault: 0

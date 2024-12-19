@@ -70,7 +70,7 @@ public class AnimatorWizard : MonoBehaviour
 	public bool createFacialExpressionsControl = true;
 	public string expTrackName = "ExpressionTrackingActive";
 
-	public bool createLipSyncControl = true;
+	public bool createFaceTrackingLipSyncControl = true;
 	public string lipSyncName = "LipSyncTrackingActive";
 
 	public bool createFaceToggleControl = true;
@@ -79,6 +79,8 @@ public class AnimatorWizard : MonoBehaviour
 	public bool createParamForResetFaceTracking = true;
 	public string resetFTName = "Reset";
 
+	public bool saveVRCExpressionParameters = true;
+	
 	public string mouthPrefix = "exp/mouth/";
 	public string[] mouthShapeNames =
 	{
@@ -149,8 +151,11 @@ public class AnimatorWizard : MonoBehaviour
 	{
 		SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
 		VRCAvatarDescriptor avatar = GetComponentInChildren<VRCAvatarDescriptor>();
-
+		if(saveVRCExpressionParameters)
+		{
 		_vrcParams = new List<VRCExpressionParameters.Parameter>();
+		}
+
 		_aac = AacV0.Create(new AacConfiguration
 		{
 			SystemName = SystemName,
@@ -344,12 +349,6 @@ public class AnimatorWizard : MonoBehaviour
 		{
 			var layer = _aac.CreateSupportingFxLayer("face animations toggle").WithAvatarMask(fxMask);
 
-
-			var offState = layer.NewState("face tracking off")
-				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true);
-			var offControl = offState.State.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
-			offControl.trackingMouth = VRC_AnimatorTrackingControl.TrackingType.Tracking;
-
 			// Clip for zeroing all FT blendshapes
 			var offClip = _aac.NewClip("zero all FT blendshapes");
 			for (var i = 0; i < skin.sharedMesh.blendShapeCount; i++)
@@ -360,39 +359,62 @@ public class AnimatorWizard : MonoBehaviour
 					offClip.BlendShape(skin, blendShapeName, 0);
 				}
 			}
-			offState.WithAnimation(offClip);
+
+			var offFaceTrackingState = layer.NewState("face tracking off")
+				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true);
+			var offFaceTrackingControl = offFaceTrackingState.State.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
+			offFaceTrackingControl.trackingMouth = VRC_AnimatorTrackingControl.TrackingType.Animation;
+			offFaceTrackingState.WithAnimation(offClip);
 
 
-			var onState = layer.NewState("face tracking on")
+			var offFaceTrackingLipSyncState = layer.NewState("face tracking off [LipSync]")
+				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true);
+			var offFaceTrackingLipSyncControl = offFaceTrackingLipSyncState.State.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
+			offFaceTrackingLipSyncControl.trackingMouth = VRC_AnimatorTrackingControl.TrackingType.Tracking;
+			offFaceTrackingLipSyncState.WithAnimation(offClip);
+
+
+			var onFaceTrackingState = layer.NewState("face tracking on")
 				.Drives(ftBlendParam, 1).WithWriteDefaultsSetTo(true);
-			var onControl = onState.State.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
-			onControl.trackingMouth = VRC_AnimatorTrackingControl.TrackingType.Animation;
+			var onFaceTrackingControl = onFaceTrackingState.State.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
+			onFaceTrackingControl.trackingMouth = VRC_AnimatorTrackingControl.TrackingType.Animation;
 
-			var lipSyncState = layer.NewState("face tracking on [LipSync]")
+
+			var onFaceTrackingLipSyncState = layer.NewState("face tracking on [LipSync]")
 				.Drives(ftBlendParam, 1).WithWriteDefaultsSetTo(true);
-			var lipSyncControl = lipSyncState.State.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
-			lipSyncControl.trackingMouth = VRC_AnimatorTrackingControl.TrackingType.Tracking;
-
-			layer.AnyTransitionsTo(onState)
-				.WithTransitionToSelf()
-				.When(ftActiveParam.IsTrue())
-				.And(LipSyncActiveParam.IsFalse())
-				.And(ResetFTActiveParam.IsFalse());
-
-			layer.AnyTransitionsTo(lipSyncState)
-				.WithTransitionToSelf()
-				.When(ftActiveParam.IsTrue())
-				.And(LipSyncActiveParam.IsTrue())
-				.And(ResetFTActiveParam.IsFalse());
-
-			layer.AnyTransitionsTo(offState)
-				.When(ftActiveParam.IsFalse()); 
-
+			var onFaceTrackingLipSyncControl = onFaceTrackingLipSyncState.State.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
+			onFaceTrackingLipSyncControl.trackingMouth = VRC_AnimatorTrackingControl.TrackingType.Tracking;
+			
 
 			var resetState = layer.NewState("reset face tracking")
 				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true); // Это проблема, её нужно решить.
 			resetState.WithAnimation(offClip);
 			var resetDriver = resetState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
+
+			layer.AnyTransitionsTo(offFaceTrackingState)
+				.When(ftActiveParam.IsFalse())
+				.And(LipSyncActiveParam.IsFalse()); 
+
+			layer.AnyTransitionsTo(offFaceTrackingLipSyncState)
+				.When(ftActiveParam.IsFalse())
+				.And(LipSyncActiveParam.IsTrue()); 				
+
+			layer.AnyTransitionsTo(onFaceTrackingState)
+				.WithTransitionToSelf()
+				.When(ftActiveParam.IsTrue())
+				.And(LipSyncActiveParam.IsFalse())
+				.And(ResetFTActiveParam.IsFalse());
+
+			layer.AnyTransitionsTo(onFaceTrackingLipSyncState)
+				.WithTransitionToSelf()
+				.When(ftActiveParam.IsTrue())
+				.And(LipSyncActiveParam.IsTrue())
+				.And(ResetFTActiveParam.IsFalse());
+
+			layer.AnyTransitionsTo(resetState)
+				.WithTransitionToSelf()
+				.When(ResetFTActiveParam.IsTrue());
+
 
 			// Helper function to prevent duplicates (Что-то не очень круто получается, это просто отстой..)
 			void AddParameterIfNotExists(string parameterName)
@@ -433,10 +455,7 @@ public class AnimatorWizard : MonoBehaviour
 				}
 			}
 
-			layer.AnyTransitionsTo(resetState)
-				.WithTransitionToSelf()
-				.When(ResetFTActiveParam.IsTrue());
-	
+
 			// Tree "face tracking"
 			var tree = masterTree.CreateBlendTreeChild(0);
 			tree.name = "face tracking";
@@ -445,7 +464,6 @@ public class AnimatorWizard : MonoBehaviour
 			tree.blendParameter = ftActiveParam.Name;
 			tree.blendParameterY = ftActiveParam.Name;
 
-
 			// adding blend shapes
 			for (var i = 0; i < ftShapes.Length; i++)
 			{
@@ -453,7 +471,6 @@ public class AnimatorWizard : MonoBehaviour
 				var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
 				tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
 			}
-
 
 			// adding dual blend shapes
 			for (var i = 0; i < ftDualShapes.Length; i++)
@@ -468,7 +485,6 @@ public class AnimatorWizard : MonoBehaviour
 			}
 
 
-
 			var children = masterTree.children;
 			children[children.Length - 1].directBlendParameter = ftBlendParam.Name;
 			masterTree.children = children;
@@ -481,11 +497,11 @@ public class AnimatorWizard : MonoBehaviour
 			// }
 		}
 
-
-
+		
 		// add all the new avatar params to the avatar descriptor
-		avatar.expressionParameters.parameters = _vrcParams.ToArray();
-		EditorUtility.SetDirty(avatar.expressionParameters);
+			avatar.expressionParameters.parameters = _vrcParams.ToArray();
+			EditorUtility.SetDirty(avatar.expressionParameters);
+
 	}
 
 	private BlendTree BlendshapeTree(AacFlLayer layer, SkinnedMeshRenderer skin, AacFlParameter param, 
@@ -711,27 +727,33 @@ public class AnimatorWizard : MonoBehaviour
 [CustomEditor(typeof(AnimatorWizard), true)]
 public class AnimatorGeneratorEditor : Editor
 {
+	private SerializedProperty saveVRCExpressionParameters;
+
 	private SerializedProperty assetContainer;
+
 	private SerializedProperty fxMask, gestureMask, lMask, rMask;
 
 	private SerializedProperty handPoses;
-	private SerializedProperty createShapePreferences, createColorCustomization, createFaceTracking, createClothCustomization, createFacialExpressionsControl, createLipSyncControl, createFaceToggleControl, createParamForResetFaceTracking;
+	private SerializedProperty createShapePreferences, createColorCustomization, createFaceTracking, createClothCustomization, createFacialExpressionsControl, createFaceTrackingLipSyncControl, createFaceToggleControl, createParamForResetFaceTracking;
 
-	private SerializedProperty shapePreferenceSliderPrefix, shapePreferenceTogglesPrefix, mouthPrefix, browPrefix, ftPrefix, shapeClothTogglesPrefix, shapeClothAdjustPrefix, expTrackName, lipSyncName, faceToggleName, resetFTName;
+	private SerializedProperty shapePreferenceSliderPrefix, shapePreferenceTogglesPrefix, mouthPrefix, browPrefix, ftPrefix, shapeClothTogglesPrefix, shapeClothAdjustPrefix;
 
 	private SerializedProperty primaryColor0, primaryColor1, secondColor0, secondColor1;
 
-	private SerializedProperty mouthShapeNames, browShapeNames;
+	private SerializedProperty mouthShapeNames, browShapeNames, expTrackName;
 
-	private SerializedProperty ftShapes, ftDualShapes;
+	private SerializedProperty lipSyncName, faceToggleName, resetFTName, ftShapes, ftDualShapes;
 
 	private AnimatorWizard wizard;
 	
 	private void OnEnable()
 	{
+
 		wizard = (AnimatorWizard)target;
-		
+		saveVRCExpressionParameters = serializedObject.FindProperty("saveVRCExpressionParameters");
+
 		assetContainer = serializedObject.FindProperty("assetContainer");
+
 		fxMask = serializedObject.FindProperty("fxMask");
 		gestureMask = serializedObject.FindProperty("gestureMask");
 		lMask = serializedObject.FindProperty("lMask");
@@ -744,7 +766,7 @@ public class AnimatorGeneratorEditor : Editor
 		createFaceTracking = serializedObject.FindProperty("createFaceTracking");
 		createClothCustomization = serializedObject.FindProperty("createClothCustomization");
 		createFacialExpressionsControl = serializedObject.FindProperty("createFacialExpressionsControl");
-		createLipSyncControl = serializedObject.FindProperty("createLipSyncControl");
+		createFaceTrackingLipSyncControl = serializedObject.FindProperty("createFaceTrackingLipSyncControl");
 		createFaceToggleControl = serializedObject.FindProperty("createFaceToggleControl");
 		createParamForResetFaceTracking = serializedObject.FindProperty("createParamForResetFaceTracking");
 
@@ -753,21 +775,20 @@ public class AnimatorGeneratorEditor : Editor
 		mouthPrefix = serializedObject.FindProperty("mouthPrefix");
 		browPrefix = serializedObject.FindProperty("browPrefix");
 		ftPrefix = serializedObject.FindProperty("ftPrefix");
+		shapeClothTogglesPrefix = serializedObject.FindProperty("shapeClothTogglesPrefix");
+		shapeClothAdjustPrefix = serializedObject.FindProperty("shapeClothAdjustPrefix");
+
 		expTrackName = serializedObject.FindProperty("expTrackName");
 		lipSyncName = serializedObject.FindProperty("lipSyncName");
 		faceToggleName = serializedObject.FindProperty("faceToggleName");
 		resetFTName = serializedObject.FindProperty("resetFTName");
-		shapeClothTogglesPrefix = serializedObject.FindProperty("shapeClothTogglesPrefix");
-		shapeClothAdjustPrefix = serializedObject.FindProperty("shapeClothAdjustPrefix");
+		mouthShapeNames = serializedObject.FindProperty("mouthShapeNames");
+		browShapeNames = serializedObject.FindProperty("browShapeNames");
 
 		primaryColor0 = serializedObject.FindProperty("primaryColor0");
 		secondColor0 = serializedObject.FindProperty("secondColor0");
-
 		primaryColor1 = serializedObject.FindProperty("primaryColor1");
 		secondColor1 = serializedObject.FindProperty("secondColor1");
-
-		mouthShapeNames = serializedObject.FindProperty("mouthShapeNames");
-		browShapeNames = serializedObject.FindProperty("browShapeNames");
 
 		ftShapes = serializedObject.FindProperty("ftShapes");
 		ftDualShapes = serializedObject.FindProperty("ftDualShapes");
@@ -790,7 +811,8 @@ public class AnimatorGeneratorEditor : Editor
 				textColor = EditorStyles.label.normal.textColor
 			}
 		};
-		
+
+		GUILayout.Space(10);
 		if (GUILayout.Button("Setup animator! (DESTRUCTIVE!!!)", GUILayout.Height(50)))
 		{
 			if (EditorUtility.DisplayDialog("Animator Wizard", AlertMsg, "yes (DESTRUCTIVE!)", "NO"))
@@ -798,9 +820,12 @@ public class AnimatorGeneratorEditor : Editor
 				Create();
 			}
 		}
-		
 		GUILayout.Space(20);
+		GUILayout.Label("Will save your VRC Expression Parameters before setup animator");
+		GUILayout.Space(10);
+		EditorGUILayout.PropertyField(saveVRCExpressionParameters);
 
+		GUILayout.Label("AssetContainer", headerStyle);
 		EditorGUILayout.PropertyField(assetContainer);
 
 		GUILayout.Label("Avatar animator masks", headerStyle);
@@ -816,8 +841,10 @@ public class AnimatorGeneratorEditor : Editor
 		GUILayout.Label("Facial expressions", headerStyle);
 		GUILayout.Label("Brow and mouth blendshapes controlled by left and right hands." +
 		                "Array index maps to hand gesture parameter. Array length should be 8!");
+		GUILayout.Space(10);
 		EditorGUILayout.PropertyField(createFacialExpressionsControl);
 		EditorGUILayout.PropertyField(createFaceToggleControl);
+		GUILayout.Space(10);
 		EditorGUILayout.PropertyField(mouthPrefix);
 		EditorGUILayout.PropertyField(mouthShapeNames);
 		GUILayout.Space(20);
@@ -863,7 +890,8 @@ public class AnimatorGeneratorEditor : Editor
 		{
 			GUILayout.Label("VRCFaceTracking (Universal Shapes) settings", headerStyle);
 			EditorGUILayout.PropertyField(ftPrefix);
-			EditorGUILayout.PropertyField(createLipSyncControl);
+			GUILayout.Space(10);
+			EditorGUILayout.PropertyField(createFaceTrackingLipSyncControl);
 			EditorGUILayout.PropertyField(createParamForResetFaceTracking);
 			GUILayout.Space(10);
 			GUILayout.Label("Single shapes controlled by a float parameter");
