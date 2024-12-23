@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: Cloth Foot
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 9717dab5febadb240af488c69ba37be3, type: 2}
+  Parameters: {fileID: 11400000, guid: 81db426d2d57e2649b743a4a6f77e921, type: 2}
   controls:
   - name: <b><color=orange>Slaps
     icon: {fileID: 2800000, guid: bad9afc38c6c3ab4f8744e861261be85, type: 3}
     type: 102
     parameter:
-      name: cloth/Foot/slaps
+      name: cloth/toggle/slaps
     value: 1
     style: 0
     subMenu: {fileID: 0}
@@ -28,7 +28,7 @@ MonoBehaviour:
     icon: {fileID: 2800000, guid: 378ef4bd9b799d043b73abc10fc9b856, type: 3}
     type: 102
     parameter:
-      name: cloth/Foot/boots
+      name: cloth/toggle/boots
     value: 1
     style: 0
     subMenu: {fileID: 0}
@@ -38,7 +38,7 @@ MonoBehaviour:
     icon: {fileID: 2800000, guid: c8158c5df23a6474fa0e4cd2ad483807, type: 3}
     type: 102
     parameter:
-      name: cloth/Foot/shoes
+      name: cloth/toggle/shoes
     value: 1
     style: 0
     subMenu: {fileID: 0}

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: Cloth Upper body
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 9717dab5febadb240af488c69ba37be3, type: 2}
+  Parameters: {fileID: 11400000, guid: 81db426d2d57e2649b743a4a6f77e921, type: 2}
   controls:
   - name: <b><color=orange>T-shirt
     icon: {fileID: 2800000, guid: f0552e8710b00094b8ee548c54ba17f6, type: 3}
     type: 102
     parameter:
-      name: cloth/UpperBody/T-shirt
+      name: cloth/toggle/T-shirt
     value: 1
     style: 0
     subMenu: {fileID: 0}
@@ -28,7 +28,7 @@ MonoBehaviour:
     icon: {fileID: 2800000, guid: b0ef8b4d942d3de4fadbc8b2b7673f17, type: 3}
     type: 102
     parameter:
-      name: cloth/UpperBody/coat_v2
+      name: cloth/toggle/coat_v2
     value: 1
     style: 0
     subMenu: {fileID: 0}
@@ -38,7 +38,7 @@ MonoBehaviour:
     icon: {fileID: 2800000, guid: 8573c1e8d394f36439e2c01b6d6bb0d4, type: 3}
     type: 102
     parameter:
-      name: cloth/UpperBody/coat
+      name: cloth/toggle/coat
     value: 1
     style: 0
     subMenu: {fileID: 0}

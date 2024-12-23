@@ -677,8 +677,9 @@ MonoBehaviour:
   shapePreferenceSliderPrefix: pref/slider/
   shapePreferenceTogglesPrefix: pref/toggle/
   createClothCustomization: 1
-  shapeClothTogglesPrefix: cloth/toggle/
-  shapeClothAdjustPrefix: cloth/adjust/
+  ClothTogglesPrefix: cloth/toggle/
+  ClothAdjustPrefix: cloth/adjust/
+  ClothAdjustBodyPrefix: cloth/adjust/Body/with/
   createColorCustomization: 1
   primaryColor0: {fileID: 7400000, guid: 8421033fab3bd4941a54cc533287898b, type: 2}
   primaryColor1: {fileID: 7400000, guid: 1ee5d60bcc1f77a47b1e79f2944139e3, type: 2}
@@ -713,6 +714,18 @@ MonoBehaviour:
   - worried
   - curious
   - down
+  ClothUpperBodyNames:
+  - coat
+  - coat_v2
+  - T-shirt
+  ClothLowerBodyNames:
+  - jeans
+  - pants
+  - shorts
+  ClothFootNames:
+  - shoes
+  - boots
+  - slaps
   createFaceTracking: 1
   ftPrefix: v2/
   ftShapes:
@@ -743,12 +756,6 @@ MonoBehaviour:
     minValue: -1
     neutralValue: 0
     maxValue: 1
-  - paramName: JawX
-    minShapeName: JawLeft
-    maxShapeName: JawRight
-    minValue: -1
-    neutralValue: 0
-    maxValue: 1
   - paramName: BrowExpressionLeft
     minShapeName: BrowDownLeft
     maxShapeName: BrowUpLeft
@@ -772,6 +779,12 @@ MonoBehaviour:
     maxShapeName: EyeWideRight
     minValue: 0
     neutralValue: 0.75
+    maxValue: 1
+  - paramName: JawX
+    minShapeName: JawLeft
+    maxShapeName: JawRight
+    minValue: -1
+    neutralValue: 0
     maxValue: 1
   - paramName: CheekPuffSuck
     minShapeName: CheekSuck
@@ -843,8 +856,9 @@ MonoBehaviour:
   shapePreferenceSliderPrefix: pref/slider/
   shapePreferenceTogglesPrefix: pref/toggle/
   createClothCustomization: 1
-  shapeClothTogglesPrefix: cloth/toggle/
-  shapeClothAdjustPrefix: cloth/adjust/
+  ClothTogglesPrefix: cloth/toggle/
+  ClothAdjustPrefix: cloth/adjust/
+  ClothAdjustBodyPrefix: cloth/adjust/Body/with/
   createColorCustomization: 1
   primaryColor0: {fileID: 0}
   primaryColor1: {fileID: 0}
@@ -879,6 +893,18 @@ MonoBehaviour:
   - worried
   - curious
   - down
+  ClothUpperBodyNames:
+  - coat
+  - coat_v2
+  - T-shirt
+  ClothLowerBodyNames:
+  - jeans
+  - pants
+  - shorts
+  ClothFootNames:
+  - shoes
+  - boots
+  - slaps
   createFaceTracking: 1
   ftPrefix: v2/
   ftShapes:
@@ -1496,7 +1522,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   colliders: []
   limitType: 1
-  maxAngleX: 120
+  maxAngleX: 135
   maxAngleXCurve:
     serializedVersion: 2
     m_Curve:
@@ -1556,7 +1582,7 @@ MonoBehaviour:
     allowSelf: 1
     allowOthers: 0
   snapToHand: 0
-  grabMovement: 0.5
+  grabMovement: 1
   maxStretch: 0
   maxStretchCurve:
     serializedVersion: 2
@@ -1678,7 +1704,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   colliders: []
   limitType: 1
-  maxAngleX: 120
+  maxAngleX: 135
   maxAngleXCurve:
     serializedVersion: 2
     m_Curve:
@@ -1738,7 +1764,7 @@ MonoBehaviour:
     allowSelf: 1
     allowOthers: 0
   snapToHand: 0
-  grabMovement: 0.5
+  grabMovement: 1
   maxStretch: 0
   maxStretchCurve:
     serializedVersion: 2
@@ -1904,7 +1930,7 @@ MonoBehaviour:
     isDefault: 0
   - isEnabled: 0
     type: 3
-    animatorController: {fileID: 9100000, guid: 33710b9233ac4bd498674a3ca0545c65,
+    animatorController: {fileID: 9100000, guid: 18b6853ff077145498f1ada15fe16c43,
       type: 2}
     mask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
     isDefault: 0
@@ -1938,12 +1964,36 @@ MonoBehaviour:
     isDefault: 1
   AnimationPreset: {fileID: 0}
   animationHashSet:
+  - hash: 1256214857
+    name: Proning
+  - hash: -13884245
+    name: Standing
+  - hash: -843081352
+    name: Crouching
+  - hash: -1536771405
+    name: JumpAndFall.Short Fall
+  - hash: 724575528
+    name: JumpAndFall.HardLand
+  - hash: -1616780693
+    name: JumpAndFall.LongFall
+  - hash: 976865536
+    name: JumpAndFall.RestoreTracking
+  - hash: -333680968
+    name: JumpAndFall.SmallHop
+  - hash: 1506794239
+    name: JumpAndFall.RestoreToHop
+  - hash: -49821148
+    name: JumpAndFall.QuickLand
+  - hash: -285389910
+    name: test
   - hash: -1140487849
     name: Tail WAG [SLOW]
   - hash: -1449020238
     name: Tail WAG [MEDIUM]
   - hash: -662814545
     name: Tail WAG [FAST]
+  - hash: 1037400324
+    name: Tail idle
   - hash: 533631384
     name: Waiting command
   - hash: 1285585196
@@ -2028,16 +2078,18 @@ MonoBehaviour:
     name: grimace 1
   - hash: 1579845495
     name: frown 0
-  - hash: 156143115
-    name: face tracking off
-  - hash: -109848450
-    name: face tracking on
-  - hash: -1265504785
-    name: face tracking on [LypSync]
-  - hash: 1977544079
-    name: Face Builder (reset)
   - hash: -576816719
     name: drivers
+  - hash: -1965148844
+    name: face tracking off
+  - hash: -1400783761
+    name: face tracking off [LipSync]
+  - hash: -1169342359
+    name: face tracking on
+  - hash: -2100026051
+    name: face tracking on [LipSync]
+  - hash: 94222277
+    name: reset face tracking
   - hash: 1784143190
     name: Idle
   - hash: -1710515403
@@ -2106,36 +2158,36 @@ MonoBehaviour:
     name: Waiting command
   - hash: -1874490598
     name: Tail Legs Collider
-  - hash: 414375926
+  - hash: -223289905
+    name: coat
+  - hash: 1276634686
+    name: coat_v2
+  - hash: 2035838407
+    name: T-Shirt
+  - hash: -415900743
     name: Waiting command
-  - hash: 937400508
-    name: Cloth Upper body.coat
-  - hash: 1252259707
-    name: Cloth Upper body.coat_v2
-  - hash: 2146204802
-    name: Cloth Upper body.T-Shirt
-  - hash: -1954516829
+  - hash: 1946645740
     name: Waiting command
-  - hash: 1768406571
-    name: Cloth Lower body.Jeans
-  - hash: -1226492739
-    name: Cloth Lower body.pants
-  - hash: -694388543
-    name: Cloth Lower body.shorts
-  - hash: -1169579543
-    name: With coat|coat_v2|T_Shirt.With coat|coat_v2|T_Shirt [jeans]
-  - hash: -708084348
-    name: 'With coat|coat_v2|T_Shirt.With coat|coat_v2|T_Shirt [pants] '
-  - hash: -69512555
-    name: With coat|coat_v2|T_Shirt.With coat|coat_v2|T_Shirt [shorts]
-  - hash: 552093419
+  - hash: 96589517
+    name: jeans.adjust jeans
+  - hash: 288839743
+    name: jeans.jeans
+  - hash: -114603932
+    name: pants.adjust pants
+  - hash: 2013537194
+    name: pants.pants
+  - hash: 244144527
+    name: shorts.adjust shorts
+  - hash: 1205264363
+    name: shorts.shorts
+  - hash: -1806722359
     name: Waiting command
-  - hash: -1514662650
-    name: Cloth Foot.shoes
-  - hash: 401688911
-    name: Cloth Foot.slaps
-  - hash: 909553821
-    name: Cloth Foot.boots
+  - hash: 157888301
+    name: shoes
+  - hash: -1155501212
+    name: slaps
+  - hash: -1696101706
+    name: boots
   autoFootsteps: 1
   autoLocomotion: 1
   collider_head:
@@ -2264,10 +2316,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchedFromSDKPipeline: 0
   completedSDKPipeline: 0
-  blueprintId: avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1
+  blueprintId: 
   contentType: 0
   assetBundleUnityVersion: 
-  fallbackStatus: 3
+  fallbackStatus: 0
 --- !u!137 &1422257553560203677 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
@@ -2740,9 +2792,10 @@ MonoBehaviour:
   position: {x: 0, y: 0.000206, z: 0.001755}
   rotation: {x: 0, y: 0, z: 0, w: 1}
   collisionTags:
+  - Head
   - Hand
   - Finger
-  allowSelf: 1
+  allowSelf: 0
   allowOthers: 1
   localOnly: 0
   receiverType: 0
@@ -2768,8 +2821,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 0
   DopplerLevel: 1
-  MinDistance: 2
-  MaxDistance: 3
+  MinDistance: 1
+  MaxDistance: 2
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -2856,8 +2909,8 @@ MonoBehaviour:
   m_Script: {fileID: 1610797297, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Gain: 2
-  Far: 3
+  Gain: 1
+  Far: 2
   Near: 0
   VolumetricRadius: 0
   EnableSpatialization: 1
@@ -2992,7 +3045,7 @@ MonoBehaviour:
     allowSelf: 1
     allowOthers: 0
   snapToHand: 0
-  grabMovement: 0.5
+  grabMovement: 1
   maxStretch: 0
   maxStretchCurve:
     serializedVersion: 2
