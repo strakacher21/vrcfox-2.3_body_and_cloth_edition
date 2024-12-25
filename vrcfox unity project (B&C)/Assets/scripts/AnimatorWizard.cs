@@ -253,7 +253,10 @@ public class AnimatorWizard : MonoBehaviour
 
 		// mouth gesture expressions
 		MapHandPosesToShapes("mouth expressions", skin, mouthShapeNames, mouthPrefix, true, ftActiveParam, ExpTrackActiveParam, FaceToggleActiveParam);
-        // сreating FX drivers (common to prefs and cloth)
+
+		// Toggle drivers (common to prefs and cloth)
+		// this state transitions to itself every half second to update toggles. it sucks
+		// TODO: not use this awful driver updating
         var fxDriverLayer = _aac.CreateSupportingFxLayer("drivers").WithAvatarMask(fxMask);
 		var fxDriverState = fxDriverLayer.NewState("drivers").WithWriteDefaultsSetTo(true);
 		fxDriverState.TransitionsTo(fxDriverState).AfterAnimationFinishes().WithTransitionDurationSeconds(0.5f)
@@ -264,7 +267,7 @@ public class AnimatorWizard : MonoBehaviour
 		if (createShapePreferences)
 		{
 			var tree = masterTree.CreateBlendTreeChild(0);
-			tree.name = "preferences";
+			tree.name = "Shape Preferences";
 			tree.blendType = BlendTreeType.Direct;
 
             // working with prefs blend shapes
@@ -300,15 +303,15 @@ public class AnimatorWizard : MonoBehaviour
         {
 			// Trees of cloth
             var tree = masterTree.CreateBlendTreeChild(0);
-            tree.name = "ClothCustomization";
+            tree.name = "Cloth Customization";
             tree.blendType = BlendTreeType.Direct;
 
             var toggleTree = tree.CreateBlendTreeChild(0);
-            toggleTree.name = "ClothToggle";
+            toggleTree.name = "Cloth Toggle";
             toggleTree.blendType = BlendTreeType.Direct;
 
             var adjustTree = tree.CreateBlendTreeChild(1);
-            adjustTree.name = "ClothAdjust";
+            adjustTree.name = "Cloth Adjust";
             adjustTree.blendType = BlendTreeType.Direct;
 
             //working with blend shapes and iterate through the ClothUpperBodyNames, ClothLowerBodyNames, ClothFootNames lists to create trees
@@ -704,7 +707,7 @@ public class AnimatorWizard : MonoBehaviour
         if (createColorCustomization)
 		{
 			var tree = masterTree.CreateBlendTreeChild(0);
-			tree.name = "color customization";
+			tree.name = "Color Customization";
 			tree.blendType = BlendTreeType.Direct;
 
 			// color changing
@@ -734,30 +737,35 @@ public class AnimatorWizard : MonoBehaviour
 				}
 			}
 
+			// State "face tracking off"
 			var offFaceTrackingState = layer.NewState("face tracking off")
 				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true);
 			var offFaceTrackingControl = offFaceTrackingState.State.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
 			offFaceTrackingControl.trackingMouth = VRC_AnimatorTrackingControl.TrackingType.Animation;
 			offFaceTrackingState.WithAnimation(offClip);
 
+			// State "face tracking off [LipSync]"
 			var offFaceTrackingLipSyncState = layer.NewState("face tracking off [LipSync]")
 				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true);
 			var offFaceTrackingLipSyncControl = offFaceTrackingLipSyncState.State.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
 			offFaceTrackingLipSyncControl.trackingMouth = VRC_AnimatorTrackingControl.TrackingType.Tracking;
 			offFaceTrackingLipSyncState.WithAnimation(offClip);
 
+			// State "face tracking on"
 			var onFaceTrackingState = layer.NewState("face tracking on")
 				.Drives(ftBlendParam, 1).WithWriteDefaultsSetTo(true);
 			var onFaceTrackingControl = onFaceTrackingState.State.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
 			onFaceTrackingControl.trackingMouth = VRC_AnimatorTrackingControl.TrackingType.Animation;
 
+			// State "face tracking on [LipSync]"
 			var onFaceTrackingLipSyncState = layer.NewState("face tracking on [LipSync]")
 				.Drives(ftBlendParam, 1).WithWriteDefaultsSetTo(true);
 			var onFaceTrackingLipSyncControl = onFaceTrackingLipSyncState.State.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
 			onFaceTrackingLipSyncControl.trackingMouth = VRC_AnimatorTrackingControl.TrackingType.Tracking;
-			
+
+			// State "reset face tracking"
 			var resetState = layer.NewState("reset face tracking")
-				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true); // Это проблема, её нужно решить.
+				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true);
 			resetState.WithAnimation(offClip);
 			var resetDriver = resetState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
 
@@ -785,7 +793,6 @@ public class AnimatorWizard : MonoBehaviour
 			layer.AnyTransitionsTo(resetState)
 				.WithTransitionToSelf()
 				.When(ResetFTActiveParam.IsTrue());
-
 
 			// Helper function to prevent duplicates (костыльные функция)
 			void AddParameterIfNotExists(string parameterName)
@@ -826,10 +833,9 @@ public class AnimatorWizard : MonoBehaviour
 				}
 			}
 
-
 			// Tree "face tracking"
 			var tree = masterTree.CreateBlendTreeChild(0);
-			tree.name = "face tracking";
+			tree.name = "Face Tracking";
 			tree.blendType = BlendTreeType.Direct;
 
 			tree.blendParameter = ftActiveParam.Name;
@@ -868,7 +874,7 @@ public class AnimatorWizard : MonoBehaviour
 			// }
 		}
 
-		
+		 
 			// will save your VRC Parameters if True
 			if(!saveVRCExpressionParameters)
 			{
@@ -1187,6 +1193,9 @@ public class AnimatorGeneratorEditor : Editor
 	private const string AlertMsg =
 		"Running this will destroy any manual animator changes. Are you sure you want to continue?";
 
+
+	// On Inspector GUI
+
 	public override void OnInspectorGUI()
 	{
 		GUIStyle headerStyle = new GUIStyle()
@@ -1221,6 +1230,11 @@ public class AnimatorGeneratorEditor : Editor
             }
         };
 
+		GUIContent PopUpLabel(string PropertyFieldLabel, string label)
+		{
+			return new GUIContent(PropertyFieldLabel, label);
+		}
+
         GUILayout.Space(10);
 		if (GUILayout.Button("Setup animator! (DESTRUCTIVE!!!)", GUILayout.Height(50)))
 		{
@@ -1229,30 +1243,39 @@ public class AnimatorGeneratorEditor : Editor
 				Create();
 			}
 		}
+
+		// Save VRC Expression Parameters
 		GUILayout.Space(20);
-		GUILayout.Label("Will save your VRC Expression Parameters before setup animator", headerStyle2);
-		GUILayout.Space(10);
-		EditorGUILayout.PropertyField(saveVRCExpressionParameters);
+		EditorGUILayout.PropertyField(saveVRCExpressionParameters,
+		 PopUpLabel("Save VRC Expression Parameters","Will save your VRC Expression Parameters before setup animator."));
 
+		// Asset Container
 		GUILayout.Label("Asset Container", headerStyle);
-		EditorGUILayout.PropertyField(assetContainer);
+		EditorGUILayout.PropertyField(assetContainer, 
+		PopUpLabel("Asset Container", "Asset Container stores all generated animations and Blend Trees."));
 
+		// Avatar animator masks
 		GUILayout.Label("Avatar animator masks", headerStyle);
 		EditorGUILayout.PropertyField(fxMask);
 		EditorGUILayout.PropertyField(gestureMask);
 		EditorGUILayout.PropertyField(lMask);
 		EditorGUILayout.PropertyField(rMask);
 		
+		// Hand Poses
 		GUILayout.Label("Hand Poses", headerStyle);
 		GUILayout.Label("Array index maps to hand gesture parameter. Array length should be 8!");
 		EditorGUILayout.PropertyField(handPoses);
 
+		// Facial expressions
 		GUILayout.Label("Facial expressions", headerStyle);
-		GUILayout.Label("Brow and mouth blendshapes controlled by left and right hands.");
-        GUILayout.Label("Array index maps to hand gesture parameter. Array length should be 8!");
+		GUILayout.Label("Brow and mouth blendshapes controlled by left and right hands. \nArray index maps to hand gesture parameter. Array length should be 8!");
 		GUILayout.Space(10);
-		EditorGUILayout.PropertyField(createFacialExpressionsControl);
-		EditorGUILayout.PropertyField(createFaceToggleControl);
+		EditorGUILayout.PropertyField(createFacialExpressionsControl, 
+		PopUpLabel("Create Facial Expressions Control", "When created, adds a parameter to the VRC to disable/enable expression binding to hands."));
+		EditorGUILayout.PropertyField(createFaceToggleControl,
+		 PopUpLabel("Сreate Face Toggle Control", "If you use your Face presets for avatar," + 
+			"it disable expression binding to hands when “FaceToggleActive” is true (turn it on in the VRC Parameter Driver when Face preset true and turn it off when false)." + 
+			"It also adds a parameter to the VRC."));
 		GUILayout.Space(10);
 		EditorGUILayout.PropertyField(mouthPrefix);
 		EditorGUILayout.PropertyField(mouthShapeNames);
@@ -1260,10 +1283,9 @@ public class AnimatorGeneratorEditor : Editor
 		EditorGUILayout.PropertyField(browPrefix);
 		EditorGUILayout.PropertyField(browShapeNames);
 		
-		
+		// Animator creation flags
 		GUILayout.Label("Animator creation flags", headerStyle);
-		GUILayout.Label("Choose what parts of the animator are generated.");
-        GUILayout.Label("Disabling features saves VRC parameter budget!");
+		GUILayout.Label("Choose what parts of the animator are generated. Disabling features saves VRC params budget!");
         GUILayout.Space(10);
         EditorGUILayout.PropertyField(createShapePreferences);
 		EditorGUILayout.PropertyField(createColorCustomization);
@@ -1272,57 +1294,60 @@ public class AnimatorGeneratorEditor : Editor
 		GUILayout.Label("Experimental:", TipStyle);
 		EditorGUILayout.PropertyField(createClothCustomization);
 		
+		// Shape Preferences
 		if (wizard.createShapePreferences)
 		{
-			GUILayout.Label("Preference prefixes", headerStyle);
-			GUILayout.Label("Animator wizard will automatically create VRC parameters for blendshapes with these prefixes");
+			GUILayout.Label("Shape Preferences", headerStyle);
+			GUILayout.Label("Animator wizard will automatically create VRC params for blendshapes with these prefixes.");
 			GUILayout.Space(10);
 			EditorGUILayout.PropertyField(shapePreferenceSliderPrefix);
 			EditorGUILayout.PropertyField(shapePreferenceTogglesPrefix);
 		}
 
+		// Cloths customization
         if (wizard.createClothCustomization)
         {
             GUILayout.Label("Cloths customization [Experimental]", headerStyle);
-			GUILayout.Label("The prefixes ClothToggles and ClothAdjustBody roll up clothes and body into a \"tube\".");
-            GUILayout.Label("ClothAdjustPrefix regulates the fit of the сloth lower body to the cloth upper body.");
+			GUILayout.Label("Animator wizard will create animations, algorithm to switch clothes \nand VRC params with these prefixes.");
 			GUILayout.Space(10);
-            EditorGUILayout.PropertyField(ClothTogglesPrefix);
-			EditorGUILayout.PropertyField(ClothAdjustPrefix);
-            EditorGUILayout.PropertyField(ClothAdjustBodyPrefix); // need to combine it with ClothAdjustPrefix.
-            GUILayout.Space(10);
-            GUILayout.Label("TIP: If you are going to remove some clothing,", TipStyle);
-			GUILayout.Label("it is advisable to also remove the clothing meshes in Blender and", TipStyle);
-            GUILayout.Label("then export using the attached script back to Unity.", TipStyle);
+			EditorGUILayout.PropertyField(ClothTogglesPrefix, 
+			PopUpLabel("Cloth Toggles Prefix", "The prefixes ClothToggles roll up clothes into a \"tube\"."));
+			EditorGUILayout.PropertyField(ClothAdjustPrefix, 
+			PopUpLabel("Cloth Adjust Prefix", "ClothAdjustPrefix regulates the fit of the cloth lower body to the cloth upper body."));
+            EditorGUILayout.PropertyField(ClothAdjustBodyPrefix, 
+			PopUpLabel("Cloth Adjust Body Prefix", "The prefixes ClothAdjustBody roll up body into a \"tube\".")); // need to combine it with ClothAdjustPrefix.
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(ClothUpperBodyNames);
             EditorGUILayout.PropertyField(ClothLowerBodyNames);
             EditorGUILayout.PropertyField(ClothFootNames);
         }
-
+		
+		// Color customization
         if (wizard.createColorCustomization)
 		{
 			GUILayout.Label("Color customization UV-offset animations", headerStyle);
-			GUILayout.Label("Animations controlling color palette texture UV-offsets for in-game color customization");
+			GUILayout.Label("Animations controlling color palette texture UV-offsets for in-game color customization.");
 			EditorGUILayout.PropertyField(primaryColor0);
 			EditorGUILayout.PropertyField(primaryColor1);
 			EditorGUILayout.PropertyField(secondColor0);
 			EditorGUILayout.PropertyField(secondColor1);
 		}
 
+		// FaceTracking
 		if (wizard.createFaceTracking)
 		{
 			GUILayout.Label("FaceTracking (Universal Shapes) settings", headerStyle);
 			EditorGUILayout.PropertyField(ftPrefix);
 			GUILayout.Space(10);
-			EditorGUILayout.PropertyField(createFaceTrackingLipSyncControl);
-			EditorGUILayout.PropertyField(createParamForResetFaceTracking);
+			EditorGUILayout.PropertyField(createFaceTrackingLipSyncControl,
+			PopUpLabel("Create Face Tracking LipSync Control", "Adds LypSync off/on feature."));
+			EditorGUILayout.PropertyField(createParamForResetFaceTracking, 
+			PopUpLabel("Reset Face Tracking","A parameter is created that resets the values of all blendshape" + 
+			"and Face Tracking params to zero when an OSC bug or other causes..."));
 			GUILayout.Space(10);
-			GUILayout.Label("Single shapes controlled by a float parameter");
-			EditorGUILayout.PropertyField(ftShapes);
+			EditorGUILayout.PropertyField(ftShapes, PopUpLabel("FT Single Shapes","Single shapes controlled by a float parameter."));
 			GUILayout.Space(10);
-			GUILayout.Label("Mutually exclusive shape pairs controlled by a single float parameter");
-			EditorGUILayout.PropertyField(ftDualShapes);
+			EditorGUILayout.PropertyField(ftDualShapes, PopUpLabel("FT Dual Shapes", "Mutually exclusive shape pairs controlled by a single float parameter."));
 		}
 
 		serializedObject.ApplyModifiedProperties();

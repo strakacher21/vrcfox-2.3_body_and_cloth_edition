@@ -1930,7 +1930,7 @@ MonoBehaviour:
     isDefault: 0
   - isEnabled: 0
     type: 3
-    animatorController: {fileID: 9100000, guid: 18b6853ff077145498f1ada15fe16c43,
+    animatorController: {fileID: 9100000, guid: cacff1008ade78a41a590d9f753d3f74,
       type: 2}
     mask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
     isDefault: 0
@@ -1984,8 +1984,6 @@ MonoBehaviour:
     name: JumpAndFall.RestoreToHop
   - hash: -49821148
     name: JumpAndFall.QuickLand
-  - hash: -285389910
-    name: test
   - hash: -1140487849
     name: Tail WAG [SLOW]
   - hash: -1449020238
@@ -2042,10 +2040,6 @@ MonoBehaviour:
     name: rig_hand 7 thumbs up
   - hash: -1099298580
     name: master tree
-  - hash: 1666853253
-    name: OSCmooth_Local
-  - hash: -378687850
-    name: OSCmooth_Net
   - hash: 927299615
     name: basis
   - hash: 1205124559
@@ -2078,8 +2072,6 @@ MonoBehaviour:
     name: grimace 1
   - hash: 1579845495
     name: frown 0
-  - hash: -576816719
-    name: drivers
   - hash: -1965148844
     name: face tracking off
   - hash: -1400783761
@@ -2090,6 +2082,42 @@ MonoBehaviour:
     name: face tracking on [LipSync]
   - hash: 94222277
     name: reset face tracking
+  - hash: -576816719
+    name: drivers
+  - hash: 1379458372
+    name: Waiting command
+  - hash: -2040153108
+    name: coat
+  - hash: -1291651959
+    name: coat_v2
+  - hash: 1200377972
+    name: T-shirt
+  - hash: -1056280047
+    name: Waiting command
+  - hash: 785365631
+    name: jeans
+  - hash: 814489581
+    name: pants
+  - hash: -1116651490
+    name: shorts
+  - hash: -1998215857
+    name: jeans adjusted
+  - hash: -1038865904
+    name: pants adjusted
+  - hash: 1190029370
+    name: shorts adjusted
+  - hash: -695304992
+    name: Waiting command
+  - hash: -1375662867
+    name: shoes
+  - hash: 1032825206
+    name: boots
+  - hash: 474501284
+    name: slaps
+  - hash: 1919488495
+    name: Waiting command
+  - hash: -1207595230
+    name: AFK
   - hash: 1784143190
     name: Idle
   - hash: -1710515403
@@ -2138,10 +2166,6 @@ MonoBehaviour:
     name: open smile
   - hash: 555645585
     name: open smile stronger
-  - hash: 767789207
-    name: Waiting command
-  - hash: 287860411
-    name: AFK
   - hash: 1715603956
     name: Waiting command
   - hash: 1013542260
@@ -2158,36 +2182,12 @@ MonoBehaviour:
     name: Waiting command
   - hash: -1874490598
     name: Tail Legs Collider
-  - hash: -223289905
-    name: coat
-  - hash: 1276634686
-    name: coat_v2
-  - hash: 2035838407
-    name: T-Shirt
-  - hash: -415900743
-    name: Waiting command
-  - hash: 1946645740
-    name: Waiting command
-  - hash: 96589517
-    name: jeans.adjust jeans
-  - hash: 288839743
-    name: jeans.jeans
-  - hash: -114603932
-    name: pants.adjust pants
-  - hash: 2013537194
-    name: pants.pants
-  - hash: 244144527
-    name: shorts.adjust shorts
-  - hash: 1205264363
-    name: shorts.shorts
-  - hash: -1806722359
-    name: Waiting command
-  - hash: 157888301
-    name: shoes
-  - hash: -1155501212
-    name: slaps
-  - hash: -1696101706
-    name: boots
+  - hash: -595865904
+    name: Binary_Parameters_Blendtree
+  - hash: 1666853253
+    name: OSCmooth_Local
+  - hash: -378687850
+    name: OSCmooth_Net
   autoFootsteps: 1
   autoLocomotion: 1
   collider_head:
@@ -2316,7 +2316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchedFromSDKPipeline: 0
   completedSDKPipeline: 0
-  blueprintId: 
+  blueprintId: avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1
   contentType: 0
   assetBundleUnityVersion: 
   fallbackStatus: 0
@@ -3003,7 +3003,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   colliders: []
   limitType: 1
-  maxAngleX: 20
+  maxAngleX: 30
   maxAngleXCurve:
     serializedVersion: 2
     m_Curve: []
