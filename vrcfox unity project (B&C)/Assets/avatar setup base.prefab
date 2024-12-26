@@ -694,6 +694,7 @@ MonoBehaviour:
   createParamForResetFaceTracking: 1
   resetFTName: Reset
   saveVRCExpressionParameters: 1
+  MirroringShape: 0
   mouthPrefix: exp/mouth/
   mouthShapeNames:
   - basis
@@ -864,15 +865,16 @@ MonoBehaviour:
   primaryColor1: {fileID: 0}
   secondColor0: {fileID: 0}
   secondColor1: {fileID: 0}
-  createFacialExpressionsControl: 1
+  createFacialExpressionsControl: 0
   expTrackName: ExpressionTrackingActive
-  createFaceTrackingLipSyncControl: 1
+  createFaceTrackingLipSyncControl: 0
   lipSyncName: LipSyncTrackingActive
-  createFaceToggleControl: 1
+  createFaceToggleControl: 0
   faceToggleName: FaceToggleActive
-  createParamForResetFaceTracking: 1
+  createParamForResetFaceTracking: 0
   resetFTName: Reset
-  saveVRCExpressionParameters: 1
+  saveVRCExpressionParameters: 0
+  MirroringShape: 0
   mouthPrefix: exp/mouth/
   mouthShapeNames:
   - basis

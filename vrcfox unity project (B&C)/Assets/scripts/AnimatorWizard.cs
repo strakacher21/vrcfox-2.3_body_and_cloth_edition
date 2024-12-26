@@ -74,19 +74,20 @@ public class AnimatorWizard : MonoBehaviour
 	public Motion secondColor0;
 	public Motion secondColor1;
 
-	public bool createFacialExpressionsControl = true;
+	public bool createFacialExpressionsControl = false;
 	public string expTrackName = "ExpressionTrackingActive";
 
-	public bool createFaceTrackingLipSyncControl = true;
+	public bool createFaceTrackingLipSyncControl = false;
 	public string lipSyncName = "LipSyncTrackingActive";
 
-	public bool createFaceToggleControl = true;
+	public bool createFaceToggleControl = false;
 	public string faceToggleName = "FaceToggleActive";
 
-	public bool createParamForResetFaceTracking = true;
+	public bool createParamForResetFaceTracking = false;
 	public string resetFTName = "Reset";
 
-	public bool saveVRCExpressionParameters = true;
+	public bool saveVRCExpressionParameters = false;
+	public bool MirroringShape = false;
 	
 	public string mouthPrefix = "exp/mouth/";
 	public string[] mouthShapeNames =
@@ -845,20 +846,55 @@ public class AnimatorWizard : MonoBehaviour
 			for (var i = 0; i < ftShapes.Length; i++)
 			{
 				string shapeName = ftShapes[i];
-				var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
-				tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
+
+				if(MirroringShape)
+				{
+					for (int flip = 0; flip < EachSide(ref shapeName); flip++)
+					{
+						var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
+						tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
+					}
+				}
+
+				if(!MirroringShape)
+				{
+					var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
+					tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
+				}
+
 			}
 
 			// adding dual blend shapes
 			for (var i = 0; i < ftDualShapes.Length; i++)
 			{
 				DualShape shape = ftDualShapes[i];
-				var param = CreateFloatParam(fxLayer, ftPrefix + shape.paramName, false, 0);
-				tree.AddChild(DualBlendshapeTree(
-					fxTreeLayer, param, skin,
-					ftPrefix + shape.minShapeName,
-					ftPrefix + shape.maxShapeName,
-					shape.minValue, shape.neutralValue, shape.maxValue));
+
+				if(MirroringShape)
+				{
+					string flippedParamName = shape.paramName;
+
+					for (int flip = 0; flip < EachSide(ref flippedParamName); flip++)
+					{
+						var param = CreateFloatParam(fxLayer, ftPrefix + flippedParamName, false, 0);
+
+						tree.AddChild(DualBlendshapeTree(fxTreeLayer,
+							param, skin,
+							ftPrefix + shape.minShapeName + GetSide(param.Name),
+							ftPrefix + shape.maxShapeName + GetSide(param.Name),
+							shape.minValue, shape.neutralValue, shape.maxValue));
+					}
+				}	
+							
+				if(!MirroringShape)
+				{
+					var param = CreateFloatParam(fxLayer, ftPrefix + shape.paramName, false, 0);
+					tree.AddChild(DualBlendshapeTree(
+						fxTreeLayer, param, skin,
+						ftPrefix + shape.minShapeName,
+						ftPrefix + shape.maxShapeName,
+						shape.minValue, shape.neutralValue, shape.maxValue));
+				}				
+
 			}
 
 
@@ -1118,7 +1154,7 @@ public class AnimatorWizard : MonoBehaviour
 [CustomEditor(typeof(AnimatorWizard), true)]
 public class AnimatorGeneratorEditor : Editor
 {
-	private SerializedProperty saveVRCExpressionParameters;
+	private SerializedProperty saveVRCExpressionParameters, MirroringShape;
 
 	private SerializedProperty assetContainer;
 
@@ -1142,6 +1178,7 @@ public class AnimatorGeneratorEditor : Editor
 
 		wizard = (AnimatorWizard)target;
 		saveVRCExpressionParameters = serializedObject.FindProperty("saveVRCExpressionParameters");
+		MirroringShape = serializedObject.FindProperty("MirroringShape");
 
 		assetContainer = serializedObject.FindProperty("assetContainer");
 
@@ -1344,6 +1381,11 @@ public class AnimatorGeneratorEditor : Editor
 			EditorGUILayout.PropertyField(createParamForResetFaceTracking, 
 			PopUpLabel("Reset Face Tracking","A parameter is created that resets the values of all blendshape" + 
 			"and Face Tracking params to zero when an OSC bug or other causes..."));
+			GUILayout.Space(10);
+			EditorGUILayout.PropertyField(MirroringShape,
+			 PopUpLabel("Mirroring shapes", "Reflect automatically blendshapes if they have “Left” in their name (for example “MouthLowerDownLeft”)." + 
+			 " You don't need to write the same blendshape for the right side (i.e. write only “MouthLowerDownLeft” and it will automatically create one for the right side as well)." + 
+			 " It's better to leave it off, as bugs are possible!"));
 			GUILayout.Space(10);
 			EditorGUILayout.PropertyField(ftShapes, PopUpLabel("FT Single Shapes","Single shapes controlled by a float parameter."));
 			GUILayout.Space(10);
