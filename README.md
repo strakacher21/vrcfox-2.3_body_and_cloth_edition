@@ -39,12 +39,14 @@ The Unity project has a prefab model, as well as two scenes for **PC** and **Que
 >[!NOTE]
 > - To think about blendshapes **v2/MouthCornerPullLeft** and **v2/MouthCornerPullRight**, **v2/MouthLeft** and **v2/MouthRight** as the **v2/SmileSad** and **v2/MouthStretch** splits were expected to perform the same function, but alas in game they maxed out at **30%** of their value. Most likely we should remove the separation (make it as it was) and make separate blendshapes for **v2/MouthCornerPullLeft** and **v2/MouthCornerPullRight** or improve blendshapes: **v2/MouthLeft** and **v2/MouthRight** And insert them into the avatar's face tracking;
 > - Improve blendshapes: **v2/CheekPuff** and **v2/CheekSuck**;
-> - Improve the **eyetracking** system through parameters, and make it create automatically *(***OSCmooth*** works great, but it hasn't been tested without it yet!)*;
+> - Improve the **eyetracking** system through parameters, and make it create automatically *(***OSCmooth*** works great, but it hasn't been tested without it yet! **OSCmooth** is now removed in **eyetracking**)*;
 > - ~~Add a **clothing creation** system to the **Animator Wizard** and the ability to **add new clothing**~~ *(The algorithm needs to be significantly improved!)*;
-> - Implement ***OSCmooth*** functionality in ***AnimatorWizard***;
+> - ~~Implement ***OSCmooth*** functionality in ***AnimatorWizard***~~ *(It's working! Tested. The code should be optimized if possible)*;
 > ___
 > - Add new presets for faces (FaceToggle);
 > - Improve locomotion *(Slightly improved)*;
 > - Review the settings of all Physbones, especially about the Physbone tongue *(Slightly improved)*;
 > - Revisit some of the weights for the rig;
+> - Migrating from *V0* to *V1* ***AnimatorAsCode***;
+> - Split ***Animator wizard*** into several scripts *(Maybe :D)*;
 > - *Make a better showcase :D.*
