@@ -286,7 +286,7 @@ public class AnimatorWizard : MonoBehaviour
 		// TODO: not use this awful driver updating
         var fxDriverLayer = _aac.CreateSupportingFxLayer("drivers").WithAvatarMask(fxMask);
 		var fxDriverState = fxDriverLayer.NewState("drivers").WithWriteDefaultsSetTo(true);
-		fxDriverState.TransitionsTo(fxDriverState).AfterAnimationFinishes().WithTransitionDurationSeconds(0.5f)
+		fxDriverState.TransitionsTo(fxDriverState).AfterAnimationFinishes().WithTransitionDurationSeconds(0.25f)
 			.WithTransitionToSelf();
 		var drivers = fxDriverState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
 
@@ -1588,7 +1588,7 @@ public class AnimatorGeneratorEditor : Editor
 		GUILayout.Label("Experimental:", TipStyle);
 		EditorGUILayout.PropertyField(createClothCustomization);
 		GUILayout.Space(10);
-		GUILayout.Label("WIP", TipStyle);	
+		GUILayout.Label("WIP:", TipStyle);	
 		EditorGUILayout.PropertyField(createEyeTracking);
 		
 		// Shape Preferences

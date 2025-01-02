@@ -42,7 +42,8 @@ The Unity project has a prefab model, as well as two scenes for **PC** and **Que
 > - Improve the **eyetracking** system through parameters, ~~and make it create automatically~~ *(**WIP**, it will be developed many times, but it is working now)(***OSCmooth*** works great, but it hasn't been tested without it yet! **OSCmooth** is now removed in **eyetracking**)*;
 > - ~~Add a **clothing creation** system to the **Animator Wizard** and the ability to **add new clothing**~~ *(The algorithm needs to be significantly improved!)*;
 > - ~~Implement ***OSCmooth*** functionality in ***AnimatorWizard***~~ *(It's working! Tested. The code should be optimized if possible)*;
-> - Toggle drivers (common to prefs and cloth). This state transitions to itself every half second to update toggles. it sucks...TODO: not use this awful driver updating. *(Layer of anim fx: **vrcfox__drivers**)*
+> - Toggle drivers (common to prefs and cloth). This state transitions to itself every half second to update toggles. it sucks...TODO: not use this awful driver updating. *(Layer of anim fx: **vrcfox__drivers**)*;
+> - Significantly improve **Animator Wizard** code optimization and readability;
 > ___
 > - Add new presets for faces (FaceToggle);
 > - Improve locomotion *(Slightly improved)*;
