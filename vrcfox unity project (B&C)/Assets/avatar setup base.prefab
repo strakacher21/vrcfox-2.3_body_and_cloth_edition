@@ -661,6 +661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   assetContainer: {fileID: 9100000, guid: a33c5817a0ccd554595fad701f7d25e6, type: 2}
   fxMask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
+  EyeMask: {fileID: 31900000, guid: 66094741a9a9e9a4eb478890a4125eb4, type: 2}
   gestureMask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
   lMask: {fileID: 31900000, guid: 2ea11c35275506a4fbf628a11c068a8e, type: 2}
   rMask: {fileID: 31900000, guid: 00b67f2d2f7eba8438148317288155d8, type: 2}
@@ -694,11 +695,37 @@ MonoBehaviour:
   createParamForResetFaceTracking: 1
   resetFTName: Reset
   saveVRCExpressionParameters: 1
-  MirroringShape: 0
+  MirroringParam: 1
   createOSCsmooth: 1
+  IsLocal: 0
   localSmoothness: 0.1
   remoteSmoothness: 0.7
-  IsLocal: 0
+  createEyeTracking: 1
+  EyeLookDownLeftRot: {fileID: 7400000, guid: 6acaa8131ea844f4f8391ba2348df9ef, type: 2}
+  EyeLookInDownLeftRot: {fileID: 7400000, guid: 967a6c5240a328641ab581d19f1e8082,
+    type: 2}
+  EyeLookInLeftRot: {fileID: 7400000, guid: 9219af586e78ed44eac14b5fe7cc766e, type: 2}
+  EyeLookInUpLeftRot: {fileID: 7400000, guid: 502411203eea70b488b9d5230a0b75ad, type: 2}
+  EyeLookNeutralLeftRot: {fileID: 7400000, guid: 494ef91a9dda4a74aa868f9104bdf294,
+    type: 2}
+  EyeLookOutDownLeftRot: {fileID: 7400000, guid: 900cbec586c7cbe48bec3784bdecabb0,
+    type: 2}
+  EyeLookOutLeftRot: {fileID: 7400000, guid: daac798f15c5ac3499ced166d31c2c40, type: 2}
+  EyeLookOutUPLeftRot: {fileID: 7400000, guid: 8072aea378c283d4fa3602d3012bc9d6, type: 2}
+  EyeLookUpLeftRot: {fileID: 7400000, guid: 920333b06fbcacb47814d658c4f020dc, type: 2}
+  EyeLookDownRightRot: {fileID: 7400000, guid: bf929902944dfa04bbb302c8cdb70e54, type: 2}
+  EyeLookInDownRightRot: {fileID: 7400000, guid: 2f0235ce23d4a414d83fb418b3afb995,
+    type: 2}
+  EyeLookInRightRot: {fileID: 7400000, guid: 9f84b0e23ed6d5b49a62f242946a3bc6, type: 2}
+  EyeLookInUpRightRot: {fileID: 7400000, guid: 6b7776ef8bd35a847ab06201ba109850, type: 2}
+  EyeLookNeutralRightRot: {fileID: 7400000, guid: fd8f714a23c250d4cbc49f8df81e3ca5,
+    type: 2}
+  EyeLookOutDownRightRot: {fileID: 7400000, guid: ae1f40e111011e34bab4254996c52f0c,
+    type: 2}
+  EyeLookOutRightRot: {fileID: 7400000, guid: 4d4fffcb94243ce429c2b43db5e0513a, type: 2}
+  EyeLookOutUPRightRot: {fileID: 7400000, guid: 5e801d29a40b6b3428803162eb624325,
+    type: 2}
+  EyeLookUpRightRot: {fileID: 7400000, guid: 02c0729258272ee4da6a512c03c76474, type: 2}
   mouthPrefix: exp/mouth/
   mouthShapeNames:
   - basis
@@ -1157,22 +1184,22 @@ PrefabInstance:
     - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9945219
       objectReference: {fileID: 0}
     - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00000008378349
+      value: -0.104528464
       objectReference: {fileID: 0}
     - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 6.705745e-14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.5722621e-15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6247945034147084998, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
@@ -1204,25 +1231,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: avatar
       objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[1]
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9945219
       objectReference: {fileID: 0}
     - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00000008378349
+      value: -0.104528464
       objectReference: {fileID: 0}
     - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 7.4606974e-14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.5722432e-15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7329873763272774051, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
