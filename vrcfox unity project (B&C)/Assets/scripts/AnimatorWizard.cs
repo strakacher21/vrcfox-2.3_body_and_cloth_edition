@@ -14,7 +14,6 @@ using System.ComponentModel.Composition.Primitives;
 using UnityEngine.XR;
 using static BlackStartX.GestureManager.Editor.Data.GestureManagerStyles.Animations;
 using static UnityEditor.Experimental.GraphView.GraphView;
-using System.Linq;
 
 [Serializable]
 public struct DualShape
@@ -286,7 +285,7 @@ public class AnimatorWizard : MonoBehaviour
 		// TODO: not use this awful driver updating
         var fxDriverLayer = _aac.CreateSupportingFxLayer("drivers").WithAvatarMask(fxMask);
 		var fxDriverState = fxDriverLayer.NewState("drivers").WithWriteDefaultsSetTo(true);
-		fxDriverState.TransitionsTo(fxDriverState).AfterAnimationFinishes().WithTransitionDurationSeconds(0.25f)
+		fxDriverState.TransitionsTo(fxDriverState).AfterAnimationFinishes().WithTransitionDurationSeconds(0.5f)
 			.WithTransitionToSelf();
 		var drivers = fxDriverState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
 
@@ -325,410 +324,209 @@ public class AnimatorWizard : MonoBehaviour
 			}
 		}
 
-        // Cloth Customization (it works crutchily, but it works)
-        if (createClothCustomization)
-        {
-			// Trees of cloth
-            var tree = masterTree.CreateBlendTreeChild(0);
-            tree.name = "Cloth Customization";
-            tree.blendType = BlendTreeType.Direct;
-
-            var toggleTree = tree.CreateBlendTreeChild(0);
-            toggleTree.name = "Cloth Toggle";
-            toggleTree.blendType = BlendTreeType.Direct;
-
-            var adjustTree = tree.CreateBlendTreeChild(1);
-            adjustTree.name = "Cloth Adjust";
-            adjustTree.blendType = BlendTreeType.Direct;
-
-            //working with blend shapes and iterate through the ClothUpperBodyNames, ClothLowerBodyNames, ClothFootNames lists to create trees
-            foreach (var clothName in ClothUpperBodyNames.Concat(ClothLowerBodyNames).Concat(ClothFootNames))
-            {
-                if (skin.sharedMesh.blendShapeCount > 0)
-                {
-                    for (int i = 0; i < skin.sharedMesh.blendShapeCount; i++)
-                    {
-                        string blendShapeName = skin.sharedMesh.GetBlendShapeName(i);
-
-                        if (blendShapeName.StartsWith(ClothTogglesPrefix + clothName))
-                        {
-                            var boolParam = CreateBoolParam(fxLayer, ClothTogglesPrefix + clothName, true, false);
-                            var floatParam = fxLayer.FloatParameter(ClothTogglesPrefix + clothName + "-float");
-
-                            var driverEntry = new VRC_AvatarParameterDriver.Parameter
-                            {
-                                type = VRC_AvatarParameterDriver.ChangeType.Copy,
-                                source = boolParam.Name,
-                                name = floatParam.Name
-                            };
-                            drivers.parameters.Add(driverEntry);
-
-							// reversed animations for clothes
-                            toggleTree.AddChild(BlendshapeTree(fxTreeLayer, skin, ClothTogglesPrefix + clothName, floatParam, max: 0, min: 100));
-                        }
-
-                        else if (blendShapeName.StartsWith(ClothAdjustPrefix + clothName))
-                        {
-                            var boolParam = CreateBoolParam(fxLayer, ClothAdjustPrefix + clothName, true, false);
-                            var floatParam = fxLayer.FloatParameter(ClothAdjustPrefix + clothName + "-float");
-
-                            var driverEntry = new VRC_AvatarParameterDriver.Parameter
-                            {
-                                type = VRC_AvatarParameterDriver.ChangeType.Copy,
-                                source = boolParam.Name,
-                                name = floatParam.Name
-                            };
-                            drivers.parameters.Add(driverEntry);
-
-                            adjustTree.AddChild(BlendshapeTree(fxTreeLayer, skin, ClothAdjustPrefix + clothName, floatParam));
-                        }
-
-                        // Check if blendShapeName starts with the cloth adjust body prefix
-                        else if (blendShapeName.StartsWith(ClothAdjustBodyPrefix + clothName))
-                        {
-                            var boolParam = CreateBoolParam(fxLayer, ClothAdjustBodyPrefix + clothName, true, false);
-                            var floatParam = fxLayer.FloatParameter(ClothAdjustBodyPrefix + clothName + "-float");
-
-                            var driverEntry = new VRC_AvatarParameterDriver.Parameter
-                            {
-                                type = VRC_AvatarParameterDriver.ChangeType.Copy,
-                                source = boolParam.Name,
-                                name = floatParam.Name
-                            };
-                            drivers.parameters.Add(driverEntry);
-
-                            adjustTree.AddChild(BlendshapeTree(fxTreeLayer, skin, ClothAdjustBodyPrefix + clothName, floatParam));
-                        }
-                    }
-                }
-            }
-
-            // Upper Body Clothes
-            var upperBodyLayer = _aac.CreateSupportingFxLayer("cloth_upper_body").WithAvatarMask(fxMask);
-
-            // Waiting State
-            var upperWaitingState = upperBodyLayer.NewState("Waiting command")
-                .WithWriteDefaultsSetTo(true);
-
-            var upperResetDriver = upperWaitingState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-            foreach (var clothName in ClothUpperBodyNames)
-            {
-                AddParameterIfBlendShapeExists(upperResetDriver, skin, ClothTogglesPrefix + clothName, 0);
-                AddParameterIfBlendShapeExists(upperResetDriver, skin, ClothAdjustBodyPrefix + clothName, 0);
-            }
-
-            foreach (var clothName in ClothUpperBodyNames)
-            {
-                upperWaitingState.Exits().WithTransitionDurationSeconds(TransitionSpeed)
-                    .When(upperBodyLayer.BoolParameter(ClothTogglesPrefix + clothName).IsTrue());
-            }
-
-            // states upper body clothes 
-            var upperClothStates = new Dictionary<string, AacFlState>();
-            foreach (var clothName in ClothUpperBodyNames)
-            {
-                var upperClothState = upperBodyLayer.NewState(clothName).WithWriteDefaultsSetTo(true);
-
-                var upperDriver = upperClothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-                AddParameterIfBlendShapeExists(upperDriver, skin, ClothTogglesPrefix + clothName, 1);
-                AddParameterIfBlendShapeExists(upperDriver, skin, ClothAdjustBodyPrefix + clothName, 1);
-
-                foreach (var otherClothName in ClothUpperBodyNames)
-                {
-                    if (otherClothName != clothName)
-                    {
-                        AddParameterIfBlendShapeExists(upperDriver, skin, ClothTogglesPrefix + otherClothName, 0);
-                        AddParameterIfBlendShapeExists(upperDriver, skin, ClothAdjustBodyPrefix + otherClothName, 0);
-                    }
-                }
-
-                upperClothStates[clothName] = upperClothState;
-
-                upperBodyLayer.EntryTransitionsTo(upperClothState)
-                    .When(upperBodyLayer.BoolParameter(ClothTogglesPrefix + clothName).IsTrue());
-                upperClothState.Exits().WithTransitionDurationSeconds(TransitionSpeed)
-                    .When(upperBodyLayer.BoolParameter(ClothTogglesPrefix + clothName).IsFalse());
-            }
-
-            // add transitions between upper body states
-            foreach (var clothName in ClothUpperBodyNames)
-            {
-                var currentUpperState = upperClothStates[clothName];
-
-                foreach (var otherClothName in ClothUpperBodyNames)
-                {
-                    if (otherClothName != clothName)
-                    {
-                        var targetUpperState = upperClothStates[otherClothName];
-
-                        currentUpperState.TransitionsTo(targetUpperState).WithTransitionDurationSeconds(TransitionSpeed)
-                            .When(upperBodyLayer.BoolParameter(ClothTogglesPrefix + otherClothName).IsTrue());
-                    }
-                }
-            }
-
-            // Lower Body Clothes
-            var lowerBodyLayer = _aac.CreateSupportingFxLayer("cloth_lower_body").WithAvatarMask(fxMask);
-
-            // Waiting State
-            var lowerWaitingState = lowerBodyLayer.NewState("Waiting command")
-                .WithWriteDefaultsSetTo(true);
-
-			// Add VRCDriver for disabling params of clothes
-            var lowerResetDriver = lowerWaitingState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-            foreach (var clothName in ClothLowerBodyNames)
-            {
-                AddParameterIfBlendShapeExists(lowerResetDriver, skin, ClothTogglesPrefix + clothName, 0);
-                AddParameterIfBlendShapeExists(lowerResetDriver, skin, ClothAdjustPrefix + clothName, 0);
-                AddParameterIfBlendShapeExists(lowerResetDriver, skin, ClothAdjustBodyPrefix + clothName, 0);
-            }
-
-            foreach (var clothName in ClothLowerBodyNames)
-            {
-                lowerWaitingState.Exits().WithTransitionDurationSeconds(TransitionSpeed)
-                    .When(lowerBodyLayer.BoolParameter(ClothTogglesPrefix + clothName).IsTrue());
-            }
-
-            // states lower body clothes
-            var lowerClothStates = new Dictionary<string, AacFlState>();
-            foreach (var clothName in ClothLowerBodyNames)
-            {
-                var lowerClothState = lowerBodyLayer.NewState(clothName).WithWriteDefaultsSetTo(true);
-
-                // adding VRCDriver with logic for enabling or disabling parameters
-                var lowerDriver = lowerClothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-                AddParameterIfBlendShapeExists(lowerDriver, skin, ClothTogglesPrefix + clothName, 1);
-                AddParameterIfBlendShapeExists(lowerDriver, skin, ClothAdjustPrefix + clothName, 0);
-                AddParameterIfBlendShapeExists(lowerDriver, skin, ClothAdjustBodyPrefix + clothName, 1);
-
-                // disable other clothing params
-                foreach (var otherClothName in ClothLowerBodyNames)
-                {
-                    if (otherClothName != clothName)
-                    {
-                        AddParameterIfBlendShapeExists(lowerDriver, skin, ClothTogglesPrefix + otherClothName, 0);
-                        AddParameterIfBlendShapeExists(lowerDriver, skin, ClothAdjustPrefix + otherClothName, 0);
-                        AddParameterIfBlendShapeExists(lowerDriver, skin, ClothAdjustBodyPrefix + otherClothName, 0);
-                    }
-                }
-
-                lowerClothStates[clothName] = lowerClothState;
-
-                lowerClothState.Exits().WithTransitionDurationSeconds(TransitionSpeed)
-                    .When(lowerBodyLayer.BoolParameter(ClothTogglesPrefix + clothName).IsFalse());
-            }
-
-            // transitions between lower body states
-            foreach (var clothName in ClothLowerBodyNames)
-            {
-                var currentLowerState = lowerClothStates[clothName];
-
-                foreach (var otherClothName in ClothLowerBodyNames)
-                {
-                    if (otherClothName != clothName)
-                    {
-                        var targetLowerState = lowerClothStates[otherClothName];
-
-                        currentLowerState.TransitionsTo(targetLowerState).WithTransitionDurationSeconds(TransitionSpeed)
-                            .When(lowerBodyLayer.BoolParameter(ClothTogglesPrefix + otherClothName).IsTrue());
-                    }
-                }
-            }
-
-            // transitions from ENTRY to lower body states based on upper body clothes toggle
-            foreach (var lowerClothName in ClothLowerBodyNames)
-            {
-                foreach (var upperClothName in ClothUpperBodyNames)
-                {
-                    lowerBodyLayer.EntryTransitionsTo(lowerClothStates[lowerClothName])
-                        .When(lowerBodyLayer.BoolParameter(ClothTogglesPrefix + lowerClothName).IsTrue())
-                        .And(lowerBodyLayer.BoolParameter(ClothTogglesPrefix + upperClothName).IsFalse());
-                }
-            }
-
-            // adjust states lower body clothes
-            var adjustlowerClothStates = new Dictionary<string, AacFlState>();
-
-            foreach (var clothName in ClothLowerBodyNames)
-            {
-                var adjustlowerClothState = lowerBodyLayer.NewState(clothName + " adjusted").WithWriteDefaultsSetTo(true);
-
-                // adding VRCDriver with logic for enabling or disabling parameters
-                var adjustlowerDriver = adjustlowerClothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-
-                AddParameterIfBlendShapeExists(adjustlowerDriver, skin, ClothTogglesPrefix + clothName, 1);
-                AddParameterIfBlendShapeExists(adjustlowerDriver, skin, ClothAdjustPrefix + clothName, 1);
-                AddParameterIfBlendShapeExists(adjustlowerDriver, skin, ClothAdjustBodyPrefix + clothName, 1);
-
-                foreach (var otherClothName in ClothLowerBodyNames)
-                {
-                    if (otherClothName != clothName)
-                    {
-                        AddParameterIfBlendShapeExists(adjustlowerDriver, skin, ClothTogglesPrefix + otherClothName, 0);
-                        AddParameterIfBlendShapeExists(adjustlowerDriver, skin, ClothAdjustPrefix + otherClothName, 0);
-                        AddParameterIfBlendShapeExists(adjustlowerDriver, skin, ClothAdjustBodyPrefix + otherClothName, 0);
-                    }
-                }
-
-                adjustlowerClothStates[clothName] = adjustlowerClothState;
-
-                adjustlowerClothState.Exits().WithTransitionDurationSeconds(TransitionSpeed)
-                    .When(lowerBodyLayer.BoolParameter(ClothTogglesPrefix + clothName).IsFalse());
-            }
-
-				// transitions of adjust states
-                foreach (var clothName in ClothLowerBodyNames)
-            {
-                var currentAdjustLowerState = adjustlowerClothStates[clothName];
-
-                foreach (var otherClothName in ClothLowerBodyNames)
-                {
-                    if (otherClothName != clothName)
-                    {
-                        var targetAdjustLowerState = adjustlowerClothStates[otherClothName];
-
-                        currentAdjustLowerState.TransitionsTo(targetAdjustLowerState).WithTransitionDurationSeconds(TransitionSpeed)
-                            .When(lowerBodyLayer.BoolParameter(ClothTogglesPrefix + otherClothName).IsTrue());
-                    }
-                }
-            }
-
-            foreach (var adjustLowerClothName in ClothLowerBodyNames)
-            {
-                foreach (var upperClothName in ClothUpperBodyNames)
-                {
-                    lowerBodyLayer.EntryTransitionsTo(adjustlowerClothStates[adjustLowerClothName])
-                        .When(lowerBodyLayer.BoolParameter(ClothTogglesPrefix + adjustLowerClothName).IsTrue())
-                        .And(lowerBodyLayer.BoolParameter(ClothTogglesPrefix + upperClothName).IsTrue()); 
-
-                }
-
-            }
-            foreach (var lowerClothName in ClothLowerBodyNames)
-            {
-                var currentLowerState = lowerClothStates[lowerClothName];
-                var targetAdjustLowerState = adjustlowerClothStates[lowerClothName];
-
-                foreach (var upperClothName in ClothUpperBodyNames)
-                {
-                    currentLowerState.TransitionsTo(targetAdjustLowerState).WithTransitionDurationSeconds(TransitionSpeed)
-                        .When(lowerBodyLayer.BoolParameter(ClothTogglesPrefix + upperClothName).IsTrue());
-                }
-            }
-
-            foreach (var clothName in ClothLowerBodyNames)
-            {
-                var adjustedState = adjustlowerClothStates[clothName];
-                var normalState = lowerClothStates[clothName];
-
-                var transition = adjustedState.TransitionsTo(normalState)
-                    .WithTransitionDurationSeconds(TransitionSpeed);
-
-                foreach (var upperClothName in ClothUpperBodyNames)
-                {
-                    transition.When(lowerBodyLayer.BoolParameter(ClothTogglesPrefix + upperClothName).IsFalse());
-                }
-            }
-
-            // Foot Clothes
-            var footLayer = _aac.CreateSupportingFxLayer("cloth_foot").WithAvatarMask(fxMask);
-
-            // Waiting State
-            var footWaitingState = footLayer.NewState("Waiting command")
-                .WithWriteDefaultsSetTo(true);
-
-            var footResetDriver = footWaitingState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-            foreach (var clothName in ClothFootNames)
-            {
-                AddParameter(footResetDriver, ClothTogglesPrefix + clothName, 0);
-                AddParameter(footResetDriver, ClothAdjustBodyPrefix + clothName, 0);
-            }
-
-            foreach (var clothName in ClothFootNames)
-            {
-                footWaitingState.Exits().WithTransitionDurationSeconds(TransitionSpeed)
-                    .When(footLayer.BoolParameter(ClothTogglesPrefix + clothName).IsTrue());
-            }
-
-            // Create states for each clothing
-            var footClothStates = new Dictionary<string, AacFlState>();
-            foreach (var clothName in ClothFootNames)
-            {
-                var footClothState = footLayer.NewState(clothName).WithWriteDefaultsSetTo(true);
-
-                // adding VRCDriver with logic for enabling or disabling parameters
-                var footDriver = footClothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-                AddParameter(footDriver, ClothTogglesPrefix + clothName, 1);
-                AddParameter(footDriver, ClothAdjustBodyPrefix + clothName, 1);
-
-                foreach (var otherClothName in ClothFootNames)
-                {
-                    if (otherClothName != clothName)
-                    {
-                        AddParameter(footDriver, ClothTogglesPrefix + otherClothName, 0);
-                        AddParameter(footDriver, ClothAdjustBodyPrefix + otherClothName, 0);
-                    }
-                }
-
-                footClothStates[clothName] = footClothState;
-
-                footLayer.EntryTransitionsTo(footClothState)
-                    .When(footLayer.BoolParameter(ClothTogglesPrefix + clothName).IsTrue());
-
-                footClothState.Exits().WithTransitionDurationSeconds(TransitionSpeed)
-                    .When(footLayer.BoolParameter(ClothTogglesPrefix + clothName).IsFalse());
-            }
-
-            // add transitions between states
-            foreach (var clothName in ClothFootNames)
-            {
-                var currentFootState = footClothStates[clothName];
-
-                foreach (var otherClothName in ClothFootNames)
-                {
-                    if (otherClothName != clothName)
-                    {
-                        var targetFootState = footClothStates[otherClothName];
-
-                        // transitions between states
-                        currentFootState.TransitionsTo(targetFootState).WithTransitionDurationSeconds(TransitionSpeed)
-                            .When(footLayer.BoolParameter(ClothTogglesPrefix + otherClothName).IsTrue());
-                    }
-                }
-            }
-
-			// it is necessary to remove these functions later, preferably (костыльные функции)
-
-            // Helper function for adding parameters if blend shape exists
-            void AddParameterIfBlendShapeExists(VRCAvatarParameterDriver driver, SkinnedMeshRenderer skin, string paramName, float value)
-            {
-                for (int i = 0; i < skin.sharedMesh.blendShapeCount; i++)
-                {
-                    if (skin.sharedMesh.GetBlendShapeName(i).StartsWith(paramName))
-                    {
-                        driver.parameters.Add(new VRC_AvatarParameterDriver.Parameter
-                        {
-                            name = paramName,
-                            type = VRC_AvatarParameterDriver.ChangeType.Set,
-                            value = value
-                        });
-                        return;
-                    }
-                }
-            }
-
-            // Helper function for adding parameters
-            void AddParameter(VRCAvatarParameterDriver driver, string name, float value)
-            {
-                driver.parameters.Add(new VRC_AvatarParameterDriver.Parameter
-                {
-                    name = name,
-                    type = VRC_AvatarParameterDriver.ChangeType.Set,
-                    value = value
-                });
-            }
-
-        }
+		// Cloth Customization (WIP)
+		if (createClothCustomization)
+		{
+			var tree = masterTree.CreateBlendTreeChild(0);
+			tree.name = "Cloth Customization";
+			tree.blendType = BlendTreeType.Direct;
+
+			var toggleTree = tree.CreateBlendTreeChild(0);
+			toggleTree.name = "Cloth Toggle";
+			toggleTree.blendType = BlendTreeType.Direct;
+
+			var adjustTree = tree.CreateBlendTreeChild(1);
+			adjustTree.name = "Cloth Adjust";
+			adjustTree.blendType = BlendTreeType.Direct;
+
+			// Process different parts of body clothing
+			ProcessClothPart(ClothUpperBodyNames, skin, toggleTree, adjustTree);
+			ProcessClothPart(ClothLowerBodyNames, skin, toggleTree, adjustTree);
+			ProcessClothPart(ClothFootNames, skin, toggleTree, adjustTree);
+
+			// Upper Body Clothes
+			var upperBodyLayer = _aac.CreateSupportingFxLayer("cloth_upper_body").WithAvatarMask(fxMask);
+			SetupClothLayer(upperBodyLayer, ClothUpperBodyNames, skin, ClothTogglesPrefix, ClothAdjustBodyPrefix);
+
+			// Lower Body Clothes
+			var lowerBodyLayer = _aac.CreateSupportingFxLayer("cloth_lower_body").WithAvatarMask(fxMask);
+			SetupClothLayerWithAdjustments(lowerBodyLayer, ClothLowerBodyNames, skin, ClothTogglesPrefix, ClothAdjustPrefix, ClothAdjustBodyPrefix);
+
+			// Foot Clothes
+			var footLayer = _aac.CreateSupportingFxLayer("cloth_foot").WithAvatarMask(fxMask);
+			SetupClothLayer(footLayer, ClothFootNames, skin, ClothTogglesPrefix, ClothAdjustBodyPrefix);
+		}
+
+		void ProcessClothPart(string[] clothNames, SkinnedMeshRenderer skin, BlendTree toggleTree, BlendTree adjustTree)
+		{
+			foreach (var clothName in clothNames)
+			{
+				if (skin.sharedMesh.blendShapeCount > 0)
+				{
+					for (int i = 0; i < skin.sharedMesh.blendShapeCount; i++)
+					{
+						string blendShapeName = skin.sharedMesh.GetBlendShapeName(i);
+
+						if (blendShapeName.StartsWith(ClothTogglesPrefix + clothName))
+						{
+							var boolParam = CreateBoolParam(fxLayer, ClothTogglesPrefix + clothName, true, false);
+							var floatParam = fxLayer.FloatParameter(ClothTogglesPrefix + clothName + "-float");
+
+							var driverEntry = new VRC_AvatarParameterDriver.Parameter
+							{
+								type = VRC_AvatarParameterDriver.ChangeType.Copy,
+								source = boolParam.Name,
+								name = floatParam.Name
+							};
+							drivers.parameters.Add(driverEntry);
+
+							// Reversed animations for clothes
+							toggleTree.AddChild(BlendshapeTree(fxTreeLayer, skin, ClothTogglesPrefix + clothName, floatParam, max: 0, min: 100));
+						}
+						else if (blendShapeName.StartsWith(ClothAdjustPrefix + clothName) || 
+								blendShapeName.StartsWith(ClothAdjustBodyPrefix + clothName))
+						{
+							var prefix = blendShapeName.StartsWith(ClothAdjustPrefix + clothName) ? ClothAdjustPrefix : ClothAdjustBodyPrefix;
+							var boolParam = CreateBoolParam(fxLayer, prefix + clothName, true, false);
+							var floatParam = fxLayer.FloatParameter(prefix + clothName + "-float");
+
+							var driverEntry = new VRC_AvatarParameterDriver.Parameter
+							{
+								type = VRC_AvatarParameterDriver.ChangeType.Copy,
+								source = boolParam.Name,
+								name = floatParam.Name
+							};
+							drivers.parameters.Add(driverEntry);
+
+							adjustTree.AddChild(BlendshapeTree(fxTreeLayer, skin, prefix + clothName, floatParam));
+						}
+					}
+				}
+			}
+		}
+
+		void SetupClothLayer(AacFlLayer layer, string[] clothNames, SkinnedMeshRenderer skin, string togglePrefix, string adjustBodyPrefix)
+		{
+			var waitingState = layer.NewState("Waiting command").WithWriteDefaultsSetTo(true);
+			var waitingTransition = layer.AnyTransitionsTo(waitingState).WithTransitionToSelf();
+			var resetDriver = waitingState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
+			var clothStates = new Dictionary<string, AacFlState>();
+
+			foreach (var clothName in clothNames)
+			{
+				var clothState = layer.NewState(clothName).WithWriteDefaultsSetTo(true);
+				var driver = clothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
+
+				AddParameterIfBlendShapeExists(resetDriver, skin, togglePrefix + clothName, 0);
+				AddParameterIfBlendShapeExists(resetDriver, skin, adjustBodyPrefix + clothName, 0);
+
+				AddParameterIfBlendShapeExists(driver, skin, togglePrefix + clothName, 1);
+				AddParameterIfBlendShapeExists(driver, skin, adjustBodyPrefix + clothName, 1);
+
+				foreach (var otherClothName in clothNames)
+				{
+					if (otherClothName != clothName)
+					{
+						AddParameterIfBlendShapeExists(driver, skin, togglePrefix + otherClothName, 0);
+						AddParameterIfBlendShapeExists(driver, skin, adjustBodyPrefix + otherClothName, 0);
+					}
+				}
+
+				clothStates[clothName] = clothState;
+
+				waitingTransition.When(layer.BoolParameter(togglePrefix + clothName).IsFalse());
+				layer.AnyTransitionsTo(clothState).When(layer.BoolParameter(togglePrefix + clothName).IsTrue());
+			}
+		}
+
+		void SetupClothLayerWithAdjustments(AacFlLayer layer, string[] clothNames, SkinnedMeshRenderer skin, string togglePrefix, string adjustPrefix, string adjustBodyPrefix)
+		{
+			var waitingState = layer.NewState("Waiting command").WithWriteDefaultsSetTo(true);
+			var waitingTransition = layer.AnyTransitionsTo(waitingState).WithTransitionToSelf();
+			var resetDriver = waitingState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
+			var clothStates = new Dictionary<string, AacFlState>();
+			var adjustClothStates = new Dictionary<string, AacFlState>();
+
+			foreach (var clothName in clothNames)
+			{
+				var clothState = layer.NewState(clothName).WithWriteDefaultsSetTo(true);
+				var driver = clothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
+				var adjustClothState = layer.NewState(clothName + " adjusted").WithWriteDefaultsSetTo(true);
+				var adjustDriver = adjustClothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
+
+				AddParameterIfBlendShapeExists(resetDriver, skin, togglePrefix + clothName, 0);
+				AddParameterIfBlendShapeExists(resetDriver, skin, adjustPrefix + clothName, 0);
+				AddParameterIfBlendShapeExists(resetDriver, skin, adjustBodyPrefix + clothName, 0);
+
+				AddParameterIfBlendShapeExists(driver, skin, togglePrefix + clothName, 1);
+				AddParameterIfBlendShapeExists(driver, skin, adjustPrefix + clothName, 0);
+				AddParameterIfBlendShapeExists(driver, skin, adjustBodyPrefix + clothName, 1);
+
+				AddParameterIfBlendShapeExists(adjustDriver, skin, togglePrefix + clothName, 1);
+				AddParameterIfBlendShapeExists(adjustDriver, skin, adjustPrefix + clothName, 1);
+				AddParameterIfBlendShapeExists(adjustDriver, skin, adjustBodyPrefix + clothName, 1);
+
+				foreach (var otherClothName in clothNames)
+				{
+					if (otherClothName != clothName)
+					{
+						AddParameterIfBlendShapeExists(driver, skin, togglePrefix + otherClothName, 0);
+						AddParameterIfBlendShapeExists(driver, skin, adjustPrefix + otherClothName, 0);
+						AddParameterIfBlendShapeExists(driver, skin, adjustBodyPrefix + otherClothName, 0);
+
+						AddParameterIfBlendShapeExists(adjustDriver, skin, togglePrefix + otherClothName, 0);
+						AddParameterIfBlendShapeExists(adjustDriver, skin, adjustPrefix + otherClothName, 0);
+						AddParameterIfBlendShapeExists(adjustDriver, skin, adjustBodyPrefix + otherClothName, 0);
+					}
+				}
+
+				clothStates[clothName] = clothState;
+				adjustClothStates[clothName] = adjustClothState;
+
+				waitingTransition.When(layer.BoolParameter(togglePrefix + clothName).IsFalse());
+
+				var clothTransition = layer.AnyTransitionsTo(clothState).When(layer.BoolParameter(togglePrefix + clothName).IsTrue());
+				foreach (var upperClothName in ClothUpperBodyNames)
+				{
+					clothTransition.And(layer.BoolParameter(togglePrefix + upperClothName).IsFalse());
+				}
+
+				// Transitions for adjust states
+				foreach (var upperClothName in ClothUpperBodyNames)
+				{
+					layer.AnyTransitionsTo(adjustClothState)
+						.When(layer.BoolParameter(togglePrefix + clothName).IsTrue())
+						.And(layer.BoolParameter(togglePrefix + upperClothName).IsTrue());
+				}
+			}
+		}
+
+		void AddParameterIfBlendShapeExists(VRCAvatarParameterDriver driver, SkinnedMeshRenderer skin, string paramName, float value)
+		{
+			for (int i = 0; i < skin.sharedMesh.blendShapeCount; i++)
+			{
+				if (skin.sharedMesh.GetBlendShapeName(i).StartsWith(paramName))
+				{
+					driver.parameters.Add(new VRC_AvatarParameterDriver.Parameter
+					{
+						name = paramName,
+						type = VRC_AvatarParameterDriver.ChangeType.Set,
+						value = value
+					});
+					return;
+				}
+			}
+		}
+
+		void AddParameter(VRCAvatarParameterDriver driver, string name, float value)
+		{
+			driver.parameters.Add(new VRC_AvatarParameterDriver.Parameter
+			{
+				name = name,
+				type = VRC_AvatarParameterDriver.ChangeType.Set,
+				value = value
+			});
+		}
 
 		// Color Customization
         if (createColorCustomization)
@@ -1029,7 +827,6 @@ public class AnimatorWizard : MonoBehaviour
 
 			if (createOSCsmooth)
 			{
-
 				var OSCLayer = _aac.CreateSupportingFxLayer("OSC smoothing").WithAvatarMask(fxMask);
 
 				// The main OSC trees 
@@ -1043,7 +840,16 @@ public class AnimatorWizard : MonoBehaviour
 				OSCRemoteTree.blendType = BlendTreeType.Direct;
 				var OSCRemoteState = OSCLayer.NewState(OSCRemoteTree.name).WithAnimation(OSCRemoteTree).WithWriteDefaultsSetTo(true);
 
-				var allShapes = ftShapes.Concat(ftDualShapes.Select(ds => ds.paramName));
+				// Combine ftShapes and ftDualShapes manually
+				var allShapes = new List<string>();
+				foreach (var shape in ftShapes)
+				{
+					allShapes.Add(shape);
+				}
+				foreach (var ds in ftDualShapes)
+				{
+					allShapes.Add(ds.paramName);
+				}
 
 				// General function for creating trees
 				void CreateOSCTrees(string type, BlendTree rootTree, float smoothness)
@@ -1585,10 +1391,8 @@ public class AnimatorGeneratorEditor : Editor
 		EditorGUILayout.PropertyField(createColorCustomization);
 		EditorGUILayout.PropertyField(createFaceTracking);
 		GUILayout.Space(10);
-		GUILayout.Label("Experimental:", TipStyle);
-		EditorGUILayout.PropertyField(createClothCustomization);
-		GUILayout.Space(10);
 		GUILayout.Label("WIP:", TipStyle);	
+		EditorGUILayout.PropertyField(createClothCustomization);
 		EditorGUILayout.PropertyField(createEyeTracking);
 		
 		// Shape Preferences
@@ -1604,7 +1408,7 @@ public class AnimatorGeneratorEditor : Editor
 		// Cloths customization
         if (wizard.createClothCustomization)
         {
-            GUILayout.Label("Cloths customization [Experimental]", headerStyle);
+            GUILayout.Label("Cloths customization [WIP]", headerStyle);
 			GUILayout.Label("Animator wizard will create animations, algorithm to switch clothes \nand VRC params with these prefixes.");
 			GUILayout.Space(10);
 			EditorGUILayout.PropertyField(ClothTogglesPrefix, 

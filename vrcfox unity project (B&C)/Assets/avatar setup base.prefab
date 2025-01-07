@@ -695,7 +695,7 @@ MonoBehaviour:
   createParamForResetFaceTracking: 1
   resetFTName: Reset
   saveVRCExpressionParameters: 1
-  MirroringParam: 1
+  MirroringParam: 0
   createOSCsmooth: 1
   IsLocal: 0
   localSmoothness: 0.1
@@ -1181,26 +1181,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9945219
-      objectReference: {fileID: 0}
-    - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.104528464
-      objectReference: {fileID: 0}
-    - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -6247945034147084998, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1234,26 +1214,11 @@ PrefabInstance:
     - target: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[1]
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9945219
-      objectReference: {fileID: 0}
-    - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.104528464
-      objectReference: {fileID: 0}
-    - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
+    - target: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
-      propertyPath: m_LocalRotation.z
+      propertyPath: m_BlendShapeWeights.Array.data[2]
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7329873763272774051, guid: 1a1022667c449ad4ea3340db6aa363c8,
