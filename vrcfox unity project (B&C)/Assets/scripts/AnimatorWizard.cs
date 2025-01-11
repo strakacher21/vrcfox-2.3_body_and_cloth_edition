@@ -51,7 +51,8 @@ public class AnimatorWizard : MonoBehaviour
 	public AnimatorController assetContainer;
 	
 	public AvatarMask fxMask;
-	public AvatarMask EyeMask;
+	public AvatarMask EyeLeftMask;
+	public AvatarMask EyeRightMask;
 	public AvatarMask gestureMask;
 	public AvatarMask lMask;
 	public AvatarMask rMask;
@@ -95,26 +96,16 @@ public class AnimatorWizard : MonoBehaviour
     public float remoteSmoothness = 0.7f;
 
 	public bool createEyeTracking = true;
-
-	public Motion EyeLookDownLeftRot;
-	public Motion EyeLookInDownLeftRot;
-	public Motion EyeLookInLeftRot;
-	public Motion EyeLookInUpLeftRot;
-	public Motion EyeLookNeutralLeftRot;
-	public Motion EyeLookOutDownLeftRot;
-	public Motion EyeLookOutLeftRot;
-	public Motion EyeLookOutUPLeftRot;
-	public Motion EyeLookUpLeftRot;
-
-	public Motion EyeLookDownRightRot;
-	public Motion EyeLookInDownRightRot;
-	public Motion EyeLookInRightRot;
-	public Motion EyeLookInUpRightRot;
-	public Motion EyeLookNeutralRightRot;
-	public Motion EyeLookOutDownRightRot;
-	public Motion EyeLookOutRightRot;
-	public Motion EyeLookOutUPRightRot;
-	public Motion EyeLookUpRightRot;
+	public float maxEyeMotionValue = 0.25f;
+	public Motion EyeLookDown;
+	public Motion EyeLookLeft;
+	public Motion EyeLookLeftDown;
+	public Motion EyeLookLeftUp;
+	public Motion EyeLookNeutral;
+	public Motion EyeLookRight;	
+	public Motion EyeLookRightDown;	
+	public Motion EyeLookRightUp;
+	public Motion EyeLookUp;	
 	
 	public string mouthPrefix = "exp/mouth/";
 	public string[] mouthShapeNames =
@@ -548,105 +539,119 @@ public class AnimatorWizard : MonoBehaviour
 		// Eye Tracking (WIP)
 		if (createEyeTracking)
 		{
-			var Eyelayer = _aac.CreateSupportingIdleLayer("Eye Tracking").WithAvatarMask(EyeMask);
+			var EyeLeftLayer = _aac.CreateSupportingIdleLayer("Eye Left Tracking").WithAvatarMask(EyeLeftMask);
+			var EyeRightLayer = _aac.CreateSupportingIdleLayer("Eye Right Tracking").WithAvatarMask(EyeRightMask);
 
-			// Creating parameters
-			AacFlBoolParameter etActiveParam = CreateBoolParam(Eyelayer, ftPrefix + "EyeTrackingActive", true, false);
-			AacFlFloatParameter etBlendParam = Eyelayer.FloatParameter(ftPrefix + "EyeTrackingActive-float");
-			AacFlFloatParameter EyeXParam = Eyelayer.FloatParameter(ftPrefix + "EyeX");
-			AacFlFloatParameter EyeYParam = Eyelayer.FloatParameter(ftPrefix + "EyeY");
+			// Shared params for both eyes
+			AacFlBoolParameter etActiveParam = CreateBoolParam(EyeLeftLayer, ftPrefix + "EyeTrackingActive", true, false);
+			AacFlFloatParameter etBlendParam = EyeLeftLayer.FloatParameter(ftPrefix + "EyeTrackingActive-float");
 
-			// "VRC Eye Control" state
-			var VRCEyeControlState = Eyelayer.NewState("VRC Eye Control")
+			// Left eye params
+			AacFlFloatParameter EyeLeftXParam = EyeLeftLayer.FloatParameter(ftPrefix + "EyeX");
+			AacFlFloatParameter EyeLeftYParam = EyeLeftLayer.FloatParameter(ftPrefix + "EyeY");
+
+			// Right eye params
+			AacFlFloatParameter EyeRightXParam = EyeRightLayer.FloatParameter(ftPrefix + "EyeX");
+			AacFlFloatParameter EyeRightYParam = EyeRightLayer.FloatParameter(ftPrefix + "EyeY");
+
+			// --- Left Eye ---
+			// VRC Eye Control State
+			var VRCEyeLeftControlState = EyeLeftLayer.NewState("VRC Eye Control")
 				.WithWriteDefaultsSetTo(true)
 				.Drives(etBlendParam, 0.0f)
 				.TrackingTracks(AacFlState.TrackingElement.Eyes);
-			
-			// Eye Tracking Tree
-			var EyeTrackingTree = _aac.NewBlendTreeAsRaw();
-			EyeTrackingTree.name = "EyeTracking";
-			EyeTrackingTree.blendType = BlendTreeType.Direct;
 
-			// "Eye Tracking" state
-			var EyeTrackingState = Eyelayer.NewState("Eye Tracking")
-				.WithAnimation(EyeTrackingTree)
+			// Eye Tracking Tree
+			var EyeLeftTrackingTree = _aac.NewBlendTreeAsRaw();
+			EyeLeftTrackingTree.name = "Eye Left Tracking";
+			EyeLeftTrackingTree.blendType = BlendTreeType.FreeformCartesian2D;
+			EyeLeftTrackingTree.blendParameter = EyeLeftXParam.Name;
+			EyeLeftTrackingTree.blendParameterY = EyeLeftYParam.Name;
+
+			// Add motions
+			AddEyeTrackingMotions(EyeLeftTrackingTree, maxEyeMotionValue, new Motion[]
+			{
+				EyeLookDown, EyeLookLeftDown, EyeLookLeft, EyeLookLeftUp, EyeLookNeutral,
+				EyeLookRightDown, EyeLookRight, EyeLookRightUp, EyeLookUp
+			});
+
+			// Eye Tracking State
+			var EyeTrackingStateLeft = EyeLeftLayer.NewState("Eye Tracking")
+				.WithAnimation(EyeLeftTrackingTree)
 				.WithWriteDefaultsSetTo(true)
 				.Drives(etBlendParam, 1.0f)
 				.TrackingAnimates(AacFlState.TrackingElement.Eyes);
 
-			// Left Eye tree
-			var LeftEyeTree = EyeTrackingTree.CreateBlendTreeChild(0);
-			LeftEyeTree.name = "Left Eye";
-			LeftEyeTree.blendType = BlendTreeType.FreeformCartesian2D;
-			LeftEyeTree.blendParameter = EyeXParam.Name;
-			LeftEyeTree.blendParameterY = EyeYParam.Name;
-      		AddEyePositionClips(LeftEyeTree, isLeft: true);
-			
-			// Right Eye tree
-			var RightEyeTree = EyeTrackingTree.CreateBlendTreeChild(1);
-			RightEyeTree.name = "Right Eye";
-			RightEyeTree.blendType = BlendTreeType.FreeformCartesian2D;
-			RightEyeTree.blendParameter = EyeXParam.Name;
-			RightEyeTree.blendParameterY = EyeYParam.Name;
-      		AddEyePositionClips(RightEyeTree, isLeft: false);
+			// Transitions
+			EyeLeftLayer.AnyTransitionsTo(VRCEyeLeftControlState).When(etActiveParam.IsFalse());
+			EyeLeftLayer.AnyTransitionsTo(EyeTrackingStateLeft).WithTransitionToSelf().When(etActiveParam.IsTrue());
+
+			// --- Right Eye ---
+			// VRC Eye Control State
+			var VRCEyeRightControlState = EyeRightLayer.NewState("VRC Eye Control")
+				.WithWriteDefaultsSetTo(true)
+				.Drives(etBlendParam, 0.0f)
+				.TrackingTracks(AacFlState.TrackingElement.Eyes);
+
+			// Eye Tracking Tree
+			var EyeRightTrackingTree = _aac.NewBlendTreeAsRaw();
+			EyeRightTrackingTree.name = "Eye Right Tracking";
+			EyeRightTrackingTree.blendType = BlendTreeType.FreeformCartesian2D;
+			EyeRightTrackingTree.blendParameter = EyeRightXParam.Name;
+			EyeRightTrackingTree.blendParameterY = EyeRightYParam.Name;
+
+			// Add motions
+			AddEyeTrackingMotions(EyeRightTrackingTree, maxEyeMotionValue, new Motion[]
+			{
+				EyeLookDown, EyeLookLeftDown, EyeLookLeft, EyeLookLeftUp, EyeLookNeutral,
+				EyeLookRightDown, EyeLookRight, EyeLookRightUp, EyeLookUp
+			});
+
+			// Eye Tracking State
+			var EyeTrackingStateRight = EyeRightLayer.NewState("Eye Tracking")
+				.WithAnimation(EyeRightTrackingTree)
+				.WithWriteDefaultsSetTo(true)
+				.Drives(etBlendParam, 1.0f)
+				.TrackingAnimates(AacFlState.TrackingElement.Eyes);
 
 			// Transitions
-			Eyelayer.AnyTransitionsTo(VRCEyeControlState)
-				.When(etActiveParam.IsFalse());
-			Eyelayer.AnyTransitionsTo(EyeTrackingState).WithTransitionToSelf()
-				.When(etActiveParam.IsTrue());
-
-			// Adding param for turning Left&Right Eye trees on/off
-			var EyeTrackingTreeChildren = EyeTrackingTree.children;
-			for (int i = 0; i < EyeTrackingTreeChildren.Length; i++)
+			EyeRightLayer.AnyTransitionsTo(VRCEyeRightControlState).When(etActiveParam.IsFalse());
+			EyeRightLayer.AnyTransitionsTo(EyeTrackingStateRight).WithTransitionToSelf().When(etActiveParam.IsTrue());
+		
+			void AddEyeTrackingMotions(BlendTree tree, float maxMotionValue, Motion[] motions)
 			{
-				var child = EyeTrackingTreeChildren[i];
-				child.directBlendParameter = etBlendParam.Name;
-				EyeTrackingTreeChildren[i] = child;
-			}
-			EyeTrackingTree.children = EyeTrackingTreeChildren;
-			
-			// Adding eye motion positions
-			void AddEyePositionClips(BlendTree tree, bool isLeft)
-			{
-				var prefix = isLeft ? "Left" : "Right";
-				float maxValue = 0.25f;
-				var motions = new Dictionary<string, Motion>
+				var positions = new[]
 				{
-					{ "Down", isLeft ? EyeLookDownLeftRot : EyeLookDownRightRot },
-					{ "InDown", isLeft ? EyeLookInDownLeftRot : EyeLookInDownRightRot },
-					{ "In", isLeft ? EyeLookInLeftRot : EyeLookInRightRot },
-					{ "InUp", isLeft ? EyeLookInUpLeftRot : EyeLookInUpRightRot },
-					{ "Neutral", isLeft ? EyeLookNeutralLeftRot : EyeLookNeutralRightRot },
-					{ "OutDown", isLeft ? EyeLookOutDownLeftRot : EyeLookOutDownRightRot },
-					{ "Out", isLeft ? EyeLookOutLeftRot : EyeLookOutRightRot },
-					{ "OutUp", isLeft ? EyeLookOutUPLeftRot : EyeLookOutUPRightRot },
-					{ "Up", isLeft ? EyeLookUpLeftRot : EyeLookUpRightRot },
+					new Vector2(0, -maxMotionValue), // Down
+					new Vector2(-maxMotionValue, -maxMotionValue), // LeftDown
+					new Vector2(-maxMotionValue, 0), // Left
+					new Vector2(-maxMotionValue, maxMotionValue), // LeftUp
+					Vector2.zero, // Neutral
+					new Vector2(maxMotionValue, -maxMotionValue), // RightDown
+					new Vector2(maxMotionValue, 0), // Right
+					new Vector2(maxMotionValue, maxMotionValue), // RightUp
+					new Vector2(0, maxMotionValue) // Up
 				};
 
-				// Map motions to their positions in the 2D blend space
-				var positions = new[] 
+				for (int i = 0; i < motions.Length; i++)
 				{
-					("Down", new Vector2(0, -maxValue)),
-					("InDown", new Vector2(isLeft ? maxValue : -maxValue, -maxValue)),
-					("In", new Vector2(isLeft ? maxValue : -maxValue, 0)),
-					("InUp", new Vector2(isLeft ? maxValue : -maxValue, maxValue)),
-					("Neutral", Vector2.zero),
-					("OutDown", new Vector2(isLeft ? -maxValue : maxValue, -maxValue)),
-					("Out", new Vector2(isLeft ? -maxValue : maxValue, 0)),
-					("OutUp", new Vector2(isLeft ? -maxValue : maxValue, maxValue)),
-					("Up", new Vector2(0, maxValue)),
-				};
-
-				foreach (var (name, position) in positions)
-				{
-					if (motions.TryGetValue(name, out var motion) && motion != null)
+					var child = new ChildMotion
 					{
-						tree.AddChild(motion, position);
-					}
+						motion = motions[i],
+						position = positions[i],
+						timeScale = 1f
+					};
+					tree.children = AppendChild(tree.children, child);
 				}
 			}
-		
+
+			ChildMotion[] AppendChild(ChildMotion[] children, ChildMotion child)
+			{
+				var newChildren = new ChildMotion[children.Length + 1];
+				Array.Copy(children, newChildren, children.Length);
+				newChildren[children.Length] = child;
+				return newChildren;
+			}
 		}
 
 		// Face Tracking
@@ -1187,7 +1192,7 @@ public class AnimatorGeneratorEditor : Editor
 
 	private SerializedProperty assetContainer;
 
-	private SerializedProperty fxMask, EyeMask, gestureMask, lMask, rMask;
+	private SerializedProperty fxMask, EyeLeftMask, EyeRightMask, gestureMask, lMask, rMask;
 
 	private SerializedProperty handPoses;
 	private SerializedProperty createShapePreferences, createColorCustomization, createFaceTracking, createClothCustomization, createEyeTracking;
@@ -1200,8 +1205,9 @@ public class AnimatorGeneratorEditor : Editor
 
 	private SerializedProperty primaryColor0, primaryColor1, secondColor0, secondColor1;
 
-	private SerializedProperty EyeLookDownLeftRot, EyeLookInDownLeftRot, EyeLookInLeftRot, EyeLookInUpLeftRot, EyeLookNeutralLeftRot, EyeLookOutDownLeftRot, EyeLookOutLeftRot, EyeLookOutUPLeftRot, EyeLookUpLeftRot;
-	private SerializedProperty EyeLookDownRightRot, EyeLookInDownRightRot, EyeLookInRightRot, EyeLookInUpRightRot, EyeLookNeutralRightRot, EyeLookOutDownRightRot, EyeLookOutRightRot, EyeLookOutUPRightRot, EyeLookUpRightRot;
+	private SerializedProperty maxEyeMotionValue;
+
+	private SerializedProperty EyeLookDown, EyeLookLeft, EyeLookLeftDown, EyeLookLeftUp, EyeLookNeutral, EyeLookRight, EyeLookRightDown, EyeLookRightUp, EyeLookUp;
 
 	private SerializedProperty mouthShapeNames, browShapeNames, expTrackName, ClothUpperBodyNames, ClothLowerBodyNames, ClothFootNames;
 
@@ -1219,7 +1225,8 @@ public class AnimatorGeneratorEditor : Editor
 		assetContainer = serializedObject.FindProperty("assetContainer");
 
 		fxMask = serializedObject.FindProperty("fxMask");
-		EyeMask = serializedObject.FindProperty("EyeMask");
+		EyeLeftMask = serializedObject.FindProperty("EyeLeftMask");
+		EyeRightMask = serializedObject.FindProperty("EyeRightMask");
 		gestureMask = serializedObject.FindProperty("gestureMask");
 		lMask = serializedObject.FindProperty("lMask");
 		rMask = serializedObject.FindProperty("rMask");
@@ -1263,26 +1270,17 @@ public class AnimatorGeneratorEditor : Editor
 		secondColor0 = serializedObject.FindProperty("secondColor0");
 		primaryColor1 = serializedObject.FindProperty("primaryColor1");
 		secondColor1 = serializedObject.FindProperty("secondColor1");
-
-        EyeLookDownLeftRot = serializedObject.FindProperty("EyeLookDownLeftRot");
-		EyeLookInDownLeftRot = serializedObject.FindProperty("EyeLookInDownLeftRot");
-		EyeLookInLeftRot = serializedObject.FindProperty("EyeLookInLeftRot");
-		EyeLookInUpLeftRot = serializedObject.FindProperty("EyeLookInUpLeftRot");
-		EyeLookNeutralLeftRot = serializedObject.FindProperty("EyeLookNeutralLeftRot");
-		EyeLookOutDownLeftRot = serializedObject.FindProperty("EyeLookOutDownLeftRot");
-		EyeLookOutLeftRot = serializedObject.FindProperty("EyeLookOutLeftRot");
-		EyeLookOutUPLeftRot = serializedObject.FindProperty("EyeLookOutUPLeftRot");
-		EyeLookUpLeftRot = serializedObject.FindProperty("EyeLookUpLeftRot");
-
-		EyeLookDownRightRot = serializedObject.FindProperty("EyeLookDownRightRot");
-		EyeLookInDownRightRot = serializedObject.FindProperty("EyeLookInDownRightRot");
-		EyeLookInRightRot = serializedObject.FindProperty("EyeLookInRightRot");
-		EyeLookInUpRightRot = serializedObject.FindProperty("EyeLookInUpRightRot");
-		EyeLookNeutralRightRot = serializedObject.FindProperty("EyeLookNeutralRightRot");
-		EyeLookOutDownRightRot = serializedObject.FindProperty("EyeLookOutDownRightRot");
-		EyeLookOutRightRot = serializedObject.FindProperty("EyeLookOutRightRot");
-		EyeLookOutUPRightRot = serializedObject.FindProperty("EyeLookOutUPRightRot");
-		EyeLookUpRightRot = serializedObject.FindProperty("EyeLookUpRightRot");
+		
+		maxEyeMotionValue = serializedObject.FindProperty("maxEyeMotionValue");
+        EyeLookDown = serializedObject.FindProperty("EyeLookDown");
+		EyeLookLeft = serializedObject.FindProperty("EyeLookLeft");
+		EyeLookLeftDown = serializedObject.FindProperty("EyeLookLeftDown");
+		EyeLookLeftUp = serializedObject.FindProperty("EyeLookLeftUp");
+		EyeLookNeutral = serializedObject.FindProperty("EyeLookNeutral");
+		EyeLookRight = serializedObject.FindProperty("EyeLookRight");
+		EyeLookRightDown = serializedObject.FindProperty("EyeLookRightDown");
+		EyeLookRightUp = serializedObject.FindProperty("EyeLookRightUp");
+		EyeLookUp = serializedObject.FindProperty("EyeLookUp");
 
 		ftShapes = serializedObject.FindProperty("ftShapes");
 		ftDualShapes = serializedObject.FindProperty("ftDualShapes");
@@ -1356,7 +1354,11 @@ public class AnimatorGeneratorEditor : Editor
 		// Avatar animator masks
 		GUILayout.Label("Avatar animator masks", headerStyle);
 		EditorGUILayout.PropertyField(fxMask);
-		EditorGUILayout.PropertyField(EyeMask);
+		if (wizard.createEyeTracking)
+		{	
+			EditorGUILayout.PropertyField(EyeLeftMask);
+			EditorGUILayout.PropertyField(EyeRightMask);
+		}
 		EditorGUILayout.PropertyField(gestureMask);
 		EditorGUILayout.PropertyField(lMask);
 		EditorGUILayout.PropertyField(rMask);
@@ -1444,35 +1446,21 @@ public class AnimatorGeneratorEditor : Editor
 					GUILayout.Space(10);
 					EditorGUILayout.PropertyField(ftPrefix);
 				}
-				//GUILayout.Space(10);
-				//EditorGUILayout.PropertyField(MirroringParam,PopUpLabel("Mirroring Animations", ""));
 				GUILayout.Space(10);
-				GUILayout.Label("Left Eye", headerStyle2);
+				EditorGUILayout.PropertyField(maxEyeMotionValue);
 				GUILayout.Space(10);
-				EditorGUILayout.PropertyField(EyeLookDownLeftRot);
-				EditorGUILayout.PropertyField(EyeLookInDownLeftRot);
-				EditorGUILayout.PropertyField(EyeLookInLeftRot);
-				EditorGUILayout.PropertyField(EyeLookInUpLeftRot);
-				EditorGUILayout.PropertyField(EyeLookNeutralLeftRot);
-				EditorGUILayout.PropertyField(EyeLookOutDownLeftRot);
-				EditorGUILayout.PropertyField(EyeLookOutLeftRot);
-				EditorGUILayout.PropertyField(EyeLookOutUPLeftRot);
-				EditorGUILayout.PropertyField(EyeLookUpLeftRot);
+				GUILayout.Label("Eye Poses", headerStyle2);
 				GUILayout.Space(10);
-				//if(!wizard.MirroringParam)
-				//{
-					GUILayout.Label("Right Eye", headerStyle2);	
-					GUILayout.Space(10);
-					EditorGUILayout.PropertyField(EyeLookDownRightRot);
-					EditorGUILayout.PropertyField(EyeLookInDownRightRot);
-					EditorGUILayout.PropertyField(EyeLookInRightRot);
-					EditorGUILayout.PropertyField(EyeLookInUpRightRot);
-					EditorGUILayout.PropertyField(EyeLookNeutralRightRot);
-					EditorGUILayout.PropertyField(EyeLookOutDownRightRot);
-					EditorGUILayout.PropertyField(EyeLookOutRightRot);
-					EditorGUILayout.PropertyField(EyeLookOutUPRightRot);
-					EditorGUILayout.PropertyField(EyeLookUpRightRot);
-				//}
+				EditorGUILayout.PropertyField(EyeLookDown);
+				EditorGUILayout.PropertyField(EyeLookLeft);
+				EditorGUILayout.PropertyField(EyeLookLeftDown);
+				EditorGUILayout.PropertyField(EyeLookLeftUp);
+				EditorGUILayout.PropertyField(EyeLookNeutral);
+				EditorGUILayout.PropertyField(EyeLookRight);
+				EditorGUILayout.PropertyField(EyeLookRightDown);
+				EditorGUILayout.PropertyField(EyeLookRightUp);
+				EditorGUILayout.PropertyField(EyeLookUp);
+				GUILayout.Space(10);
 			}
 
 
@@ -1480,6 +1468,7 @@ public class AnimatorGeneratorEditor : Editor
 		if (wizard.createFaceTracking)
 		{
 			GUILayout.Label("FaceTracking (Universal Shapes) settings", headerStyle);
+			GUILayout.Space(10);
 			EditorGUILayout.PropertyField(ftPrefix);
 			GUILayout.Space(10);
 			EditorGUILayout.PropertyField(createFaceTrackingLipSyncControl,

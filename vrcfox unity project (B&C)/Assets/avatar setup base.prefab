@@ -661,7 +661,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   assetContainer: {fileID: 9100000, guid: a33c5817a0ccd554595fad701f7d25e6, type: 2}
   fxMask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
-  EyeMask: {fileID: 31900000, guid: 66094741a9a9e9a4eb478890a4125eb4, type: 2}
+  EyeLeftMask: {fileID: 31900000, guid: 66094741a9a9e9a4eb478890a4125eb4, type: 2}
+  EyeRightMask: {fileID: 31900000, guid: a20dbdd41a7b0424aac0c38f843b59e8, type: 2}
   gestureMask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
   lMask: {fileID: 31900000, guid: 2ea11c35275506a4fbf628a11c068a8e, type: 2}
   rMask: {fileID: 31900000, guid: 00b67f2d2f7eba8438148317288155d8, type: 2}
@@ -701,31 +702,15 @@ MonoBehaviour:
   localSmoothness: 0.1
   remoteSmoothness: 0.7
   createEyeTracking: 1
-  EyeLookDownLeftRot: {fileID: 7400000, guid: 6acaa8131ea844f4f8391ba2348df9ef, type: 2}
-  EyeLookInDownLeftRot: {fileID: 7400000, guid: 967a6c5240a328641ab581d19f1e8082,
-    type: 2}
-  EyeLookInLeftRot: {fileID: 7400000, guid: 9219af586e78ed44eac14b5fe7cc766e, type: 2}
-  EyeLookInUpLeftRot: {fileID: 7400000, guid: 502411203eea70b488b9d5230a0b75ad, type: 2}
-  EyeLookNeutralLeftRot: {fileID: 7400000, guid: 494ef91a9dda4a74aa868f9104bdf294,
-    type: 2}
-  EyeLookOutDownLeftRot: {fileID: 7400000, guid: 900cbec586c7cbe48bec3784bdecabb0,
-    type: 2}
-  EyeLookOutLeftRot: {fileID: 7400000, guid: daac798f15c5ac3499ced166d31c2c40, type: 2}
-  EyeLookOutUPLeftRot: {fileID: 7400000, guid: 8072aea378c283d4fa3602d3012bc9d6, type: 2}
-  EyeLookUpLeftRot: {fileID: 7400000, guid: 920333b06fbcacb47814d658c4f020dc, type: 2}
-  EyeLookDownRightRot: {fileID: 7400000, guid: bf929902944dfa04bbb302c8cdb70e54, type: 2}
-  EyeLookInDownRightRot: {fileID: 7400000, guid: 2f0235ce23d4a414d83fb418b3afb995,
-    type: 2}
-  EyeLookInRightRot: {fileID: 7400000, guid: 9f84b0e23ed6d5b49a62f242946a3bc6, type: 2}
-  EyeLookInUpRightRot: {fileID: 7400000, guid: 6b7776ef8bd35a847ab06201ba109850, type: 2}
-  EyeLookNeutralRightRot: {fileID: 7400000, guid: fd8f714a23c250d4cbc49f8df81e3ca5,
-    type: 2}
-  EyeLookOutDownRightRot: {fileID: 7400000, guid: ae1f40e111011e34bab4254996c52f0c,
-    type: 2}
-  EyeLookOutRightRot: {fileID: 7400000, guid: 4d4fffcb94243ce429c2b43db5e0513a, type: 2}
-  EyeLookOutUPRightRot: {fileID: 7400000, guid: 5e801d29a40b6b3428803162eb624325,
-    type: 2}
-  EyeLookUpRightRot: {fileID: 7400000, guid: 02c0729258272ee4da6a512c03c76474, type: 2}
+  EyeLookDown: {fileID: 7400000, guid: ffe7bfda0c46fa64b89b8669e23871f9, type: 2}
+  EyeLookLeft: {fileID: 7400000, guid: cdb2ee8d508e6764fa1a67ddc8e777e8, type: 2}
+  EyeLookLeftDown: {fileID: 7400000, guid: 930b2e2a422ccbb4fb29655b1686ce42, type: 2}
+  EyeLookLeftUp: {fileID: 7400000, guid: 38516e689f55a6f44ab492e0efcabfd4, type: 2}
+  EyeLookNeutral: {fileID: 7400000, guid: 3120e85eb2940074a9e03f97ee4a77bd, type: 2}
+  EyeLookRight: {fileID: 7400000, guid: 0652075c7a43ce2419b2fbe08166217e, type: 2}
+  EyeLookRightDown: {fileID: 7400000, guid: fabaa03842dea1346b36860ebff4c25a, type: 2}
+  EyeLookRightUp: {fileID: 7400000, guid: f3c788404e5bad34b8f25f8a5c367302, type: 2}
+  EyeLookUp: {fileID: 7400000, guid: 38516e689f55a6f44ab492e0efcabfd4, type: 2}
   mouthPrefix: exp/mouth/
   mouthShapeNames:
   - basis
