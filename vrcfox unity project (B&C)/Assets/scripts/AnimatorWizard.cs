@@ -357,12 +357,14 @@ public class AnimatorWizard : MonoBehaviour
 					for (int i = 0; i < skin.sharedMesh.blendShapeCount; i++)
 					{
 						string blendShapeName = skin.sharedMesh.GetBlendShapeName(i);
-
+						
+                		// Check if the blend shape is for toggling cloth
 						if (blendShapeName.StartsWith(ClothTogglesPrefix + clothName))
 						{
 							var boolParam = CreateBoolParam(fxLayer, ClothTogglesPrefix + clothName, true, false);
 							var floatParam = fxLayer.FloatParameter(ClothTogglesPrefix + clothName + "-float");
 
+							// add parameter driver to toggle function
 							var driverEntry = new VRC_AvatarParameterDriver.Parameter
 							{
 								type = VRC_AvatarParameterDriver.ChangeType.Copy,
@@ -371,16 +373,21 @@ public class AnimatorWizard : MonoBehaviour
 							};
 							drivers.parameters.Add(driverEntry);
 
-							// Reversed animations for clothes
+							// add toggle blend shape to the blend tree
 							toggleTree.AddChild(BlendshapeTree(fxTreeLayer, skin, ClothTogglesPrefix + clothName, floatParam, max: 0, min: 100));
 						}
+
+						// check if the blend shape is for adjust (cloth adjust or adjust body)
 						else if (blendShapeName.StartsWith(ClothAdjustPrefix + clothName) || 
 								blendShapeName.StartsWith(ClothAdjustBodyPrefix + clothName))
 						{
+							// Determine the prefix (adjust or adjust body)
 							var prefix = blendShapeName.StartsWith(ClothAdjustPrefix + clothName) ? ClothAdjustPrefix : ClothAdjustBodyPrefix;
-							var boolParam = CreateBoolParam(fxLayer, prefix + clothName, true, false);
+
+							var boolParam = fxLayer.BoolParameter(prefix + clothName);
 							var floatParam = fxLayer.FloatParameter(prefix + clothName + "-float");
 
+							// add parameter driver for adjust function
 							var driverEntry = new VRC_AvatarParameterDriver.Parameter
 							{
 								type = VRC_AvatarParameterDriver.ChangeType.Copy,
@@ -389,6 +396,7 @@ public class AnimatorWizard : MonoBehaviour
 							};
 							drivers.parameters.Add(driverEntry);
 
+							// add adjust blend shape to the blend tree
 							adjustTree.AddChild(BlendshapeTree(fxTreeLayer, skin, prefix + clothName, floatParam));
 						}
 					}
@@ -474,15 +482,15 @@ public class AnimatorWizard : MonoBehaviour
 				clothStates[clothName] = clothState;
 				adjustClothStates[clothName] = adjustClothState;
 
+				// Transitions
 				waitingTransition.When(layer.BoolParameter(togglePrefix + clothName).IsFalse());
-
 				var clothTransition = layer.AnyTransitionsTo(clothState).When(layer.BoolParameter(togglePrefix + clothName).IsTrue());
 				foreach (var upperClothName in ClothUpperBodyNames)
 				{
 					clothTransition.And(layer.BoolParameter(togglePrefix + upperClothName).IsFalse());
 				}
 
-				// Transitions for adjust states
+				// for adjust states
 				foreach (var upperClothName in ClothUpperBodyNames)
 				{
 					layer.AnyTransitionsTo(adjustClothState)
@@ -509,16 +517,6 @@ public class AnimatorWizard : MonoBehaviour
 			}
 		}
 
-		void AddParameter(VRCAvatarParameterDriver driver, string name, float value)
-		{
-			driver.parameters.Add(new VRC_AvatarParameterDriver.Parameter
-			{
-				name = name,
-				type = VRC_AvatarParameterDriver.ChangeType.Set,
-				value = value
-			});
-		}
-
 		// Color Customization
         if (createColorCustomization)
 		{
@@ -539,20 +537,14 @@ public class AnimatorWizard : MonoBehaviour
 		// Eye Tracking (WIP)
 		if (createEyeTracking)
 		{
+			var AdditiveLayer = _aac.CreateMainIdleLayer();
 			var EyeLeftLayer = _aac.CreateSupportingIdleLayer("Eye Left Tracking").WithAvatarMask(EyeLeftMask);
 			var EyeRightLayer = _aac.CreateSupportingIdleLayer("Eye Right Tracking").WithAvatarMask(EyeRightMask);
 
-			// Shared params for both eyes
-			AacFlBoolParameter etActiveParam = CreateBoolParam(EyeLeftLayer, ftPrefix + "EyeTrackingActive", true, false);
-			AacFlFloatParameter etBlendParam = EyeLeftLayer.FloatParameter(ftPrefix + "EyeTrackingActive-float");
-
-			// Left eye params
-			AacFlFloatParameter EyeLeftXParam = EyeLeftLayer.FloatParameter(ftPrefix + "EyeX");
-			AacFlFloatParameter EyeLeftYParam = EyeLeftLayer.FloatParameter(ftPrefix + "EyeY");
-
-			// Right eye params
-			AacFlFloatParameter EyeRightXParam = EyeRightLayer.FloatParameter(ftPrefix + "EyeX");
-			AacFlFloatParameter EyeRightYParam = EyeRightLayer.FloatParameter(ftPrefix + "EyeY");
+			AacFlBoolParameter etActiveParam = CreateBoolParam(AdditiveLayer, ftPrefix + "EyeTrackingActive", true, false);
+			AacFlFloatParameter etBlendParam = AdditiveLayer.FloatParameter(ftPrefix + "EyeTrackingActive-float");
+			AacFlFloatParameter EyeXParam = CreateFloatParam(AdditiveLayer, ftPrefix + "EyeX", false, 0.0f);
+			AacFlFloatParameter EyeYParam = CreateFloatParam(AdditiveLayer, ftPrefix + "EyeY", false, 0.0f);
 
 			// --- Left Eye ---
 			// VRC Eye Control State
@@ -565,10 +557,10 @@ public class AnimatorWizard : MonoBehaviour
 			var EyeLeftTrackingTree = _aac.NewBlendTreeAsRaw();
 			EyeLeftTrackingTree.name = "Eye Left Tracking";
 			EyeLeftTrackingTree.blendType = BlendTreeType.FreeformCartesian2D;
-			EyeLeftTrackingTree.blendParameter = EyeLeftXParam.Name;
-			EyeLeftTrackingTree.blendParameterY = EyeLeftYParam.Name;
+			EyeLeftTrackingTree.blendParameter = EyeXParam.Name;
+			EyeLeftTrackingTree.blendParameterY = EyeYParam.Name;
 
-			// Add motions
+			// add motions
 			AddEyeTrackingMotions(EyeLeftTrackingTree, maxEyeMotionValue, new Motion[]
 			{
 				EyeLookDown, EyeLookLeftDown, EyeLookLeft, EyeLookLeftUp, EyeLookNeutral,
@@ -597,10 +589,10 @@ public class AnimatorWizard : MonoBehaviour
 			var EyeRightTrackingTree = _aac.NewBlendTreeAsRaw();
 			EyeRightTrackingTree.name = "Eye Right Tracking";
 			EyeRightTrackingTree.blendType = BlendTreeType.FreeformCartesian2D;
-			EyeRightTrackingTree.blendParameter = EyeRightXParam.Name;
-			EyeRightTrackingTree.blendParameterY = EyeRightYParam.Name;
+			EyeRightTrackingTree.blendParameter = EyeXParam.Name;
+			EyeRightTrackingTree.blendParameterY = EyeYParam.Name;
 
-			// Add motions
+			// add motions
 			AddEyeTrackingMotions(EyeRightTrackingTree, maxEyeMotionValue, new Motion[]
 			{
 				EyeLookDown, EyeLookLeftDown, EyeLookLeft, EyeLookLeftUp, EyeLookNeutral,
@@ -617,7 +609,8 @@ public class AnimatorWizard : MonoBehaviour
 			// Transitions
 			EyeRightLayer.AnyTransitionsTo(VRCEyeRightControlState).When(etActiveParam.IsFalse());
 			EyeRightLayer.AnyTransitionsTo(EyeTrackingStateRight).WithTransitionToSelf().When(etActiveParam.IsTrue());
-		
+
+			// functions for adding motions and managing child arrays
 			void AddEyeTrackingMotions(BlendTree tree, float maxMotionValue, Motion[] motions)
 			{
 				var positions = new[]
@@ -866,28 +859,29 @@ public class AnimatorWizard : MonoBehaviour
 						var smootherParamName = $"OSCsmooth/{type}/{ftPrefix}{shape}Smoother";
 						var driverParamName = $"OSCsmooth/Proxy/{ftPrefix}{shape}";
 
-						CreateFloatParam(fxLayer, smootherParamName, true, 0.0f);
-						CreateFloatParam(fxLayer, driverParamName, true, 0.0f);
+						AacFlFloatParameter smootherParam = OSCLayer.FloatParameter(smootherParamName);
+						AacFlFloatParameter driverParam = OSCLayer.FloatParameter(driverParamName);
+
+						OSCLayer.OverrideValue(smootherParam, 0.0f);
+						OSCLayer.OverrideValue(driverParam, 0.0f);
 
 						// Replace params in the FT tree
 						foreach (var child in masterTree.children)
 						{
 							if (child.motion is BlendTree blendTree)
 							{
-								ReplaceBlendTreeParameter(blendTree, inputParamName, driverParamName);
+								ReplaceBlendTreeParameter(blendTree, inputParamName, driverParam.Name);
 							}
 						}
 
 						var inputParam = OSCLayer.FloatParameter(inputParamName);
-						var smootherParam = OSCLayer.FloatParameter(smootherParamName);
-						OSCLayer.OverrideValue(smootherParam, smoothness);
 
 						// Root Tree
 						var rootSubTree = rootTree.CreateBlendTreeChild(0);
 						rootSubTree.name = $"OSCsmooth/{type}/{ftPrefix}{shape}Smoother";
 						rootSubTree.blendType = BlendTreeType.Simple1D;
 						rootSubTree.useAutomaticThresholds = false;
-						rootSubTree.blendParameter = smootherParamName;
+						rootSubTree.blendParameter = smootherParam.Name;
 
 						// Input Tree
 						var inputTree = rootSubTree.CreateBlendTreeChild(0);
@@ -897,9 +891,9 @@ public class AnimatorWizard : MonoBehaviour
 						inputTree.blendParameter = inputParam.Name;
 
 						var clipMin = _aac.NewClip($"Animator.OSCsmooth/Proxy/{ftPrefix}{shape}_Min")
-							.Animating(anim => anim.AnimatesAnimator(OSCLayer.FloatParameter(driverParamName)).WithFixedSeconds(0.0f, -1.0f));
+							.Animating(anim => anim.AnimatesAnimator(driverParam).WithFixedSeconds(0.0f, -1.0f));
 						var clipMax = _aac.NewClip($"Animator.OSCsmooth/Proxy/{ftPrefix}{shape}_Max")
-							.Animating(anim => anim.AnimatesAnimator(OSCLayer.FloatParameter(driverParamName)).WithFixedSeconds(0.0f, 1.0f));
+							.Animating(anim => anim.AnimatesAnimator(driverParam).WithFixedSeconds(0.0f, 1.0f));
 
 						inputTree.AddChild(clipMin.Clip, -1.0f);
 						inputTree.AddChild(clipMax.Clip, 1.0f);
@@ -909,7 +903,7 @@ public class AnimatorWizard : MonoBehaviour
 						driverTree.name = $"OSCsmooth Driver ({ftPrefix}{shape})";
 						driverTree.blendType = BlendTreeType.Simple1D;
 						driverTree.useAutomaticThresholds = false;
-						driverTree.blendParameter = driverParamName;
+						driverTree.blendParameter = driverParam.Name;
 
 						driverTree.AddChild(clipMin.Clip, -1.0f);
 						driverTree.AddChild(clipMax.Clip, 1.0f);
@@ -921,7 +915,7 @@ public class AnimatorWizard : MonoBehaviour
 
 				OSCLocalState.TransitionsTo(OSCRemoteState).When(OSCLayer.BoolParameter("IsLocal").IsFalse());
 				OSCRemoteState.TransitionsTo(OSCLocalState).When(OSCLayer.BoolParameter("IsLocal").IsTrue());
-				
+
 				void ReplaceBlendTreeParameter(BlendTree tree, string oldParam, string newParam)
 				{
 					if (tree.blendParameter == oldParam)
@@ -1106,9 +1100,6 @@ public class AnimatorWizard : MonoBehaviour
 	{
 
 		{
-			// Exclude ClothAdjustPrefix and OSC params (костыль, надо решить его)
-			if (!paramName.StartsWith(ClothAdjustPrefix) && !paramName.StartsWith("OSCsmooth"))
-			{
 				_vrcParams.Add(new VRCExpressionParameters.Parameter()
 				{
 					name = paramName,
@@ -1117,7 +1108,6 @@ public class AnimatorWizard : MonoBehaviour
 					networkSynced = true,
 					defaultValue = val,
 				});
-			}
 		}
 	}
 
@@ -1127,9 +1117,6 @@ public class AnimatorWizard : MonoBehaviour
 		// will save your VRCParams if True
 		if(!saveVRCExpressionParameters)
 		{
-			// Exclude ClothAdjustPrefix and OSC params (костыль, надо решить его)
-			if (!paramName.StartsWith(ClothAdjustPrefix) && !paramName.StartsWith("OSCsmooth"))
-			{
 				_vrcParams.Add(new VRCExpressionParameters.Parameter()
 				{
 					name = paramName,
@@ -1138,7 +1125,6 @@ public class AnimatorWizard : MonoBehaviour
 					networkSynced = true,
 					defaultValue = val ? 1 : 0,
 				});
-			}
 		}
 		
 		return layer.BoolParameter(paramName);
