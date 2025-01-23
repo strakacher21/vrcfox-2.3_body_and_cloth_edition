@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: Face Builder-4
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 813ca3981145fa046847840958a7301f, type: 2}
+  Parameters: {fileID: 11400000, guid: 81db426d2d57e2649b743a4a6f77e921, type: 2}
   controls:
-  - name: <b>v2/EyeY
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+  - name: <b>JawX
+    icon: {fileID: 2800000, guid: 66120f7762b4f4a4798f4282a2cfd302, type: 3}
     type: 203
     parameter:
       name: 
@@ -23,10 +23,10 @@ MonoBehaviour:
     style: 0
     subMenu: {fileID: 0}
     subParameters:
-    - name: v2/EyeY
+    - name: v2/JawX
     labels: []
-  - name: <b>v2/EyeX
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+  - name: <b>JawOpen
+    icon: {fileID: 2800000, guid: 66120f7762b4f4a4798f4282a2cfd302, type: 3}
     type: 203
     parameter:
       name: 
@@ -34,10 +34,10 @@ MonoBehaviour:
     style: 0
     subMenu: {fileID: 0}
     subParameters:
-    - name: v2/EyeX
+    - name: v2/JawOpen
     labels: []
   - name: <b>MouthStretchRight
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+    icon: {fileID: 2800000, guid: 66120f7762b4f4a4798f4282a2cfd302, type: 3}
     type: 203
     parameter:
       name: 
@@ -48,7 +48,7 @@ MonoBehaviour:
     - name: v2/MouthStretchRight
     labels: []
   - name: <b>MouthStretchLeft
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+    icon: {fileID: 2800000, guid: 66120f7762b4f4a4798f4282a2cfd302, type: 3}
     type: 203
     parameter:
       name: 
@@ -59,7 +59,7 @@ MonoBehaviour:
     - name: v2/MouthStretchLeft
     labels: []
   - name: <b>SmileSadRight
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+    icon: {fileID: 2800000, guid: 66120f7762b4f4a4798f4282a2cfd302, type: 3}
     type: 203
     parameter:
       name: 
@@ -70,7 +70,7 @@ MonoBehaviour:
     - name: v2/SmileSadRight
     labels: []
   - name: <b>SmileSadLeft
-    icon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+    icon: {fileID: 2800000, guid: 66120f7762b4f4a4798f4282a2cfd302, type: 3}
     type: 203
     parameter:
       name: 
