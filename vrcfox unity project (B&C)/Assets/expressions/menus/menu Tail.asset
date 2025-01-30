@@ -12,55 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: menu Tail
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 9717dab5febadb240af488c69ba37be3, type: 2}
+  Parameters: {fileID: 11400000, guid: 81db426d2d57e2649b743a4a6f77e921, type: 2}
   controls:
-  - name: <b><color=green>Tail Floor Collider
+  - name: <b><color=green>Tail Colliders
     icon: {fileID: 2800000, guid: 7663ddfd7cdb4724983662b30244eb85, type: 3}
     type: 102
     parameter:
-      name: tail/Floor Collider
+      name: tail/Colliders
     value: 1
     style: 0
     subMenu: {fileID: 0}
     subParameters: []
     labels: []
-  - name: <b><color=green>Tail Legs Collider
-    icon: {fileID: 2800000, guid: a68733c7bec10b749929bc5966a961a4, type: 3}
-    type: 102
+  - name: <b><color=orange>Tail WAG
+    icon: {fileID: 2800000, guid: 25c0480fe355ea940abf1dd7e635f4c4, type: 3}
+    type: 203
     parameter:
-      name: tail/Legs Collider
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
-    labels: []
-  - name: <b>Tail WAG <color=orange>[SLOW]
-    icon: {fileID: 2800000, guid: 416e100da13df044cb7e91397632d8b7, type: 3}
-    type: 102
-    parameter:
-      name: tail/anim/WAG/slow
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters: []
-    labels: []
-  - name: <b>Tail WAG <color=orange>[MEDIUM]
-    icon: {fileID: 2800000, guid: 416e100da13df044cb7e91397632d8b7, type: 3}
-    type: 102
-    parameter:
-      name: tail/anim/WAG/medium
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters: []
-    labels: []
-  - name: <b>Tail WAG <color=orange>[FAST]
-    icon: {fileID: 2800000, guid: 416e100da13df044cb7e91397632d8b7, type: 3}
-    type: 102
-    parameter:
-      name: tail/anim/WAG/fast
-    value: 1
-    style: 0
-    subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: tail/anim/WAG
     labels: []

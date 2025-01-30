@@ -28,7 +28,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
+    importConstraints: 1
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -38,11 +38,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: rig|hand 0 neutral
-      takeName: rig|hand 0 neutral
+      name: rig|export pose
+      takeName: rig|export pose
       internalID: -323290640565089156
       firstFrame: 0
-      lastFrame: 0
+      lastFrame: 0.1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -71,7 +71,7 @@ ModelImporter:
       takeName: rig|hand 1 fist
       internalID: 1812292174531892778
       firstFrame: 0
-      lastFrame: 0
+      lastFrame: 0.1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -100,7 +100,7 @@ ModelImporter:
       takeName: rig|hand 2 open
       internalID: -6936282357973609983
       firstFrame: 0
-      lastFrame: 0
+      lastFrame: 0.1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -129,7 +129,36 @@ ModelImporter:
       takeName: rig|hand 3 point
       internalID: 6345884184507438519
       firstFrame: 0
-      lastFrame: 0
+      lastFrame: 0.1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: rig|hand 4 okay
+      takeName: rig|hand 4 okay
+      internalID: -597605664110973857
+      firstFrame: 0
+      lastFrame: 0.1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -156,9 +185,38 @@ ModelImporter:
     - serializedVersion: 16
       name: rig|hand 4 peace
       takeName: rig|hand 4 peace
-      internalID: -597605664110973857
+      internalID: 5224918019115096257
       firstFrame: 0
-      lastFrame: 0
+      lastFrame: 0.1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: rig|hand 5 middle finger
+      takeName: rig|hand 5 middle finger
+      internalID: 7338417288294162353
+      firstFrame: 0
+      lastFrame: 0.1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -185,9 +243,9 @@ ModelImporter:
     - serializedVersion: 16
       name: rig|hand 5 rock n roll
       takeName: rig|hand 5 rock n roll
-      internalID: 5224918019115096257
+      internalID: 5305558247662170596
       firstFrame: 0
-      lastFrame: 0
+      lastFrame: 0.1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -214,9 +272,9 @@ ModelImporter:
     - serializedVersion: 16
       name: rig|hand 6 gun
       takeName: rig|hand 6 gun
-      internalID: 7338417288294162353
+      internalID: -5262539324075170805
       firstFrame: 0
-      lastFrame: 0
+      lastFrame: 0.1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -243,9 +301,38 @@ ModelImporter:
     - serializedVersion: 16
       name: rig|hand 7 thumbs up
       takeName: rig|hand 7 thumbs up
-      internalID: 5305558247662170596
+      internalID: 286228351643695133
       firstFrame: 0
-      lastFrame: 0
+      lastFrame: 0.1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: rig|showcase pose
+      takeName: rig|showcase pose
+      internalID: -428907144866149839
+      firstFrame: 0
+      lastFrame: 0.1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

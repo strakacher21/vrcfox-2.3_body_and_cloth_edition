@@ -19,20 +19,10 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: tail/anim/WAG/slow
-    valueType: 2
+  - name: tail/anim/WAG
+    valueType: 1
     saved: 1
-    defaultValue: 1
-    networkSynced: 1
-  - name: tail/anim/WAG/medium
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: tail/anim/WAG/fast
-    valueType: 2
-    saved: 1
-    defaultValue: 0
+    defaultValue: 0.2
     networkSynced: 1
   - name: cloth/toggle/coat
     valueType: 2
@@ -84,12 +74,12 @@ MonoBehaviour:
     saved: 1
     defaultValue: 1
     networkSynced: 1
-  - name: anim/ears[FT]
+  - name: anim/ears
     valueType: 2
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: ExpressionTrackingActive
+  - name: v2/ExpressionTrackingActive
     valueType: 2
     saved: 1
     defaultValue: 1
@@ -99,15 +89,10 @@ MonoBehaviour:
     saved: 1
     defaultValue: 1
     networkSynced: 1
-  - name: tail/Floor Collider
+  - name: tail/Colliders
     valueType: 2
     saved: 1
     defaultValue: 1
-    networkSynced: 1
-  - name: tail/Legs Collider
-    valueType: 2
-    saved: 1
-    defaultValue: 0.7
     networkSynced: 1
   - name: pref/toggle/ears[more]
     valueType: 2
@@ -229,32 +214,22 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: v2/MouthStretchLeft
+  - name: v2/MouthStretch
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: v2/MouthStretchRight
+  - name: v2/MouthUpperX
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: v2/MouthUpperUpRight
+  - name: v2/MouthX
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: v2/MouthUpperUpLeft
-    valueType: 1
-    saved: 0
-    defaultValue: 0
-    networkSynced: 1
-  - name: v2/MouthLowerDownRight
-    valueType: 1
-    saved: 0
-    defaultValue: 0
-    networkSynced: 1
-  - name: v2/MouthLowerDownLeft
+  - name: v2/MouthLowerX
     valueType: 1
     saved: 0
     defaultValue: 0
@@ -264,12 +239,7 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: v2/SmileSadLeft
-    valueType: 1
-    saved: 0
-    defaultValue: 0
-    networkSynced: 1
-  - name: v2/SmileSadRight
+  - name: v2/SmileSad
     valueType: 1
     saved: 0
     defaultValue: 0
@@ -279,12 +249,12 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: v2/BrowExpressionRight
+  - name: v2/BrowExpressionLeft
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: v2/BrowExpressionLeft
+  - name: v2/BrowExpressionRight
     valueType: 1
     saved: 0
     defaultValue: 0

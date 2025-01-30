@@ -72,6 +72,7 @@ if bpy.context.selected_objects:
         bake_anim_force_startend_keying=False,
         bake_anim_simplify_factor=0.0,
         colors_type="LINEAR",
+		#add_leaf_bones=False,
         use_armature_deform_only=True,
         use_triangles=False,
     )

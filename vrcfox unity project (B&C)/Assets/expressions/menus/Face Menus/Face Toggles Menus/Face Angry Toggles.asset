@@ -12,30 +12,60 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: Face Angry Toggles
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 6df3fdda378831143beda2f2d79c756a, type: 2}
+  Parameters: {fileID: 11400000, guid: 81db426d2d57e2649b743a4a6f77e921, type: 2}
   controls:
-  - name: <b>Stone Jonson
-    icon: {fileID: 2800000, guid: 4b495e767db8b3040ae5aa43778de9da, type: 3}
+  - name: <b><color=red>Critical Eyebrow Raise
+    icon: {fileID: 2800000, guid: 43d2a48c186071a4a8cbbb9a7c4b3ade, type: 3}
     type: 102
     parameter:
       name: v2/anim/FacePresets
-    value: 1
+    value: 25
     style: 0
     subMenu: {fileID: 0}
     subParameters: []
     labels: []
-  - name: <b>Frown
-    icon: {fileID: 2800000, guid: eff9a989f4dfe57429c24adf88006e29, type: 3}
+  - name: <b><color=red>Resigned Frustration
+    icon: {fileID: 2800000, guid: 43d2a48c186071a4a8cbbb9a7c4b3ade, type: 3}
     type: 102
     parameter:
       name: v2/anim/FacePresets
-    value: 10
+    value: 24
     style: 0
     subMenu: {fileID: 0}
     subParameters: []
     labels: []
-  - name: <b>Uhhh man
-    icon: {fileID: 2800000, guid: d80589cf143f0ea43a040f1e580f1b7b, type: 3}
+  - name: <b><color=red>Sulky Tongue-out
+    icon: {fileID: 2800000, guid: 43d2a48c186071a4a8cbbb9a7c4b3ade, type: 3}
+    type: 102
+    parameter:
+      name: v2/anim/FacePresets
+    value: 23
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b><color=red>Squinting
+    icon: {fileID: 2800000, guid: 43d2a48c186071a4a8cbbb9a7c4b3ade, type: 3}
+    type: 102
+    parameter:
+      name: v2/anim/FacePresets
+    value: 22
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b><color=red>Frustrated Puff
+    icon: {fileID: 2800000, guid: 43d2a48c186071a4a8cbbb9a7c4b3ade, type: 3}
+    type: 102
+    parameter:
+      name: v2/anim/FacePresets
+    value: 21
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b><color=red>Frown
+    icon: {fileID: 2800000, guid: 43d2a48c186071a4a8cbbb9a7c4b3ade, type: 3}
     type: 102
     parameter:
       name: v2/anim/FacePresets
@@ -44,22 +74,22 @@ MonoBehaviour:
     subMenu: {fileID: 0}
     subParameters: []
     labels: []
-  - name: <b>I'm seriously
-    icon: {fileID: 2800000, guid: d8d01f92becb62c44a736877ea3caa9b, type: 3}
+  - name: <b><color=red>Angry Stronger
+    icon: {fileID: 2800000, guid: 43d2a48c186071a4a8cbbb9a7c4b3ade, type: 3}
     type: 102
     parameter:
       name: v2/anim/FacePresets
-    value: 5
+    value: 19
     style: 0
     subMenu: {fileID: 0}
     subParameters: []
     labels: []
-  - name: <b>Angry
-    icon: {fileID: 2800000, guid: c3fd333c3b35ceb45a689d81ee013096, type: 3}
+  - name: <b><color=red>Angry
+    icon: {fileID: 2800000, guid: 43d2a48c186071a4a8cbbb9a7c4b3ade, type: 3}
     type: 102
     parameter:
       name: v2/anim/FacePresets
-    value: 17
+    value: 18
     style: 0
     subMenu: {fileID: 0}
     subParameters: []

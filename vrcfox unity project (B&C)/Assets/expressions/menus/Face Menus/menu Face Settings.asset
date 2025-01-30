@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: menu Face Settings
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 5ce5794457f03b04691c806ab3d1fdbf, type: 2}
+  Parameters: {fileID: 11400000, guid: 81db426d2d57e2649b743a4a6f77e921, type: 2}
   controls:
   - name: <b><color=red>Facial exp
     icon: {fileID: 2800000, guid: 20b6acfd757881246abc9321be457ece, type: 3}
     type: 102
     parameter:
-      name: ExpressionTrackingActive
+      name: v2/ExpressionTrackingActive
     value: 1
     style: 0
     subMenu: {fileID: 0}
@@ -34,11 +34,11 @@ MonoBehaviour:
     subMenu: {fileID: 0}
     subParameters: []
     labels: []
-  - name: <b><color=red>EarsMovement <color=green>[FT]
+  - name: <b><color=red>EarsMovement
     icon: {fileID: 2800000, guid: dd7cbe53dc22dec489fab1f70e695eb9, type: 3}
     type: 102
     parameter:
-      name: anim/ears[FT]
+      name: anim/ears
     value: 1
     style: 0
     subMenu: {fileID: 0}
@@ -49,6 +49,16 @@ MonoBehaviour:
     type: 102
     parameter:
       name: exp/pet
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b><color=red>Reset Face Tracking
+    icon: {fileID: 2800000, guid: 440c67b8a93907a4da5f35d246608145, type: 3}
+    type: 101
+    parameter:
+      name: v2/Reset
     value: 1
     style: 0
     subMenu: {fileID: 0}

@@ -666,15 +666,25 @@ MonoBehaviour:
   gestureMask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
   lMask: {fileID: 31900000, guid: 2ea11c35275506a4fbf628a11c068a8e, type: 2}
   rMask: {fileID: 31900000, guid: 00b67f2d2f7eba8438148317288155d8, type: 2}
-  handPoses:
-  - {fileID: 7400000, guid: 17f6811ad8fbaec4ba758c0e9d4bc63e, type: 2}
-  - {fileID: 7400000, guid: 9716ac2dc262b524193365c552868456, type: 2}
-  - {fileID: 7400000, guid: 2c53e22680d6f644d8f67bf16fc29e04, type: 2}
-  - {fileID: 7400000, guid: 159b856034800bb4ea0319b1ce4fd8c7, type: 2}
-  - {fileID: 7400000, guid: ceefb8979ff222e469c6b2a2f9b0532a, type: 2}
-  - {fileID: 7400000, guid: 21778a9afd428014e9d0e351ad5a1c40, type: 2}
-  - {fileID: 7400000, guid: 17e549f94f6d25f4da19e77f85918ec1, type: 2}
-  - {fileID: 7400000, guid: be1b6b943c973cc44ba8ca84a47f3273, type: 2}
+  MirrorHandposes: 0
+  LeftHandPoses:
+  - {fileID: 7400000, guid: 94dd43eed79c1d4438c69d48e1954c13, type: 2}
+  - {fileID: 7400000, guid: 543b481883849484981dc6a10adf6c4c, type: 2}
+  - {fileID: 7400000, guid: 54c2e9adf3cb08e44a62c1c142c835bf, type: 2}
+  - {fileID: 7400000, guid: 20a51b23aed1ba24e9068b84f33e4f87, type: 2}
+  - {fileID: 7400000, guid: dbc7c11279f82434ba896eabbbacc499, type: 2}
+  - {fileID: 7400000, guid: f35516daaf8e67b4b8f1582d1095303e, type: 2}
+  - {fileID: 7400000, guid: 28091d423eadb704ea68369fbd26bece, type: 2}
+  - {fileID: 7400000, guid: be5b7ddc53f49774287ff1efea42fcf2, type: 2}
+  RightHandPoses:
+  - {fileID: 7400000, guid: 94dd43eed79c1d4438c69d48e1954c13, type: 2}
+  - {fileID: 7400000, guid: 543b481883849484981dc6a10adf6c4c, type: 2}
+  - {fileID: 7400000, guid: 54c2e9adf3cb08e44a62c1c142c835bf, type: 2}
+  - {fileID: 7400000, guid: 20a51b23aed1ba24e9068b84f33e4f87, type: 2}
+  - {fileID: 7400000, guid: 97ddcb50f63b6e54eb91376e15ce53bc, type: 2}
+  - {fileID: 7400000, guid: 765fab113d808df408235148c1065b49, type: 2}
+  - {fileID: 7400000, guid: 28091d423eadb704ea68369fbd26bece, type: 2}
+  - {fileID: 7400000, guid: be5b7ddc53f49774287ff1efea42fcf2, type: 2}
   createShapePreferences: 1
   shapePreferenceSliderPrefix: pref/slider/
   shapePreferenceTogglesPrefix: pref/toggle/
@@ -689,29 +699,41 @@ MonoBehaviour:
   secondColor1: {fileID: 7400000, guid: b7ba98e9f6ffbba43a2ed420efb56037, type: 2}
   createFacialExpressionsControl: 1
   expTrackName: ExpressionTrackingActive
-  createFaceTrackingLipSyncControl: 1
+  createFTLipSyncControl: 1
   lipSyncName: LipSyncTrackingActive
   createFaceToggleControl: 1
   faceToggleName: FaceToggleActive
-  createParamForResetFaceTracking: 1
+  createFTreset: 1
   resetFTName: Reset
   saveVRCExpressionParameters: 1
-  MirroringParam: 0
+  MirrorFTparams: 1
   createOSCsmooth: 1
   IsLocal: 0
   localSmoothness: 0.1
   remoteSmoothness: 0.7
   createEyeTracking: 1
+  MirrorEyeposes: 1
   maxEyeMotionValue: 0.25
-  EyeLookDown: {fileID: 7400000, guid: ffe7bfda0c46fa64b89b8669e23871f9, type: 2}
-  EyeLookLeft: {fileID: 7400000, guid: cdb2ee8d508e6764fa1a67ddc8e777e8, type: 2}
-  EyeLookLeftDown: {fileID: 7400000, guid: 930b2e2a422ccbb4fb29655b1686ce42, type: 2}
-  EyeLookLeftUp: {fileID: 7400000, guid: 38516e689f55a6f44ab492e0efcabfd4, type: 2}
-  EyeLookNeutral: {fileID: 7400000, guid: 3120e85eb2940074a9e03f97ee4a77bd, type: 2}
-  EyeLookRight: {fileID: 7400000, guid: 0652075c7a43ce2419b2fbe08166217e, type: 2}
-  EyeLookRightDown: {fileID: 7400000, guid: fabaa03842dea1346b36860ebff4c25a, type: 2}
-  EyeLookRightUp: {fileID: 7400000, guid: f3c788404e5bad34b8f25f8a5c367302, type: 2}
-  EyeLookUp: {fileID: 7400000, guid: d4d847e27156e1a45916a7a0fff5ed71, type: 2}
+  LeftEyePoses:
+  - {fileID: 7400000, guid: 38516e689f55a6f44ab492e0efcabfd4, type: 2}
+  - {fileID: 7400000, guid: d4d847e27156e1a45916a7a0fff5ed71, type: 2}
+  - {fileID: 7400000, guid: f3c788404e5bad34b8f25f8a5c367302, type: 2}
+  - {fileID: 7400000, guid: cdb2ee8d508e6764fa1a67ddc8e777e8, type: 2}
+  - {fileID: 7400000, guid: 3120e85eb2940074a9e03f97ee4a77bd, type: 2}
+  - {fileID: 7400000, guid: 0652075c7a43ce2419b2fbe08166217e, type: 2}
+  - {fileID: 7400000, guid: 930b2e2a422ccbb4fb29655b1686ce42, type: 2}
+  - {fileID: 7400000, guid: ffe7bfda0c46fa64b89b8669e23871f9, type: 2}
+  - {fileID: 7400000, guid: fabaa03842dea1346b36860ebff4c25a, type: 2}
+  RightEyePoses:
+  - {fileID: 7400000, guid: 38516e689f55a6f44ab492e0efcabfd4, type: 2}
+  - {fileID: 7400000, guid: d4d847e27156e1a45916a7a0fff5ed71, type: 2}
+  - {fileID: 7400000, guid: f3c788404e5bad34b8f25f8a5c367302, type: 2}
+  - {fileID: 7400000, guid: cdb2ee8d508e6764fa1a67ddc8e777e8, type: 2}
+  - {fileID: 7400000, guid: 3120e85eb2940074a9e03f97ee4a77bd, type: 2}
+  - {fileID: 7400000, guid: 0652075c7a43ce2419b2fbe08166217e, type: 2}
+  - {fileID: 7400000, guid: 930b2e2a422ccbb4fb29655b1686ce42, type: 2}
+  - {fileID: 7400000, guid: ffe7bfda0c46fa64b89b8669e23871f9, type: 2}
+  - {fileID: 7400000, guid: fabaa03842dea1346b36860ebff4c25a, type: 2}
   mouthPrefix: exp/mouth/
   mouthShapeNames:
   - basis
@@ -751,56 +773,44 @@ MonoBehaviour:
   - LipFunnel
   - LipPucker
   - MouthClosed
-  - MouthStretchLeft
-  - MouthStretchRight
-  - MouthUpperUpLeft
-  - MouthUpperUpRight
-  - MouthLowerDownLeft
-  - MouthLowerDownRight
+  - MouthStretch
   - MouthRaiserLower
   - TongueOut
   - EyeSquintLeft
-  - EyeSquintRight
   ftDualShapes:
-  - paramName: SmileSadLeft
-    minShapeName: MouthSadLeft
-    maxShapeName: MouthSmileLeft
-    minValue: -1
-    neutralValue: 0
-    maxValue: 1
-  - paramName: SmileSadRight
-    minShapeName: MouthSadRight
-    maxShapeName: MouthSmileRight
+  - paramName: SmileSad
+    minShapeName: MouthSad
+    maxShapeName: MouthSmile
     minValue: -1
     neutralValue: 0
     maxValue: 1
   - paramName: BrowExpressionLeft
-    minShapeName: BrowDownLeft
-    maxShapeName: BrowUpLeft
+    minShapeName: BrowDown
+    maxShapeName: BrowUp
     minValue: -1
     neutralValue: 0
-    maxValue: 1
-  - paramName: BrowExpressionRight
-    minShapeName: BrowDownRight
-    maxShapeName: BrowUpRight
-    minValue: -1
-    neutralValue: 0
-    maxValue: 1
-  - paramName: EyeLidLeft
-    minShapeName: EyeClosedLeft
-    maxShapeName: EyeWideLeft
-    minValue: 0
-    neutralValue: 0.75
-    maxValue: 1
-  - paramName: EyeLidRight
-    minShapeName: EyeClosedRight
-    maxShapeName: EyeWideRight
-    minValue: 0
-    neutralValue: 0.75
     maxValue: 1
   - paramName: JawX
     minShapeName: JawLeft
     maxShapeName: JawRight
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: MouthX
+    minShapeName: MouthLeft
+    maxShapeName: MouthRight
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: MouthUpperX
+    minShapeName: MouthUpperUpLeft
+    maxShapeName: MouthUpperUpRight
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
+  - paramName: MouthLowerX
+    minShapeName: MouthLowerDownLeft
+    maxShapeName: MouthLowerDownRight
     minValue: -1
     neutralValue: 0
     maxValue: 1
@@ -809,6 +819,12 @@ MonoBehaviour:
     maxShapeName: CheekPuff
     minValue: -1
     neutralValue: 0
+    maxValue: 1
+  - paramName: EyeLidLeft
+    minShapeName: EyeClosed
+    maxShapeName: EyeWide
+    minValue: 0
+    neutralValue: 0.75
     maxValue: 1
 --- !u!1 &7156784885415510145
 GameObject:
@@ -1172,6 +1188,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: -4207872768154498626, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.60305405
+      objectReference: {fileID: 0}
+    - target: {fileID: -4207872768154498626, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.2059805
+      objectReference: {fileID: 0}
+    - target: {fileID: -4207872768154498626, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.60450596
+      objectReference: {fileID: 0}
+    - target: {fileID: -4207872768154498626, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.4779859
+      objectReference: {fileID: 0}
     - target: {fileID: -1620508094356194258, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1196,16 +1232,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: avatar
-      objectReference: {fileID: 0}
-    - target: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_BlendShapeWeights.Array.data[1]
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_BlendShapeWeights.Array.data[2]
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7329873763272774051, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
@@ -1775,13 +1801,13 @@ MonoBehaviour:
     isDefault: 0
   - isEnabled: 0
     type: 2
-    animatorController: {fileID: 9100000, guid: f1cbab5787cc05d409272b7e2e7fa971,
+    animatorController: {fileID: 9100000, guid: 71074a750cd626b4c9ea53f62e48dff3,
       type: 2}
     mask: {fileID: 0}
     isDefault: 0
   - isEnabled: 0
     type: 3
-    animatorController: {fileID: 9100000, guid: cacff1008ade78a41a590d9f753d3f74,
+    animatorController: {fileID: 9100000, guid: 7992f28a694bf3c4085dbfd71e5ba082,
       type: 2}
     mask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
     isDefault: 0
@@ -1792,9 +1818,9 @@ MonoBehaviour:
     isDefault: 1
   - isEnabled: 0
     type: 5
-    animatorController: {fileID: 9100000, guid: 9b76112a99ebe6443bf8d97468c14eee,
+    animatorController: {fileID: 9100000, guid: dd3a0ab180d0dfe46b079b91bd3ae462,
       type: 2}
-    mask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
+    mask: {fileID: 0}
     isDefault: 0
   specialAnimationLayers:
   - isEnabled: 0
@@ -1821,6 +1847,8 @@ MonoBehaviour:
     name: Standing
   - hash: -843081352
     name: Crouching
+  - hash: -205779520
+    name: Avatar  Showcase
   - hash: -1536771405
     name: JumpAndFall.Short Fall
   - hash: 724575528
@@ -1835,28 +1863,30 @@ MonoBehaviour:
     name: JumpAndFall.RestoreToHop
   - hash: -49821148
     name: JumpAndFall.QuickLand
-  - hash: -1140487849
-    name: Tail WAG [SLOW]
-  - hash: -1449020238
-    name: Tail WAG [MEDIUM]
-  - hash: -662814545
-    name: Tail WAG [FAST]
+  - hash: 1748779547
+    name: Tail WAG
   - hash: 1037400324
     name: Tail idle
-  - hash: 533631384
+  - hash: 2133647813
     name: Waiting command
-  - hash: 1285585196
-    name: Ears Back.Ears Back [FT]
-  - hash: -196336429
-    name: Ears Back.Ears Back
-  - hash: 460263802
-    name: VRC Eye Control
-  - hash: 1962482133
-    name: Eye Tracking
-  - hash: 1666853253
-    name: OSCmooth_Local
-  - hash: -378687850
-    name: OSCmooth_Net
+  - hash: 1595537516
+    name: Ears Back [Gesture] (L)
+  - hash: 1238313730
+    name: Ears Back [Eyelid] (L)
+  - hash: 1274899654
+    name: Ears Back [Gesture] (R)
+  - hash: 1218621268
+    name: Waiting command
+  - hash: -2109092702
+    name: Ears Back [Eyelid] (R)
+  - hash: -773289456
+    name: VRC Eye Left Control
+  - hash: 1023822341
+    name: Eye Left Tracking
+  - hash: -278810794
+    name: VRC Eye Right Control
+  - hash: -394345367
+    name: Eye Right Tracking
   - hash: 601478037
     name: rig_hand 0 neutral
   - hash: 744237656
@@ -1865,8 +1895,8 @@ MonoBehaviour:
     name: rig_hand 2 open
   - hash: 473837550
     name: rig_hand 3 point
-  - hash: 1730805251
-    name: rig_hand 4 peace
+  - hash: 72887393
+    name: rig_hand 4 okay
   - hash: -708430404
     name: rig_hand 5 rock n roll
   - hash: -1135795121
@@ -1883,14 +1913,18 @@ MonoBehaviour:
     name: rig_hand 3 point
   - hash: -816517996
     name: rig_hand 4 peace
-  - hash: -2118409412
-    name: rig_hand 5 rock n roll
+  - hash: -1416007400
+    name: rig_hand 5 middle finger
   - hash: -1420037029
     name: rig_hand 6 gun
   - hash: 1638421798
     name: rig_hand 7 thumbs up
   - hash: -1099298580
     name: master tree
+  - hash: 68613525
+    name: OSC Local
+  - hash: 1955443278
+    name: OSC Remote
   - hash: 927299615
     name: basis
   - hash: 1205124559
@@ -1925,16 +1959,82 @@ MonoBehaviour:
     name: frown 0
   - hash: -1965148844
     name: face tracking off
-  - hash: -1400783761
-    name: face tracking off [LipSync]
   - hash: -1169342359
     name: face tracking on
+  - hash: -1400783761
+    name: face tracking off [LipSync]
   - hash: -2100026051
     name: face tracking on [LipSync]
   - hash: 94222277
     name: reset face tracking
   - hash: -576816719
     name: drivers
+  - hash: 1860074642
+    name: Idle
+  - hash: -819325686
+    name: FaceToogle_Happy
+  - hash: -989824097
+    name: FaceToggle_cheekiness
+  - hash: 1189343763
+    name: FaceToggle_conceited
+  - hash: 706512522
+    name: FaceToggle_OpenSmile
+  - hash: 496825050
+    name: FaceToggle_OpenSmileStronger
+  - hash: -355700350
+    name: FaceToggle_schadenfreude
+  - hash: -1834817308
+    name: FaceToggle_smirk
+  - hash: -2004665811
+    name: FaceToggle_WarmLook
+  - hash: -1029026893
+    name: FaceToggle_DefaultFace
+  - hash: 1494186541
+    name: FaceToggle_curiousing
+  - hash: 2025594616
+    name: FaceToggle_CuriousingStronger
+  - hash: -458816179
+    name: FaceToggle_disgust
+  - hash: -570330212
+    name: FaceToggle_fear
+  - hash: -1291972414
+    name: FaceToggle_ForcedOptimism
+  - hash: -1150518871
+    name: FaceToggle_sad
+  - hash: -582360965
+    name: FaceToggle_shoke
+  - hash: 1662050218
+    name: FaceToggle_angry
+  - hash: 33690826
+    name: FaceToggle_CriticalEyebrow_raise
+  - hash: 994626471
+    name: FaceToggle_frown
+  - hash: 639234733
+    name: FaceToggle_ResignedFrustration
+  - hash: 222051532
+    name: FaceToggle_sulky tongue_out
+  - hash: 2141058583
+    name: "FaceToggle_Nervous\u0421uriosity"
+  - hash: 331230723
+    name: FaceToggle_FrustratedPuff
+  - hash: -51347928
+    name: FaceToggle_squinting
+  - hash: -1007121058
+    name: FaceToggle_AngryStronger
+  - hash: 625167218
+    name: FaceToggle_EyeClosed
+  - hash: -1038920044
+    name: FaceToggle_confident
+  - hash: -336263825
+    name: FaceToggle_SquintingStronger
+  - hash: 1564406015
+    name: FaceToggle_SneakyGrin
+  - hash: -1670629089
+    name: FaceToggle_BaffledReaction
+  - hash: 1969355184
+    name: FaceToggle_thirst
+  - hash: -287519424
+    name: FaceToggle_fatigue
   - hash: 1379458372
     name: Waiting command
   - hash: -2040153108
@@ -1947,14 +2047,14 @@ MonoBehaviour:
     name: Waiting command
   - hash: 785365631
     name: jeans
-  - hash: 814489581
-    name: pants
-  - hash: -1116651490
-    name: shorts
   - hash: -1998215857
     name: jeans adjusted
+  - hash: 814489581
+    name: pants
   - hash: -1038865904
     name: pants adjusted
+  - hash: -1116651490
+    name: shorts
   - hash: 1190029370
     name: shorts adjusted
   - hash: -695304992
@@ -1969,76 +2069,18 @@ MonoBehaviour:
     name: Waiting command
   - hash: -1207595230
     name: AFK
-  - hash: 1784143190
-    name: Idle
-  - hash: -1710515403
-    name: curiousing
-  - hash: 1059620841
-    name: I'm seriously
-  - hash: -235394471
-    name: oops
-  - hash: -1807641810
-    name: shadenfreude
-  - hash: -117717155
-    name: Stone Jonson
-  - hash: -307215382
-    name: warm look
-  - hash: 378722351
-    name: sleeping
-  - hash: -1873817713
-    name: happy
-  - hash: -1679939950
-    name: curiousing stronger
-  - hash: -1237614894
-    name: frown
-  - hash: 1986234650
-    name: Flash emotion
-  - hash: 233063054
-    name: disgust
-  - hash: -209001821
-    name: It's okay! [uncertainty]
-  - hash: -1581911482
-    name: Pesos
-  - hash: -864171699
-    name: Conceited
-  - hash: -1295529885
-    name: sad
-  - hash: -295474465
-    name: angry
-  - hash: 1346000142
-    name: shoke
-  - hash: -1514540157
-    name: fear
-  - hash: -1417002089
-    name: Uhhh man
-  - hash: 784749937
-    name: A good dream
-  - hash: 1690916435
-    name: open smile
-  - hash: 555645585
-    name: open smile stronger
-  - hash: 1715603956
+  - hash: 403919829
     name: Waiting command
-  - hash: 1013542260
+  - hash: 1887317104
     name: Confused Contact
-  - hash: -276753179
+  - hash: -392116291
     name: Waiting command
-  - hash: 1177310478
+  - hash: -1023431549
     name: Nose Contact Sound
-  - hash: -504291014
-    name: Tail Floor Collider
-  - hash: -1957760162
+  - hash: -1121085048
     name: Waiting command
-  - hash: 444796514
-    name: Waiting command
-  - hash: -1874490598
-    name: Tail Legs Collider
-  - hash: -595865904
-    name: Binary_Parameters_Blendtree
-  - hash: 1666853253
-    name: OSCmooth_Local
-  - hash: -378687850
-    name: OSCmooth_Net
+  - hash: -1175527987
+    name: Tail Colliders
   autoFootsteps: 1
   autoLocomotion: 1
   collider_head:
@@ -2170,7 +2212,7 @@ MonoBehaviour:
   blueprintId: avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1
   contentType: 0
   assetBundleUnityVersion: 
-  fallbackStatus: 0
+  fallbackStatus: 3
 --- !u!137 &1422257553560203677 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
