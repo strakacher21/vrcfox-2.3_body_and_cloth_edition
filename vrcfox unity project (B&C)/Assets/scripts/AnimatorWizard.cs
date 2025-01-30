@@ -67,7 +67,7 @@ public class AnimatorWizard : MonoBehaviour
 	public bool createClothCustomization = true;
 	public string ClothTogglesPrefix = "cloth/toggle/";
 	public string ClothAdjustPrefix = "cloth/adjust/";
-    public string ClothAdjustBodyPrefix = "cloth/adjust/Body/with/"; // need to combine it with ClothAdjustPrefix.
+    public string ClothAdjustBodyPrefix = "cloth/adjust/Body/with/";
 
     public bool createColorCustomization = true;
 	public Motion primaryColor0;
@@ -203,25 +203,22 @@ public class AnimatorWizard : MonoBehaviour
 
 		_aac.ClearPreviousAssets();
 
-		// Gesture animations setup
+		// Gesture Layer
 		_aac.CreateMainGestureLayer().WithAvatarMask(gestureMask);
 
 		// Iterate through each hand side (left/right)
 		foreach (string side in new[] { Left, Right })
 		{
-			// Create a separate layer for each hand
 			var layer = _aac.CreateSupportingGestureLayer(side + " hand")
 				.WithAvatarMask(side == Left ? lMask : rMask);
 
 			var Gesture = layer.IntParameter("Gesture" + side);
 			var GestureWeight = layer.FloatParameter("Gesture" + side + "Weight");
 
-			// Define hand poses for the current side
 			Motion[] poses = side == Left || MirrorHandposes
 				? LeftHandPoses
 				: RightHandPoses;
 
-			// Validate that the poses array is complete
 			if (poses == null || poses.Length != 8)
 				throw new Exception($"The {side} hand poses array must contain exactly 8 motions!");
 
@@ -230,16 +227,13 @@ public class AnimatorWizard : MonoBehaviour
 			{
 				Motion motion = poses[i];
 
-				// Ensure each motion is assigned
 				if (motion == null)
 					throw new Exception($"Gesture animation for {side} hand, index {i}, is not assigned!");
 
-				// Create a state for the gesture
 				var state = layer.NewState(motion.name, 1, i)
 					.WithAnimation(motion)
 					.WithWriteDefaultsSetTo(true);
 
-				// Configure transitions
 				layer.EntryTransitionsTo(state).When(Gesture.IsEqualTo(i));
 				state.Exits()
 					.WithTransitionDurationSeconds(TransitionSpeed)
@@ -1018,7 +1012,8 @@ public class AnimatorWizard : MonoBehaviour
 					exit.Or().When(ExpTrackActiveParam.IsFalse());
 				}
 			}
-			if (createFaceTracking)
+			
+			if (createFaceToggleControl)
 			{
 				if (i == 0)
 				{
@@ -1412,7 +1407,7 @@ public class AnimatorGeneratorEditor : Editor
 			EditorGUILayout.PropertyField(ClothAdjustPrefix, 
 			PopUpLabel("Cloth Adjust Prefix", "ClothAdjustPrefix regulates the fit of the cloth lower body to the cloth upper body."));
             EditorGUILayout.PropertyField(ClothAdjustBodyPrefix, 
-			PopUpLabel("Cloth Adjust Body Prefix", "The prefixes ClothAdjustBody roll up body into a \"tube\".")); // need to combine it with ClothAdjustPrefix.
+			PopUpLabel("Cloth Adjust Body Prefix", "The prefixes ClothAdjustBody roll up body into a \"tube\"."));
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(ClothUpperBodyNames);
             EditorGUILayout.PropertyField(ClothLowerBodyNames);
