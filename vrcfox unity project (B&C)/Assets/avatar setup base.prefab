@@ -774,6 +774,8 @@ MonoBehaviour:
   - LipPucker
   - MouthClosed
   - MouthStretch
+  - MouthUpperUp
+  - MouthLowerDown
   - MouthRaiserLower
   - TongueOut
   - EyeSquintLeft
@@ -796,21 +798,15 @@ MonoBehaviour:
     minValue: -1
     neutralValue: 0
     maxValue: 1
+  - paramName: JawZ
+    minShapeName: JawBackward
+    maxShapeName: JawForward
+    minValue: -1
+    neutralValue: 0
+    maxValue: 1
   - paramName: MouthX
     minShapeName: MouthLeft
     maxShapeName: MouthRight
-    minValue: -1
-    neutralValue: 0
-    maxValue: 1
-  - paramName: MouthUpperX
-    minShapeName: MouthUpperUpLeft
-    maxShapeName: MouthUpperUpRight
-    minValue: -1
-    neutralValue: 0
-    maxValue: 1
-  - paramName: MouthLowerX
-    minShapeName: MouthLowerDownLeft
-    maxShapeName: MouthLowerDownRight
     minValue: -1
     neutralValue: 0
     maxValue: 1
@@ -1820,7 +1816,7 @@ MonoBehaviour:
     type: 5
     animatorController: {fileID: 9100000, guid: dd3a0ab180d0dfe46b079b91bd3ae462,
       type: 2}
-    mask: {fileID: 0}
+    mask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
     isDefault: 0
   specialAnimationLayers:
   - isEnabled: 0
@@ -1863,6 +1859,14 @@ MonoBehaviour:
     name: JumpAndFall.RestoreToHop
   - hash: -49821148
     name: JumpAndFall.QuickLand
+  - hash: -773289456
+    name: VRC Eye Left Control
+  - hash: 1023822341
+    name: Eye Left Tracking
+  - hash: -278810794
+    name: VRC Eye Right Control
+  - hash: -394345367
+    name: Eye Right Tracking
   - hash: 1748779547
     name: Tail WAG
   - hash: 1037400324
@@ -1879,14 +1883,6 @@ MonoBehaviour:
     name: Waiting command
   - hash: -2109092702
     name: Ears Back [Eyelid] (R)
-  - hash: -773289456
-    name: VRC Eye Left Control
-  - hash: 1023822341
-    name: Eye Left Tracking
-  - hash: -278810794
-    name: VRC Eye Right Control
-  - hash: -394345367
-    name: Eye Right Tracking
   - hash: 601478037
     name: rig_hand 0 neutral
   - hash: 744237656
@@ -1921,10 +1917,6 @@ MonoBehaviour:
     name: rig_hand 7 thumbs up
   - hash: -1099298580
     name: master tree
-  - hash: 68613525
-    name: OSC Local
-  - hash: 1955443278
-    name: OSC Remote
   - hash: 927299615
     name: basis
   - hash: 1205124559
@@ -1957,84 +1949,8 @@ MonoBehaviour:
     name: grimace 1
   - hash: 1579845495
     name: frown 0
-  - hash: -1965148844
-    name: face tracking off
-  - hash: -1169342359
-    name: face tracking on
-  - hash: -1400783761
-    name: face tracking off [LipSync]
-  - hash: -2100026051
-    name: face tracking on [LipSync]
-  - hash: 94222277
-    name: reset face tracking
   - hash: -576816719
     name: drivers
-  - hash: 1860074642
-    name: Idle
-  - hash: -819325686
-    name: FaceToogle_Happy
-  - hash: -989824097
-    name: FaceToggle_cheekiness
-  - hash: 1189343763
-    name: FaceToggle_conceited
-  - hash: 706512522
-    name: FaceToggle_OpenSmile
-  - hash: 496825050
-    name: FaceToggle_OpenSmileStronger
-  - hash: -355700350
-    name: FaceToggle_schadenfreude
-  - hash: -1834817308
-    name: FaceToggle_smirk
-  - hash: -2004665811
-    name: FaceToggle_WarmLook
-  - hash: -1029026893
-    name: FaceToggle_DefaultFace
-  - hash: 1494186541
-    name: FaceToggle_curiousing
-  - hash: 2025594616
-    name: FaceToggle_CuriousingStronger
-  - hash: -458816179
-    name: FaceToggle_disgust
-  - hash: -570330212
-    name: FaceToggle_fear
-  - hash: -1291972414
-    name: FaceToggle_ForcedOptimism
-  - hash: -1150518871
-    name: FaceToggle_sad
-  - hash: -582360965
-    name: FaceToggle_shoke
-  - hash: 1662050218
-    name: FaceToggle_angry
-  - hash: 33690826
-    name: FaceToggle_CriticalEyebrow_raise
-  - hash: 994626471
-    name: FaceToggle_frown
-  - hash: 639234733
-    name: FaceToggle_ResignedFrustration
-  - hash: 222051532
-    name: FaceToggle_sulky tongue_out
-  - hash: 2141058583
-    name: "FaceToggle_Nervous\u0421uriosity"
-  - hash: 331230723
-    name: FaceToggle_FrustratedPuff
-  - hash: -51347928
-    name: FaceToggle_squinting
-  - hash: -1007121058
-    name: FaceToggle_AngryStronger
-  - hash: 625167218
-    name: FaceToggle_EyeClosed
-  - hash: -1038920044
-    name: FaceToggle_confident
-  - hash: -336263825
-    name: FaceToggle_SquintingStronger
-  - hash: 1564406015
-    name: FaceToggle_SneakyGrin
-  - hash: -1670629089
-    name: FaceToggle_BaffledReaction
-  - hash: 1969355184
-    name: FaceToggle_thirst
-  - hash: -287519424
-    name: FaceToggle_fatigue
   - hash: 1379458372
     name: Waiting command
   - hash: -2040153108
@@ -2065,6 +1981,86 @@ MonoBehaviour:
     name: boots
   - hash: 474501284
     name: slaps
+  - hash: -1965148844
+    name: face tracking off
+  - hash: -1169342359
+    name: face tracking on
+  - hash: -1400783761
+    name: face tracking off [LipSync]
+  - hash: -2100026051
+    name: face tracking on [LipSync]
+  - hash: 94222277
+    name: reset face tracking
+  - hash: 68613525
+    name: OSC Local
+  - hash: 1955443278
+    name: OSC Remote
+  - hash: 1860074642
+    name: Idle
+  - hash: -819325686
+    name: FaceToogle_Happy
+  - hash: -989824097
+    name: FaceToggle_cheekiness
+  - hash: -287519424
+    name: FaceToggle_fatigue
+  - hash: 1969355184
+    name: FaceToggle_thirst
+  - hash: -1670629089
+    name: FaceToggle_BaffledReaction
+  - hash: 1564406015
+    name: FaceToggle_SneakyGrin
+  - hash: -336263825
+    name: FaceToggle_SquintingStronger
+  - hash: -1038920044
+    name: FaceToggle_confident
+  - hash: 625167218
+    name: FaceToggle_EyeClosed
+  - hash: -1007121058
+    name: FaceToggle_AngryStronger
+  - hash: -51347928
+    name: FaceToggle_squinting
+  - hash: 331230723
+    name: FaceToggle_FrustratedPuff
+  - hash: 2141058583
+    name: "FaceToggle_Nervous\u0421uriosity"
+  - hash: 222051532
+    name: FaceToggle_sulky tongue_out
+  - hash: 639234733
+    name: FaceToggle_ResignedFrustration
+  - hash: 994626471
+    name: FaceToggle_frown
+  - hash: 33690826
+    name: FaceToggle_CriticalEyebrow_raise
+  - hash: 1662050218
+    name: FaceToggle_angry
+  - hash: -582360965
+    name: FaceToggle_shoke
+  - hash: -458816179
+    name: FaceToggle_disgust
+  - hash: -1150518871
+    name: FaceToggle_sad
+  - hash: -1291972414
+    name: FaceToggle_ForcedOptimism
+  - hash: -570330212
+    name: FaceToggle_fear
+  - hash: 2025594616
+    name: FaceToggle_CuriousingStronger
+  - hash: 1494186541
+    name: FaceToggle_curiousing
+  - hash: -1029026893
+    name: FaceToggle_DefaultFace
+  - hash: -2004665811
+    name: FaceToggle_WarmLook
+  - hash: -1834817308
+    name: FaceToggle_smirk
+  - hash: -355700350
+    name: FaceToggle_schadenfreude
+  - hash: 496825050
+    name: FaceToggle_OpenSmileStronger
+  - hash: 706512522
+    name: FaceToggle_OpenSmile
+  - hash: 1189343763
+    name: FaceToggle_conceited
   - hash: 1919488495
     name: Waiting command
   - hash: -1207595230
@@ -2840,7 +2836,7 @@ MonoBehaviour:
   ignoreTransforms: []
   endpointPosition: {x: 0, y: 0, z: 0}
   multiChildType: 0
-  pull: 0.7
+  pull: 0.9
   pullCurve:
     serializedVersion: 2
     m_Curve: []
