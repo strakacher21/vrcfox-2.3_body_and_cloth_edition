@@ -74,7 +74,7 @@ if bpy.context.selected_objects:
         colors_type="LINEAR",
 		#add_leaf_bones=False,
         use_armature_deform_only=True,
-        use_triangles=False,
+        use_triangles=True,
     )
 
     bpy.ops.ed.undo_push()
