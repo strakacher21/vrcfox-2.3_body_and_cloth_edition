@@ -33,6 +33,6 @@ The Unity project has a prefab model, as well as two scenes for **PC** and **Que
 >**Material: 1**<br>
 >**Mesh: 1**<br>
 >**Audio Source: 1 (PC)**<br>
->**Contact Receivers: 2**<br>
+>**Contact Receivers: 2 (PC) / 1 (Quest&IOS)**<br>
 >**Contact Colliders: 3**<br>
 >**Download size: <1 mb**<br>

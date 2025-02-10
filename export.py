@@ -1,6 +1,7 @@
 # EXPORT SCRIPT - click '▶' on menu bar above to export to Unity
 import bpy
 import os
+import bmesh # WORKAROUND
 
 # Export settings
 export_path = bpy.path.abspath(r"//vrcfox unity project (B&C)/Assets")
@@ -40,6 +41,20 @@ for obj in export_collection.all_objects:
 for obj in bpy.data.objects:
     obj.hide_set(False)
 
+# WORKAROUND: function for mesh triangulation
+def triangulate_object(obj):
+    mesh = obj.data
+    bm = bmesh.new()
+    bm.from_mesh(mesh)
+    bmesh.ops.triangulate(bm, faces=bm.faces, quad_method='BEAUTY', ngon_method='BEAUTY')
+    bm.to_mesh(mesh)
+    bm.free()
+
+# WORKAROUND: apply triangulation to all except 'Body'
+for obj in export_objects:
+    if obj.name != desired_model_name:
+         triangulate_object(obj)
+
 # Join objects and export
 bpy.ops.object.select_all(action='DESELECT')
 for obj in export_objects:
@@ -55,7 +70,7 @@ if bpy.context.selected_objects:
     else:
         raise ValueError(f"UV map '{export_uv_map}' not found.")
 
-    # Set main collection as active
+    # Set 'main' collection as active
     export_layer_collection = bpy.context.view_layer.layer_collection.children[export_collection_name]
     bpy.context.view_layer.active_layer_collection = export_layer_collection
 
@@ -72,9 +87,9 @@ if bpy.context.selected_objects:
         bake_anim_force_startend_keying=False,
         bake_anim_simplify_factor=0.0,
         colors_type="LINEAR",
-		#add_leaf_bones=False,
+        #add_leaf_bones=False,
         use_armature_deform_only=True,
-        use_triangles=True,
+        use_triangles=False #WORKAROUND: Disable automatic triangulation in Blender to keep 'Body' untriangulated, as it causes vertex colors to display incorrectly. 
     )
 
     bpy.ops.ed.undo_push()
