@@ -96,8 +96,33 @@ AnimatorStateMachine:
   m_AnyStatePosition: {x: 0, y: 490, z: 0}
   m_EntryPosition: {x: 0, y: -70, z: 0}
   m_ExitPosition: {x: 1750, y: -70, z: 0}
-  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_ParentStateMachinePosition: {x: 750, y: -70, z: 0}
   m_DefaultState: {fileID: 0}
+--- !u!1101 &-8556804812614794395
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: v2/EyeTrackingActive
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 5997957829630780121}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 0
 --- !u!1101 &-8527994618037265872
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -524,23 +549,23 @@ AnimatorStateMachine:
   m_Name: vrcfox__Eye Left Tracking
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: -5825570521557585637}
-    m_Position: {x: 0, y: 70, z: 0}
+    m_State: {fileID: 4483445089315876112}
+    m_Position: {x: 500, y: 70, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -1932626274736189405}
-    m_Position: {x: 0, y: 140, z: 0}
+    m_State: {fileID: 4059832712689638471}
+    m_Position: {x: 500, y: 140, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
-  - {fileID: 2179816763470198162}
-  - {fileID: 5747967946315485469}
+  - {fileID: 8369513770598270833}
+  - {fileID: 9121299636166881210}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 0, y: 490, z: 0}
   m_EntryPosition: {x: 0, y: -70, z: 0}
   m_ExitPosition: {x: 1750, y: -70, z: 0}
-  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -5825570521557585637}
+  m_ParentStateMachinePosition: {x: 750, y: -70, z: 0}
+  m_DefaultState: {fileID: 4483445089315876112}
 --- !u!1101 &-6260207026671587889
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -882,6 +907,29 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-5057908825283303624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -646210727, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackingHead: 0
+  trackingLeftHand: 0
+  trackingRightHand: 0
+  trackingHip: 0
+  trackingLeftFoot: 0
+  trackingRightFoot: 0
+  trackingLeftFingers: 0
+  trackingRightFingers: 0
+  trackingEyes: 1
+  trackingMouth: 0
+  debugString: 
 --- !u!114 &-4433836386110591728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1157,6 +1205,58 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 9080390419699579724}
+--- !u!114 &-3700544939401771996
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -706344726, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters:
+  - type: 0
+    name: v2/EyeTrackingActive-float
+    source: 
+    value: 1
+    valueMin: 0
+    valueMax: 1
+    chance: 1
+    convertRange: 0
+    sourceMin: 0
+    sourceMax: 0
+    destMin: 0
+    destMax: 0
+  localOnly: 0
+  debugString: 
+--- !u!1101 &-3697904742965037559
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: v2/EyeTrackingActive
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -1108831762715296768}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &-3678149162924282464
 AnimatorState:
   serializedVersion: 6
@@ -1347,6 +1447,29 @@ MonoBehaviour:
   trackingEyes: 1
   trackingMouth: 0
   debugString: 
+--- !u!114 &-2063345895812144495
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -646210727, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackingHead: 0
+  trackingLeftHand: 0
+  trackingRightHand: 0
+  trackingHip: 0
+  trackingLeftFoot: 0
+  trackingRightFoot: 0
+  trackingLeftFingers: 0
+  trackingRightFingers: 0
+  trackingEyes: 2
+  trackingMouth: 0
+  debugString: 
 --- !u!1102 &-1932626274736189405
 AnimatorState:
   serializedVersion: 6
@@ -1507,6 +1630,35 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &-1108831762715296768
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Eye Right Tracking
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: 5116594456631752191}
+  - {fileID: -2063345895812144495}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -7266181348229265676, guid: a33c5817a0ccd554595fad701f7d25e6,
+    type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &-1062974035213341036
 AnimatorState:
   serializedVersion: 6
@@ -2158,6 +2310,29 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 0
+--- !u!114 &2375400338946505693
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -646210727, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackingHead: 0
+  trackingLeftHand: 0
+  trackingRightHand: 0
+  trackingHip: 0
+  trackingLeftFoot: 0
+  trackingRightFoot: 0
+  trackingLeftFingers: 0
+  trackingRightFingers: 0
+  trackingEyes: 2
+  trackingMouth: 0
+  debugString: 
 --- !u!1101 &2837709589296019735
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2456,6 +2631,35 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &4059832712689638471
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Eye Left Tracking
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: -3700544939401771996}
+  - {fileID: 2375400338946505693}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -7197477393915333347, guid: a33c5817a0ccd554595fad701f7d25e6,
+    type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &4072981143789326681
 AnimatorState:
   serializedVersion: 6
@@ -2484,6 +2688,33 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &4342661218615212577
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -706344726, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters:
+  - type: 0
+    name: v2/EyeTrackingActive-float
+    source: 
+    value: 0
+    valueMin: 0
+    valueMax: 1
+    chance: 1
+    convertRange: 0
+    sourceMin: 0
+    sourceMax: 0
+    destMin: 0
+    destMax: 0
+  localOnly: 0
+  debugString: 
 --- !u!1102 &4406746174212724723
 AnimatorState:
   serializedVersion: 6
@@ -2513,6 +2744,35 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: GestureRightWeight
+--- !u!1102 &4483445089315876112
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VRC Eye Left Control
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: 4342661218615212577}
+  - {fileID: 6024121071918301907}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -4943802704236833678, guid: a33c5817a0ccd554595fad701f7d25e6,
+    type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &4799312475105309257
 AnimatorState:
   serializedVersion: 6
@@ -2542,6 +2802,33 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &5116594456631752191
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -706344726, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters:
+  - type: 0
+    name: v2/EyeTrackingActive-float
+    source: 
+    value: 1
+    valueMin: 0
+    valueMax: 1
+    chance: 1
+    convertRange: 0
+    sourceMin: 0
+    sourceMax: 0
+    destMin: 0
+    destMax: 0
+  localOnly: 0
+  debugString: 
 --- !u!114 &5265699523711683900
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2594,6 +2881,35 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &5997957829630780121
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VRC Eye Right Control
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: 6625594677358166228}
+  - {fileID: -5057908825283303624}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -2491170163218378425, guid: a33c5817a0ccd554595fad701f7d25e6,
+    type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &6007977508895087411
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2615,6 +2931,29 @@ MonoBehaviour:
   trackingLeftFingers: 0
   trackingRightFingers: 0
   trackingEyes: 2
+  trackingMouth: 0
+  debugString: 
+--- !u!114 &6024121071918301907
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -646210727, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackingHead: 0
+  trackingLeftHand: 0
+  trackingRightHand: 0
+  trackingHip: 0
+  trackingLeftFoot: 0
+  trackingRightFoot: 0
+  trackingLeftFingers: 0
+  trackingRightFingers: 0
+  trackingEyes: 1
   trackingMouth: 0
   debugString: 
 --- !u!114 &6153894102955179252
@@ -2718,6 +3057,33 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &6625594677358166228
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -706344726, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters:
+  - type: 0
+    name: v2/EyeTrackingActive-float
+    source: 
+    value: 0
+    valueMin: 0
+    valueMax: 1
+    chance: 1
+    convertRange: 0
+    sourceMin: 0
+    sourceMax: 0
+    destMin: 0
+    destMax: 0
+  localOnly: 0
+  debugString: 
 --- !u!114 &6740489078271569539
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2755,23 +3121,23 @@ AnimatorStateMachine:
   m_Name: vrcfox__Eye Right Tracking
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: -4054337082897640147}
-    m_Position: {x: 0, y: 70, z: 0}
+    m_State: {fileID: 5997957829630780121}
+    m_Position: {x: 500, y: 70, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 188830168816007925}
-    m_Position: {x: 0, y: 140, z: 0}
+    m_State: {fileID: -1108831762715296768}
+    m_Position: {x: 500, y: 140, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
-  - {fileID: 2837709589296019735}
-  - {fileID: -5744948877043150833}
+  - {fileID: -8556804812614794395}
+  - {fileID: -3697904742965037559}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 0, y: 490, z: 0}
   m_EntryPosition: {x: 0, y: -70, z: 0}
   m_ExitPosition: {x: 1750, y: -70, z: 0}
-  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -4054337082897640147}
+  m_ParentStateMachinePosition: {x: 750, y: -70, z: 0}
+  m_DefaultState: {fileID: 5997957829630780121}
 --- !u!1101 &7364525225350810828
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2855,6 +3221,31 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &8369513770598270833
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: v2/EyeTrackingActive
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 4483445089315876112}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 0
 --- !u!1101 &8516813861758892938
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2962,3 +3353,28 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &9121299636166881210
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: v2/EyeTrackingActive
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 4059832712689638471}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1

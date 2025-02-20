@@ -660,6 +660,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetContainer: {fileID: 9100000, guid: a33c5817a0ccd554595fad701f7d25e6, type: 2}
+  animFx: {fileID: 9100000, guid: dd3a0ab180d0dfe46b079b91bd3ae462, type: 2}
+  animGesture: {fileID: 9100000, guid: 7992f28a694bf3c4085dbfd71e5ba082, type: 2}
+  animAdditive: {fileID: 9100000, guid: 71074a750cd626b4c9ea53f62e48dff3, type: 2}
   fxMask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
   EyeLeftMask: {fileID: 31900000, guid: 66094741a9a9e9a4eb478890a4125eb4, type: 2}
   EyeRightMask: {fileID: 31900000, guid: a20dbdd41a7b0424aac0c38f843b59e8, type: 2}
@@ -2644,13 +2647,13 @@ MonoBehaviour:
   height: 0.0032
   position: {x: 0, y: 0.0006, z: 0.0004}
   rotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
+  localOnly: 0
   collisionTags:
   - Head
   - Hand
   - Finger
   allowSelf: 0
   allowOthers: 1
-  localOnly: 0
   receiverType: 0
   parameter: contact/confuse
   minVelocity: 0.05
@@ -2672,13 +2675,13 @@ MonoBehaviour:
   height: 2
   position: {x: 0, y: 0.000206, z: 0.001755}
   rotation: {x: 0, y: 0, z: 0, w: 1}
+  localOnly: 0
   collisionTags:
   - Head
   - Hand
   - Finger
   allowSelf: 0
   allowOthers: 1
-  localOnly: 0
   receiverType: 0
   parameter: contact/nose
   minVelocity: 0.05

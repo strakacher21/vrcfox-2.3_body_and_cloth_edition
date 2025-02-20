@@ -1,19 +1,15 @@
 #if UNITY_EDITOR
 using System;
-using AnimatorAsCode.V0;
+using AnimatorAsCode.V1;
+using AnimatorAsCode.V1.VRC;
+using AnimatorAsCode.V1.VRCDestructiveWorkflow;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Avatars.ScriptableObjects;
 using System.Collections.Generic;
-using UnityEngine.Serialization;
-using VRC;
 using VRC.SDKBase;
-using System.ComponentModel.Composition.Primitives;
-using UnityEngine.XR;
-using static BlackStartX.GestureManager.Editor.Data.GestureManagerStyles.Animations;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 [Serializable]
 public struct DualShape
@@ -188,16 +184,15 @@ public class AnimatorWizard : MonoBehaviour
 
 		_vrcParams = new List<VRCExpressionParameters.Parameter>();
 
-		_aac = AacV0.Create(new AacConfiguration
+		_aac = AacV1.Create(new AacConfiguration
 		{
 			SystemName = SystemName,
-			AvatarDescriptor = avatar,
 			AnimatorRoot = avatar.transform,
 			DefaultValueRoot = avatar.transform,
 			AssetContainer = assetContainer,
 			AssetKey = SystemName,
 			DefaultsProvider = new AacDefaultsProvider(false)
-		});
+		}.WithAvatarDescriptor(avatar));
 
 		_aac.ClearPreviousAssets();
 
@@ -432,10 +427,10 @@ public class AnimatorWizard : MonoBehaviour
 				var VRCEyeControlState = layer.NewState($"VRC Eye {side} Control")
 					.WithWriteDefaultsSetTo(true)
 					.Drives(etBlendParam, 0.0f)
-					.TrackingTracks(AacFlState.TrackingElement.Eyes);
+					.TrackingTracks(AacAv3.Av3TrackingElement.Eyes);
 
-				// Eye Tracking Tree
-				var EyeTrackingTree = _aac.NewBlendTreeAsRaw();
+                // Eye Tracking Tree
+                var EyeTrackingTree = _aac.NewBlendTreeAsRaw();
 				EyeTrackingTree.name = $"Eye {side} Tracking";
 				EyeTrackingTree.blendType = BlendTreeType.FreeformCartesian2D;
 				EyeTrackingTree.blendParameter = EyeXParam.Name;
@@ -448,7 +443,7 @@ public class AnimatorWizard : MonoBehaviour
 					.WithAnimation(EyeTrackingTree)
 					.WithWriteDefaultsSetTo(true)
 					.Drives(etBlendParam, 1.0f)
-					.TrackingAnimates(AacFlState.TrackingElement.Eyes);
+					.TrackingAnimates(AacAv3.Av3TrackingElement.Eyes);
 
 				// Transitions
 				layer.AnyTransitionsTo(VRCEyeControlState)
@@ -518,26 +513,26 @@ public class AnimatorWizard : MonoBehaviour
 			// State "face tracking off"
 			var offFaceTrackingState = layer.NewState("face tracking off")
 				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true)
-				.TrackingAnimates(AacFlState.TrackingElement.Mouth);
+				.TrackingAnimates(AacAv3.Av3TrackingElement.Mouth);
 			offFaceTrackingState.WithAnimation(offClip);
 
 			// State "face tracking on"
 			var onFaceTrackingState = layer.NewState("face tracking on")
 				.Drives(ftBlendParam, 1).WithWriteDefaultsSetTo(true)
-				.TrackingAnimates(AacFlState.TrackingElement.Mouth);
+				.TrackingAnimates(AacAv3.Av3TrackingElement.Mouth);
 
 			if (createFTLipSyncControl)
 			{
 				// State "face tracking off [LipSync]"
 				var offFaceTrackingLipSyncState = layer.NewState("face tracking off [LipSync]")
 				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true)
-				.TrackingTracks(AacFlState.TrackingElement.Mouth);
-				offFaceTrackingLipSyncState.WithAnimation(offClip);
+				.TrackingTracks(AacAv3.Av3TrackingElement.Mouth);
+                offFaceTrackingLipSyncState.WithAnimation(offClip);
 
 				// State "face tracking on [LipSync]"
 				var onFaceTrackingLipSyncState = layer.NewState("face tracking on [LipSync]")
 				.Drives(ftBlendParam, 1).WithWriteDefaultsSetTo(true)
-				.TrackingTracks(AacFlState.TrackingElement.Mouth);
+				.TrackingTracks(AacAv3.Av3TrackingElement.Mouth);
 				
 				// Transitions
 				var offFaceTrackingLipSyncTransition = layer.AnyTransitionsTo(offFaceTrackingLipSyncState)
