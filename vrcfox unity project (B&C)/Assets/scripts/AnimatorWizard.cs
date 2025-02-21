@@ -171,10 +171,11 @@ public class AnimatorWizard : MonoBehaviour
 	private AacFlBase _aac;
 	private List<VRCExpressionParameters.Parameter> _vrcParams;
 
-	private const string Left = "Left";
+    private const bool UseWriteDefaults = true;
+
+    private const string Left = "Left";
 	private const string Right = "Right";
 
-	private const string SystemName = "vrcfox";
 	private const float TransitionSpeed = 0.05f;
 
 	public void Create()
@@ -186,18 +187,22 @@ public class AnimatorWizard : MonoBehaviour
 
 		_aac = AacV1.Create(new AacConfiguration
 		{
-			SystemName = SystemName,
+			SystemName = "vrcfox",
 			AnimatorRoot = avatar.transform,
 			DefaultValueRoot = avatar.transform,
 			AssetContainer = assetContainer,
-			AssetKey = SystemName,
-			DefaultsProvider = new AacDefaultsProvider(false)
-		}.WithAvatarDescriptor(avatar));
+			AssetKey = "vrcfox",
+            DefaultsProvider = new AacDefaultsProvider(UseWriteDefaults)
+        }.WithAvatarDescriptor(avatar));
 
-		_aac.ClearPreviousAssets();
+        // clear assetContainer
+        //_aac.ClearPreviousAssets(); // Broken in new version
+        foreach (var asset in AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(assetContainer)))
+            if (asset is AnimationClip or BlendTree)
+                AssetDatabase.RemoveObjectFromAsset(asset);
 
-		// Gesture Layer
-		_aac.CreateMainGestureLayer().WithAvatarMask(gestureMask);
+        // Gesture Layer
+        _aac.CreateMainGestureLayer().WithAvatarMask(gestureMask);
 
 		// Iterate through each hand side (left/right)
 		foreach (string side in new[] { Left, Right })
@@ -224,10 +229,15 @@ public class AnimatorWizard : MonoBehaviour
 					throw new Exception($"Gesture animation for {side} hand, index {i}, is not assigned!");
 
 				var state = layer.NewState(motion.name, 1, i)
-					.WithAnimation(motion)
-					.WithWriteDefaultsSetTo(true);
+					.WithAnimation(motion);
 
-				layer.EntryTransitionsTo(state).When(Gesture.IsEqualTo(i));
+                // Gesture Weight for the element with the index 1
+                if (i == 1)
+                {
+                    state = state.WithMotionTime(GestureWeight);
+                }
+
+                layer.EntryTransitionsTo(state).When(Gesture.IsEqualTo(i));
 				state.Exits()
 					.WithTransitionDurationSeconds(TransitionSpeed)
 					.When(Gesture.IsNotEqualTo(i));
@@ -244,8 +254,7 @@ public class AnimatorWizard : MonoBehaviour
 		var masterTree = _aac.NewBlendTreeAsRaw();
 		masterTree.name = "master tree";
 		masterTree.blendType = BlendTreeType.Direct;
-		fxTreeLayer.NewState(masterTree.name).WithAnimation(masterTree)
-			.WithWriteDefaultsSetTo(true);
+		fxTreeLayer.NewState(masterTree.name).WithAnimation(masterTree);
 
 		AacFlBoolParameter ftActiveParam = CreateBoolParam(fxLayer, ftPrefix + "LipTrackingActive", true, false);
 		AacFlFloatParameter ftBlendParam = fxLayer.FloatParameter(ftPrefix + "LipTrackingActive-float");
@@ -265,7 +274,7 @@ public class AnimatorWizard : MonoBehaviour
 		// this state transitions to itself every half second to update toggles. it sucks
 		// TODO: not use this awful driver updating
         var fxDriverLayer = _aac.CreateSupportingFxLayer("drivers").WithAvatarMask(fxMask);
-		var fxDriverState = fxDriverLayer.NewState("drivers").WithWriteDefaultsSetTo(true);
+		var fxDriverState = fxDriverLayer.NewState("drivers");
 		fxDriverState.TransitionsTo(fxDriverState).AfterAnimationFinishes().WithTransitionDurationSeconds(0.5f)
 			.WithTransitionToSelf();
 		var drivers = fxDriverState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
@@ -319,7 +328,7 @@ public class AnimatorWizard : MonoBehaviour
 			void setupClothes(string[] clothNames, string layerName)
 			{
 				var layer = _aac.CreateSupportingFxLayer(layerName).WithAvatarMask(fxMask);
-				var waitingState = layer.NewState("Waiting command").WithWriteDefaultsSetTo(true);
+				var waitingState = layer.NewState("Waiting command");
 				var waitingTransition = layer.AnyTransitionsTo(waitingState).WithTransitionToSelf();
 				var resetDriver = waitingState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
 				var clothStates = new Dictionary<string, AacFlState>();
@@ -327,7 +336,7 @@ public class AnimatorWizard : MonoBehaviour
 
 				foreach (var clothName in clothNames)
 				{
-					var clothState = layer.NewState(clothName).WithWriteDefaultsSetTo(true);
+					var clothState = layer.NewState(clothName);
 					var driver = clothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
 
 					for (int i = 0; i < blendShapeCount; i++)
@@ -425,7 +434,6 @@ public class AnimatorWizard : MonoBehaviour
 
 				// VRC Eye Control State
 				var VRCEyeControlState = layer.NewState($"VRC Eye {side} Control")
-					.WithWriteDefaultsSetTo(true)
 					.Drives(etBlendParam, 0.0f)
 					.TrackingTracks(AacAv3.Av3TrackingElement.Eyes);
 
@@ -441,7 +449,6 @@ public class AnimatorWizard : MonoBehaviour
 				// Eye Tracking State
 				var EyeTrackingState = layer.NewState($"Eye {side} Tracking")
 					.WithAnimation(EyeTrackingTree)
-					.WithWriteDefaultsSetTo(true)
 					.Drives(etBlendParam, 1.0f)
 					.TrackingAnimates(AacAv3.Av3TrackingElement.Eyes);
 
@@ -512,26 +519,26 @@ public class AnimatorWizard : MonoBehaviour
 
 			// State "face tracking off"
 			var offFaceTrackingState = layer.NewState("face tracking off")
-				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true)
+				.Drives(ftBlendParam, 0)
 				.TrackingAnimates(AacAv3.Av3TrackingElement.Mouth);
 			offFaceTrackingState.WithAnimation(offClip);
 
 			// State "face tracking on"
 			var onFaceTrackingState = layer.NewState("face tracking on")
-				.Drives(ftBlendParam, 1).WithWriteDefaultsSetTo(true)
+				.Drives(ftBlendParam, 1)
 				.TrackingAnimates(AacAv3.Av3TrackingElement.Mouth);
 
 			if (createFTLipSyncControl)
 			{
 				// State "face tracking off [LipSync]"
 				var offFaceTrackingLipSyncState = layer.NewState("face tracking off [LipSync]")
-				.Drives(ftBlendParam, 0).WithWriteDefaultsSetTo(true)
+				.Drives(ftBlendParam, 0)
 				.TrackingTracks(AacAv3.Av3TrackingElement.Mouth);
                 offFaceTrackingLipSyncState.WithAnimation(offClip);
 
 				// State "face tracking on [LipSync]"
 				var onFaceTrackingLipSyncState = layer.NewState("face tracking on [LipSync]")
-				.Drives(ftBlendParam, 1).WithWriteDefaultsSetTo(true)
+				.Drives(ftBlendParam, 1)
 				.TrackingTracks(AacAv3.Av3TrackingElement.Mouth);
 				
 				// Transitions
@@ -566,8 +573,7 @@ public class AnimatorWizard : MonoBehaviour
 				// State "reset face tracking"
 				var resetState = layer.NewState("reset face tracking")
 				.WithAnimation(offClip)
-				.Drives(ftBlendParam, 0)
-				.WithWriteDefaultsSetTo(true);
+				.Drives(ftBlendParam, 0);
 				var resetDriver = resetState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
 
 				// Combine FTshapes
@@ -680,15 +686,13 @@ public class AnimatorWizard : MonoBehaviour
 				OSCLocalTree.name = "OSC Local";
 				OSCLocalTree.blendType = BlendTreeType.Direct;
 				var OSCLocalState = OSCLayer.NewState(OSCLocalTree.name)
-					.WithAnimation(OSCLocalTree)
-					.WithWriteDefaultsSetTo(true);
+					.WithAnimation(OSCLocalTree);
 
 				var OSCRemoteTree = _aac.NewBlendTreeAsRaw();
 				OSCRemoteTree.name = "OSC Remote";
 				OSCRemoteTree.blendType = BlendTreeType.Direct;
 				var OSCRemoteState = OSCLayer.NewState(OSCRemoteTree.name)
-					.WithAnimation(OSCRemoteTree)
-					.WithWriteDefaultsSetTo(true);
+					.WithAnimation(OSCRemoteTree);
 
 				// Combine FTshapes
 				var allShapes = new List<string>();	
@@ -847,8 +851,7 @@ public class AnimatorWizard : MonoBehaviour
 			}
 
 			var state = layer.NewState(shapeNames[i], 1, i)
-				.WithAnimation(clip)
-				.WithWriteDefaultsSetTo(true);
+				.WithAnimation(clip);
 
 			var enter = layer.EntryTransitionsTo(state)
 				.When(Gesture.IsEqualTo(i));
