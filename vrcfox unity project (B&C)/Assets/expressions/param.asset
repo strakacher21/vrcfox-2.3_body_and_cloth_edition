@@ -219,7 +219,12 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: v2/MouthUpperUp
+  - name: v2/MouthUpperUpLeft
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/MouthUpperUpRight
     valueType: 1
     saved: 0
     defaultValue: 0
@@ -229,7 +234,12 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: v2/MouthLowerDown
+  - name: v2/MouthLowerDownLeft
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/MouthLowerDownRight
     valueType: 1
     saved: 0
     defaultValue: 0
@@ -304,8 +314,3 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 1
-  - name: v2/MouthPressRight
-    valueType: 1
-    saved: 0
-    defaultValue: 0
-    networkSynced: 0

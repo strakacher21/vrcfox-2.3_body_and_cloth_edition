@@ -772,8 +772,8 @@ MonoBehaviour:
   - LipPucker
   - MouthClosed
   - MouthStretch
-  - MouthUpperUp
-  - MouthLowerDown
+  - MouthUpperUpLeft
+  - MouthLowerDownLeft
   - MouthRaiserLower
   - TongueOut
   - EyeSquintLeft
@@ -1795,13 +1795,13 @@ MonoBehaviour:
     isDefault: 0
   - isEnabled: 0
     type: 2
-    animatorController: {fileID: 9100000, guid: 71074a750cd626b4c9ea53f62e48dff3,
+    animatorController: {fileID: 9100000, guid: 90e1a29d22fcc854d89ba2fcc67604ba,
       type: 2}
     mask: {fileID: 0}
     isDefault: 0
   - isEnabled: 0
     type: 3
-    animatorController: {fileID: 9100000, guid: 7992f28a694bf3c4085dbfd71e5ba082,
+    animatorController: {fileID: 9100000, guid: 8a3eb7bd72c9bae49b318c7604a903ac,
       type: 2}
     mask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
     isDefault: 0
@@ -1812,7 +1812,7 @@ MonoBehaviour:
     isDefault: 1
   - isEnabled: 0
     type: 5
-    animatorController: {fileID: 9100000, guid: dd3a0ab180d0dfe46b079b91bd3ae462,
+    animatorController: {fileID: 9100000, guid: 8f29958f6d0bade43ab6c665101232bd,
       type: 2}
     mask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
     isDefault: 0
@@ -1923,14 +1923,14 @@ MonoBehaviour:
     name: up
   - hash: 1601521538
     name: curious
-  - hash: -1054679528
-    name: up 0
+  - hash: -1239028082
+    name: up 1
   - hash: 606987544
     name: worried
-  - hash: 327776126
-    name: curious 0
-  - hash: 188106133
-    name: down 0
+  - hash: 1687046120
+    name: curious 1
+  - hash: 2083616003
+    name: down 1
   - hash: -629658374
     name: basis
   - hash: -818971815
@@ -1939,14 +1939,14 @@ MonoBehaviour:
     name: smile
   - hash: -2085605352
     name: grimace
-  - hash: -1656664433
-    name: smile 0
-  - hash: 1447439796
-    name: grimace 0
+  - hash: -364478951
+    name: smile 1
   - hash: 557915426
     name: grimace 1
-  - hash: 1579845495
-    name: frown 0
+  - hash: -1203221352
+    name: grimace 2
+  - hash: 690862049
+    name: frown 1
   - hash: -576816719
     name: drivers
   - hash: 1379458372
@@ -1993,66 +1993,66 @@ MonoBehaviour:
     name: FaceToogle_Happy
   - hash: -989824097
     name: FaceToggle_cheekiness
-  - hash: -287519424
-    name: FaceToggle_fatigue
-  - hash: 1969355184
-    name: FaceToggle_thirst
-  - hash: -1670629089
-    name: FaceToggle_BaffledReaction
-  - hash: 1564406015
-    name: FaceToggle_SneakyGrin
-  - hash: -336263825
-    name: FaceToggle_SquintingStronger
-  - hash: -1038920044
-    name: FaceToggle_confident
-  - hash: 625167218
-    name: FaceToggle_EyeClosed
-  - hash: -1007121058
-    name: FaceToggle_AngryStronger
-  - hash: -51347928
-    name: FaceToggle_squinting
-  - hash: 331230723
-    name: FaceToggle_FrustratedPuff
-  - hash: 2141058583
-    name: "FaceToggle_Nervous\u0421uriosity"
-  - hash: 222051532
-    name: FaceToggle_sulky tongue_out
-  - hash: 639234733
-    name: FaceToggle_ResignedFrustration
-  - hash: 994626471
-    name: FaceToggle_frown
-  - hash: 33690826
-    name: FaceToggle_CriticalEyebrow_raise
-  - hash: 1662050218
-    name: FaceToggle_angry
-  - hash: -582360965
-    name: FaceToggle_shoke
-  - hash: -458816179
-    name: FaceToggle_disgust
-  - hash: -1150518871
-    name: FaceToggle_sad
-  - hash: -1291972414
-    name: FaceToggle_ForcedOptimism
-  - hash: -570330212
-    name: FaceToggle_fear
-  - hash: 2025594616
-    name: FaceToggle_CuriousingStronger
-  - hash: 1494186541
-    name: FaceToggle_curiousing
-  - hash: -1029026893
-    name: FaceToggle_DefaultFace
-  - hash: -2004665811
-    name: FaceToggle_WarmLook
-  - hash: -1834817308
-    name: FaceToggle_smirk
-  - hash: -355700350
-    name: FaceToggle_schadenfreude
-  - hash: 496825050
-    name: FaceToggle_OpenSmileStronger
-  - hash: 706512522
-    name: FaceToggle_OpenSmile
   - hash: 1189343763
     name: FaceToggle_conceited
+  - hash: 706512522
+    name: FaceToggle_OpenSmile
+  - hash: 496825050
+    name: FaceToggle_OpenSmileStronger
+  - hash: -355700350
+    name: FaceToggle_schadenfreude
+  - hash: -1834817308
+    name: FaceToggle_smirk
+  - hash: -2004665811
+    name: FaceToggle_WarmLook
+  - hash: -1029026893
+    name: FaceToggle_DefaultFace
+  - hash: 1494186541
+    name: FaceToggle_curiousing
+  - hash: 2025594616
+    name: FaceToggle_CuriousingStronger
+  - hash: -570330212
+    name: FaceToggle_fear
+  - hash: -1291972414
+    name: FaceToggle_ForcedOptimism
+  - hash: -1150518871
+    name: FaceToggle_sad
+  - hash: -458816179
+    name: FaceToggle_disgust
+  - hash: -582360965
+    name: FaceToggle_shoke
+  - hash: 1662050218
+    name: FaceToggle_angry
+  - hash: 33690826
+    name: FaceToggle_CriticalEyebrow_raise
+  - hash: 994626471
+    name: FaceToggle_frown
+  - hash: 331230723
+    name: FaceToggle_FrustratedPuff
+  - hash: 639234733
+    name: FaceToggle_ResignedFrustration
+  - hash: 222051532
+    name: FaceToggle_sulky tongue_out
+  - hash: 2141058583
+    name: "FaceToggle_Nervous\u0421uriosity"
+  - hash: -51347928
+    name: FaceToggle_squinting
+  - hash: -1007121058
+    name: FaceToggle_AngryStronger
+  - hash: 625167218
+    name: FaceToggle_EyeClosed
+  - hash: -1038920044
+    name: FaceToggle_confident
+  - hash: -336263825
+    name: FaceToggle_SquintingStronger
+  - hash: 1564406015
+    name: FaceToggle_SneakyGrin
+  - hash: -1670629089
+    name: FaceToggle_BaffledReaction
+  - hash: 1969355184
+    name: FaceToggle_thirst
+  - hash: -287519424
+    name: FaceToggle_fatigue
   - hash: 1919488495
     name: Waiting command
   - hash: -1207595230
@@ -2197,7 +2197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchedFromSDKPipeline: 0
   completedSDKPipeline: 0
-  blueprintId: 
+  blueprintId: avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1
   contentType: 0
   assetBundleUnityVersion: 
   fallbackStatus: 3
