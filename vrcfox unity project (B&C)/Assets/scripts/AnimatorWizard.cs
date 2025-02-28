@@ -10,7 +10,6 @@ using UnityEngine;
 using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Avatars.ScriptableObjects;
 using VRC.SDKBase;
-using static VRC.SDKBase.VRC_SpecialLayer;
 
 [Serializable]
 public struct DualShape
