@@ -49,8 +49,8 @@ public class AnimatorWizard : MonoBehaviour
     public AvatarMask EyeLeftMask;
     public AvatarMask EyeRightMask;
     public AvatarMask gestureMask;
-    public AvatarMask lMask;
-    public AvatarMask rMask;
+    public AvatarMask GestureLeftMask;
+    public AvatarMask GestureRightMask;
 
     public bool MirrorHandposes = true;
     public Motion[] LeftHandPoses;
@@ -75,8 +75,9 @@ public class AnimatorWizard : MonoBehaviour
     public bool createFTLipSyncControl = false;
     public string lipSyncName = "LipSyncTrackingActive";
 
-    public bool createFaceToggleControl = false;
+    public bool createFaceToggle = false;
     public bool FaceToggleActive = false;
+    public Motion[] FaceToggleNames;
 
     public bool saveVRCExpressionParameters = false;
     public bool MirrorFTparams = false;
@@ -207,7 +208,7 @@ public class AnimatorWizard : MonoBehaviour
         foreach (string side in new[] { Left, Right })
         {
             var layer = _aac.CreateSupportingGestureLayer(side + " hand")
-                .WithAvatarMask(side == Left ? lMask : rMask);
+                .WithAvatarMask(side == Left ? GestureLeftMask : GestureRightMask);
 
             var Gesture = layer.IntParameter("Gesture" + side);
             var GestureWeight = layer.FloatParameter("Gesture" + side + "Weight");
@@ -381,7 +382,6 @@ public class AnimatorWizard : MonoBehaviour
                 .When(etActiveParam.IsFalse());
 
                 layer.AnyTransitionsTo(EyeTrackingState)
-                .WithTransitionToSelf()
                 .When(etActiveParam.IsTrue());
             }
 
@@ -669,6 +669,22 @@ public class AnimatorWizard : MonoBehaviour
                 EditorUtility.SetDirty(avatar.expressionParameters);
             }
         }
+
+        if (createFaceToggle)
+        {
+            var FaceToggleLayer = _aac.CreateSupportingFxLayer("Face Toggle").WithAvatarMask(fxMask);
+            AacFlIntParameter FaceToggleActiveParam = CreateIntParam(fxLayer, ftPrefix + "anim/FacePresets", true, 0);
+            AacFlBoolParameter FaceToggleActive = FaceToggleLayer.BoolParameter("FaceToggleActive");
+            var FaceToggleWaitingState = FaceToggleLayer.NewState("Waiting command").Drives(FaceToggleActive, false);
+            var waitingTransition = FaceToggleLayer.AnyTransitionsTo(FaceToggleWaitingState)
+                .WithTransitionDurationSeconds(0.25f)
+                .When(FaceToggleActiveParam.IsEqualTo(0));
+
+            for (int i = 0; i < FaceToggleNames.Length; i++)
+            {
+                setupFaceToggle(FaceToggleLayer, FaceToggleNames[i], FaceToggleActiveParam, FaceToggleActive, i);
+            }
+        }
     }
 
     private BlendTree BlendshapeTree(AacFlLayer layer, SkinnedMeshRenderer skin, AacFlParameter param,
@@ -690,8 +706,20 @@ public class AnimatorWizard : MonoBehaviour
             param);
     }
 
-    private void MapHandPosesToShapes(string layerName, SkinnedMeshRenderer skin,
-        string[] shapeNames, string prefix, bool rightHand, AacFlBoolParameter ftActiveParam, AacFlBoolParameter ExpTrackActiveParam, bool FaceToggleActive)
+    private void setupFaceToggle(AacFlLayer FaceToggleLayer, Motion motion,
+        AacFlIntParameter FaceToggleActiveParam, AacFlBoolParameter FaceToggleActive, int index)
+    {
+        var faceToggleState = FaceToggleLayer.NewState(motion.name)
+            .Drives(FaceToggleActive, true)
+            .WithAnimation(motion);
+
+        FaceToggleLayer.AnyTransitionsTo(faceToggleState)
+            .WithTransitionDurationSeconds(0.25f)
+            .When(FaceToggleActiveParam.IsEqualTo(index + 1));
+    }
+
+    private void MapHandPosesToShapes(string layerName, SkinnedMeshRenderer skin, string[] shapeNames, string prefix, bool rightHand,
+        AacFlBoolParameter ftActiveParam, AacFlBoolParameter ExpTrackActiveParam, bool FaceToggleActive)
     {
         var layer = _aac.CreateSupportingFxLayer(layerName).WithAvatarMask(fxMask);
         var Gesture = layer.IntParameter("Gesture" + (rightHand ? Right : Left));
@@ -752,7 +780,7 @@ public class AnimatorWizard : MonoBehaviour
                 }
             }
 
-            if (createFaceToggleControl)
+            if (createFaceToggle)
             {
                 if (i == 0)
                 {
@@ -891,13 +919,18 @@ public class AnimatorWizard : MonoBehaviour
 
     private AacFlFloatParameter CreateFloatParam(AacFlLayer layer, string paramName, bool save, float val)
     {
-        CreateFloatParamVrcOnly(paramName, save, val);
+        CreateParamVrcOnly(paramName, save, val);
 
         return layer.FloatParameter(paramName);
     }
+    private AacFlIntParameter CreateIntParam(AacFlLayer layer, string paramName, bool save, int val)
+    {
+        CreateParamVrcOnly(paramName, save, val);
 
+        return layer.IntParameter(paramName);
+    }
 
-    private void CreateFloatParamVrcOnly(string paramName, bool save, float val)
+    private void CreateParamVrcOnly(string paramName, bool save, float val)
     {
 
         {
@@ -993,13 +1026,13 @@ public class AnimatorGeneratorEditor : Editor
 
     private SerializedProperty assetContainer;
 
-    private SerializedProperty fxMask, EyeLeftMask, EyeRightMask, gestureMask, lMask, rMask;
+    private SerializedProperty fxMask, EyeLeftMask, EyeRightMask, gestureMask, GestureLeftMask, GestureRightMask;
 
     private SerializedProperty LeftHandPoses, RightHandPoses;
 
-    private SerializedProperty createShapePreferences, createColorCustomization, createFaceTracking, createClothCustomization, createEyeTracking;
+    private SerializedProperty createShapePreferences, createColorCustomization, createClothCustomization, createFaceToggle, createEyeTracking, createFaceTracking;
 
-    private SerializedProperty createFacialExpressionsControl, createFTLipSyncControl, createFaceToggleControl, createOSCsmooth;
+    private SerializedProperty createFacialExpressionsControl, createFTLipSyncControl, createOSCsmooth;
 
     private SerializedProperty localSmoothness, remoteSmoothness;
 
@@ -1011,7 +1044,7 @@ public class AnimatorGeneratorEditor : Editor
 
     private SerializedProperty LeftEyePoses, RightEyePoses;
 
-    private SerializedProperty mouthShapeNames, browShapeNames, expTrackName, ClothUpperBodyNames, ClothLowerBodyNames, ClothFootNames;
+    private SerializedProperty mouthShapeNames, browShapeNames, expTrackName, ClothUpperBodyNames, ClothLowerBodyNames, ClothFootNames, FaceToggleNames;
 
     private SerializedProperty lipSyncName, faceToggleName, ftShapes, ftDualShapes;
 
@@ -1032,20 +1065,20 @@ public class AnimatorGeneratorEditor : Editor
         EyeLeftMask = serializedObject.FindProperty("EyeLeftMask");
         EyeRightMask = serializedObject.FindProperty("EyeRightMask");
         gestureMask = serializedObject.FindProperty("gestureMask");
-        lMask = serializedObject.FindProperty("lMask");
-        rMask = serializedObject.FindProperty("rMask");
+        GestureLeftMask = serializedObject.FindProperty("GestureLeftMask");
+        GestureRightMask = serializedObject.FindProperty("GestureRightMask");
 
         LeftHandPoses = serializedObject.FindProperty("LeftHandPoses");
         RightHandPoses = serializedObject.FindProperty("RightHandPoses");
 
         createShapePreferences = serializedObject.FindProperty("createShapePreferences");
-        createColorCustomization = serializedObject.FindProperty("createColorCustomization");
         createFaceTracking = serializedObject.FindProperty("createFaceTracking");
+        createColorCustomization = serializedObject.FindProperty("createColorCustomization");
         createClothCustomization = serializedObject.FindProperty("createClothCustomization");
+        createFaceToggle = serializedObject.FindProperty("createFaceToggle");
         createEyeTracking = serializedObject.FindProperty("createEyeTracking");
         createFacialExpressionsControl = serializedObject.FindProperty("createFacialExpressionsControl");
         createFTLipSyncControl = serializedObject.FindProperty("createFTLipSyncControl");
-        createFaceToggleControl = serializedObject.FindProperty("createFaceToggleControl");
 
         createOSCsmooth = serializedObject.FindProperty("createOSCsmooth");
         localSmoothness = serializedObject.FindProperty("localSmoothness");
@@ -1066,6 +1099,7 @@ public class AnimatorGeneratorEditor : Editor
         ClothUpperBodyNames = serializedObject.FindProperty("ClothUpperBodyNames");
         ClothLowerBodyNames = serializedObject.FindProperty("ClothLowerBodyNames");
         ClothFootNames = serializedObject.FindProperty("ClothFootNames");
+        FaceToggleNames = serializedObject.FindProperty("FaceToggleNames");
 
         primaryColor0 = serializedObject.FindProperty("primaryColor0");
         secondColor0 = serializedObject.FindProperty("secondColor0");
@@ -1098,24 +1132,16 @@ public class AnimatorGeneratorEditor : Editor
                 textColor = EditorStyles.label.normal.textColor
             }
         };
+
         GUIStyle headerStyle2 = new GUIStyle()
         {
             richText = false,
             fontStyle = FontStyle.Bold,
             fontSize = EditorStyles.label.fontSize + 1,
+            padding = new RectOffset(3, 3, 0, 5),
             normal = new GUIStyleState()
             {
                 textColor = EditorStyles.label.normal.textColor
-            }
-        };
-
-        GUIStyle TipStyle = new GUIStyle()
-        {
-            richText = false,
-            fontStyle = FontStyle.Bold,
-            normal = new GUIStyleState()
-            {
-                textColor = Color.gray
             }
         };
 
@@ -1152,12 +1178,12 @@ public class AnimatorGeneratorEditor : Editor
             EditorGUILayout.PropertyField(EyeRightMask);
         }
         EditorGUILayout.PropertyField(gestureMask);
-        EditorGUILayout.PropertyField(lMask);
-        EditorGUILayout.PropertyField(rMask);
+        EditorGUILayout.PropertyField(GestureLeftMask);
+        EditorGUILayout.PropertyField(GestureRightMask);
 
         // Hand Poses
         GUILayout.Label("Hand Poses", headerStyle);
-        GUILayout.Label("Array index maps to hand gesture parameter. Array length should be 8!");
+        GUILayout.Label("Array index maps to hand gesture parameter. Array length should be 8!", headerStyle2);
         EditorGUILayout.PropertyField(MirrorHandposes, PopUpLabel("Mirror Hand Poses", ""));
         GUILayout.Space(10);
 
@@ -1175,14 +1201,11 @@ public class AnimatorGeneratorEditor : Editor
 
         // Facial expressions
         GUILayout.Label("Facial expressions", headerStyle);
-        GUILayout.Label("Brow and mouth blendshapes controlled by left and right hands. \nArray index maps to hand Gesture parameter. Array length should be 8!");
+        GUILayout.Label("Brow and mouth blendshapes controlled by left and right hands." +
+            "\nArray index maps to hand Gesture parameter. Array length should be 8!", headerStyle2);
         GUILayout.Space(10);
         EditorGUILayout.PropertyField(createFacialExpressionsControl,
         PopUpLabel("Create Facial Expressions Control", "When created, adds a parameter to the VRC to disable/enable expression binding to hands."));
-        EditorGUILayout.PropertyField(createFaceToggleControl,
-         PopUpLabel("Сreate Face Toggle Control", "If you use your Face presets for avatar," +
-            "it disable expression binding to hands when “FaceToggleActive” is true (turn it on in the VRC Parameter Driver when Face preset true and turn it off when false)." +
-            "It also adds a parameter to the VRC."));
         GUILayout.Space(10);
         EditorGUILayout.PropertyField(mouthPrefix);
         EditorGUILayout.PropertyField(mouthShapeNames);
@@ -1192,11 +1215,13 @@ public class AnimatorGeneratorEditor : Editor
 
         // Animator creation flags
         GUILayout.Label("Animator creation flags", headerStyle);
-        GUILayout.Label("Choose what parts of the animator are generated. Disabling features saves VRC params budget!");
+        GUILayout.Label("Choose what parts of the animator are generated." +
+            "\nDisabling features saves VRC params budget!", headerStyle2);
         GUILayout.Space(10);
         EditorGUILayout.PropertyField(createShapePreferences);
         EditorGUILayout.PropertyField(createClothCustomization);
         EditorGUILayout.PropertyField(createColorCustomization);
+        EditorGUILayout.PropertyField(createFaceToggle);
         EditorGUILayout.PropertyField(createEyeTracking);
         EditorGUILayout.PropertyField(createFaceTracking);
 
@@ -1204,7 +1229,7 @@ public class AnimatorGeneratorEditor : Editor
         if (wizard.createShapePreferences)
         {
             GUILayout.Label("Shape Preferences", headerStyle);
-            GUILayout.Label("Animator wizard will automatically create VRC params for blendshapes with these prefixes.");
+            GUILayout.Label("Creates VRC params for blendshapes with these prefixes.", headerStyle2);
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(shapePreferenceSliderPrefix);
             EditorGUILayout.PropertyField(shapePreferenceTogglesPrefix);
@@ -1214,7 +1239,7 @@ public class AnimatorGeneratorEditor : Editor
         if (wizard.createClothCustomization)
         {
             GUILayout.Label("Cloths customization", headerStyle);
-            GUILayout.Label("Animator wizard will create algorithm to switch clothes, animations  \nand VRC params with these prefixes.");
+            GUILayout.Label("Creates an algorithm to switch clothes, animations \nand VRC params with these prefixes.", headerStyle2);
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(ClothTogglesPrefix,
             PopUpLabel("Cloth Toggles Prefix", "Prefixes roll up clothes and body into \"tube\",\n" +
@@ -1229,21 +1254,30 @@ public class AnimatorGeneratorEditor : Editor
         if (wizard.createColorCustomization)
         {
             GUILayout.Label("Color customization UV-offset animations", headerStyle);
-            GUILayout.Label("Animations controlling color palette texture UV-offsets for in-game color customization.");
+            GUILayout.Label("Animations controlling color palette texture UV-offsets (ToonLit shader)" +
+                "\nfor in-game color customization.", headerStyle2);
             EditorGUILayout.PropertyField(primaryColor0);
             EditorGUILayout.PropertyField(primaryColor1);
             EditorGUILayout.PropertyField(secondColor0);
             EditorGUILayout.PropertyField(secondColor1);
         }
 
+        // Face Toggle
+        if (wizard.createFaceToggle)
+        {
+            GUILayout.Label("FaceToggle setup animations", headerStyle);
+            GUILayout.Label("Creates an algorithm to switch face animations.", headerStyle2);
+            EditorGUILayout.PropertyField(FaceToggleNames);
+        }
+
         // EyeTracking
         if (wizard.createEyeTracking)
         {
-            GUILayout.Label("EyeTracking (Simplified Eye Parameters).", headerStyle);
-            GUILayout.Label("Animator wizard will create EyeTracking with these animations.");
+            GUILayout.Label("EyeTracking (Simplified Eye Parameters) settings.", headerStyle);
+            GUILayout.Label("Creates EyeTracking with these animations.", headerStyle2);
+            GUILayout.Space(10);
             if (!wizard.createFaceTracking)
             {
-                GUILayout.Space(10);
                 EditorGUILayout.PropertyField(ftPrefix);
             }
             EditorGUILayout.PropertyField(MirrorEyeposes);
@@ -1263,6 +1297,7 @@ public class AnimatorGeneratorEditor : Editor
         if (wizard.createFaceTracking)
         {
             GUILayout.Label("FaceTracking (Universal Shapes) settings", headerStyle);
+            GUILayout.Label("Creates FaceTracking with these animations.", headerStyle2);
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(ftPrefix);
             GUILayout.Space(10);
