@@ -379,10 +379,11 @@ public class AnimatorWizard : MonoBehaviour
 
                 // Transitions
                 layer.AnyTransitionsTo(VRCEyeControlState)
-                .When(etActiveParam.IsFalse());
+                    .When(etActiveParam.IsFalse());
 
                 layer.AnyTransitionsTo(EyeTrackingState)
-                .When(etActiveParam.IsTrue());
+                    .WithTransitionToSelf()
+                    .When(etActiveParam.IsTrue());
             }
 
             // Functions for adding motions and managing child arrays
@@ -458,6 +459,7 @@ public class AnimatorWizard : MonoBehaviour
                 .And(LipSyncActiveParam.IsTrue());
 
                 var onFaceTrackingLipSyncTransition = layer.AnyTransitionsTo(onFaceTrackingLipSyncState)
+                .WithTransitionToSelf()
                 .When(ftActiveParam.IsTrue())
                 .And(LipSyncActiveParam.IsTrue());
 
@@ -466,6 +468,7 @@ public class AnimatorWizard : MonoBehaviour
                     .And(LipSyncActiveParam.IsFalse());
 
                 layer.AnyTransitionsTo(onFaceTrackingState)
+                    .WithTransitionToSelf()
                     .When(ftActiveParam.IsTrue())
                     .And(LipSyncActiveParam.IsFalse());
             }
