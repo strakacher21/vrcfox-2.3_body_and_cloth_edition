@@ -43,6 +43,16 @@ public struct DualShape
 
 public class AnimatorWizard : MonoBehaviour
 {
+    private AacFlBase _aac;
+    private List<VRCExpressionParameters.Parameter> _vrcParams;
+
+    private const string SystemName = "vrcfox";
+    private const bool UseWriteDefaults = true;
+    private const string Left = "Left";
+    private const string Right = "Right";
+
+    private const float TransitionSpeed = 0.05f;
+
     public AnimatorController assetContainer;
 
     public AvatarMask fxMask;
@@ -76,7 +86,6 @@ public class AnimatorWizard : MonoBehaviour
     public string lipSyncName = "LipSyncTrackingActive";
 
     public bool createFaceToggle = false;
-    public bool FaceToggleActive = false;
     public Motion[] FaceToggleNames;
 
     public bool saveVRCExpressionParameters = false;
@@ -140,7 +149,6 @@ public class AnimatorWizard : MonoBehaviour
         "slaps",
     };
 
-
     public bool createFaceTracking = true;
     public string ftPrefix = "v2/";
     public string[] ftShapes =
@@ -168,14 +176,6 @@ public class AnimatorWizard : MonoBehaviour
         new DualShape("CheekPuffSuck", "CheekSuck", "CheekPuff"),
     };
 
-    private AacFlBase _aac;
-    private List<VRCExpressionParameters.Parameter> _vrcParams;
-
-    private const string Left = "Left";
-    private const string Right = "Right";
-
-    private const float TransitionSpeed = 0.05f;
-
     public void Create()
     {
         SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -185,13 +185,13 @@ public class AnimatorWizard : MonoBehaviour
 
         _aac = AacV1.Create(new AacConfiguration
         {
-            SystemName = "vrcfox",
+            SystemName = SystemName,
             AnimatorRoot = avatar.transform,
             DefaultValueRoot = avatar.transform,
             AssetContainer = assetContainer,
             ContainerMode = AacConfiguration.Container.Everything,
-            AssetKey = "vrcfox",
-            DefaultsProvider = new AacDefaultsProvider(true),
+            AssetKey = SystemName,
+            DefaultsProvider = new AacDefaultsProvider(UseWriteDefaults),
             //AssetContainerProvider = null
         }.WithAvatarDescriptor(avatar));
 
@@ -258,7 +258,7 @@ public class AnimatorWizard : MonoBehaviour
 
         AacFlBoolParameter ftActiveParam = CreateBoolParam(fxLayer, ftPrefix + "LipTrackingActive", true, false);
         AacFlFloatParameter ftBlendParam = fxLayer.FloatParameter(ftPrefix + "LipTrackingActive-float");
-
+        AacFlBoolParameter FaceToggleActive = fxLayer.BoolParameter("FaceToggleActive");
         AacFlBoolParameter ExpTrackActiveParam = CreateBoolParam(fxLayer, ftPrefix + expTrackName, true, true);
         AacFlBoolParameter LipSyncActiveParam = CreateBoolParam(fxLayer, ftPrefix + lipSyncName, true, false);
 
@@ -349,10 +349,10 @@ public class AnimatorWizard : MonoBehaviour
             AacFlFloatParameter EyeXParam = CreateFloatParam(AdditiveLayer, ftPrefix + "EyeX", false, 0.0f);
             AacFlFloatParameter EyeYParam = CreateFloatParam(AdditiveLayer, ftPrefix + "EyeY", false, 0.0f);
 
-            foreach (string side in new[] { "Left", "Right" })
+            foreach (string side in new[] { Left, Right })
             {
-                var layer = side == "Left" ? EyeLeftLayer : EyeRightLayer;
-                Motion[] poses = side == "Left" || MirrorEyeposes ? LeftEyePoses : RightEyePoses;
+                var layer = side == Left ? EyeLeftLayer : EyeRightLayer;
+                Motion[] poses = side == Left || MirrorEyeposes ? LeftEyePoses : RightEyePoses;
 
                 if (poses == null || poses.Length != 9)
                     throw new Exception($"The {side} eye poses array must contain exactly 9 motions!");
@@ -486,6 +486,8 @@ public class AnimatorWizard : MonoBehaviour
             tree.blendParameter = ftActiveParam.Name;
             tree.blendParameterY = ftActiveParam.Name;
 
+            var allShapes = new List<string>();
+
             // adding blend shapes
             for (var i = 0; i < ftShapes.Length; i++)
             {
@@ -497,6 +499,7 @@ public class AnimatorWizard : MonoBehaviour
                     {
                         var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
                         tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
+                        allShapes.Add(shapeName);
                     }
                 }
 
@@ -504,40 +507,40 @@ public class AnimatorWizard : MonoBehaviour
                 {
                     var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
                     tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
+                    allShapes.Add(shapeName);
                 }
             }
 
             // adding dual blend shapes
             for (var i = 0; i < ftDualShapes.Length; i++)
             {
-                DualShape shape = ftDualShapes[i];
+                DualShape dualshape = ftDualShapes[i];
+                string dualshapeName = dualshape.paramName;
 
                 if (MirrorFTparams)
                 {
-                    string flippedParamName = shape.paramName;
-
-                    for (int flip = 0; flip < EachSide(ref flippedParamName); flip++)
+                    for (int flip = 0; flip < EachSide(ref dualshapeName); flip++)
                     {
-                        var param = CreateFloatParam(fxLayer, ftPrefix + flippedParamName, false, 0);
-
-                        tree.AddChild(DualBlendshapeTree(fxTreeLayer,
-                            param, skin,
-                            ftPrefix + shape.minShapeName + GetSide(param.Name),
-                            ftPrefix + shape.maxShapeName + GetSide(param.Name),
-                            shape.minValue, shape.neutralValue, shape.maxValue));
+                        var param = CreateFloatParam(fxLayer, ftPrefix + dualshapeName, false, 0);
+                        tree.AddChild(DualBlendshapeTree(
+                            fxTreeLayer, param, skin,
+                            ftPrefix + dualshape.minShapeName + GetSide(param.Name),
+                            ftPrefix + dualshape.maxShapeName + GetSide(param.Name),
+                            dualshape.minValue, dualshape.neutralValue, dualshape.maxValue));
+                        allShapes.Add(dualshapeName);
                     }
                 }
 
                 else
                 {
-                    var param = CreateFloatParam(fxLayer, ftPrefix + shape.paramName, false, 0);
+                    var param = CreateFloatParam(fxLayer, ftPrefix + dualshape.paramName, false, 0);
                     tree.AddChild(DualBlendshapeTree(
                         fxTreeLayer, param, skin,
-                        ftPrefix + shape.minShapeName,
-                        ftPrefix + shape.maxShapeName,
-                        shape.minValue, shape.neutralValue, shape.maxValue));
+                        ftPrefix + dualshape.minShapeName,
+                        ftPrefix + dualshape.maxShapeName,
+                        dualshape.minValue, dualshape.neutralValue, dualshape.maxValue));
+                    allShapes.Add(dualshapeName);
                 }
-
             }
 
             var children = masterTree.children;
@@ -547,19 +550,6 @@ public class AnimatorWizard : MonoBehaviour
             if (createOSCsmooth)
             {
                 var OSCLayer = _aac.CreateSupportingFxLayer("OSC smoothing").WithAvatarMask(fxMask);
-
-                // Combine FTshapes
-                var allShapes = new List<string>();
-
-                foreach (var shape in ftShapes)
-                {
-                    AddShapeToList(shape, allShapes, MirrorFTparams);
-                }
-
-                foreach (var dualshape in ftDualShapes)
-                {
-                    AddShapeToList(dualshape.paramName, allShapes, MirrorFTparams);
-                }
 
                 // The main OSC trees 
                 var OSCLocalTree = _aac.NewBlendTreeAsRaw();
@@ -575,6 +565,9 @@ public class AnimatorWizard : MonoBehaviour
                 var OSCRemoteState = OSCLayer.NewState(OSCRemoteTree.name)
                     .WithAnimation(OSCRemoteTree);
                 CreateOSCTrees("Remote", OSCRemoteTree, remoteSmoothness);
+
+                OSCLocalState.TransitionsTo(OSCRemoteState).When(OSCLayer.BoolParameter("IsLocal").IsFalse());
+                OSCRemoteState.TransitionsTo(OSCLocalState).When(OSCLayer.BoolParameter("IsLocal").IsTrue());
 
                 // Function for creating trees
                 void CreateOSCTrees(string type, BlendTree rootTree, float smoothness)
@@ -617,9 +610,10 @@ public class AnimatorWizard : MonoBehaviour
                         inputTree.useAutomaticThresholds = false;
                         inputTree.blendParameter = inputParam.Name;
 
-                        var clipMin = _aac.NewClip($"Animator.OSCsmooth/Proxy/{ftPrefix}{shape}_Min")
+                        var clipMin = _aac.NewClip($"OSCsmooth/Proxy/{ftPrefix}{shape}_Min")
                             .Animating(anim => anim.AnimatesAnimator(driverParam).WithFixedSeconds(0.0f, -1.0f));
-                        var clipMax = _aac.NewClip($"Animator.OSCsmooth/Proxy/{ftPrefix}{shape}_Max")
+
+                        var clipMax = _aac.NewClip($"OSCsmooth/Proxy/{ftPrefix}{shape}_Max")
                             .Animating(anim => anim.AnimatesAnimator(driverParam).WithFixedSeconds(0.0f, 1.0f));
 
                         inputTree.AddChild(clipMin.Clip, -1.0f);
@@ -636,9 +630,6 @@ public class AnimatorWizard : MonoBehaviour
                         driverTree.AddChild(clipMax.Clip, 1.0f);
                     }
                 }
-
-                OSCLocalState.TransitionsTo(OSCRemoteState).When(OSCLayer.BoolParameter("IsLocal").IsFalse());
-                OSCRemoteState.TransitionsTo(OSCLocalState).When(OSCLayer.BoolParameter("IsLocal").IsTrue());
 
                 void ReplaceBlendTreeParameter(BlendTree tree, string oldParam, string newParam)
                 {
@@ -673,16 +664,17 @@ public class AnimatorWizard : MonoBehaviour
         if (createFaceToggle)
         {
             var FaceToggleLayer = _aac.CreateSupportingFxLayer("Face Toggle").WithAvatarMask(fxMask);
-            AacFlIntParameter FaceToggleActiveParam = CreateIntParam(fxLayer, ftPrefix + "anim/FacePresets", true, 0);
-            AacFlBoolParameter FaceToggleActive = FaceToggleLayer.BoolParameter("FaceToggleActive");
+
+            AacFlIntParameter FaceToggleActiveParam = CreateIntParam(fxLayer, ftPrefix + "anim/FacePresets", false, 0);
+
             var FaceToggleWaitingState = FaceToggleLayer.NewState("Waiting command").Drives(FaceToggleActive, false);
             var waitingTransition = FaceToggleLayer.AnyTransitionsTo(FaceToggleWaitingState)
                 .WithTransitionDurationSeconds(0.25f)
-                .When(FaceToggleActiveParam.IsEqualTo(0));
+                .When(FaceToggleActiveParam.IsEqualTo(0)).Or().When(ftActiveParam.IsTrue());
 
             for (int i = 0; i < FaceToggleNames.Length; i++)
             {
-                setupFaceToggle(FaceToggleLayer, FaceToggleNames[i], FaceToggleActiveParam, FaceToggleActive, i);
+                setupFaceToggle(FaceToggleLayer, FaceToggleNames[i], ftActiveParam, FaceToggleActiveParam, FaceToggleActive, i);
             }
         }
     }
@@ -706,7 +698,7 @@ public class AnimatorWizard : MonoBehaviour
             param);
     }
 
-    private void setupFaceToggle(AacFlLayer FaceToggleLayer, Motion motion,
+    private void setupFaceToggle(AacFlLayer FaceToggleLayer, Motion motion, AacFlBoolParameter ftActiveParam,
         AacFlIntParameter FaceToggleActiveParam, AacFlBoolParameter FaceToggleActive, int index)
     {
         var faceToggleState = FaceToggleLayer.NewState(motion.name)
@@ -715,21 +707,22 @@ public class AnimatorWizard : MonoBehaviour
 
         FaceToggleLayer.AnyTransitionsTo(faceToggleState)
             .WithTransitionDurationSeconds(0.25f)
-            .When(FaceToggleActiveParam.IsEqualTo(index + 1));
+            .When(FaceToggleActiveParam.IsEqualTo(index + 1))
+            .And(ftActiveParam.IsFalse());
     }
 
     private void MapHandPosesToShapes(string layerName, SkinnedMeshRenderer skin, string[] shapeNames, string prefix, bool rightHand,
-        AacFlBoolParameter ftActiveParam, AacFlBoolParameter ExpTrackActiveParam, bool FaceToggleActive)
+        AacFlBoolParameter ftActiveParam, AacFlBoolParameter ExpTrackActiveParam, AacFlBoolParameter FaceToggleActive)
     {
         var layer = _aac.CreateSupportingFxLayer(layerName).WithAvatarMask(fxMask);
         var Gesture = layer.IntParameter("Gesture" + (rightHand ? Right : Left));
 
-        List<string> allPossibleExpressions = new List<string>();
+        List<string> allExpressions = new List<string>();
 
         foreach (var shapeName in shapeNames)
         {
-            if (!allPossibleExpressions.Contains(shapeName))
-                allPossibleExpressions.Add(shapeName);
+            if (!allExpressions.Contains(shapeName))
+                allExpressions.Add(shapeName);
         }
 
         if (shapeNames.Length != 8)
@@ -784,13 +777,13 @@ public class AnimatorWizard : MonoBehaviour
             {
                 if (i == 0)
                 {
-                    enter.Or().When(layer.BoolParameter("FaceToggleActive").IsTrue());
-                    exit.And(layer.BoolParameter("FaceToggleActive").IsFalse());
+                    enter.Or().When(FaceToggleActive.IsTrue());
+                    exit.And(FaceToggleActive.IsFalse());
                 }
                 else
                 {
-                    enter.And(layer.BoolParameter("FaceToggleActive").IsFalse());
-                    exit.Or().When(layer.BoolParameter("FaceToggleActive").IsTrue());
+                    enter.And(FaceToggleActive.IsFalse());
+                    exit.Or().When(FaceToggleActive.IsTrue());
                 }
             }
         }
@@ -799,7 +792,7 @@ public class AnimatorWizard : MonoBehaviour
     {
         var layer = _aac.CreateSupportingFxLayer(layerName).WithAvatarMask(fxMask);
         var waitingState = layer.NewState("Waiting command");
-        var waitingTransition = layer.AnyTransitionsTo(waitingState).WithTransitionToSelf();
+        var waitingTransition = layer.AnyTransitionsTo(waitingState);
         var ClothDriverSetsFalse = waitingState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
         var clothStates = new Dictionary<string, AacFlState>();
         int blendShapeCount = skin.sharedMesh.blendShapeCount;
@@ -915,50 +908,46 @@ public class AnimatorWizard : MonoBehaviour
 
         return tree;
     }
-
-
-    private AacFlFloatParameter CreateFloatParam(AacFlLayer layer, string paramName, bool save, float val)
-    {
-        CreateParamVrcOnly(paramName, save, val);
-
-        return layer.FloatParameter(paramName);
-    }
+    // 'Int' isn't added to VRCExpressionParameters, it needs to be fixed!
     private AacFlIntParameter CreateIntParam(AacFlLayer layer, string paramName, bool save, int val)
     {
-        CreateParamVrcOnly(paramName, save, val);
+        _vrcParams.Add(new VRCExpressionParameters.Parameter()
+        {
+            name = paramName,
+            valueType = VRCExpressionParameters.ValueType.Int,
+            saved = save,
+            networkSynced = true,
+            defaultValue = val,
+        });
 
         return layer.IntParameter(paramName);
     }
 
-    private void CreateParamVrcOnly(string paramName, bool save, float val)
+    private AacFlFloatParameter CreateFloatParam(AacFlLayer layer, string paramName, bool save, float val)
     {
-
+        _vrcParams.Add(new VRCExpressionParameters.Parameter()
         {
-            _vrcParams.Add(new VRCExpressionParameters.Parameter()
-            {
-                name = paramName,
-                valueType = VRCExpressionParameters.ValueType.Float,
-                saved = save,
-                networkSynced = true,
-                defaultValue = val,
-            });
-        }
+            name = paramName,
+            valueType = VRCExpressionParameters.ValueType.Float,
+            saved = save,
+            networkSynced = true,
+            defaultValue = val,
+        });
+
+        return layer.FloatParameter(paramName);
     }
 
     private AacFlBoolParameter CreateBoolParam(AacFlLayer layer, string paramName, bool save, bool val)
     {
-        // will save your VRCParams if True
-        if (!saveVRCExpressionParameters)
+
+        _vrcParams.Add(new VRCExpressionParameters.Parameter()
         {
-            _vrcParams.Add(new VRCExpressionParameters.Parameter()
-            {
-                name = paramName,
-                valueType = VRCExpressionParameters.ValueType.Bool,
-                saved = save,
-                networkSynced = true,
-                defaultValue = val ? 1 : 0,
-            });
-        }
+            name = paramName,
+            valueType = VRCExpressionParameters.ValueType.Bool,
+            saved = save,
+            networkSynced = true,
+            defaultValue = val ? 1 : 0,
+        });
 
         return layer.BoolParameter(paramName);
     }
@@ -1001,21 +990,6 @@ public class AnimatorWizard : MonoBehaviour
         if (str.EndsWith(Left))
             return Left;
         return "";
-    }
-
-    private static void AddShapeToList(string shapeName, List<string> allShapes, bool mirrorFTparams)
-    {
-        if (mirrorFTparams)
-        {
-            for (int flip = 0; flip < EachSide(ref shapeName); flip++)
-            {
-                allShapes.Add(shapeName);
-            }
-        }
-        else
-        {
-            allShapes.Add(shapeName);
-        }
     }
 }
 
