@@ -96,6 +96,9 @@ public class AnimatorWizard : MonoBehaviour
     public float localSmoothness = 0.1f;
     public float remoteSmoothness = 0.7f;
 
+    public bool createFaceTracking = true;
+    public string ftPrefix = "v2/";
+
     public bool createEyeTracking = true;
     public bool MirrorEyeposes = true;
     public float maxEyeMotionValue = 0.25f;
@@ -149,8 +152,6 @@ public class AnimatorWizard : MonoBehaviour
         "slaps",
     };
 
-    public bool createFaceTracking = true;
-    public string ftPrefix = "v2/";
     public string[] ftShapes =
     {
         "JawOpen",
@@ -502,7 +503,7 @@ public class AnimatorWizard : MonoBehaviour
                     {
                         var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
                         tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
-                        allShapes.Add(shapeName);
+                        allShapes.Add(ftPrefix + shapeName);
                     }
                 }
 
@@ -510,7 +511,7 @@ public class AnimatorWizard : MonoBehaviour
                 {
                     var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
                     tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
-                    allShapes.Add(shapeName);
+                    allShapes.Add(ftPrefix + shapeName);
                 }
             }
 
@@ -530,7 +531,7 @@ public class AnimatorWizard : MonoBehaviour
                             ftPrefix + dualshape.minShapeName + GetSide(param.Name),
                             ftPrefix + dualshape.maxShapeName + GetSide(param.Name),
                             dualshape.minValue, dualshape.neutralValue, dualshape.maxValue));
-                        allShapes.Add(dualshapeName);
+                        allShapes.Add(ftPrefix + dualshapeName);
                     }
                 }
 
@@ -542,7 +543,7 @@ public class AnimatorWizard : MonoBehaviour
                         ftPrefix + dualshape.minShapeName,
                         ftPrefix + dualshape.maxShapeName,
                         dualshape.minValue, dualshape.neutralValue, dualshape.maxValue));
-                    allShapes.Add(dualshapeName);
+                    allShapes.Add(ftPrefix + dualshapeName);
                 }
             }
 
@@ -550,110 +551,16 @@ public class AnimatorWizard : MonoBehaviour
             children[children.Length - 1].directBlendParameter = ftBlendParam.Name;
             masterTree.children = children;
 
+            // OSC smooth
             if (createOSCsmooth)
             {
                 var OSCLayer = _aac.CreateSupportingFxLayer("OSC smoothing").WithAvatarMask(fxMask);
 
-                // The main OSC trees 
-                var OSCLocalTree = _aac.NewBlendTreeAsRaw();
-                OSCLocalTree.name = "OSC Local";
-                OSCLocalTree.blendType = BlendTreeType.Direct;
-                var OSCLocalState = OSCLayer.NewState(OSCLocalTree.name)
-                    .WithAnimation(OSCLocalTree);
-                CreateOSCTrees("Local", OSCLocalTree, localSmoothness);
-
-                var OSCRemoteTree = _aac.NewBlendTreeAsRaw();
-                OSCRemoteTree.name = "OSC Remote";
-                OSCRemoteTree.blendType = BlendTreeType.Direct;
-                var OSCRemoteState = OSCLayer.NewState(OSCRemoteTree.name)
-                    .WithAnimation(OSCRemoteTree);
-                CreateOSCTrees("Remote", OSCRemoteTree, remoteSmoothness);
+                var OSCLocalState = CreateOSCTree(OSCLayer, "Local", localSmoothness, allShapes, masterTree);
+                var OSCRemoteState = CreateOSCTree(OSCLayer, "Remote", remoteSmoothness, allShapes, masterTree);
 
                 OSCLocalState.TransitionsTo(OSCRemoteState).When(OSCLayer.BoolParameter("IsLocal").IsFalse());
                 OSCRemoteState.TransitionsTo(OSCLocalState).When(OSCLayer.BoolParameter("IsLocal").IsTrue());
-
-                // Function for creating trees
-                void CreateOSCTrees(string type, BlendTree rootTree, float smoothness)
-                {
-                    foreach (var shape in allShapes)
-                    {
-                        // Params
-                        var inputParamName = $"{ftPrefix}{shape}";
-                        var smootherParamName = $"OSCsmooth/{type}/{ftPrefix}{shape}Smoother";
-                        var driverParamName = $"OSCsmooth/Proxy/{ftPrefix}{shape}";
-
-                        AacFlFloatParameter smootherParam = OSCLayer.FloatParameter(smootherParamName);
-                        AacFlFloatParameter driverParam = OSCLayer.FloatParameter(driverParamName);
-
-                        OSCLayer.OverrideValue(smootherParam, smoothness);
-                        OSCLayer.OverrideValue(driverParam, 0.0f);
-
-                        // Replace params in the FT tree
-                        foreach (var child in masterTree.children)
-                        {
-                            if (child.motion is BlendTree blendTree)
-                            {
-                                ReplaceBlendTreeParameter(blendTree, inputParamName, driverParam.Name);
-                            }
-                        }
-
-                        var inputParam = OSCLayer.FloatParameter(inputParamName);
-
-                        // Root Tree
-                        var rootSubTree = rootTree.CreateBlendTreeChild(0);
-                        rootSubTree.name = $"OSCsmooth/{type}/{ftPrefix}{shape}Smoother";
-                        rootSubTree.blendType = BlendTreeType.Simple1D;
-                        rootSubTree.useAutomaticThresholds = false;
-                        rootSubTree.blendParameter = smootherParam.Name;
-
-                        // Input Tree
-                        var inputTree = rootSubTree.CreateBlendTreeChild(0);
-                        inputTree.name = $"OSCsmooth Input ({ftPrefix}{shape})";
-                        inputTree.blendType = BlendTreeType.Simple1D;
-                        inputTree.useAutomaticThresholds = false;
-                        inputTree.blendParameter = inputParam.Name;
-
-                        var clipMin = _aac.NewClip($"OSCsmooth/Proxy/{ftPrefix}{shape}_Min")
-                            .Animating(anim => anim.AnimatesAnimator(driverParam).WithFixedSeconds(0.0f, -1.0f));
-
-                        var clipMax = _aac.NewClip($"OSCsmooth/Proxy/{ftPrefix}{shape}_Max")
-                            .Animating(anim => anim.AnimatesAnimator(driverParam).WithFixedSeconds(0.0f, 1.0f));
-
-                        inputTree.AddChild(clipMin.Clip, -1.0f);
-                        inputTree.AddChild(clipMax.Clip, 1.0f);
-
-                        // Driver Tree
-                        var driverTree = rootSubTree.CreateBlendTreeChild(1);
-                        driverTree.name = $"OSCsmooth Driver ({ftPrefix}{shape})";
-                        driverTree.blendType = BlendTreeType.Simple1D;
-                        driverTree.useAutomaticThresholds = false;
-                        driverTree.blendParameter = driverParam.Name;
-
-                        driverTree.AddChild(clipMin.Clip, -1.0f);
-                        driverTree.AddChild(clipMax.Clip, 1.0f);
-                    }
-                }
-
-                void ReplaceBlendTreeParameter(BlendTree tree, string oldParam, string newParam)
-                {
-                    if (tree.blendParameter == oldParam)
-                    {
-                        tree.blendParameter = newParam;
-                    }
-
-                    if (tree.blendParameterY == oldParam)
-                    {
-                        tree.blendParameterY = newParam;
-                    }
-
-                    foreach (var child in tree.children)
-                    {
-                        if (child.motion is BlendTree childTree)
-                        {
-                            ReplaceBlendTreeParameter(childTree, oldParam, newParam);
-                        }
-                    }
-                }
             }
 
             if (!saveVRCExpressionParameters)
@@ -868,6 +775,84 @@ public class AnimatorWizard : MonoBehaviour
 
             waitingTransition.When(layer.BoolParameter(ClothTogglesPrefix + clothName).IsFalse());
             layer.AnyTransitionsTo(clothState).When(layer.BoolParameter(ClothTogglesPrefix + clothName).IsTrue());
+        }
+    }
+    private AacFlState CreateOSCTree(AacFlLayer layer, string type, float smoothness, List<string> allShapes, BlendTree tree)
+    {
+        var rootTree = _aac.NewBlendTreeAsRaw();
+        rootTree.name = $"OSC {type}";
+        rootTree.blendType = BlendTreeType.Direct;
+
+        var state = layer.NewState(rootTree.name).WithAnimation(rootTree);
+
+        foreach (var shape in allShapes)
+        {
+            AacFlFloatParameter proxyParam = layer.FloatParameter($"OSCsmooth/Proxy/{shape}");
+            AacFlFloatParameter smootherParam = layer.FloatParameter($"OSCsmooth/{type}/{shape}Smoother");
+
+            layer.OverrideValue(proxyParam, 0.0f);
+            layer.OverrideValue(smootherParam, smoothness);
+
+            // sets proxy params in tree ("Local" for single replace)
+            if (type == "Local")
+            {
+                ReplaceTreeParams(tree, shape, proxyParam.Name);
+            }
+
+            var clipMin = _aac.NewClip()
+                .Animating(anim => anim.AnimatesAnimator(proxyParam).WithFixedSeconds(0.0f, -1.0f));
+            var clipMax = _aac.NewClip()
+                .Animating(anim => anim.AnimatesAnimator(proxyParam).WithFixedSeconds(0.0f, 1.0f));
+
+            // Root subtree
+            var rootSubTree = rootTree.CreateBlendTreeChild(0);
+            rootSubTree.name = $"OSCsmooth/{type}/{shape}Smoother";
+            rootSubTree.blendType = BlendTreeType.Simple1D;
+            rootSubTree.useAutomaticThresholds = false;
+            rootSubTree.blendParameter = smootherParam.Name;
+
+            // Input tree
+            var inputTree = rootSubTree.CreateBlendTreeChild(0);
+            inputTree.name = $"OSCsmooth Input ({shape})";
+            inputTree.blendType = BlendTreeType.Simple1D;
+            inputTree.useAutomaticThresholds = false;
+            inputTree.blendParameter = shape;
+
+            inputTree.AddChild(clipMin.Clip, -1.0f);
+            inputTree.AddChild(clipMax.Clip, 1.0f);
+
+            // Driver tree
+            var driverTree = rootSubTree.CreateBlendTreeChild(1);
+            driverTree.name = $"OSCsmooth Driver ({shape})";
+            driverTree.blendType = BlendTreeType.Simple1D;
+            driverTree.useAutomaticThresholds = false;
+            driverTree.blendParameter = proxyParam.Name;
+
+            driverTree.AddChild(clipMin.Clip, -1.0f);
+            driverTree.AddChild(clipMax.Clip, 1.0f);
+        }
+
+        return state;
+    }
+
+    private void ReplaceTreeParams(BlendTree tree, string oldParam, string newParam)
+    {
+        if (tree.blendParameter == oldParam)
+        {
+            tree.blendParameter = newParam;
+        }
+
+        if (tree.blendParameterY == oldParam)
+        {
+            tree.blendParameterY = newParam;
+        }
+
+        foreach (var child in tree.children)
+        {
+            if (child.motion is BlendTree childTree)
+            {
+                ReplaceTreeParams(childTree, oldParam, newParam);
+            }
         }
     }
 
