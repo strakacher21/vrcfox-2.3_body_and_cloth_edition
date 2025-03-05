@@ -85,14 +85,10 @@ public class AnimatorWizard : MonoBehaviour
     public bool createFTLipSyncControl = false;
     public string lipSyncName = "LipSyncTrackingActive";
 
-    public bool createFaceToggle = false;
-    public Motion[] FaceToggleNames;
-
     public bool saveVRCExpressionParameters = false;
     public bool MirrorFTparams = false;
 
     public bool createOSCsmooth = true;
-    public bool IsLocal = false;
     public float localSmoothness = 0.1f;
     public float remoteSmoothness = 0.7f;
 
@@ -151,6 +147,9 @@ public class AnimatorWizard : MonoBehaviour
         "boots",
         "slaps",
     };
+
+    public bool createFaceToggle = false;
+    public Motion[] FaceToggleNames;
 
     public string[] ftShapes =
     {
@@ -338,92 +337,23 @@ public class AnimatorWizard : MonoBehaviour
                 CreateFloatParam(fxTreeLayer, shapePreferenceSliderPrefix + "scol", true, 0)));
         }
 
-        // Eye Tracking
         if (createEyeTracking)
         {
             var AdditiveLayer = _aac.CreateMainIdleLayer();
-            var EyeLeftLayer = _aac.CreateSupportingIdleLayer("Eye Left Tracking").WithAvatarMask(EyeLeftMask);
-            var EyeRightLayer = _aac.CreateSupportingIdleLayer("Eye Right Tracking").WithAvatarMask(EyeRightMask);
-
             AacFlBoolParameter etActiveParam = CreateBoolParam(AdditiveLayer, ftPrefix + "EyeTrackingActive", true, false);
-            AacFlFloatParameter etBlendParam = AdditiveLayer.FloatParameter(ftPrefix + "EyeTrackingActive-float");
+            AacFlFloatParameter WORKAROUND_BlendParam = AdditiveLayer.FloatParameter("OSCsmooth/Blend"); // WORKAROUND: OSCsmooth does not work if the Blend param is not updated. need to fix this!
             AacFlFloatParameter EyeXParam = CreateFloatParam(AdditiveLayer, ftPrefix + "EyeX", false, 0.0f);
             AacFlFloatParameter EyeYParam = CreateFloatParam(AdditiveLayer, ftPrefix + "EyeY", false, 0.0f);
 
-            foreach (string side in new[] { Left, Right })
+            BlendTree leftEyeTree = setupEyeTracking(EyeXParam, EyeYParam, etActiveParam, WORKAROUND_BlendParam, "Left", maxEyeMotionValue, LeftEyePoses, EyeLeftMask);
+            BlendTree rightEyeTree = setupEyeTracking(EyeXParam, EyeYParam, etActiveParam, WORKAROUND_BlendParam, "Right", maxEyeMotionValue, RightEyePoses, EyeRightMask);
+
+            // OSC Eye Tracking smooth
+            if (createOSCsmooth)
             {
-                var layer = side == Left ? EyeLeftLayer : EyeRightLayer;
-                Motion[] poses = side == Left || MirrorEyeposes ? LeftEyePoses : RightEyePoses;
-
-                if (poses == null || poses.Length != 9)
-                    throw new Exception($"The {side} eye poses array must contain exactly 9 motions!");
-
-                // VRC Eye Control State
-                var VRCEyeControlState = layer.NewState($"VRC Eye {side} Control")
-                    .Drives(etBlendParam, 0.0f)
-                    .TrackingTracks(AacAv3.Av3TrackingElement.Eyes);
-
-                // Eye Tracking Tree
-                var EyeTrackingTree = _aac.NewBlendTreeAsRaw();
-                EyeTrackingTree.name = $"Eye {side} Tracking";
-                EyeTrackingTree.blendType = BlendTreeType.FreeformCartesian2D;
-                EyeTrackingTree.blendParameter = EyeXParam.Name;
-                EyeTrackingTree.blendParameterY = EyeYParam.Name;
-
-                AddEyeTrackingMotions(EyeTrackingTree, maxEyeMotionValue, poses);
-
-                // Eye Tracking State
-                var EyeTrackingState = layer.NewState($"Eye {side} Tracking")
-                    .WithAnimation(EyeTrackingTree)
-                    .Drives(etBlendParam, 1.0f)
-                    .TrackingAnimates(AacAv3.Av3TrackingElement.Eyes);
-
-                // Transitions
-                layer.AnyTransitionsTo(VRCEyeControlState)
-                    .When(etActiveParam.IsFalse());
-
-                layer.AnyTransitionsTo(EyeTrackingState)
-                    .WithTransitionToSelf()
-                    .When(etActiveParam.IsTrue());
-            }
-
-            // Functions for adding motions and managing child arrays
-            void AddEyeTrackingMotions(BlendTree tree, float maxMotionValue, Motion[] poses)
-            {
-                var positions = new[]
-                {
-                    new Vector2(-maxMotionValue, maxMotionValue), // LeftUp
-					new Vector2(0, maxMotionValue), // Up
-					new Vector2(maxMotionValue, maxMotionValue), // RightUp
-					new Vector2(-maxMotionValue, 0), // Left
-					Vector2.zero, // Neutral
-					new Vector2(maxMotionValue, 0), // Right
-					new Vector2(-maxMotionValue, -maxMotionValue), // LeftDown
-					new Vector2(0, -maxMotionValue), // Down
-					new Vector2(maxMotionValue, -maxMotionValue) // RightDown
-				};
-
-                for (int i = 0; i < poses.Length; i++)
-                {
-                    if (poses[i] == null)
-                        throw new Exception($"Eye tracking animation at index {i} is missing!");
-
-                    var child = new ChildMotion
-                    {
-                        motion = poses[i],
-                        position = positions[i],
-                        timeScale = 1f
-                    };
-                    tree.children = AppendChild(tree.children, child);
-                }
-            }
-
-            ChildMotion[] AppendChild(ChildMotion[] children, ChildMotion child)
-            {
-                var newChildren = new ChildMotion[children.Length + 1];
-                Array.Copy(children, newChildren, children.Length);
-                newChildren[children.Length] = child;
-                return newChildren;
+                var allEyeParams = new List<string> { EyeXParam.Name, EyeYParam.Name };
+                var OSCLayerEye = _aac.CreateSupportingIdleLayer("OSC smoothing");
+                setupOSCsmooth(OSCLayerEye, localSmoothness, remoteSmoothness, allEyeParams, new List<BlendTree> { leftEyeTree, rightEyeTree });
             }
         }
 
@@ -503,7 +433,7 @@ public class AnimatorWizard : MonoBehaviour
                     {
                         var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
                         tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
-                        allShapes.Add(ftPrefix + shapeName);
+                        if (createOSCsmooth) allShapes.Add(ftPrefix + shapeName);
                     }
                 }
 
@@ -511,7 +441,7 @@ public class AnimatorWizard : MonoBehaviour
                 {
                     var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
                     tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
-                    allShapes.Add(ftPrefix + shapeName);
+                    if (createOSCsmooth) allShapes.Add(ftPrefix + shapeName);
                 }
             }
 
@@ -531,7 +461,7 @@ public class AnimatorWizard : MonoBehaviour
                             ftPrefix + dualshape.minShapeName + GetSide(param.Name),
                             ftPrefix + dualshape.maxShapeName + GetSide(param.Name),
                             dualshape.minValue, dualshape.neutralValue, dualshape.maxValue));
-                        allShapes.Add(ftPrefix + dualshapeName);
+                        if (createOSCsmooth) allShapes.Add(ftPrefix + dualshapeName);
                     }
                 }
 
@@ -543,7 +473,7 @@ public class AnimatorWizard : MonoBehaviour
                         ftPrefix + dualshape.minShapeName,
                         ftPrefix + dualshape.maxShapeName,
                         dualshape.minValue, dualshape.neutralValue, dualshape.maxValue));
-                    allShapes.Add(ftPrefix + dualshapeName);
+                    if (createOSCsmooth) allShapes.Add(ftPrefix + dualshapeName);
                 }
             }
 
@@ -551,16 +481,11 @@ public class AnimatorWizard : MonoBehaviour
             children[children.Length - 1].directBlendParameter = ftBlendParam.Name;
             masterTree.children = children;
 
-            // OSC smooth
+            // OSC Face Tracking smooth
             if (createOSCsmooth)
             {
                 var OSCLayer = _aac.CreateSupportingFxLayer("OSC smoothing").WithAvatarMask(fxMask);
-
-                var OSCLocalState = CreateOSCTree(OSCLayer, "Local", localSmoothness, allShapes, masterTree);
-                var OSCRemoteState = CreateOSCTree(OSCLayer, "Remote", remoteSmoothness, allShapes, masterTree);
-
-                OSCLocalState.TransitionsTo(OSCRemoteState).When(OSCLayer.BoolParameter("IsLocal").IsFalse());
-                OSCRemoteState.TransitionsTo(OSCLocalState).When(OSCLayer.BoolParameter("IsLocal").IsTrue());
+                setupOSCsmooth(OSCLayer, localSmoothness, remoteSmoothness, allShapes, new List<BlendTree> { masterTree });
             }
 
             if (!saveVRCExpressionParameters)
@@ -777,81 +702,165 @@ public class AnimatorWizard : MonoBehaviour
             layer.AnyTransitionsTo(clothState).When(layer.BoolParameter(ClothTogglesPrefix + clothName).IsTrue());
         }
     }
-    private AacFlState CreateOSCTree(AacFlLayer layer, string type, float smoothness, List<string> allShapes, BlendTree tree)
+
+    private BlendTree setupEyeTracking(AacFlFloatParameter EyeXParam, AacFlFloatParameter EyeYParam,
+    AacFlBoolParameter etActiveParam, AacFlFloatParameter etBlendParam, string side, float maxMotionValue, Motion[] poses, AvatarMask mask)
     {
-        var rootTree = _aac.NewBlendTreeAsRaw();
-        rootTree.name = $"OSC {type}";
-        rootTree.blendType = BlendTreeType.Direct;
+        var layer = _aac.CreateSupportingIdleLayer($"Eye {side} Tracking").WithAvatarMask(mask);
 
-        var state = layer.NewState(rootTree.name).WithAnimation(rootTree);
+        if (poses == null || poses.Length != 9)
+            throw new Exception($"The {side} eye poses array must contain exactly 9 motions!");
 
-        foreach (var shape in allShapes)
+        var VRCEyeControlState = layer.NewState($"VRC Eye {side} Control")
+            .TrackingTracks(AacAv3.Av3TrackingElement.Eyes);
+
+        var EyeTrackingTree = _aac.NewBlendTreeAsRaw();
+        EyeTrackingTree.name = $"Eye {side} Tracking";
+        EyeTrackingTree.blendType = BlendTreeType.FreeformCartesian2D;
+        EyeTrackingTree.blendParameter = EyeXParam.Name;
+        EyeTrackingTree.blendParameterY = EyeYParam.Name;
+
+        // add motions to the blend tree
+        var positions = new[]
         {
-            AacFlFloatParameter proxyParam = layer.FloatParameter($"OSCsmooth/Proxy/{shape}");
-            AacFlFloatParameter smootherParam = layer.FloatParameter($"OSCsmooth/{type}/{shape}Smoother");
+            new Vector2(-maxMotionValue, maxMotionValue), // LeftUp
+            new Vector2(0, maxMotionValue), // Up
+            new Vector2(maxMotionValue, maxMotionValue), // RightUp
+            new Vector2(-maxMotionValue, 0), // Left
+            Vector2.zero, // Neutral
+            new Vector2(maxMotionValue, 0), // Right
+            new Vector2(-maxMotionValue, -maxMotionValue), // LeftDown
+            new Vector2(0, -maxMotionValue), // Down
+            new Vector2(maxMotionValue, -maxMotionValue) // RightDown
+         };
 
-            layer.OverrideValue(proxyParam, 0.0f);
-            layer.OverrideValue(smootherParam, smoothness);
+        for (int i = 0; i < poses.Length; i++)
+        {
+            if (poses[i] == null)
+                throw new Exception($"Eye tracking animation at index {i} is missing!");
 
-            // sets proxy params in tree ("Local" for single replace)
-            if (type == "Local")
+            var child = new ChildMotion
             {
-                ReplaceTreeParams(tree, shape, proxyParam.Name);
-            }
+                motion = poses[i],
+                position = positions[i],
+                timeScale = 1f
+            };
 
-            var clipMin = _aac.NewClip()
-                .Animating(anim => anim.AnimatesAnimator(proxyParam).WithFixedSeconds(0.0f, -1.0f));
-            var clipMax = _aac.NewClip()
-                .Animating(anim => anim.AnimatesAnimator(proxyParam).WithFixedSeconds(0.0f, 1.0f));
-
-            // Root subtree
-            var rootSubTree = rootTree.CreateBlendTreeChild(0);
-            rootSubTree.name = $"OSCsmooth/{type}/{shape}Smoother";
-            rootSubTree.blendType = BlendTreeType.Simple1D;
-            rootSubTree.useAutomaticThresholds = false;
-            rootSubTree.blendParameter = smootherParam.Name;
-
-            // Input tree
-            var inputTree = rootSubTree.CreateBlendTreeChild(0);
-            inputTree.name = $"OSCsmooth Input ({shape})";
-            inputTree.blendType = BlendTreeType.Simple1D;
-            inputTree.useAutomaticThresholds = false;
-            inputTree.blendParameter = shape;
-
-            inputTree.AddChild(clipMin.Clip, -1.0f);
-            inputTree.AddChild(clipMax.Clip, 1.0f);
-
-            // Driver tree
-            var driverTree = rootSubTree.CreateBlendTreeChild(1);
-            driverTree.name = $"OSCsmooth Driver ({shape})";
-            driverTree.blendType = BlendTreeType.Simple1D;
-            driverTree.useAutomaticThresholds = false;
-            driverTree.blendParameter = proxyParam.Name;
-
-            driverTree.AddChild(clipMin.Clip, -1.0f);
-            driverTree.AddChild(clipMax.Clip, 1.0f);
+            var newChildren = new ChildMotion[EyeTrackingTree.children.Length + 1];
+            Array.Copy(EyeTrackingTree.children, newChildren, EyeTrackingTree.children.Length);
+            newChildren[EyeTrackingTree.children.Length] = child;
+            EyeTrackingTree.children = newChildren;
         }
 
-        return state;
+        var EyeTrackingState = layer.NewState($"Eye {side} Tracking")
+            .Drives(etBlendParam, 1.0f)
+            .WithAnimation(EyeTrackingTree)
+            .TrackingAnimates(AacAv3.Av3TrackingElement.Eyes);
+
+        layer.AnyTransitionsTo(VRCEyeControlState).When(etActiveParam.IsFalse());
+        layer.AnyTransitionsTo(EyeTrackingState).WithTransitionToSelf().When(etActiveParam.IsTrue());
+
+        return EyeTrackingTree;
     }
 
-    private void ReplaceTreeParams(BlendTree tree, string oldParam, string newParam)
+    private void setupOSCsmooth(AacFlLayer layer, float localSmoothness, float remoteSmoothness, List<string> list, List<BlendTree> trees)
     {
-        if (tree.blendParameter == oldParam)
-        {
-            tree.blendParameter = newParam;
-        }
+        AacFlBoolParameter isLocalParam = layer.BoolParameter("IsLocal");
+        AacFlFloatParameter BlendOSC = layer.FloatParameter("OSCsmooth/Blend");
 
-        if (tree.blendParameterY == oldParam)
-        {
-            tree.blendParameterY = newParam;
-        }
+        var localTree = _aac.NewBlendTreeAsRaw();
+        localTree.name = "OSC Local";
+        localTree.blendType = BlendTreeType.Direct;
 
-        foreach (var child in tree.children)
+        var remoteTree = _aac.NewBlendTreeAsRaw();
+        remoteTree.name = "OSC Remote";
+        remoteTree.blendType = BlendTreeType.Direct;
+
+        var localState = layer.NewState("OSC Local").WithAnimation(localTree);
+        var remoteState = layer.NewState("OSC Remote").WithAnimation(remoteTree);
+
+        layer.AnyTransitionsTo(localState).When(isLocalParam.IsTrue());
+        layer.AnyTransitionsTo(remoteState).When(isLocalParam.IsFalse());
+
+        foreach (var shape in list)
         {
-            if (child.motion is BlendTree childTree)
+            AacFlFloatParameter proxyParam = layer.FloatParameter($"OSCsmooth/Proxy/{shape}");
+            AacFlFloatParameter localSmootherParam = layer.FloatParameter($"OSCsmooth/Local/{shape}Smoother");
+            AacFlFloatParameter remoteSmootherParam = layer.FloatParameter($"OSCsmooth/Remote/{shape}Smoother");
+
+            layer.OverrideValue(proxyParam, 0.0f);
+            layer.OverrideValue(localSmootherParam, localSmoothness);
+            layer.OverrideValue(remoteSmootherParam, remoteSmoothness);
+
+            foreach (var tree in trees)
             {
-                ReplaceTreeParams(childTree, oldParam, newParam);
+                Queue<BlendTree> queue = new Queue<BlendTree>();
+                queue.Enqueue(tree);
+
+                while (queue.Count > 0)
+                {
+                    var currentTree = queue.Dequeue();
+
+                    if (currentTree.blendParameter == shape) currentTree.blendParameter = proxyParam.Name;
+                    if (currentTree.blendParameterY == shape) currentTree.blendParameterY = proxyParam.Name;
+
+                    foreach (var child in currentTree.children)
+                    {
+                        if (child.motion is BlendTree childTree)
+                        {
+                            queue.Enqueue(childTree);
+                        }
+                    }
+                }
+            }
+
+            foreach (var mode in new[] { "Local", "Remote" })
+            {
+                var currentTree = mode == "Local" ? localTree : remoteTree;
+                var smootherParam = mode == "Local" ? localSmootherParam : remoteSmootherParam;
+
+                var rootTree = _aac.NewBlendTreeAsRaw();
+                rootTree.name = $"OSCsmooth/{mode}/{shape}Smoother";
+                rootTree.blendType = BlendTreeType.Simple1D;
+                rootTree.useAutomaticThresholds = false;
+                rootTree.blendParameter = smootherParam.Name;
+
+                var inputTree = rootTree.CreateBlendTreeChild(0);
+                inputTree.name = $"OSCsmooth Input ({shape})";
+                inputTree.blendType = BlendTreeType.Simple1D;
+                inputTree.useAutomaticThresholds = false;
+                inputTree.blendParameter = shape;
+
+                var clipMin = _aac.NewClip()
+                    .Animating(anim => anim.AnimatesAnimator(proxyParam).WithFixedSeconds(0.0f, -1.0f));
+
+                var clipMax = _aac.NewClip()
+                    .Animating(anim => anim.AnimatesAnimator(proxyParam).WithFixedSeconds(0.0f, 1.0f));
+
+                inputTree.AddChild(clipMin.Clip, -1.0f);
+                inputTree.AddChild(clipMax.Clip, 1.0f);
+
+                var driverTree = rootTree.CreateBlendTreeChild(1);
+                driverTree.name = $"OSCsmooth Driver ({shape})";
+                driverTree.blendType = BlendTreeType.Simple1D;
+                driverTree.useAutomaticThresholds = false;
+                driverTree.blendParameter = proxyParam.Name;
+
+                driverTree.AddChild(clipMin.Clip, -1.0f);
+                driverTree.AddChild(clipMax.Clip, 1.0f);
+
+                var newChildren = new ChildMotion[currentTree.children.Length + 1];
+                for (int i = 0; i < currentTree.children.Length; i++)
+                {
+                    newChildren[i] = currentTree.children[i];
+                }
+                newChildren[newChildren.Length - 1] = new ChildMotion
+                {
+                    directBlendParameter = BlendOSC.Name,
+                    motion = rootTree,
+                    timeScale = 1
+                };
+                currentTree.children = newChildren;
             }
         }
     }
@@ -879,7 +888,6 @@ public class AnimatorWizard : MonoBehaviour
         return Subtree(new Motion[] { minClip.Clip, neutralClip.Clip, maxClip.Clip },
             new[] { minValue, neutralValue, maxValue }, param);
     }
-
 
     private BlendTree Subtree(Motion[] motions, float[] thresholds, AacFlParameter param)
     {
@@ -1184,6 +1192,8 @@ public class AnimatorGeneratorEditor : Editor
         EditorGUILayout.PropertyField(createClothCustomization);
         EditorGUILayout.PropertyField(createColorCustomization);
         EditorGUILayout.PropertyField(createFaceToggle);
+        if (wizard.createFaceTracking || wizard.createEyeTracking)
+            EditorGUILayout.PropertyField(createOSCsmooth);
         EditorGUILayout.PropertyField(createEyeTracking);
         EditorGUILayout.PropertyField(createFaceTracking);
 
@@ -1232,6 +1242,15 @@ public class AnimatorGeneratorEditor : Editor
             EditorGUILayout.PropertyField(FaceToggleNames);
         }
 
+        // OSC smooth
+        if ((wizard.createFaceTracking || wizard.createEyeTracking) && wizard.createOSCsmooth)
+        {
+            GUILayout.Label("OSC smooth setup", headerStyle);
+            GUILayout.Label("OSC smooth is needed to fix Face/Eye Tracking params in-game, " +
+                "\nas without it animation is choppy and jerky, as if it's lacking FPS.", headerStyle2);
+            EditorGUILayout.PropertyField(localSmoothness);
+            EditorGUILayout.PropertyField(remoteSmoothness);
+        }
         // EyeTracking
         if (wizard.createEyeTracking)
         {
@@ -1269,14 +1288,7 @@ public class AnimatorGeneratorEditor : Editor
             EditorGUILayout.PropertyField(MirrorFTparams,
              PopUpLabel("Mirroring shapes", "Reflect automatically blendshapes if they have “Left” in their name (for example “MouthLowerDownLeft”)." +
              " You don't need to write the same blendshape for the right side (i.e. write only “MouthLowerDownLeft” and it will automatically create one for the right side as well)."));
-            GUILayout.Space(10);
-            EditorGUILayout.PropertyField(createOSCsmooth,
-             PopUpLabel("Create OSC smooth", "OSC smooth is needed to fix Face Tracking params, as without it animation is choppy and jerky, as if it's lacking FPS"));
-            if (wizard.createOSCsmooth)
-            {
-                EditorGUILayout.PropertyField(localSmoothness);
-                EditorGUILayout.PropertyField(remoteSmoothness);
-            }
+
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(ftShapes, PopUpLabel("FT Single Shapes", "Single shapes controlled by a float parameter."));
             GUILayout.Space(10);

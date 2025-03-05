@@ -617,7 +617,6 @@ MonoBehaviour:
   createFTLipSyncControl: 1
   lipSyncName: LipSyncTrackingActive
   createFaceToggle: 1
-  FaceToggleActive: 0
   FaceToggleNames:
   - {fileID: 7400000, guid: ef810f835f800f94f89d353e01e958e5, type: 2}
   - {fileID: 7400000, guid: 7db624cd49a53ce42b649811820f16b2, type: 2}
@@ -654,9 +653,10 @@ MonoBehaviour:
   saveVRCExpressionParameters: 1
   MirrorFTparams: 1
   createOSCsmooth: 1
-  IsLocal: 0
   localSmoothness: 0.1
   remoteSmoothness: 0.7
+  createFaceTracking: 1
+  ftPrefix: v2/
   createEyeTracking: 1
   MirrorEyeposes: 1
   maxEyeMotionValue: 0.25
@@ -712,8 +712,6 @@ MonoBehaviour:
   - shoes
   - boots
   - slaps
-  createFaceTracking: 1
-  ftPrefix: v2/
   ftShapes:
   - JawOpen
   - LipFunnel
@@ -1755,7 +1753,7 @@ MonoBehaviour:
     type: 3
     animatorController: {fileID: 9100000, guid: 8a3eb7bd72c9bae49b318c7604a903ac,
       type: 2}
-    mask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
+    mask: {fileID: 0}
     isDefault: 0
   - isEnabled: 0
     type: 4
