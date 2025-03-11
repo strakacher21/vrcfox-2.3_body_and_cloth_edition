@@ -616,47 +616,13 @@ MonoBehaviour:
   expTrackName: ExpressionTrackingActive
   createFTLipSyncControl: 1
   lipSyncName: LipSyncTrackingActive
-  createFaceToggle: 1
-  FaceToggleNames:
-  - {fileID: 7400000, guid: ef810f835f800f94f89d353e01e958e5, type: 2}
-  - {fileID: 7400000, guid: 7db624cd49a53ce42b649811820f16b2, type: 2}
-  - {fileID: 7400000, guid: b10a1adcc60648a4496108d39765c8cb, type: 2}
-  - {fileID: 7400000, guid: 5b0f9c1a332881044adff725fe6c92d0, type: 2}
-  - {fileID: 7400000, guid: 931149ca94d4b34409ba64b5f9903e1f, type: 2}
-  - {fileID: 7400000, guid: 88dd8bf9add08524b9109c0482e419a6, type: 2}
-  - {fileID: 7400000, guid: e4240226e2cf35a418c7dc8ceddaee0f, type: 2}
-  - {fileID: 7400000, guid: a7cd2e8a2c5a6e147ba868e61d42d815, type: 2}
-  - {fileID: 7400000, guid: 313930bddc325ee43af1db73fc21ed30, type: 2}
-  - {fileID: 7400000, guid: 8d72ac5c579ba5648afadb54f3dcae32, type: 2}
-  - {fileID: 7400000, guid: 2b54db7c8c17b654c81374cf6ff12c4a, type: 2}
-  - {fileID: 7400000, guid: 907992d65280309449a8c68bef1c6048, type: 2}
-  - {fileID: 7400000, guid: ab32a1c84d4602840947d76346f672a9, type: 2}
-  - {fileID: 7400000, guid: f333c9b8d311f3a498aae7cf9fe14ed3, type: 2}
-  - {fileID: 7400000, guid: 1a799838a1b9fba4da62d3395d150ad9, type: 2}
-  - {fileID: 7400000, guid: 0a22229d99203ae4ea8e368bd569ac24, type: 2}
-  - {fileID: 7400000, guid: 78d7285df74993845b3fb47e86b9d661, type: 2}
-  - {fileID: 7400000, guid: fdc96a35b0881c44f83348539cfb33e0, type: 2}
-  - {fileID: 7400000, guid: f16f9f95768301e4e8c276609a01e7c6, type: 2}
-  - {fileID: 7400000, guid: 512bb6e0256de1f44b3ad5517070fc26, type: 2}
-  - {fileID: 7400000, guid: e2f310e99399b434c818462dc7113ea1, type: 2}
-  - {fileID: 7400000, guid: c825ed663e147b44f8c68ef9127db7c8, type: 2}
-  - {fileID: 7400000, guid: aa37d6dbb1ee5b647935a48914692993, type: 2}
-  - {fileID: 7400000, guid: 6fe664ae78a829f4d99113d02a9b68ec, type: 2}
-  - {fileID: 7400000, guid: 556118552aff07d4dbfa15a99dbdf1c0, type: 2}
-  - {fileID: 7400000, guid: ec5e5c65d2a78154cafefd006441a6f5, type: 2}
-  - {fileID: 7400000, guid: 09be85ebfc99818449c0dee5caffdf03, type: 2}
-  - {fileID: 7400000, guid: d380c3162ad19df47825474409a07c70, type: 2}
-  - {fileID: 7400000, guid: 25fcf3ff133ce0f41bff010ba5724ad8, type: 2}
-  - {fileID: 7400000, guid: 56cd946f8ec8fa44eb9f642bd71aac84, type: 2}
-  - {fileID: 7400000, guid: 626626221926a20409990e29b2bb2ed7, type: 2}
-  - {fileID: 7400000, guid: ae739e0b97f9d194fa00375d541767ef, type: 2}
   saveVRCExpressionParameters: 1
   MirrorFTparams: 1
   createOSCsmooth: 1
   localSmoothness: 0.1
   remoteSmoothness: 0.7
   createFaceTracking: 1
-  ftPrefix: v2/
+  FullFaceTrackingPrefix: v2/
   createEyeTracking: 1
   MirrorEyeposes: 1
   maxEyeMotionValue: 0.25
@@ -712,6 +678,40 @@ MonoBehaviour:
   - shoes
   - boots
   - slaps
+  createFaceToggle: 1
+  FaceToggleNames:
+  - {fileID: 7400000, guid: ef810f835f800f94f89d353e01e958e5, type: 2}
+  - {fileID: 7400000, guid: 7db624cd49a53ce42b649811820f16b2, type: 2}
+  - {fileID: 7400000, guid: b10a1adcc60648a4496108d39765c8cb, type: 2}
+  - {fileID: 7400000, guid: 5b0f9c1a332881044adff725fe6c92d0, type: 2}
+  - {fileID: 7400000, guid: 931149ca94d4b34409ba64b5f9903e1f, type: 2}
+  - {fileID: 7400000, guid: 88dd8bf9add08524b9109c0482e419a6, type: 2}
+  - {fileID: 7400000, guid: e4240226e2cf35a418c7dc8ceddaee0f, type: 2}
+  - {fileID: 7400000, guid: a7cd2e8a2c5a6e147ba868e61d42d815, type: 2}
+  - {fileID: 7400000, guid: 313930bddc325ee43af1db73fc21ed30, type: 2}
+  - {fileID: 7400000, guid: 8d72ac5c579ba5648afadb54f3dcae32, type: 2}
+  - {fileID: 7400000, guid: 2b54db7c8c17b654c81374cf6ff12c4a, type: 2}
+  - {fileID: 7400000, guid: 907992d65280309449a8c68bef1c6048, type: 2}
+  - {fileID: 7400000, guid: ab32a1c84d4602840947d76346f672a9, type: 2}
+  - {fileID: 7400000, guid: f333c9b8d311f3a498aae7cf9fe14ed3, type: 2}
+  - {fileID: 7400000, guid: 1a799838a1b9fba4da62d3395d150ad9, type: 2}
+  - {fileID: 7400000, guid: 0a22229d99203ae4ea8e368bd569ac24, type: 2}
+  - {fileID: 7400000, guid: 78d7285df74993845b3fb47e86b9d661, type: 2}
+  - {fileID: 7400000, guid: fdc96a35b0881c44f83348539cfb33e0, type: 2}
+  - {fileID: 7400000, guid: f16f9f95768301e4e8c276609a01e7c6, type: 2}
+  - {fileID: 7400000, guid: 512bb6e0256de1f44b3ad5517070fc26, type: 2}
+  - {fileID: 7400000, guid: e2f310e99399b434c818462dc7113ea1, type: 2}
+  - {fileID: 7400000, guid: c825ed663e147b44f8c68ef9127db7c8, type: 2}
+  - {fileID: 7400000, guid: aa37d6dbb1ee5b647935a48914692993, type: 2}
+  - {fileID: 7400000, guid: 6fe664ae78a829f4d99113d02a9b68ec, type: 2}
+  - {fileID: 7400000, guid: 556118552aff07d4dbfa15a99dbdf1c0, type: 2}
+  - {fileID: 7400000, guid: ec5e5c65d2a78154cafefd006441a6f5, type: 2}
+  - {fileID: 7400000, guid: 09be85ebfc99818449c0dee5caffdf03, type: 2}
+  - {fileID: 7400000, guid: d380c3162ad19df47825474409a07c70, type: 2}
+  - {fileID: 7400000, guid: 25fcf3ff133ce0f41bff010ba5724ad8, type: 2}
+  - {fileID: 7400000, guid: 56cd946f8ec8fa44eb9f642bd71aac84, type: 2}
+  - {fileID: 7400000, guid: 626626221926a20409990e29b2bb2ed7, type: 2}
+  - {fileID: 7400000, guid: ae739e0b97f9d194fa00375d541767ef, type: 2}
   ftShapes:
   - JawOpen
   - LipFunnel
@@ -1226,10 +1226,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4574422725973452130}
-    - targetCorrespondingSourceObject: {fileID: 3628598921951273207, guid: 1a1022667c449ad4ea3340db6aa363c8,
+    - targetCorrespondingSourceObject: {fileID: 4219271786709348375, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 994909546806996685}
+      addedObject: {fileID: 4309175442111660078}
     - targetCorrespondingSourceObject: {fileID: -7320413641165329225, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       insertIndex: -1
@@ -1753,7 +1753,7 @@ MonoBehaviour:
     type: 3
     animatorController: {fileID: 9100000, guid: 8a3eb7bd72c9bae49b318c7604a903ac,
       type: 2}
-    mask: {fileID: 0}
+    mask: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64, type: 2}
     isDefault: 0
   - isEnabled: 0
     type: 4
@@ -2746,19 +2746,25 @@ MonoBehaviour:
   VolumetricRadius: 0
   EnableSpatialization: 1
   UseAudioSourceVolumeCurve: 1
---- !u!1 &3982940911286996024 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3628598921951273207, guid: 1a1022667c449ad4ea3340db6aa363c8,
+--- !u!4 &4405562359383961109 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4052909026358133466, guid: 1a1022667c449ad4ea3340db6aa363c8,
     type: 3}
   m_PrefabInstance: {fileID: 368557219134090447}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &994909546806996685
+--- !u!1 &4580369192788155608 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4219271786709348375, guid: 1a1022667c449ad4ea3340db6aa363c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 368557219134090447}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4309175442111660078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3982940911286996024}
+  m_GameObject: {fileID: 4580369192788155608}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1661641543, guid: 2a2c05204084d904aa4945ccff20d8e5, type: 3}
@@ -2904,12 +2910,6 @@ MonoBehaviour:
   showGizmos: 1
   boneOpacity: 0.5
   limitOpacity: 0.5
---- !u!4 &4405562359383961109 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4052909026358133466, guid: 1a1022667c449ad4ea3340db6aa363c8,
-    type: 3}
-  m_PrefabInstance: {fileID: 368557219134090447}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4979253030971371597 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4613019273184500866, guid: 1a1022667c449ad4ea3340db6aa363c8,

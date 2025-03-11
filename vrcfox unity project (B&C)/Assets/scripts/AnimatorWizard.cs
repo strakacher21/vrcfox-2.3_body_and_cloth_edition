@@ -93,7 +93,7 @@ public class AnimatorWizard : MonoBehaviour
     public float remoteSmoothness = 0.7f;
 
     public bool createFaceTracking = true;
-    public string ftPrefix = "v2/";
+    public string FullFaceTrackingPrefix = "v2/";
 
     public bool createEyeTracking = true;
     public bool MirrorEyeposes = true;
@@ -256,11 +256,11 @@ public class AnimatorWizard : MonoBehaviour
         masterTree.blendType = BlendTreeType.Direct;
         fxTreeLayer.NewState(masterTree.name).WithAnimation(masterTree);
 
-        AacFlBoolParameter ftActiveParam = CreateBoolParam(fxLayer, ftPrefix + "LipTrackingActive", true, false);
-        AacFlFloatParameter ftBlendParam = fxLayer.FloatParameter(ftPrefix + "LipTrackingActive-float");
+        AacFlBoolParameter ftActiveParam = CreateBoolParam(fxLayer, FullFaceTrackingPrefix + "LipTrackingActive", true, false);
+        AacFlFloatParameter ftBlendParam = fxLayer.FloatParameter(FullFaceTrackingPrefix + "LipTrackingActive-float");
         AacFlBoolParameter FaceToggleActive = fxLayer.BoolParameter("FaceToggleActive");
-        AacFlBoolParameter ExpTrackActiveParam = CreateBoolParam(fxLayer, ftPrefix + expTrackName, true, true);
-        AacFlBoolParameter LipSyncActiveParam = CreateBoolParam(fxLayer, ftPrefix + lipSyncName, true, false);
+        AacFlBoolParameter ExpTrackActiveParam = CreateBoolParam(fxLayer, FullFaceTrackingPrefix + expTrackName, true, true);
+        AacFlBoolParameter LipSyncActiveParam = CreateBoolParam(fxLayer, FullFaceTrackingPrefix + lipSyncName, true, false);
 
         // brow Gesture expressions
         MapHandPosesToShapes("brow expressions", skin, browShapeNames, browPrefix, false, ftActiveParam, ExpTrackActiveParam, FaceToggleActive);
@@ -340,10 +340,10 @@ public class AnimatorWizard : MonoBehaviour
         if (createEyeTracking)
         {
             var AdditiveLayer = _aac.CreateMainIdleLayer();
-            AacFlBoolParameter etActiveParam = CreateBoolParam(AdditiveLayer, ftPrefix + "EyeTrackingActive", true, false);
+            AacFlBoolParameter etActiveParam = CreateBoolParam(AdditiveLayer, FullFaceTrackingPrefix + "EyeTrackingActive", true, false);
             AacFlFloatParameter WORKAROUND_BlendParam = AdditiveLayer.FloatParameter("OSCsmooth/Blend"); // WORKAROUND: OSCsmooth does not work if the Blend param is not updated. need to fix this!
-            AacFlFloatParameter EyeXParam = CreateFloatParam(AdditiveLayer, ftPrefix + "EyeX", false, 0.0f);
-            AacFlFloatParameter EyeYParam = CreateFloatParam(AdditiveLayer, ftPrefix + "EyeY", false, 0.0f);
+            AacFlFloatParameter EyeXParam = CreateFloatParam(AdditiveLayer, FullFaceTrackingPrefix + "EyeX", false, 0.0f);
+            AacFlFloatParameter EyeYParam = CreateFloatParam(AdditiveLayer, FullFaceTrackingPrefix + "EyeY", false, 0.0f);
 
             BlendTree leftEyeTree = setupEyeTracking(EyeXParam, EyeYParam, etActiveParam, WORKAROUND_BlendParam, "Left", maxEyeMotionValue, LeftEyePoses, EyeLeftMask);
             BlendTree rightEyeTree = setupEyeTracking(EyeXParam, EyeYParam, etActiveParam, WORKAROUND_BlendParam, "Right", maxEyeMotionValue, RightEyePoses, EyeRightMask);
@@ -431,17 +431,17 @@ public class AnimatorWizard : MonoBehaviour
                 {
                     for (int flip = 0; flip < EachSide(ref shapeName); flip++)
                     {
-                        var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
+                        var param = CreateFloatParam(fxLayer, FullFaceTrackingPrefix + shapeName, false, 0);
                         tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
-                        if (createOSCsmooth) allShapes.Add(ftPrefix + shapeName);
+                        if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + shapeName);
                     }
                 }
 
                 else
                 {
-                    var param = CreateFloatParam(fxLayer, ftPrefix + shapeName, false, 0);
+                    var param = CreateFloatParam(fxLayer, FullFaceTrackingPrefix + shapeName, false, 0);
                     tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
-                    if (createOSCsmooth) allShapes.Add(ftPrefix + shapeName);
+                    if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + shapeName);
                 }
             }
 
@@ -455,25 +455,25 @@ public class AnimatorWizard : MonoBehaviour
                 {
                     for (int flip = 0; flip < EachSide(ref dualshapeName); flip++)
                     {
-                        var param = CreateFloatParam(fxLayer, ftPrefix + dualshapeName, false, 0);
+                        var param = CreateFloatParam(fxLayer, FullFaceTrackingPrefix + dualshapeName, false, 0);
                         tree.AddChild(DualBlendshapeTree(
                             fxTreeLayer, param, skin,
-                            ftPrefix + dualshape.minShapeName + GetSide(param.Name),
-                            ftPrefix + dualshape.maxShapeName + GetSide(param.Name),
+                            FullFaceTrackingPrefix + dualshape.minShapeName + GetSide(param.Name),
+                            FullFaceTrackingPrefix + dualshape.maxShapeName + GetSide(param.Name),
                             dualshape.minValue, dualshape.neutralValue, dualshape.maxValue));
-                        if (createOSCsmooth) allShapes.Add(ftPrefix + dualshapeName);
+                        if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + dualshapeName);
                     }
                 }
 
                 else
                 {
-                    var param = CreateFloatParam(fxLayer, ftPrefix + dualshape.paramName, false, 0);
+                    var param = CreateFloatParam(fxLayer, FullFaceTrackingPrefix + dualshape.paramName, false, 0);
                     tree.AddChild(DualBlendshapeTree(
                         fxTreeLayer, param, skin,
-                        ftPrefix + dualshape.minShapeName,
-                        ftPrefix + dualshape.maxShapeName,
+                        FullFaceTrackingPrefix + dualshape.minShapeName,
+                        FullFaceTrackingPrefix + dualshape.maxShapeName,
                         dualshape.minValue, dualshape.neutralValue, dualshape.maxValue));
-                    if (createOSCsmooth) allShapes.Add(ftPrefix + dualshapeName);
+                    if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + dualshapeName);
                 }
             }
 
@@ -500,7 +500,7 @@ public class AnimatorWizard : MonoBehaviour
         {
             var FaceToggleLayer = _aac.CreateSupportingFxLayer("Face Toggle").WithAvatarMask(fxMask);
 
-            AacFlIntParameter FaceToggleActiveParam = CreateIntParam(fxLayer, ftPrefix + "anim/FacePresets", false, 0);
+            AacFlIntParameter FaceToggleActiveParam = CreateIntParam(fxLayer, FullFaceTrackingPrefix + "anim/FacePresets", false, 0);
 
             var FaceToggleWaitingState = FaceToggleLayer.NewState("Waiting command").Drives(FaceToggleActive, false);
             var waitingTransition = FaceToggleLayer.AnyTransitionsTo(FaceToggleWaitingState)
@@ -1006,7 +1006,7 @@ public class AnimatorGeneratorEditor : Editor
 
     private SerializedProperty localSmoothness, remoteSmoothness;
 
-    private SerializedProperty shapePreferenceSliderPrefix, shapePreferenceTogglesPrefix, mouthPrefix, browPrefix, ftPrefix, ClothTogglesPrefix;
+    private SerializedProperty shapePreferenceSliderPrefix, shapePreferenceTogglesPrefix, mouthPrefix, browPrefix, FullFaceTrackingPrefix, ClothTogglesPrefix;
 
     private SerializedProperty primaryColor0, primaryColor1, secondColor0, secondColor1;
 
@@ -1058,7 +1058,7 @@ public class AnimatorGeneratorEditor : Editor
         shapePreferenceTogglesPrefix = serializedObject.FindProperty("shapePreferenceTogglesPrefix");
         mouthPrefix = serializedObject.FindProperty("mouthPrefix");
         browPrefix = serializedObject.FindProperty("browPrefix");
-        ftPrefix = serializedObject.FindProperty("ftPrefix");
+        FullFaceTrackingPrefix = serializedObject.FindProperty("FullFaceTrackingPrefix");
         ClothTogglesPrefix = serializedObject.FindProperty("ClothTogglesPrefix");
 
         expTrackName = serializedObject.FindProperty("expTrackName");
@@ -1254,14 +1254,11 @@ public class AnimatorGeneratorEditor : Editor
         // EyeTracking
         if (wizard.createEyeTracking)
         {
-            GUILayout.Label("EyeTracking (Simplified Eye Parameters) settings.", headerStyle);
+            GUILayout.Label("EyeTracking (Simplified Eye Parameters) settings", headerStyle);
             GUILayout.Label("Creates EyeTracking with these animations.", headerStyle2);
             GUILayout.Space(10);
-            if (!wizard.createFaceTracking)
-            {
-                EditorGUILayout.PropertyField(ftPrefix);
-            }
-            EditorGUILayout.PropertyField(MirrorEyeposes);
+            EditorGUILayout.PropertyField(FullFaceTrackingPrefix);
+            EditorGUILayout.PropertyField(MirrorEyeposes, PopUpLabel("Mirror Eye poses", "Don't use other animations for the right side."));
             GUILayout.Space(10);
             if (wizard.MirrorEyeposes)
             {
@@ -1280,14 +1277,13 @@ public class AnimatorGeneratorEditor : Editor
             GUILayout.Label("FaceTracking (Universal Shapes) settings", headerStyle);
             GUILayout.Label("Creates FaceTracking with these animations.", headerStyle2);
             GUILayout.Space(10);
-            EditorGUILayout.PropertyField(ftPrefix);
+            EditorGUILayout.PropertyField(FullFaceTrackingPrefix);
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(createFTLipSyncControl,
             PopUpLabel("Create Face Tracking LipSync Control", "Adds LypSync off/on feature."));
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(MirrorFTparams,
-             PopUpLabel("Mirroring shapes", "Reflect automatically blendshapes if they have “Left” in their name (for example “MouthLowerDownLeft”)." +
-             " You don't need to write the same blendshape for the right side (i.e. write only “MouthLowerDownLeft” and it will automatically create one for the right side as well)."));
+             PopUpLabel("Mirroring shapes", "Reflect automatically blendshapes if they have “Left” in their name."));
 
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(ftShapes, PopUpLabel("FT Single Shapes", "Single shapes controlled by a float parameter."));
