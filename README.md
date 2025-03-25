@@ -1,15 +1,15 @@
 # **VRCfox**
 ## Minimalistic furry avatar for [VRChat](https://hello.vrchat.com/) with flexible customization options.<br>This is a fork of [vrcfox](https://github.com/trev3d/vrcfox) [(trev3d)](https://github.com/trev3d).
 
----
+___
 <img src="https://github.com/user-attachments/assets/d0bab74a-0902-4086-8fcd-b7249ce140b0" width="50%"><img src="https://github.com/user-attachments/assets/2923e6cc-4414-4ce5-bf1c-98b9995fa9a9" width="50%">
----
+___
 
 # А Request
 Please do not use this model to post pornographic or suggestive content.</br>
 I will also be grateful if you indicate mine and trev3d's authorship (and not indicate the above content).
 
-*About all possible mistakes and wishes or criticism write me safely. I will be interested to answer everything or realize that I have created some silly thing :D .*
+*About all possible mistakes and wishes or criticism write me safely. I will be interested to answer everything or realize that I have created some silly thing :D*
 
 # Get
 ### [:arrow_forward:Download](https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition/archive/refs/heads/main.zip)
