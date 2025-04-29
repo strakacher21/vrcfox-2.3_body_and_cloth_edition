@@ -7,7 +7,8 @@ import bmesh # WORKAROUND
 export_path = bpy.path.abspath(r"//vrcfox unity project (B&C)/Assets")
 file_name = "vrcfox model (B&C).fbx"
 desired_model_name = "Body"
-export_uv_map = "ColorMap"
+export_uv_map = "ColorMap" # ColorMap / UVMap
+export_vertex_colors = True # True / False
 export_collection_name = "main"
 exclude_collection_name = "disabled"
 
@@ -65,8 +66,14 @@ if bpy.context.selected_objects:
     bpy.ops.object.join()
     bpy.context.active_object.name = desired_model_name
 
-    if export_uv_map in bpy.context.object.data.uv_layers:
-        bpy.context.object.data.uv_layers[export_uv_map].active = True
+    # Deleting all UV maps except the selected one
+    obj = bpy.context.active_object
+    uv_layers = obj.data.uv_layers
+    if export_uv_map in uv_layers:
+        uv_layers.active = uv_layers[export_uv_map]
+        layers_to_remove = [uv for uv in uv_layers if uv.name != export_uv_map]
+        for uv in layers_to_remove:
+            uv_layers.remove(uv)
     else:
         raise ValueError(f"UV map '{export_uv_map}' not found.")
 
@@ -86,7 +93,7 @@ if bpy.context.selected_objects:
         bake_anim_use_all_bones=False,
         bake_anim_force_startend_keying=False,
         bake_anim_simplify_factor=0.0,
-        colors_type="LINEAR",
+        colors_type="LINEAR" if export_vertex_colors else "NONE",
         #add_leaf_bones=False,
         use_armature_deform_only=True,
         use_triangles=False #WORKAROUND: Disable automatic triangulation in Blender to keep 'Body' untriangulated, as it causes vertex colors to display incorrectly. 
