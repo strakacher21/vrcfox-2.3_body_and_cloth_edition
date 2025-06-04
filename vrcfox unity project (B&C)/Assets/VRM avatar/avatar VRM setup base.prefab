@@ -193,12 +193,6 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 3787324367313100564}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &3067062420606959604 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -7052880594008874784, guid: 1a1022667c449ad4ea3340db6aa363c8,
-    type: 3}
-  m_PrefabInstance: {fileID: 3787324367313100564}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3676624012611270911 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1a1022667c449ad4ea3340db6aa363c8,
@@ -229,12 +223,6 @@ MonoBehaviour:
   - Offset: {x: 0, y: 0.004, z: 0}
     Radius: 0.001
   m_gizmoColor: {r: 0, g: 1, b: 0.09803922, a: 1}
---- !u!4 &3983635831963424510 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8950920902458848790, guid: 1a1022667c449ad4ea3340db6aa363c8,
-    type: 3}
-  m_PrefabInstance: {fileID: 3787324367313100564}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4057231595393638981 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1a1022667c449ad4ea3340db6aa363c8,
@@ -451,9 +439,9 @@ MonoBehaviour:
   - Offset: {x: 0, y: 0.004, z: 0}
     Radius: 0.001
   m_gizmoColor: {r: 0, g: 1, b: 0.09803922, a: 1}
---- !u!4 &5250974778442079756 stripped
+--- !u!4 &5514424112122194712 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -265586143230983912, guid: 1a1022667c449ad4ea3340db6aa363c8,
+  m_CorrespondingSourceObject: {fileID: 8649282868000109580, guid: 1a1022667c449ad4ea3340db6aa363c8,
     type: 3}
   m_PrefabInstance: {fileID: 3787324367313100564}
   m_PrefabAsset: {fileID: 0}
@@ -513,7 +501,7 @@ MonoBehaviour:
   m_dragForce: 0.4
   m_center: {fileID: 0}
   RootBones:
-  - {fileID: 3067062420606959604}
+  - {fileID: 7116153078038768798}
   m_hitRadius: 0.0005
   ColliderGroups: []
   m_updateType: 0
@@ -543,7 +531,7 @@ MonoBehaviour:
   m_dragForce: 0.4
   m_center: {fileID: 0}
   RootBones:
-  - {fileID: 5250974778442079756}
+  - {fileID: 5514424112122194712}
   m_hitRadius: 0.0005
   ColliderGroups: []
   m_updateType: 0
@@ -573,12 +561,24 @@ MonoBehaviour:
   m_dragForce: 0.4
   m_center: {fileID: 0}
   RootBones:
-  - {fileID: 3983635831963424510}
+  - {fileID: 7096841857962824826}
   m_hitRadius: 0.001
   ColliderGroups:
   - {fileID: 4449672565086168891}
   - {fileID: 3385347064115820075}
   m_updateType: 0
+--- !u!4 &7096841857962824826 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -2958219114102944914, guid: 1a1022667c449ad4ea3340db6aa363c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 3787324367313100564}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7116153078038768798 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6219155488335819658, guid: 1a1022667c449ad4ea3340db6aa363c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 3787324367313100564}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7128438258696574594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2998821593510508138, guid: 1a1022667c449ad4ea3340db6aa363c8,
