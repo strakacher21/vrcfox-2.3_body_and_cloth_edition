@@ -31,7 +31,7 @@ Follow these steps to set up the Unity project:
 
 3. **Add Custom Package Repository**  
    This project uses custom packages from [hai-vr](https://github.com/hai-vr). Add the repository to VCC by clicking the following link:  
-   [Add hai-vr Repository to VCC](vcc://vpm/addRepo?url=https://hai-vr.github.io/vpm-listing/index.json)
+   <a href="vcc://vpm/addRepo?url=https://hai-vr.github.io/vpm-listing/index.json" target="_blank" rel="noopener noreferrer">Add hai-vr Repository to VCC</a>
 
 4. **Confirm Repository Addition**  
    A dialog box will appear in VCC. Click **I Understand, Add Repository** and verify that the repository has been successfully added in the VCC settings.
