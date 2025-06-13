@@ -23,7 +23,7 @@ Follow these steps to set up the Unity project:
 1. **Download or Clone the Project**  
    Download the project as a [ZIP file](https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition/archive/refs/heads/main.zip) or clone it using Git:  
    ```bash
-   git clone https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition.git
+   https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition.git
    ```
 
 2. **Install VRChat Creator Companion (VCC)**  
@@ -31,7 +31,7 @@ Follow these steps to set up the Unity project:
 
 3. **Add Custom Package Repository**  
    This project uses custom packages from [hai-vr](https://github.com/hai-vr). Add the repository to VCC by clicking the following link:  
-   [**Add hai-vr Repository to VCC**](vcc://vpm/addRepo?url=https://hai-vr.github.io/vpm-listing/index.json)
+   [Add hai-vr Repository to VCC](vcc://vpm/addRepo?url=https://hai-vr.github.io/vpm-listing/index.json)
 
 4. **Confirm Repository Addition**  
    A dialog box will appear in VCC. Click **I Understand, Add Repository** and verify that the repository has been successfully added in the VCC settings.
