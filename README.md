@@ -23,7 +23,7 @@ Follow these steps to set up the Unity project:
 1. **Download or Clone the Project**  
    Download the project as a [ZIP file](https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition/archive/refs/heads/main.zip) or clone it using Git:  
    ```bash
-   git clone https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition.git
+   https://github.com/strakacher21/vrcfox-2.3_body_and_cloth_edition.git
    ```
 
 2. **Install VRChat Creator Companion (VCC)**  
