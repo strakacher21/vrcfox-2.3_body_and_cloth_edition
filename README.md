@@ -18,6 +18,7 @@ I will also be grateful if you indicate mine and trev3d's authorship (and not in
 
 # Guides:
 ### [Unity project setup](Unity-setup.md)
+### [VRM in Unity project setup](VRM-setup.md)
 
 # Customization
 The project includes the **Blend 4.4** file itself and the **Unity 2022.3.22f1** project.
