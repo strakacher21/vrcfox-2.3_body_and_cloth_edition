@@ -16,14 +16,14 @@ I will also be grateful if you indicate mine and trev3d's authorship (and not in
 
 ### [:arrow_forward:Link to the avatar in VRChat](https://vrchat.com/home/avatar/avtr_433942b4-d25f-4add-ad34-75c0d20e4ae1)
 
-# Guides:
-### [Unity project setup](Unity-setup.md)
-### [VRM in Unity project setup](VRM-setup.md)
+# Guides
+### [:bulb:Unity project setup](Unity-setup.md)
+### [:bulb:VRM in Unity project setup](VRM-setup.md)
 
 # Customization
 The project includes the **Blend 4.4** file itself and the **Unity 2022.3.22f1** project.
 
-The easiest way to adjust the colors is to vertex paint rather than using a texture. This works well for solid colors, but is not suitable for fancy patterns. Your avatar file size will stay small and load quickly without texture files. If you prefer to use a texture, the model has a second set of **UVs**. You will need to change the **active UV layer** of each mesh to **‘UVMap’** and apply the texture yourself. You will also need to erase all vertex colors, as they will still appear on the default material in the Unity project! 
+The easiest way to adjust the colors is to vertex paint rather than using a texture. This works well for solid colors, but is not suitable for fancy patterns. Your avatar file size will stay small and load quickly without texture files. If you prefer to use a texture, the model has a second set of **UVs**. You will need to change the **active UV layer** of each mesh to **‘UVMap’** and apply the texture yourself. You will also need to erase all vertex colors, as they will still appear on the default material in the Unity project!
 
 > [!WARNING]
 >**To properly export a model from Blender to Unity, you need to use the export script in Blender!** 
@@ -31,7 +31,8 @@ The easiest way to adjust the colors is to vertex paint rather than using a text
 >Simply click the '▶' button in Blender to export the model correctly to Unity </br>
 >*(Without — the colors of the model in Unity look faded and the clothes are exported incorrectly.)*
 
-The Unity project has a prefab model, as well as two scenes for **PC** and **Quest&IOS**. All prefab changes go into changing the scene. Аlso includes a script **AnimatorWizard** (uses the  [v3-animator-as-code](https://github.com/hai-vr/av3-animator-as-code) [(hai-vr)](https://github.com/hai-vr) package to configure animators) that allows you to customise facial expressions, avatar blend preferences, cloth/color customisation, eye/face tracking, etc. You can disable some features to save [VRChat parameters](https://creators.vrchat.com/avatars/animator-parameters/).
+The Unity project has a prefab model, as well as two scenes for **PC** and **Quest&IOS**. All prefab changes go into changing the scene. Аlso includes a script **AnimatorWizard** (uses the  [v3-animator-as-code](https://github.com/hai-vr/av3-animator-as-code) [(hai-vr)](https://github.com/hai-vr) package to configure animators) that allows you to customise facial expressions, avatar blend preferences, cloth/color customisation, eye/face tracking, etc. You can disable some features to save [VRChat parameters](https://creators.vrchat.com/avatars/animator-parameters/).<br/>
+The project also includes a [VRM file](vrcfox%20unity%20project%20(B&C)/Assets/VRM%20avatar/vrm%20file) and a pre-configured VRM scene. Refer to the [VRM setup guide](VRM-setup.md) for switching to VRM.
 ___
 
 ### [Main avatar performance stats for VRChat](https://creators.vrchat.com/avatars/avatar-performance-ranking-system#avatar-performance-ranking-stats)

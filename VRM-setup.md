@@ -15,7 +15,7 @@ This guide explains how to set up a VRM model for the Unity project, including p
    In the same **Scripting** workspace, select the `"batch remove prefix ftshapekeys"` script and set `ftprefix = False`. Run the script to remove unnecessary prefixes from shapekeys.
 
 5. **Export the Model**  
-   Export the model using the `"export to unity"` script. *Before exporting, Pay attention to the settings:*  
+   Export the model using the `"export to unity"` script. *Before exporting, pay attention to the settings (if you are using a custom texture, replace it with the opposite settings. In Unity, replace the material texture `vrcfox UniUnlit`):*  
    ```
    export_uv_map = "ColorMap"  # ColorMap / UVMap
    export_vertex_colors = True  # True / False
