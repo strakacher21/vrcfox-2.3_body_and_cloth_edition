@@ -26,11 +26,11 @@ Transform:
   m_GameObject: {fileID: 433754824779909284}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.4848096, z: -0, w: 0.8746197}
-  m_LocalPosition: {x: -3.9209242, y: -0.18664151, z: -2.0584278}
+  m_LocalPosition: {x: 4.4647713, y: 3.7351897, z: 14.920575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4495529472307362868}
+  m_Father: {fileID: 7203509226136297418}
   m_LocalEulerAnglesHint: {x: 0, y: 58, z: 0}
 --- !u!20 &1360729302831851911
 Camera:
@@ -109,11 +109,11 @@ Transform:
   m_GameObject: {fileID: 1167397745927755363}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.004075777, y: 0.5683584, z: 6.808572}
+  m_LocalPosition: {x: 8.389771, y: 4.4901896, z: 23.787575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4495529472307362868}
+  m_Father: {fileID: 7203509226136297418}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!20 &7991765258609875225
 Camera:
@@ -192,11 +192,11 @@ Transform:
   m_GameObject: {fileID: 1719733494681648081}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.004075777, y: -0.51364154, z: 2.4725723}
+  m_LocalPosition: {x: 8.389771, y: 3.4081898, z: 19.451576}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4495529472307362868}
+  m_Father: {fileID: 7203509226136297418}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!20 &8289786749719251235
 Camera:
@@ -275,11 +275,11 @@ Transform:
   m_GameObject: {fileID: 4422527842216569329}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.004075777, y: -0.21164155, z: -6.1314263}
+  m_LocalPosition: {x: 8.389771, y: 3.7101898, z: 10.847576}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4495529472307362868}
+  m_Father: {fileID: 7203509226136297418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6013431148909186106
 Camera:
@@ -426,45 +426,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &6191949583191843163
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4495529472307362868}
-  m_Layer: 0
-  m_Name: Cameras
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4495529472307362868
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6191949583191843163}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.004075777, y: 1.1116415, z: -0.3385723}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8156623542599852333}
-  - {fileID: 5893123160960070052}
-  - {fileID: 436533594976994675}
-  - {fileID: 2939695372627707468}
-  - {fileID: 3701824785658449189}
-  - {fileID: 1758001129998890504}
-  - {fileID: 5635702586115073693}
-  - {fileID: 5106831203898818193}
-  m_Father: {fileID: 8401531228967075183}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6460888268413598147
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,11 +452,11 @@ Transform:
   m_GameObject: {fileID: 6460888268413598147}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.004075777, y: -0.21164155, z: 6.808572}
+  m_LocalPosition: {x: 8.389771, y: 3.7101898, z: 23.787575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4495529472307362868}
+  m_Father: {fileID: 7203509226136297418}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!20 &2803117797462032439
 Camera:
@@ -835,8 +796,47 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3484120561664103377}
-  - {fileID: 4495529472307362868}
+  - {fileID: 7203509226136297418}
   m_Father: {fileID: 5745010746917710464}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7169574328986716630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7203509226136297418}
+  m_Layer: 0
+  m_Name: Cameras
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7203509226136297418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7169574328986716630}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8.389771, y: -2.8101897, z: -17.317575}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8156623542599852333}
+  - {fileID: 5893123160960070052}
+  - {fileID: 436533594976994675}
+  - {fileID: 2939695372627707468}
+  - {fileID: 3701824785658449189}
+  - {fileID: 1758001129998890504}
+  - {fileID: 5635702586115073693}
+  - {fileID: 5106831203898818193}
+  m_Father: {fileID: 8401531228967075183}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7319220849408347885
 GameObject:
@@ -865,11 +865,11 @@ Transform:
   m_GameObject: {fileID: 7319220849408347885}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.87688774, z: -0, w: 0.48069537}
-  m_LocalPosition: {x: 3.9290757, y: -0.18664151, z: 2.7355723}
+  m_LocalPosition: {x: 12.314772, y: 3.7351897, z: 19.714575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4495529472307362868}
+  m_Father: {fileID: 7203509226136297418}
   m_LocalEulerAnglesHint: {x: 0, y: -122.538, z: 0}
 --- !u!20 &786521212168361526
 Camera:
@@ -956,11 +956,11 @@ Transform:
   m_GameObject: {fileID: 7370099124809470205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.004075777, y: 0.25435853, z: 2.4725723}
+  m_LocalPosition: {x: 8.389771, y: 4.17619, z: 19.451576}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4495529472307362868}
+  m_Father: {fileID: 7203509226136297418}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!20 &1808770842046978265
 Camera:
@@ -1039,11 +1039,11 @@ Transform:
   m_GameObject: {fileID: 9214732633679689214}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.004075777, y: -1.0366416, z: 1.0375724}
+  m_LocalPosition: {x: 8.389771, y: 2.8851898, z: 18.016575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4495529472307362868}
+  m_Father: {fileID: 7203509226136297418}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!20 &5850573243520050179
 Camera:
@@ -1119,26 +1119,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.00000009672761
-      objectReference: {fileID: 0}
-    - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -1.7649083e-14
-      objectReference: {fileID: 0}
-    - target: {fileID: -6791269601454348049, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 1.5922221e-15
-      objectReference: {fileID: 0}
     - target: {fileID: -6247945034147084998, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1169,16 +1149,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 19.285
       objectReference: {fileID: 0}
-    - target: {fileID: -540324200656917186, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.00019612789
-      objectReference: {fileID: 0}
-    - target: {fileID: -540324200656917186, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.056729157
-      objectReference: {fileID: 0}
     - target: {fileID: 355735186214189947, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1188,16 +1158,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Icon
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 917918338576708563, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.0003399528
-      objectReference: {fileID: 0}
-    - target: {fileID: 917918338576708563, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.058599014
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
@@ -1209,50 +1169,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: avatar
       objectReference: {fileID: 0}
-    - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
+    - target: {fileID: 919132149155446097, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
-      propertyPath: m_LocalRotation.w
+      propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.00000009672761
-      objectReference: {fileID: 0}
-    - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -1.0543657e-14
-      objectReference: {fileID: 0}
-    - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -1.5923208e-15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4613019273184500866, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.00019613915
-      objectReference: {fileID: 0}
-    - target: {fileID: 4613019273184500866, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.056729168
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067194956783848370, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.00033994918
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067194956783848370, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.058599044
       objectReference: {fileID: 0}
     - target: {fileID: 7329873763272774051, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
@@ -1274,7 +1199,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5598656542265251394}
+      addedObject: {fileID: 2340211226798872842}
     - targetCorrespondingSourceObject: {fileID: 1427564092133216371, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       insertIndex: -1
@@ -1890,14 +1815,6 @@ MonoBehaviour:
     name: JumpAndFall.RestoreToHop
   - hash: -49821148
     name: JumpAndFall.QuickLand
-  - hash: -773289456
-    name: VRC Eye Left Control
-  - hash: 1023822341
-    name: Eye Left Tracking
-  - hash: -278810794
-    name: VRC Eye Right Control
-  - hash: -394345367
-    name: Eye Right Tracking
   - hash: 1748779547
     name: Tail WAG
   - hash: 1037400324
@@ -1914,6 +1831,18 @@ MonoBehaviour:
     name: Waiting command
   - hash: -2109092702
     name: Ears Back [Eyelid] (R)
+  - hash: -773289456
+    name: VRC Eye Left Control
+  - hash: 1023822341
+    name: Eye Left Tracking
+  - hash: -278810794
+    name: VRC Eye Right Control
+  - hash: -394345367
+    name: Eye Right Tracking
+  - hash: 68613525
+    name: OSC Local
+  - hash: 1955443278
+    name: OSC Remote
   - hash: 601478037
     name: rig_hand 0 neutral
   - hash: 744237656
@@ -1980,8 +1909,8 @@ MonoBehaviour:
     name: grimace 2
   - hash: 690862049
     name: frown 1
-  - hash: -576816719
-    name: drivers
+  - hash: 1118419267
+    name: preferences drivers
   - hash: 1379458372
     name: Waiting command
   - hash: -2040153108
@@ -2014,77 +1943,75 @@ MonoBehaviour:
     name: face tracking off [LipSync]
   - hash: -2100026051
     name: face tracking on [LipSync]
-  - hash: 94222277
-    name: reset face tracking
   - hash: 68613525
     name: OSC Local
   - hash: 1955443278
     name: OSC Remote
-  - hash: 1860074642
-    name: Idle
-  - hash: -819325686
-    name: FaceToogle_Happy
-  - hash: -989824097
-    name: FaceToggle_cheekiness
-  - hash: 1189343763
-    name: FaceToggle_conceited
-  - hash: 706512522
-    name: FaceToggle_OpenSmile
-  - hash: 496825050
-    name: FaceToggle_OpenSmileStronger
-  - hash: -355700350
-    name: FaceToggle_schadenfreude
-  - hash: -1834817308
-    name: FaceToggle_smirk
-  - hash: -2004665811
-    name: FaceToggle_WarmLook
-  - hash: -1029026893
+  - hash: 119439147
+    name: Waiting command
+  - hash: 1229981604
     name: FaceToggle_DefaultFace
-  - hash: 1494186541
-    name: FaceToggle_curiousing
-  - hash: 2025594616
-    name: FaceToggle_CuriousingStronger
-  - hash: -570330212
-    name: FaceToggle_fear
-  - hash: -1291972414
-    name: FaceToggle_ForcedOptimism
-  - hash: -1150518871
-    name: FaceToggle_sad
-  - hash: -458816179
-    name: FaceToggle_disgust
-  - hash: -582360965
+  - hash: 1353146138
+    name: FaceToggle_Happy
+  - hash: 519627264
+    name: FaceToggle_smirk
+  - hash: -1238115457
+    name: FaceToggle_conceited
+  - hash: 1463358141
+    name: FaceToggle_WarmLook
+  - hash: -2114681147
+    name: FaceToggle_cheekiness
+  - hash: -1876593835
+    name: FaceToggle_schadenfreude
+  - hash: -624119834
+    name: FaceToggle_OpenSmile
+  - hash: -1695058157
+    name: FaceToggle_OpenSmileStronger
+  - hash: 1360259743
     name: FaceToggle_shoke
-  - hash: 1662050218
-    name: FaceToggle_angry
-  - hash: 33690826
-    name: FaceToggle_CriticalEyebrow_raise
-  - hash: 994626471
-    name: FaceToggle_frown
-  - hash: 331230723
-    name: FaceToggle_FrustratedPuff
-  - hash: 639234733
-    name: FaceToggle_ResignedFrustration
-  - hash: 222051532
-    name: FaceToggle_sulky tongue_out
-  - hash: 2141058583
+  - hash: 1467442370
+    name: FaceToggle_fear
+  - hash: 508610352
+    name: FaceToggle_sad
+  - hash: 1046501089
+    name: FaceToggle_disgust
+  - hash: -1439449417
+    name: FaceToggle_ForcedOptimism
+  - hash: 503023479
+    name: FaceToggle_curiousing
+  - hash: -1702686871
+    name: FaceToggle_CuriousingStronger
+  - hash: -118066210
     name: "FaceToggle_Nervous\u0421uriosity"
-  - hash: -51347928
-    name: FaceToggle_squinting
-  - hash: -1007121058
+  - hash: -280308402
+    name: FaceToggle_angry
+  - hash: -1190031479
     name: FaceToggle_AngryStronger
-  - hash: 625167218
+  - hash: -1223507645
+    name: FaceToggle_frown
+  - hash: 192118902
+    name: FaceToggle_FrustratedPuff
+  - hash: 203446084
+    name: FaceToggle_squinting
+  - hash: 1847207773
+    name: FaceToggle_sulky tongue_out
+  - hash: -1577882002
+    name: FaceToggle_ResignedFrustration
+  - hash: 460114114
+    name: FaceToggle_CriticalEyebrow_raise
+  - hash: -711761378
     name: FaceToggle_EyeClosed
-  - hash: -1038920044
+  - hash: 851673080
     name: FaceToggle_confident
-  - hash: -336263825
+  - hash: 1822326950
     name: FaceToggle_SquintingStronger
-  - hash: 1564406015
+  - hash: 432672165
     name: FaceToggle_SneakyGrin
-  - hash: -1670629089
+  - hash: -1139052286
     name: FaceToggle_BaffledReaction
-  - hash: 1969355184
+  - hash: -762673701
     name: FaceToggle_thirst
-  - hash: -287519424
+  - hash: 874225388
     name: FaceToggle_fatigue
   - hash: 1919488495
     name: Waiting command
@@ -2234,7 +2161,7 @@ MonoBehaviour:
   contentType: 0
   assetBundleUnityVersion: 
   fallbackStatus: 3
---- !u!114 &5598656542265251394
+--- !u!114 &2340211226798872842
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
