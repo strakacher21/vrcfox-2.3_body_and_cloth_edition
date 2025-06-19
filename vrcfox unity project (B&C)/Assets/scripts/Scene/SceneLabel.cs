@@ -19,9 +19,11 @@ public class SceneLabel
         SceneView.duringSceneGui += OnScene;
 
         string[] guids = AssetDatabase.FindAssets("t:SceneSwitcherAsset");
-        string path = AssetDatabase.GUIDToAssetPath(guids[0]);
-        switcherAsset = AssetDatabase.LoadAssetAtPath<SceneSwitcherAsset>(path);
-
+        if (guids != null && guids.Length > 0)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guids[0]);
+            switcherAsset = AssetDatabase.LoadAssetAtPath<SceneSwitcherAsset>(path);
+        }
     }
 
     private static void OnScene(SceneView sceneview)
@@ -29,7 +31,6 @@ public class SceneLabel
         Handles.BeginGUI();
         float width = sceneview.camera.pixelWidth;
         float height = sceneview.camera.pixelHeight;
-
 
         GUI.Label(new Rect(0, 0, width, 100), SceneManager.GetActiveScene().name, style);
 
@@ -67,6 +68,14 @@ public class SceneLabel
 
                 if (GUI.Button(new Rect(LEFT_MARGIN, yPos, BUTTON_WIDTH, BUTTON_HEIGHT), scene.name))
                 {
+                    // Save current scene if modified
+                    var activeScene = EditorSceneManager.GetActiveScene();
+                    if (activeScene.isDirty)
+                    {
+                        // auto save without prompt
+                        EditorSceneManager.SaveScene(activeScene);
+                    }
+                    // Open selected scene
                     EditorSceneManager.OpenScene(scenePath);
                 }
 
