@@ -18,6 +18,7 @@ public class SceneLabel
         style.fontStyle = FontStyle.Bold;
         style.alignment = TextAnchor.MiddleCenter;
         SceneView.duringSceneGui += OnScene;
+
         string savedPath = EditorPrefs.GetString(PrefKey, "");
         if (!string.IsNullOrEmpty(savedPath))
         {
@@ -36,8 +37,11 @@ public class SceneLabel
     private static void OnScene(SceneView sceneview)
     {
         Handles.BeginGUI();
-        float width = sceneview.camera.pixelWidth;
-        float height = sceneview.camera.pixelHeight;
+        float pixelWidth = sceneview.camera.pixelWidth;
+        float pixelHeight = sceneview.camera.pixelHeight;
+        float ppp = EditorGUIUtility.pixelsPerPoint;
+        float width = pixelWidth / ppp;
+        float height = pixelHeight / ppp;
 
         GUI.Label(new Rect(0, 0, width, 100), SceneManager.GetActiveScene().name, style);
 
@@ -48,7 +52,6 @@ public class SceneLabel
         const float SPACING = 5f;
         float singleH = EditorGUIUtility.singleLineHeight;
         float y = height - BOTTOM_MARGIN;
-
         y -= singleH;
         Rect fieldRect = new Rect(LEFT_MARGIN, y, BUTTON_WIDTH, singleH);
         EditorGUI.BeginChangeCheck();
