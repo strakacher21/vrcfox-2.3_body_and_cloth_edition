@@ -6,12 +6,6 @@
     "vrchat.blackstartx.gesture-manager": {
       "version": "3.9.4"
     },
-    "com.vrchat.base": {
-      "version": "3.8.1"
-    },
-    "com.vrchat.avatars": {
-      "version": "3.8.1"
-    },
     "dev.hai-vr.animator-as-code.v1": {
       "version": "1.2.0"
     },
@@ -20,6 +14,12 @@
     },
     "dev.hai-vr.animator-as-code.v1.vrchat-destructive-workflow": {
       "version": "1.1.2"
+    },
+    "com.vrchat.base": {
+      "version": "3.8.2"
+    },
+    "com.vrchat.avatars": {
+      "version": "3.8.2"
     }
   },
   "locked": {
@@ -31,16 +31,6 @@
       "version": "3.9.4",
       "dependencies": {
         "com.vrchat.avatars": ">=3.5.2 < 3.9.X"
-      }
-    },
-    "com.vrchat.base": {
-      "version": "3.8.1",
-      "dependencies": {}
-    },
-    "com.vrchat.avatars": {
-      "version": "3.8.1",
-      "dependencies": {
-        "com.vrchat.base": "3.8.1"
       }
     },
     "dev.hai-vr.animator-as-code.v1": {
@@ -59,6 +49,16 @@
       "dependencies": {
         "dev.hai-vr.animator-as-code.v1": ">=1.1.0 <2.0.0-a",
         "com.vrchat.avatars": ">=3.5.2 <999.0.0-a"
+      }
+    },
+    "com.vrchat.base": {
+      "version": "3.8.2",
+      "dependencies": {}
+    },
+    "com.vrchat.avatars": {
+      "version": "3.8.2",
+      "dependencies": {
+        "com.vrchat.base": "3.8.2"
       }
     }
   }
