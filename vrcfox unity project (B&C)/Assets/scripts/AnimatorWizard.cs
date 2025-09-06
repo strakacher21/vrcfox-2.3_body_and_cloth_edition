@@ -46,7 +46,6 @@ public class AnimatorWizard : MonoBehaviour
     private AacFlBase _aac;
     private List<VRCExpressionParameters.Parameter> _vrcParams;
 
-    private const string SystemName = "vrcfox";
     private const bool UseWriteDefaults = true;
     private const string Left = "Left";
     private const string Right = "Right";
@@ -86,6 +85,9 @@ public class AnimatorWizard : MonoBehaviour
     public string lipSyncName = "LipSyncTrackingActive";
 
     public bool saveVRCExpressionParameters = false;
+
+    public string SystemName = "AnimatorWizard";
+
     public bool MirrorFTparams = false;
 
     public bool createOSCsmooth = true;
@@ -97,7 +99,7 @@ public class AnimatorWizard : MonoBehaviour
 
     public bool createEyeTracking = true;
     public bool MirrorEyeposes = true;
-    public float maxEyeMotionValue = 0.25f;
+    public float maxEyeMotionValue = 1f;
     public Motion[] LeftEyePoses;
     public Motion[] RightEyePoses;
 
@@ -252,15 +254,47 @@ public class AnimatorWizard : MonoBehaviour
         var fxTreeLayer = _aac.CreateSupportingFxLayer("tree").WithAvatarMask(fxMask);
 
         var masterTree = _aac.NewBlendTreeAsRaw();
+
         masterTree.name = "master tree";
         masterTree.blendType = BlendTreeType.Direct;
         fxTreeLayer.NewState(masterTree.name).WithAnimation(masterTree);
 
-        AacFlBoolParameter ftActiveParam = CreateBoolParam(fxLayer, FullFaceTrackingPrefix + "LipTrackingActive", true, false);
-        AacFlFloatParameter ftBlendParam = fxLayer.FloatParameter(FullFaceTrackingPrefix + "LipTrackingActive-float");
+        AacFlBoolParameter ftActiveParam;
+        AacFlFloatParameter ftBlendParam;
+        if (createFaceTracking)
+        {
+            ftActiveParam = CreateBoolParam(fxLayer, FullFaceTrackingPrefix + "LipTrackingActive", true, false);
+            ftBlendParam = fxLayer.FloatParameter(FullFaceTrackingPrefix + "LipTrackingActive-float");
+        }
+        else
+        {
+            ftActiveParam = fxLayer.BoolParameter(FullFaceTrackingPrefix + "LipTrackingActive");
+            ftBlendParam = fxLayer.FloatParameter(FullFaceTrackingPrefix + "LipTrackingActive-float");
+        }
+
         AacFlBoolParameter FaceToggleActive = fxLayer.BoolParameter("FaceToggleActive");
-        AacFlBoolParameter ExpTrackActiveParam = CreateBoolParam(fxLayer, FullFaceTrackingPrefix + expTrackName, true, true);
-        AacFlBoolParameter LipSyncActiveParam = CreateBoolParam(fxLayer, FullFaceTrackingPrefix + lipSyncName, true, false);
+
+        AacFlBoolParameter ExpTrackActiveParam;
+        if (createFacialExpressionsControl)
+        {
+            ExpTrackActiveParam = CreateBoolParam(fxLayer, FullFaceTrackingPrefix + expTrackName, true, true);
+        }
+        else
+        {
+            ExpTrackActiveParam = fxLayer.BoolParameter(FullFaceTrackingPrefix + expTrackName);
+        }
+
+        AacFlBoolParameter LipSyncActiveParam;
+        if (createFTLipSyncControl)
+        {
+            LipSyncActiveParam = CreateBoolParam(fxLayer, FullFaceTrackingPrefix + lipSyncName, true, false);
+        }
+        else
+
+        {
+            LipSyncActiveParam = fxLayer.BoolParameter(FullFaceTrackingPrefix + lipSyncName);
+        }
+
 
         // brow Gesture expressions
         MapHandPosesToShapes("brow expressions", skin, browShapeNames, browPrefix, false, ftActiveParam, ExpTrackActiveParam, FaceToggleActive);
@@ -268,18 +302,18 @@ public class AnimatorWizard : MonoBehaviour
         // mouth Gesture expressions
         MapHandPosesToShapes("mouth expressions", skin, mouthShapeNames, mouthPrefix, true, ftActiveParam, ExpTrackActiveParam, FaceToggleActive);
 
-        // Toggle drivers (common to prefs and cloth)
-        // this state transitions to itself every half second to update toggles. it sucks
-        // TODO: not use this awful driver updating
-        var fxDriverLayer = _aac.CreateSupportingFxLayer("preferences drivers").WithAvatarMask(fxMask);
-        var fxDriverState = fxDriverLayer.NewState("preferences drivers");
-        fxDriverState.TransitionsTo(fxDriverState).AfterAnimationFinishes().WithTransitionDurationSeconds(0.5f)
-            .WithTransitionToSelf();
-        var drivers = fxDriverState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-
         // Shape Preferences
         if (createShapePreferences)
         {
+            // Toggle drivers (common to prefs and cloth)
+            // this state transitions to itself every half second to update toggles. it sucks
+            // TODO: not use this awful driver updating
+            var fxDriverLayer = _aac.CreateSupportingFxLayer("preferences drivers").WithAvatarMask(fxMask);
+            var fxDriverState = fxDriverLayer.NewState("preferences drivers");
+            fxDriverState.TransitionsTo(fxDriverState).AfterAnimationFinishes().WithTransitionDurationSeconds(0.5f)
+                .WithTransitionToSelf();
+            var drivers = fxDriverState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
+
             var tree = masterTree.CreateBlendTreeChild(0);
             tree.name = "Shape Preferences";
             tree.blendType = BlendTreeType.Direct;
@@ -310,14 +344,14 @@ public class AnimatorWizard : MonoBehaviour
                     tree.AddChild(BlendshapeTree(fxTreeLayer, skin, blendShapeName, floatParam));
                 }
             }
-        }
 
-        // Cloth Customization
-        if (createClothCustomization)
-        {
-            setupClothes(ClothUpperBodyNames, skin, "cloth_upper_body");
-            setupClothes(ClothLowerBodyNames, skin, "cloth_lower_body");
-            setupClothes(ClothFootNames, skin, "cloth_foot");
+            // Cloth Customization
+            if (createClothCustomization)
+            {
+                setupClothes(ClothUpperBodyNames, skin, "cloth_upper_body");
+                setupClothes(ClothLowerBodyNames, skin, "cloth_lower_body");
+                setupClothes(ClothFootNames, skin, "cloth_foot");
+            }
         }
 
         // Color Customization
@@ -345,8 +379,8 @@ public class AnimatorWizard : MonoBehaviour
             AacFlFloatParameter EyeXParam = CreateFloatParam(AdditiveLayer, FullFaceTrackingPrefix + "EyeX", false, 0.0f);
             AacFlFloatParameter EyeYParam = CreateFloatParam(AdditiveLayer, FullFaceTrackingPrefix + "EyeY", false, 0.0f);
 
-            BlendTree leftEyeTree = setupEyeTracking(EyeXParam, EyeYParam, etActiveParam, WORKAROUND_BlendParam, "Left", maxEyeMotionValue, LeftEyePoses, EyeLeftMask);
-            BlendTree rightEyeTree = setupEyeTracking(EyeXParam, EyeYParam, etActiveParam, WORKAROUND_BlendParam, "Right", maxEyeMotionValue, RightEyePoses, EyeRightMask);
+            BlendTree leftEyeTree = setupEyeTracking(EyeXParam, EyeYParam, etActiveParam, "Left", maxEyeMotionValue, LeftEyePoses, EyeLeftMask);
+            BlendTree rightEyeTree = setupEyeTracking(EyeXParam, EyeYParam, etActiveParam, "Right", maxEyeMotionValue, RightEyePoses, EyeRightMask);
 
             // OSC Eye Tracking smooth
             if (createOSCsmooth)
@@ -365,7 +399,7 @@ public class AnimatorWizard : MonoBehaviour
             // State "face tracking off"
             var offFaceTrackingState = layer.NewState("face tracking off")
                 .Drives(ftBlendParam, 0)
-                .TrackingAnimates(AacAv3.Av3TrackingElement.Mouth);
+                .TrackingTracks(AacAv3.Av3TrackingElement.Mouth);
 
             // State "face tracking on"
             var onFaceTrackingState = layer.NewState("face tracking on")
@@ -704,7 +738,7 @@ public class AnimatorWizard : MonoBehaviour
     }
 
     private BlendTree setupEyeTracking(AacFlFloatParameter EyeXParam, AacFlFloatParameter EyeYParam,
-    AacFlBoolParameter etActiveParam, AacFlFloatParameter etBlendParam, string side, float maxMotionValue, Motion[] poses, AvatarMask mask)
+    AacFlBoolParameter etActiveParam, string side, float maxMotionValue, Motion[] poses, AvatarMask mask)
     {
         var layer = _aac.CreateSupportingIdleLayer($"Eye {side} Tracking").WithAvatarMask(mask);
 
@@ -753,7 +787,6 @@ public class AnimatorWizard : MonoBehaviour
         }
 
         var EyeTrackingState = layer.NewState($"Eye {side} Tracking")
-            .Drives(etBlendParam, 1.0f)
             .WithAnimation(EyeTrackingTree)
             .TrackingAnimates(AacAv3.Av3TrackingElement.Eyes);
 
@@ -767,6 +800,7 @@ public class AnimatorWizard : MonoBehaviour
     {
         AacFlBoolParameter isLocalParam = layer.BoolParameter("IsLocal");
         AacFlFloatParameter BlendOSC = layer.FloatParameter("OSCsmooth/Blend");
+        layer.OverrideValue(BlendOSC, 1.0f);
 
         var localTree = _aac.NewBlendTreeAsRaw();
         localTree.name = "OSC Local";
@@ -992,7 +1026,11 @@ public class AnimatorWizard : MonoBehaviour
 [CustomEditor(typeof(AnimatorWizard), true)]
 public class AnimatorGeneratorEditor : Editor
 {
-    private SerializedProperty saveVRCExpressionParameters, MirrorFTparams, MirrorHandposes, MirrorEyeposes;
+    private SerializedProperty saveVRCExpressionParameters;
+
+    private SerializedProperty SystemName;
+
+    private SerializedProperty MirrorFTparams, MirrorHandposes, MirrorEyeposes;
 
     private SerializedProperty assetContainer;
 
@@ -1025,6 +1063,9 @@ public class AnimatorGeneratorEditor : Editor
 
         wizard = (AnimatorWizard)target;
         saveVRCExpressionParameters = serializedObject.FindProperty("saveVRCExpressionParameters");
+
+        SystemName = serializedObject.FindProperty("SystemName");
+
         MirrorFTparams = serializedObject.FindProperty("MirrorFTparams");
         MirrorHandposes = serializedObject.FindProperty("MirrorHandposes");
         MirrorEyeposes = serializedObject.FindProperty("MirrorEyeposes");
@@ -1133,6 +1174,10 @@ public class AnimatorGeneratorEditor : Editor
         GUILayout.Space(20);
         EditorGUILayout.PropertyField(saveVRCExpressionParameters,
          PopUpLabel("Save VRC Expression Parameters", "Will save your VRC Expression Parameters before setup animator."));
+
+
+        GUILayout.Space(20);
+        EditorGUILayout.PropertyField(SystemName, PopUpLabel("Layers start name", ""));
 
         // Asset Container
         GUILayout.Label("Asset Container", headerStyle);

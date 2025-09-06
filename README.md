@@ -21,7 +21,7 @@ I will also be grateful if you indicate mine and trev3d's authorship (and not in
 ### [:bulb:VRM in Unity project setup](VRM-setup.md)
 
 # Customization
-The project includes the **Blend 4.4** file itself and the **Unity 2022.3.22f1** project.
+The project includes the **Blend 4.5** file itself and the **Unity 2022.3.22f1** project.
 
 The easiest way to adjust the colors is to vertex paint rather than using a texture. This works well for solid colors, but is not suitable for fancy patterns. Your avatar file size will stay small and load quickly without texture files. If you prefer to use a texture, the model has a second set of **UVs**. You will need to change the **active UV layer** of each mesh to **‘UVMap’** and apply the texture yourself. You will also need to erase all vertex colors, as they will still appear on the default material in the Unity project!
 
