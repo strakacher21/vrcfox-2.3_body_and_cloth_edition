@@ -20,6 +20,12 @@
     },
     "com.vrchat.avatars": {
       "version": "3.8.2"
+    },
+    "dev.vrlabs.av3manager": {
+      "version": "2.1.0"
+    },
+    "lyuma.av3emulator": {
+      "version": "3.4.9"
     }
   },
   "locked": {
@@ -59,6 +65,18 @@
       "version": "3.8.2",
       "dependencies": {
         "com.vrchat.base": "3.8.2"
+      }
+    },
+    "dev.vrlabs.av3manager": {
+      "version": "2.1.0",
+      "dependencies": {
+        "com.vrchat.avatars": "3.2 - 3.8"
+      }
+    },
+    "lyuma.av3emulator": {
+      "version": "3.4.9",
+      "dependencies": {
+        "com.vrchat.avatars": "^3.1.0"
       }
     }
   }
