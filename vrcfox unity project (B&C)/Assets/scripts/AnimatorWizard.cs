@@ -99,7 +99,7 @@ public class AnimatorWizard : MonoBehaviour
 
     public bool createEyeTracking = true;
     public bool MirrorEyeposes = true;
-    public float maxEyeMotionValue = 1f;
+    public float maxEyeMotionValue = 0.7f;
     public Motion[] LeftEyePoses;
     public Motion[] RightEyePoses;
 
@@ -279,13 +279,13 @@ public class AnimatorWizard : MonoBehaviour
         {
             ExpTrackActiveParam = CreateBoolParam(fxLayer, FullFaceTrackingPrefix + expTrackName, true, true);
         }
-        else
+        else 
         {
             ExpTrackActiveParam = fxLayer.BoolParameter(FullFaceTrackingPrefix + expTrackName);
         }
 
         AacFlBoolParameter LipSyncActiveParam;
-        if (createFTLipSyncControl)
+        if (createFTLipSyncControl) 
         {
             LipSyncActiveParam = CreateBoolParam(fxLayer, FullFaceTrackingPrefix + lipSyncName, true, false);
         }
@@ -302,48 +302,48 @@ public class AnimatorWizard : MonoBehaviour
         // mouth Gesture expressions
         MapHandPosesToShapes("mouth expressions", skin, mouthShapeNames, mouthPrefix, true, ftActiveParam, ExpTrackActiveParam, FaceToggleActive);
 
-        // Shape Preferences
-        if (createShapePreferences)
-        {
-            // Toggle drivers (common to prefs and cloth)
-            // this state transitions to itself every half second to update toggles. it sucks
-            // TODO: not use this awful driver updating
-            var fxDriverLayer = _aac.CreateSupportingFxLayer("preferences drivers").WithAvatarMask(fxMask);
-            var fxDriverState = fxDriverLayer.NewState("preferences drivers");
-            fxDriverState.TransitionsTo(fxDriverState).AfterAnimationFinishes().WithTransitionDurationSeconds(0.5f)
-                .WithTransitionToSelf();
-            var drivers = fxDriverState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-
-            var tree = masterTree.CreateBlendTreeChild(0);
-            tree.name = "Shape Preferences";
-            tree.blendType = BlendTreeType.Direct;
-
-            // working with prefs blend shapes
-            for (var i = 0; i < skin.sharedMesh.blendShapeCount; i++)
+            // Shape Preferences
+            if (createShapePreferences)
             {
-                string blendShapeName = skin.sharedMesh.GetBlendShapeName(i);
+                // Toggle drivers (common to prefs and cloth)
+                // this state transitions to itself every half second to update toggles. it sucks
+                // TODO: not use this awful driver updating
+                var fxDriverLayer = _aac.CreateSupportingFxLayer("preferences drivers").WithAvatarMask(fxMask);
+                var fxDriverState = fxDriverLayer.NewState("preferences drivers");
+                fxDriverState.TransitionsTo(fxDriverState).AfterAnimationFinishes().WithTransitionDurationSeconds(0.5f)
+                    .WithTransitionToSelf();
+                var drivers = fxDriverState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
 
-                if (blendShapeName.StartsWith(shapePreferenceSliderPrefix))
-                {
-                    var param = CreateFloatParam(fxLayer, blendShapeName, true, 0);
-                    tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
-                }
-                else if (blendShapeName.StartsWith(shapePreferenceTogglesPrefix))
-                {
-                    var boolParam = CreateBoolParam(fxLayer, blendShapeName, true, false);
-                    var floatParam = fxLayer.FloatParameter(blendShapeName + "-float");
+                var tree = masterTree.CreateBlendTreeChild(0);
+                tree.name = "Shape Preferences";
+                tree.blendType = BlendTreeType.Direct;
 
-                    var driverEntry = new VRC_AvatarParameterDriver.Parameter
+                // working with prefs blend shapes
+                for (var i = 0; i < skin.sharedMesh.blendShapeCount; i++)
+                {
+                    string blendShapeName = skin.sharedMesh.GetBlendShapeName(i);
+
+                    if (blendShapeName.StartsWith(shapePreferenceSliderPrefix))
                     {
-                        type = VRC_AvatarParameterDriver.ChangeType.Copy,
-                        source = boolParam.Name,
-                        name = floatParam.Name
-                    };
-                    drivers.parameters.Add(driverEntry);
+                        var param = CreateFloatParam(fxLayer, blendShapeName, true, 0);
+                        tree.AddChild(BlendshapeTree(fxTreeLayer, skin, param));
+                    }
+                    else if (blendShapeName.StartsWith(shapePreferenceTogglesPrefix))
+                    {
+                        var boolParam = CreateBoolParam(fxLayer, blendShapeName, true, false);
+                        var floatParam = fxLayer.FloatParameter(blendShapeName + "-float");
 
-                    tree.AddChild(BlendshapeTree(fxTreeLayer, skin, blendShapeName, floatParam));
+                        var driverEntry = new VRC_AvatarParameterDriver.Parameter
+                        {
+                            type = VRC_AvatarParameterDriver.ChangeType.Copy,
+                            source = boolParam.Name,
+                            name = floatParam.Name
+                        };
+                        drivers.parameters.Add(driverEntry);
+
+                        tree.AddChild(BlendshapeTree(fxTreeLayer, skin, blendShapeName, floatParam));
+                    }
                 }
-            }
 
             // Cloth Customization
             if (createClothCustomization)
@@ -381,7 +381,7 @@ public class AnimatorWizard : MonoBehaviour
 
             BlendTree leftEyeTree = setupEyeTracking(EyeXParam, EyeYParam, etActiveParam, "Left", maxEyeMotionValue, LeftEyePoses, EyeLeftMask);
             BlendTree rightEyeTree = setupEyeTracking(EyeXParam, EyeYParam, etActiveParam, "Right", maxEyeMotionValue, RightEyePoses, EyeRightMask);
-
+            
             // OSC Eye Tracking smooth
             if (createOSCsmooth)
             {
@@ -1303,6 +1303,7 @@ public class AnimatorGeneratorEditor : Editor
             GUILayout.Label("Creates EyeTracking with these animations.", headerStyle2);
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(FullFaceTrackingPrefix);
+            EditorGUILayout.PropertyField(maxEyeMotionValue);
             EditorGUILayout.PropertyField(MirrorEyeposes, PopUpLabel("Mirror Eye poses", "Don't use other animations for the right side."));
             GUILayout.Space(10);
             if (wizard.MirrorEyeposes)
