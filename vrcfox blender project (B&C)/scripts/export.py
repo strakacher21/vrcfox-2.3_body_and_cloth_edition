@@ -64,24 +64,31 @@ for obj in export_objects:
 if bpy.context.selected_objects:
     bpy.context.view_layer.objects.active = bpy.context.selected_objects[0]
     bpy.ops.object.join()
-    bpy.context.active_object.name = desired_model_name
+    obj = bpy.context.active_object
+    obj.name = desired_model_name
 
     # Deleting all UV maps except the selected one
-    obj = bpy.context.active_object
     uv_layers = obj.data.uv_layers
     if export_uv_map in uv_layers:
         uv_layers.active = uv_layers[export_uv_map]
-        layers_to_remove = [uv for uv in uv_layers if uv.name != export_uv_map]
-        for uv in layers_to_remove:
+        for uv in [uv for uv in uv_layers if uv.name != export_uv_map]:
             uv_layers.remove(uv)
     else:
         raise ValueError(f"UV map '{export_uv_map}' not found.")
+
+    # Simplified normals setup
+    me = obj.data
+    if hasattr(me, "calc_normals_split"):
+        me.calc_normals_split()  # recalc split normals, Sharp edges are respected
 
     # Set 'main' collection as active
     export_layer_collection = bpy.context.view_layer.layer_collection.children[export_collection_name]
     bpy.context.view_layer.active_layer_collection = export_layer_collection
 
+    # Ensure export path exists
     os.makedirs(export_path, exist_ok=True)
+
+    # Export FBX
     bpy.ops.export_scene.fbx(
         filepath=os.path.join(export_path, file_name),
         check_existing=False,
@@ -94,9 +101,10 @@ if bpy.context.selected_objects:
         bake_anim_force_startend_keying=False,
         bake_anim_simplify_factor=0.0,
         colors_type="LINEAR" if export_vertex_colors else "NONE",
-        #add_leaf_bones=False,
         use_armature_deform_only=True,
-        use_triangles=False #WORKAROUND: Disable automatic triangulation in Blender to keep 'Body' untriangulated, as it causes vertex colors to display incorrectly. 
+        use_triangles=False,            # WORKAROUND: keep Body untriangulated for vertex colors
+        mesh_smooth_type='EDGE',        # respect Sharp edges
+        use_tspace=True                 # export tangents for Unity blendshapes
     )
 
     bpy.ops.ed.undo_push()
