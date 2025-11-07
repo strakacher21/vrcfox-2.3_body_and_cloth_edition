@@ -6,7 +6,7 @@ This guide explains how to set up a VRM model for the Unity project, including p
    Follow the steps in the [Unity project setup guide](Unity-setup.md) to ensure the Unity project is properly configured with all dependencies.
 
 2. **Install Blender 4.4**  
-   Download and install [Blender 4.4](https://www.blender.org/download/), as it is required for preparing FBX files for VRM format.
+   Download and install [Blender 4.5](https://www.blender.org/download/), as it is required for preparing FBX files for VRM format.
 
 3. **Rename Bones for VRM Compatibility**  
    In Blender, switch to the **Scripting** workspace. Open the script editor by clicking the notepad icon, then select the `"rename bones VRM namespace"` script. Set `VRM_namespace = True` and run the script to rename the bones to the standard VRM format.
@@ -17,7 +17,7 @@ This guide explains how to set up a VRM model for the Unity project, including p
 5. **Export the Model**  
    Export the model using the `"export to unity"` script. *Before exporting, pay attention to the settings (if you are using a custom texture, replace it with the opposite settings. In Unity, replace the material texture `vrcfox UniUnlit`):*  
    ```
-   export_uv_map = "ColorMap"  # ColorMap / UVMap
+   export_uv_map = "ColorMap"  # ColorMap / UVMap (atlas) / UVMap
    export_vertex_colors = True  # True / False
    ```  
 6. **Configure the Rig in Unity**  
