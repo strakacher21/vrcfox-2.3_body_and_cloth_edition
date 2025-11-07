@@ -2,10 +2,7 @@
 ## Minimalistic furry avatar for [VRChat](https://hello.vrchat.com/) with flexible customization options.<br/>This is a fork of [vrcfox](https://github.com/trev3d/vrcfox) [(trev3d)](https://github.com/trev3d).
 
 ___
-
-<img src="https://github.com/user-attachments/assets/35b75180-3948-40ba-bf3b-e762263e6933" width="50%">
-<img src="https://github.com/user-attachments/assets/2923e6cc-4414-4ce5-bf1c-98b9995fa9a9" width="50%">
-
+<img src="https://github.com/user-attachments/assets/35b75180-3948-40ba-bf3b-e762263e6933" width="45%"><img src="https://github.com/user-attachments/assets/2923e6cc-4414-4ce5-bf1c-98b9995fa9a9" width="45%">
 ___
 
 # А Request
