@@ -5,8 +5,8 @@ This guide explains how to set up a VRM model for the Unity project, including p
 1. **Complete the Unity Project Setup**  
    Follow the steps in the [Unity project setup guide](Unity-setup.md) to ensure the Unity project is properly configured with all dependencies.
 
-2. **Install Blender 4.4**  
-   Download and install [Blender 4.5](https://www.blender.org/download/), as it is required for preparing FBX files for VRM format.
+2. **Install Blender 5.0**  
+   Download and install [Blender 5.0](https://www.blender.org/download/), as it is required for preparing FBX files for VRM format.
 
 3. **Rename Bones for VRM Compatibility**  
    In Blender, switch to the **Scripting** workspace. Open the script editor by clicking the notepad icon, then select the `"rename bones VRM namespace"` script. Set `VRM_namespace = True` and run the script to rename the bones to the standard VRM format.
