@@ -12,32 +12,20 @@
     "dev.hai-vr.animator-as-code.v1.vrchat-destructive-workflow": {
       "version": "1.1.2"
     },
-<<<<<<< Updated upstream
     "lyuma.av3emulator": {
       "version": "3.4.9"
-=======
+    },
     "com.vrchat.base": {
-      "version": "3.10.1"
+      "version": "3.9.0"
     },
     "com.vrchat.avatars": {
-      "version": "3.10.1"
->>>>>>> Stashed changes
+      "version": "3.9.0"
     },
     "vrchat.blackstartx.gesture-manager": {
-      "version": "3.9.7"
+      "version": "3.9.6"
     },
     "dev.vrlabs.av3manager": {
-<<<<<<< Updated upstream
       "version": "2.1.1"
-    },
-    "com.vrchat.avatars": {
-      "version": "3.10.1"
-=======
-      "version": "2.1.2"
-    },
-    "lyuma.av3emulator": {
-      "version": "3.4.10"
->>>>>>> Stashed changes
     }
   },
   "locked": {
@@ -63,50 +51,33 @@
         "com.vrchat.avatars": ">=3.5.2 <999.0.0-a"
       }
     },
-<<<<<<< Updated upstream
     "lyuma.av3emulator": {
       "version": "3.4.9",
       "dependencies": {
         "com.vrchat.avatars": "^3.1.0"
-=======
+      }
+    },
     "com.vrchat.base": {
-      "version": "3.10.1",
+      "version": "3.9.0",
       "dependencies": {}
     },
     "com.vrchat.avatars": {
-      "version": "3.10.1",
+      "version": "3.9.0",
       "dependencies": {
-        "com.vrchat.base": "3.10.1"
->>>>>>> Stashed changes
+        "com.vrchat.base": "3.9.0"
       }
     },
     "vrchat.blackstartx.gesture-manager": {
-      "version": "3.9.7",
+      "version": "3.9.6",
       "dependencies": {
-        "com.vrchat.avatars": ">=3.5.2 < 3.11.X"
+        "com.vrchat.avatars": ">=3.5.2 < 3.10.X"
       }
     },
     "dev.vrlabs.av3manager": {
-      "version": "2.1.2",
+      "version": "2.1.1",
       "dependencies": {
-        "com.vrchat.avatars": "3.2 - 3.10"
+        "com.vrchat.avatars": "3.2 - 3.9"
       }
-    },
-    "lyuma.av3emulator": {
-      "version": "3.4.10",
-      "dependencies": {
-        "com.vrchat.avatars": "^3.1.0"
-      }
-    },
-    "com.vrchat.avatars": {
-      "version": "3.10.1",
-      "dependencies": {
-        "com.vrchat.base": "3.10.1"
-      }
-    },
-    "com.vrchat.base": {
-      "version": "3.10.1",
-      "dependencies": {}
     }
   }
 }
