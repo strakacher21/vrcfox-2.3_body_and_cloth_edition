@@ -2,7 +2,9 @@
 using AnimatorAsCode.V1;
 using AnimatorAsCode.V1.VRC;
 using AnimatorAsCode.V1.VRCDestructiveWorkflow;
+using VRLabs.AV3Manager;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -546,6 +548,8 @@ public class AnimatorWizard : MonoBehaviour
                 setupFaceToggle(FaceToggleLayer, FaceToggleNames[i], ftActiveParam, FaceToggleActiveParam, FaceToggleActive, i);
             }
         }
+
+        RepackAnimatorControllers(avatar);
     }
 
     private BlendTree BlendshapeTree(AacFlLayer layer, SkinnedMeshRenderer skin, AacFlParameter param,
@@ -898,6 +902,96 @@ public class AnimatorWizard : MonoBehaviour
             }
         }
     }
+    private void RepackAnimatorControllers(VRCAvatarDescriptor avatar)
+    {
+        if (avatar == null)
+            return;
+
+        var processedPaths = new HashSet<string>();
+
+        for (int pass = 0; pass < 2; pass++)
+        {
+            var isBase = pass == 0;
+            var layers = isBase ? avatar.baseAnimationLayers : avatar.specialAnimationLayers;
+            var changed = false;
+
+            for (int i = 0; i < layers.Length; i++)
+            {
+                var layer = layers[i];
+                if (layer.isDefault)
+                    continue;
+
+                if (layer.type != VRCAvatarDescriptor.AnimLayerType.FX &&
+                    layer.type != VRCAvatarDescriptor.AnimLayerType.Gesture &&
+                    layer.type != VRCAvatarDescriptor.AnimLayerType.Additive)
+                    continue;
+
+                var sourceController = layer.animatorController as AnimatorController;
+                if (sourceController == null)
+                    continue;
+
+                var originalPath = AssetDatabase.GetAssetPath(sourceController);
+                if (string.IsNullOrEmpty(originalPath))
+                    continue;
+
+                if (processedPaths.Contains(originalPath))
+                {
+                    var reused = AssetDatabase.LoadAssetAtPath<AnimatorController>(originalPath);
+                    if (reused != null)
+                    {
+                        layer.animatorController = reused;
+                        layers[i] = layer;
+                        changed = true;
+                    }
+                    continue;
+                }
+
+                var directory = Path.GetDirectoryName(originalPath);
+                var fileName = Path.GetFileNameWithoutExtension(originalPath);
+                var ext = Path.GetExtension(originalPath);
+                var tempPath = AssetDatabase.GenerateUniqueAssetPath(
+                    Path.Combine(directory, fileName + "_Tmp" + ext));
+
+                var newController = new AnimatorController();
+                newController.name = sourceController.name;
+                AssetDatabase.CreateAsset(newController, tempPath);
+                AssetDatabase.SaveAssets();
+
+                //deep merge source into the new clean controller
+                AnimatorCloner.MergeControllers(newController, sourceController, null, false);
+
+                AssetDatabase.SaveAssets();
+
+                AssetDatabase.DeleteAsset(originalPath);
+                AssetDatabase.MoveAsset(tempPath, originalPath);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+
+                var finalController = AssetDatabase.LoadAssetAtPath<AnimatorController>(originalPath);
+                if (finalController != null)
+                {
+                    layer.animatorController = finalController;
+                    layers[i] = layer;
+                    changed = true;
+                }
+
+                processedPaths.Add(originalPath);
+            }
+
+            if (changed)
+            {
+                if (isBase)
+                    avatar.baseAnimationLayers = layers;
+                else
+                    avatar.specialAnimationLayers = layers;
+            }
+        }
+
+        EditorUtility.SetDirty(avatar);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+    }
+
 
     private BlendTree DualBlendshapeTree(
         AacFlLayer layer, AacFlParameter param, SkinnedMeshRenderer skin,
