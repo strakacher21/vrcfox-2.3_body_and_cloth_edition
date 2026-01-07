@@ -8,7 +8,7 @@ ___
 # А Request
 Please do not use this model to post pornographic or suggestive content.<br/>
 
-I will also be grateful if you could indicate my and trev3d's authorship.
+I will also be grateful if you could indicate my and trev3d's authorship (if you ever upload/post him anywhere modified or not).
 
 *About all possible mistakes and wishes or criticism write me safely. I will be interested to answer everything or realize that I have created some silly thing :D*
 
