@@ -8,7 +8,7 @@ ___
 # А Request
 Please do not use this model to post pornographic or suggestive content.<br/>
 
-I will also be grateful if you could indicate my and trev3d's authorship.
+I will also be grateful if you could indicate my and trev3d's authorship (if you ever upload/post him anywhere modified or not).
 
 *About all possible mistakes and wishes or criticism write me safely. I will be interested to answer everything or realize that I have created some silly thing :D*
 
@@ -34,7 +34,7 @@ The easiest way to adjust the colors is to vertex paint rather than using a text
 >
 > You can also adjust the export settings in the script.
 
-The Unity project has a prefab model, as well as two scenes for **PC** and **Quest&IOS**. All prefab changes go into changing the scene. Аlso includes a script **AnimatorWizard** (uses the  [v3-animator-as-code](https://github.com/hai-vr/av3-animator-as-code) [(hai-vr)](https://github.com/hai-vr) package to configure animators) that allows you to customise facial expressions, avatar blend preferences, cloth/color customisation, eye/face tracking, etc. You can disable some features to save [VRChat parameters](https://creators.vrchat.com/avatars/animator-parameters/).<br/>
+The Unity project has a prefab model, as well as two scenes for **PC** and **Quest&IOS**. All prefab changes go into changing the scene. Аlso includes a script **AnimatorWizard**, that allows you to customise facial expressions, avatar blend preferences, cloth/color customisation, eye/face tracking, etc. You can disable some features to save [VRChat parameters](https://creators.vrchat.com/avatars/animator-parameters/).<br/>
 
 The project also includes a [VRM file](vrcfox%20unity%20project%20(B&C)/Assets/VRM%20avatar/vrm%20file) and a pre-configured VRM scene. Refer to the [VRM setup guide](VRM-setup.md) for switching to VRM.
 ___
@@ -52,4 +52,7 @@ ___
 | **Audio Source** | 1 (PC) |
 | **Contact Receivers** | 2 (PC) / 1 (Quest & iOS) |
 | **Contact Colliders** | 3 |
-| **Download size** | < 1 MB |
+| **Download size** | ± 1 MB |
+
+## Attribution
+**AnimatorWizard** script uses the [v3-animator-as-code](https://github.com/hai-vr/av3-animator-as-code) [(hai-vr)](https://github.com/hai-vr) package to set up animators. **OSC smooth** in AnimatorWizard was inspired by the idea from the [OSCmooth project ](https://github.com/regzo2/OSCmooth)[(regzo2)](https://github.com/regzo2). Also uses parts of [VRLabs Avatars 3.0 Manager](https://github.com/VRLabs/Avatars-3.0-Manager) [(AnimatorCloner)](https://github.com/VRLabs/Avatars-3.0-Manager/blob/main/Editor/AnimatorCloner.cs) to “reset” AnimatorWizard-generated FX/Gesture/Additive controllers and remove hidden garbage that accumulates in animator assets over time.
