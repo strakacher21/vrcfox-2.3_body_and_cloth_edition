@@ -14,9 +14,9 @@ http://steamreview.org/BlenderSourceTools/
 
 It is required to create a DMX file.
 
-1. **Open `Armature proportion trick.blend`**
+2. **Open `Armature proportion trick.blend`**
 
-2. **Rename bones to match ValveBiped**
+3. **Rename bones to match ValveBiped**
 
 Rename bones so they match ValveBiped naming (format `ValveBiped.Bip01...`).
 If some bones do not match the list, fix the mapping in the renaming script and run it again.
