@@ -135,18 +135,6 @@ MonoBehaviour:
   m_Script: {fileID: 542108242, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2067197991 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8220114656490812864, guid: 7d3022ffd96e70644ad21296c5d339cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 6277035691913620115}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1631200402, guid: 2a2c05204084d904aa4945ccff20d8e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6277035691913620115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -194,6 +182,11 @@ PrefabInstance:
         type: 3}
       propertyPath: collider_fingerIndexR.radius
       value: 0.000088579174
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682622176408159109, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: baseAnimationLayers.Array.size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1682622176408159109, guid: 7d3022ffd96e70644ad21296c5d339cf,
         type: 3}
@@ -1417,16 +1410,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1682622176408159109, guid: 7d3022ffd96e70644ad21296c5d339cf,
         type: 3}
+      propertyPath: baseAnimationLayers.Array.data[1].type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682622176408159109, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
       propertyPath: baseAnimationLayers.Array.data[2].mask
       value: 
-      objectReference: {fileID: 31900000, guid: 2c544c8b584d741bdb884b8f910e8b64,
-        type: 2}
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682622176408159109, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: baseAnimationLayers.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1682622176408159109, guid: 7d3022ffd96e70644ad21296c5d339cf,
         type: 3}
       propertyPath: baseAnimationLayers.Array.data[4].mask
       value: 
       objectReference: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586,
         type: 2}
+    - target: {fileID: 1682622176408159109, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: baseAnimationLayers.Array.data[1].isDefault
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682622176408159109, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: baseAnimationLayers.Array.data[2].isDefault
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682622176408159109, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: baseAnimationLayers.Array.data[1].animatorController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682622176408159109, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: baseAnimationLayers.Array.data[2].animatorController
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2340211226798872842, guid: 7d3022ffd96e70644ad21296c5d339cf,
         type: 3}
       propertyPath: platformOverrides.Array.size
@@ -1491,7 +1513,7 @@ PrefabInstance:
         type: 3}
       propertyPath: colliders.Array.data[1]
       value: 
-      objectReference: {fileID: 2067197991}
+      objectReference: {fileID: 0}
     - target: {fileID: 4158848567289530126, guid: 7d3022ffd96e70644ad21296c5d339cf,
         type: 3}
       propertyPath: settings.favourite

@@ -1,34 +1,42 @@
-# moves selected vertices to a specific position on the "ColorMap" UV layer
+# Moves UVs of selected faces to a specific position on the active UV layer
 import bpy
+import bmesh
+from mathutils import Vector
 
-# Target UV position to move the selected vertices
+# Target UV position to move the selected polygons
 target_uv_position = (0.5, 0.5)
+#target_uv_position = (0.502, 0.002)
+#target_uv_position = (0.002, 0.502)
 
 # Get the active object
 obj = bpy.context.object
 
 # Check if the object is a mesh
-if obj and obj.type == 'MESH':
-    # Switch to Object Mode to work with data
-    bpy.ops.object.mode_set(mode='OBJECT')
+if not obj or obj.type != 'MESH':
+    raise TypeError("Please select an object of type 'MESH'.")
 
-    # Get the UV layer named "ColorMap"
-    uv_layer = obj.data.uv_layers.get("ColorMap")
-    if uv_layer is None:
-        print("UV map 'ColorMap' not found.")
-    else:
-        # Iterate through all polygons
-        for poly in obj.data.polygons:
-            for loop_index in poly.loop_indices:
-                loop_vert_index = obj.data.loops[loop_index].vertex_index
-                # Check if the vertex is selected
-                if obj.data.vertices[loop_vert_index].select:
-                    # Set the new UV coordinate
-                    uv_layer.data[loop_index].uv = target_uv_position
-
-        print(f"All selected vertices have been moved to the UV position {target_uv_position} on 'ColorMap'.")
-
-    # Return to Edit Mode
+# Switch to Edit Mode to work with BMesh edit data
+if bpy.context.mode != 'EDIT_MESH':
     bpy.ops.object.mode_set(mode='EDIT')
-else:
-    print("Please select an object of type 'MESH'.")
+
+# Get the mesh and BMesh (edit mesh)
+me = obj.data
+bm = bmesh.from_edit_mesh(me)
+
+# Use the active UV layer
+uv_layer = bm.loops.layers.uv.active
+if uv_layer is None:
+    raise RuntimeError("Active UV layer not found on this mesh.")
+
+# Convert target into Vector for assignment
+target = Vector(target_uv_position)
+
+# Move UVs of ALL loops of selected faces (prevents mismatched UV corners)
+for face in bm.faces:
+    if not face.select:
+        continue
+    for loop in face.loops:
+        loop[uv_layer].uv = target
+
+# Update the edit mesh after changes
+bmesh.update_edit_mesh(me, loop_triangles=True, destructive=False)
