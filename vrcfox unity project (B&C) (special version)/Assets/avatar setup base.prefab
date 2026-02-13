@@ -51,7 +51,9 @@ MonoBehaviour:
     favourite: {fileID: 0}
     initialPose: 0
     userIndex: 0
+    cullingDistance: 0
     isOnFriendsList: 0
+    simulateCulling: 0
     loadStored: 0
     isRemote: 0
     vrMode: 0
@@ -1077,7 +1079,7 @@ MonoBehaviour:
   networkIDs: []
   customExpressions: 1
   expressionsMenu: {fileID: 11400000, guid: f01c13e840b714f8288e053a90b13b50, type: 2}
-  expressionParameters: {fileID: 11400000, guid: 05750a732cedb2a459d660dfeaf9b305,
+  expressionParameters: {fileID: 11400000, guid: b0e6671e1362fed4eae24a495cefc826,
     type: 2}
   enableEyeLook: 1
   customEyeLookSettings:
@@ -1175,7 +1177,7 @@ MonoBehaviour:
     isDefault: 1
   - isEnabled: 0
     type: 5
-    animatorController: {fileID: 9100000, guid: 373087e67ca76c843a08aa0c78515340,
+    animatorController: {fileID: 9100000, guid: fa20fbf6dc46ba745b4b7b0ecc5e349b,
       type: 2}
     mask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
     isDefault: 0

@@ -35,6 +35,12 @@
     },
     "vrchat.blackstartx.gesture-manager": {
       "version": "3.9.8"
+    },
+    "com.nanochip.avatarlimbscaling": {
+      "version": "1.2.0"
+    },
+    "nadena.dev.modular-avatar": {
+      "version": "1.16.2"
     }
   },
   "locked": {
@@ -103,6 +109,23 @@
       "dependencies": {
         "com.vrchat.avatars": ">=3.5.2 < 3.11.X"
       }
+    },
+    "com.nanochip.avatarlimbscaling": {
+      "version": "1.2.0",
+      "dependencies": {
+        "com.vrchat.avatars": "^3.x.x",
+        "com.vrcfury.vrcfury": ">=1.1127.0"
+      }
+    },
+    "nadena.dev.modular-avatar": {
+      "version": "1.16.2",
+      "dependencies": {
+        "nadena.dev.ndmf": ">=1.11.0 <2.0.0-a"
+      }
+    },
+    "nadena.dev.ndmf": {
+      "version": "1.11.0",
+      "dependencies": {}
     }
   }
 }
