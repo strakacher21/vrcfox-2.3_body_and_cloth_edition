@@ -39,8 +39,9 @@ public class AnimatorGeneratorEditor : Editor
     private SerializedProperty localSmoothness;
     private SerializedProperty remoteSmoothness;
 
-    private SerializedProperty shapePreferenceSliderPrefix;
-    private SerializedProperty shapePreferenceTogglesPrefix;
+    private SerializedProperty shapePreferencePrefix;
+    private SerializedProperty shapePreferences;
+
     private SerializedProperty mouthPrefix;
     private SerializedProperty browPrefix;
     private SerializedProperty FullFaceTrackingPrefix;
@@ -48,12 +49,6 @@ public class AnimatorGeneratorEditor : Editor
     private SerializedProperty ClothTogglesPrefix;
 
     private SerializedProperty ColorProfiles;
-
-    // Legacy (optional)
-    private SerializedProperty primaryColor0;
-    private SerializedProperty primaryColor1;
-    private SerializedProperty secondColor0;
-    private SerializedProperty secondColor1;
 
     private SerializedProperty maxEyeMotionValue;
 
@@ -123,8 +118,9 @@ public class AnimatorGeneratorEditor : Editor
         localSmoothness = serializedObject.FindProperty("localSmoothness");
         remoteSmoothness = serializedObject.FindProperty("remoteSmoothness");
 
-        shapePreferenceSliderPrefix = serializedObject.FindProperty("shapePreferenceSliderPrefix");
-        shapePreferenceTogglesPrefix = serializedObject.FindProperty("shapePreferenceTogglesPrefix");
+        shapePreferencePrefix = serializedObject.FindProperty("shapePreferencePrefix");
+        shapePreferences = serializedObject.FindProperty("shapePreferences");
+
         mouthPrefix = serializedObject.FindProperty("mouthPrefix");
         browPrefix = serializedObject.FindProperty("browPrefix");
         FullFaceTrackingPrefix = serializedObject.FindProperty("FullFaceTrackingPrefix");
@@ -132,11 +128,6 @@ public class AnimatorGeneratorEditor : Editor
         ClothTogglesPrefix = serializedObject.FindProperty("ClothTogglesPrefix");
 
         ColorProfiles = serializedObject.FindProperty("ColorProfiles");
-
-        primaryColor0 = serializedObject.FindProperty("primaryColor0");
-        primaryColor1 = serializedObject.FindProperty("primaryColor1");
-        secondColor0 = serializedObject.FindProperty("secondColor0");
-        secondColor1 = serializedObject.FindProperty("secondColor1");
 
         expTrackName = serializedObject.FindProperty("expTrackName");
         lipSyncName = serializedObject.FindProperty("lipSyncName");
@@ -281,12 +272,12 @@ public class AnimatorGeneratorEditor : Editor
         if (wizard.createShapePreferences)
         {
             GUILayout.Label("Shape Preferences", headerStyle);
-            GUILayout.Label("Creates VRC params for blendshapes with these prefixes.", headerStyle2);
-
+            GUILayout.Label("Creates VRC params for blendshapes with bool/float behaviour.", headerStyle2);
             GUILayout.Space(10);
-            EditorGUILayout.PropertyField(shapePreferenceSliderPrefix);
-            EditorGUILayout.PropertyField(shapePreferenceTogglesPrefix);
+            EditorGUILayout.PropertyField(shapePreferencePrefix);
+            EditorGUILayout.PropertyField(shapePreferences, new GUIContent("Shape Preferences List"), true);
         }
+
 
         if (wizard.createClothCustomization)
         {
@@ -310,13 +301,6 @@ public class AnimatorGeneratorEditor : Editor
             GUILayout.Label("Each element defines a name and four color animations.", headerStyle2);
 
             EditorGUILayout.PropertyField(ColorProfiles, new GUIContent("Profiles"), true);
-
-            GUILayout.Space(10);
-            GUILayout.Label("Legacy (optional)", headerStyle2);
-            EditorGUILayout.PropertyField(primaryColor0);
-            EditorGUILayout.PropertyField(primaryColor1);
-            EditorGUILayout.PropertyField(secondColor0);
-            EditorGUILayout.PropertyField(secondColor1);
         }
 
         if (wizard.createFaceToggle)

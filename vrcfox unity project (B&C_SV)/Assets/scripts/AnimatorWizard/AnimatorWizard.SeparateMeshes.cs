@@ -2,12 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-
 using AnimatorAsCode.V1;
-
 using UnityEditor.Animations;
 using UnityEngine;
-
 using VRC.SDK3.Avatars.Components;
 
 public partial class AnimatorWizard : MonoBehaviour

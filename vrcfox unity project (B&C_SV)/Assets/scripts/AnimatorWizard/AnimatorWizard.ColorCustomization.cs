@@ -20,12 +20,6 @@ public partial class AnimatorWizard : MonoBehaviour
 
     public ColorProfile[] ColorProfiles;
 
-    // Legacy fallback (optional)
-    public Motion primaryColor0;
-    public Motion primaryColor1;
-    public Motion secondColor0;
-    public Motion secondColor1;
-
     private const string ColorParamPrefix = "pref/color/";
 
     private void InitializeColorCustomization()
@@ -75,29 +69,6 @@ public partial class AnimatorWizard : MonoBehaviour
             }
 
             return;
-        }
-
-        // Fallback if ColorProfiles is empty
-        if (primaryColor0 != null && primaryColor1 != null)
-        {
-            var pcolParam = CreateFloatParam(_fxTreeLayer, $"{ColorParamPrefix}Default/slider/pcol", true, 0f);
-
-            colorRoot.AddChild(Subtree(
-                new Motion[] { primaryColor0, primaryColor1 },
-                new[] { 0f, 1f },
-                pcolParam
-            ));
-        }
-
-        if (secondColor0 != null && secondColor1 != null)
-        {
-            var scolParam = CreateFloatParam(_fxTreeLayer, $"{ColorParamPrefix}Default/slider/scol", true, 0f);
-
-            colorRoot.AddChild(Subtree(
-                new Motion[] { secondColor0, secondColor1 },
-                new[] { 0f, 1f },
-                scolParam
-            ));
         }
     }
 }

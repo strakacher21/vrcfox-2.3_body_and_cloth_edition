@@ -317,6 +317,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7521030271074166375, guid: 159b5232ae618f142bf758a737b55752,
+        type: 3}
+      propertyPath: installTargetMenu
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ee08068c3f74d349bae5d08bfe98f13,
+        type: 2}
     - target: {fileID: 8217537475635442566, guid: 159b5232ae618f142bf758a737b55752,
         type: 3}
       propertyPath: m_Name
@@ -1669,6 +1675,71 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -1.5722432e-15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[4].useBool
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[4].useFloat
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[4].blendShapeName
+      value: fluff
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[5].blendShapeName
+      value: muzzle[more]
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[6].blendShapeName
+      value: muzzle[less]
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[8].blendShapeName
+      value: arms
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[10].blendShapeName
+      value: breast[male]
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[11].blendShapeName
+      value: breast[female]
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[12].blendShapeName
+      value: belly
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[13].blendShapeName
+      value: legs
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[14].blendShapeName
+      value: tail[more]
+      objectReference: {fileID: 0}
+    - target: {fileID: 3522312049661199825, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: shapePreferences.Array.data[15].blendShapeName
+      value: tail[less]
       objectReference: {fileID: 0}
     - target: {fileID: 3972742377151635921, guid: 7d3022ffd96e70644ad21296c5d339cf,
         type: 3}

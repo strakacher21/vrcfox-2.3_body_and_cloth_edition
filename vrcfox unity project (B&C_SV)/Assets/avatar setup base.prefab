@@ -113,13 +113,13 @@ MonoBehaviour:
   - name: jeans
     primaryColor0: {fileID: 7400000, guid: c4de446bb9317454da56107866fe00a0, type: 2}
     primaryColor1: {fileID: 7400000, guid: c0791d663dcd5244da9a600258f004e7, type: 2}
-    secondColor0: {fileID: 7400000, guid: f4da606afdbdd7141ae52119e3c60f12, type: 2}
-    secondColor1: {fileID: 7400000, guid: a98721e18408d56439ec800717a3b2bd, type: 2}
+    secondColor0: {fileID: 0}
+    secondColor1: {fileID: 0}
   - name: pants
     primaryColor0: {fileID: 7400000, guid: b86c5aedf1f8fec458df51f32a96f1fc, type: 2}
     primaryColor1: {fileID: 7400000, guid: 8920c34136ddda349ae80d9505b92cd0, type: 2}
-    secondColor0: {fileID: 7400000, guid: 5715cca90e269934aa0c446f275a53b4, type: 2}
-    secondColor1: {fileID: 7400000, guid: b6325b65b1cd52342905139b29821ffb, type: 2}
+    secondColor0: {fileID: 0}
+    secondColor1: {fileID: 0}
   - name: shoes
     primaryColor0: {fileID: 7400000, guid: 92757a4f4d511944ebdcc5b130609cca, type: 2}
     primaryColor1: {fileID: 7400000, guid: 1e80d4ba3f5b0064daf2f2e8ca1062ac, type: 2}
@@ -128,8 +128,8 @@ MonoBehaviour:
   - name: shorts
     primaryColor0: {fileID: 7400000, guid: 31cda8434306de44dbe809b7b2a1a528, type: 2}
     primaryColor1: {fileID: 7400000, guid: 3c2053d2f96098440915f12ca1a7c994, type: 2}
-    secondColor0: {fileID: 7400000, guid: 29f4ab3511f865c4db9967656aa5d12c, type: 2}
-    secondColor1: {fileID: 7400000, guid: 963da6cdd0defba4f8badcebf9a00e21, type: 2}
+    secondColor0: {fileID: 0}
+    secondColor1: {fileID: 0}
   - name: slaps
     primaryColor0: {fileID: 7400000, guid: 7c48ebfc65418ec45847268dacbf5bea, type: 2}
     primaryColor1: {fileID: 7400000, guid: 86f0c327164ab21459b109faa3217254, type: 2}
@@ -138,12 +138,8 @@ MonoBehaviour:
   - name: T-shirt
     primaryColor0: {fileID: 7400000, guid: e975082d388276c489bdbf1aebfd3394, type: 2}
     primaryColor1: {fileID: 7400000, guid: 06ecb6188ee5f744ab4613dae1cbd302, type: 2}
-    secondColor0: {fileID: 7400000, guid: 00997847efadb72458444e9bdd7c4a94, type: 2}
-    secondColor1: {fileID: 7400000, guid: 5bfcc1a9368cde54ea7344e4c6b3311e, type: 2}
-  primaryColor0: {fileID: 7400000, guid: 8421033fab3bd4941a54cc533287898b, type: 2}
-  primaryColor1: {fileID: 7400000, guid: 1ee5d60bcc1f77a47b1e79f2944139e3, type: 2}
-  secondColor0: {fileID: 7400000, guid: de7942e8683b2d34ea22c50b83f37f9b, type: 2}
-  secondColor1: {fileID: 7400000, guid: b7ba98e9f6ffbba43a2ed420efb56037, type: 2}
+    secondColor0: {fileID: 0}
+    secondColor1: {fileID: 0}
   assetContainer: {fileID: 9100000, guid: 6750ab3460cb8f748844b5ac096220fd, type: 2}
   fxMask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
   saveVRCExpressionParameters: 1
@@ -346,6 +342,59 @@ MonoBehaviour:
   remoteSmoothness: 0.7
   UseSeparateClothMeshes: 1
   createShapePreferences: 1
+  shapePreferencePrefix: pref/body/
+  shapePreferences:
+  - blendShapeName: ears[more]
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: ears[less]
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: hair[more]
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: hair[less]
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: lashes
+    useBool: 1
+    useFloat: 0
+  - blendShapeName: fluff
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: muzzle[more]
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: muzzle[less]
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: muzzle[less]
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: arms
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: arms
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: breast[male]
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: breast[female]
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: belly
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: legs
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: tail[more]
+    useBool: 0
+    useFloat: 1
+  - blendShapeName: tail[less]
+    useBool: 0
+    useFloat: 1
 --- !u!1001 &223477691778790266
 PrefabInstance:
   m_ObjectHideFlags: 0
