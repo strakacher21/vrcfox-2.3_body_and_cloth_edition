@@ -25,7 +25,7 @@ Follow these steps to set up the Unity project:
    A dialog box will appear in VCC. Click **I Understand, Add Repository** and verify that the repository has been successfully added in the VCC settings.
 
 5. **Add the Unity Project to VCC**  
-   In **VCC**, add the `vrcfox unity project (B&C) (special version)` folder to your project list by selecting **Add Existing Project** and navigating to the project directory.
+   In **VCC**, add the `vrcfox unity project (B&C_SV)` folder to your project list by selecting **Add Existing Project** and navigating to the project directory.
 
 6. **Manage the Project**  
    Select the project in VCC and click **Manage Project**. This will open a dialog window.
