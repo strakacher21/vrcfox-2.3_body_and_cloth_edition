@@ -311,14 +311,14 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
                 other_arm.name = rig_name + "__old"
 
             rig_obj.data.name = rig_name
+            
         # Delete all UV maps except the selected one
-
         def _cleanup_uvs_and_triangulate(obj):
             if not obj or obj.type != "MESH":
                 return
 
+            # UV cleanup
             uv_layers = obj.data.uv_layers
-
             target_name = export_uv_map.strip()
             target = uv_layers.get(target_name)
 
@@ -337,6 +337,32 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
                     uv_layers.remove(uv)
 
             uv_layers.active = uv_layers.get(target.name)
+
+            # Vertex color cleanup
+            if export_vertex_colors:
+                color_attrs = obj.data.color_attributes
+                target_color_name = export_vertex_colors_name.strip()
+                target_color = color_attrs.get(target_color_name)
+
+                if target_color is None:
+                    raise ValueError(
+                        f"Color attribute '{export_vertex_colors_name}' not found on '{obj.name}'. "
+                        f"Existing: {[attr.name for attr in color_attrs]}"
+                    )
+
+                # Set as active color attribute
+                color_attrs.active_color = target_color
+
+                # Remove all other color attributes
+                names_to_remove = [attr.name for attr in color_attrs if attr.name != target_color.name]
+                for name in names_to_remove:
+                    attr = color_attrs.get(name)
+                    if attr is not None:
+                        color_attrs.remove(attr)
+
+                # Ensure it's still active after removal
+                if color_attrs.get(target_color_name):
+                    color_attrs.active_color = color_attrs.get(target_color_name)
 
             # Triangulation
             mesh = obj.data
