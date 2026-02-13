@@ -1,25 +1,45 @@
 #if UNITY_EDITOR
 
 using AnimatorAsCode.V1.VRCDestructiveWorkflow;
-
+using System;
 using System.Collections.Generic;
-
+using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
-
 using VRC.SDK3.Avatars.Components;
 
 public partial class AnimatorWizard : MonoBehaviour
 {
+    [Serializable]
+    public struct ShapePreferenceEntry
+    {
+        public string blendShapeName;
+        public bool useBool;
+        public bool useFloat;
+
+        [HideInInspector] public int lastMode; // 0 = Bool, 1 = Float
+    }
+
     public bool createShapePreferences = true;
+
+    //base prefix for generated VRC parameters (we append "bool/" or "float/" after this)
+    public string shapePreferencePrefix = "pref/body/";
+
+    // User-defined list: each entry maps a blendshape name to either bool-style or float-style preference
+    public List<ShapePreferenceEntry> shapePreferences = new List<ShapePreferenceEntry>();
 
     private void InitializeShapePreferences(SkinnedMeshRenderer skin)
     {
         if (!createShapePreferences) return;
 
+        // Normalize prefix once so we can safely build parameter names
+        var prefix = string.IsNullOrWhiteSpace(shapePreferencePrefix) ? "pref/body/" : shapePreferencePrefix;
+        if (!prefix.EndsWith("/")) prefix += "/";
+
         var fxDriverLayer = _aac.CreateSupportingFxLayer("preferences drivers").WithAvatarMask(fxMask);
         var fxDriverState = fxDriverLayer.NewState("preferences drivers");
 
+        // this self-transition is used to re-apply drivers periodically
         fxDriverState.TransitionsTo(fxDriverState)
             .AfterAnimationFinishes()
             .WithTransitionDurationSeconds(0.5f)
@@ -32,23 +52,33 @@ public partial class AnimatorWizard : MonoBehaviour
         tree.name = "Shape Preferences";
         tree.blendType = BlendTreeType.Direct;
 
-        for (var i = 0; i < skin.sharedMesh.blendShapeCount; i++)
+        for (var i = 0; i < shapePreferences.Count; i++)
         {
-            string blendShapeName = skin.sharedMesh.GetBlendShapeName(i);
+            var entry = shapePreferences[i];
+            if (string.IsNullOrWhiteSpace(entry.blendShapeName)) continue;
 
-            if (blendShapeName.StartsWith(shapePreferenceSliderPrefix))
+            // Full blendshape name on the mesh (includes prefix)
+            var fullBlendShapeName = prefix + entry.blendShapeName;
+
+            var boolParamName = $"{prefix}bool/{entry.blendShapeName}";
+            var floatParamName = $"{prefix}float/{entry.blendShapeName}";
+
+            // If the blendshape exists on multiple meshes, drive all of them together
+            var targets = GetSkinsWithBlendshape(fullBlendShapeName);
+
+            if (entry.useFloat)
             {
-                var param = CreateFloatParam(_fxTreeLayer, blendShapeName, true, 0);
+                var param = CreateFloatParam(_fxTreeLayer, floatParamName, true, 0);
 
-                var targets = GetSkinsWithBlendshape(blendShapeName);
                 tree.AddChild(targets.Length > 0
-                    ? BlendshapeTree(_fxTreeLayer, targets, blendShapeName, param)
-                    : BlendshapeTree(_fxTreeLayer, skin, param));
+                    ? BlendshapeTree(_fxTreeLayer, targets, fullBlendShapeName, param)
+                    : BlendshapeTree(_fxTreeLayer, skin, fullBlendShapeName, param));
             }
-            else if (blendShapeName.StartsWith(shapePreferenceTogglesPrefix))
+            else if (entry.useBool)
             {
-                var boolParam = CreateBoolParam(_fxTreeLayer, blendShapeName, true, false);
-                var floatParam = _fxTreeLayer.FloatParameter(blendShapeName + "-float");
+                // Bool mode: store a bool param, then copy it into a float param used by the blendshape animation
+                var boolParam = CreateBoolParam(_fxTreeLayer, boolParamName, true, false);
+                var floatParam = _fxTreeLayer.FloatParameter(floatParamName);
 
                 drivers.parameters.Add(new VRCAvatarParameterDriver.Parameter
                 {
@@ -57,12 +87,75 @@ public partial class AnimatorWizard : MonoBehaviour
                     name = floatParam.Name
                 });
 
-                var targets = GetSkinsWithBlendshape(blendShapeName);
                 tree.AddChild(targets.Length > 0
-                    ? BlendshapeTree(_fxTreeLayer, targets, blendShapeName, floatParam)
-                    : BlendshapeTree(_fxTreeLayer, skin, blendShapeName, floatParam));
+                    ? BlendshapeTree(_fxTreeLayer, targets, fullBlendShapeName, floatParam)
+                    : BlendshapeTree(_fxTreeLayer, skin, fullBlendShapeName, floatParam));
             }
         }
+    }
+}
+
+[CustomPropertyDrawer(typeof(AnimatorWizard.ShapePreferenceEntry))]
+public class ShapePreferenceEntryDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        return EditorGUIUtility.singleLineHeight;
+    }
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        var blendShapeName = property.FindPropertyRelative("blendShapeName");
+        var useBool = property.FindPropertyRelative("useBool");
+        var useFloat = property.FindPropertyRelative("useFloat");
+        var lastMode = property.FindPropertyRelative("lastMode");
+
+        EditorGUI.BeginProperty(position, label, property);
+        position = EditorGUI.PrefixLabel(position, label);
+
+        const float spacing = 6f;
+        const float toggleW = 54f;
+
+        var nameRect = new Rect(position.x, position.y, position.width - (toggleW * 2 + spacing * 2), position.height);
+        var boolRect = new Rect(nameRect.xMax + spacing, position.y, toggleW, position.height);
+        var floatRect = new Rect(boolRect.xMax + spacing, position.y, toggleW, position.height);
+
+        EditorGUI.PropertyField(nameRect, blendShapeName, GUIContent.none);
+
+        // Make Bool/Float mutually exclusive
+        EditorGUI.BeginChangeCheck();
+        var newBool = EditorGUI.ToggleLeft(boolRect, "Bool", useBool.boolValue);
+        if (EditorGUI.EndChangeCheck())
+        {
+            useBool.boolValue = newBool;
+            if (newBool)
+            {
+                useFloat.boolValue = false;
+                lastMode.intValue = 0;
+            }
+        }
+
+        EditorGUI.BeginChangeCheck();
+        var newFloat = EditorGUI.ToggleLeft(floatRect, "Float", useFloat.boolValue);
+        if (EditorGUI.EndChangeCheck())
+        {
+            useFloat.boolValue = newFloat;
+            if (newFloat)
+            {
+                useBool.boolValue = false;
+                lastMode.intValue = 1;
+            }
+        }
+
+        //safety for edge cases (multi-edit / serialized state)
+        if (useBool.boolValue && useFloat.boolValue)
+        {
+            var keepFloat = lastMode.intValue == 1;
+            useFloat.boolValue = keepFloat;
+            useBool.boolValue = !keepFloat;
+        }
+
+        EditorGUI.EndProperty();
     }
 }
 
