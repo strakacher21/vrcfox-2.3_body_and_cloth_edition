@@ -16,7 +16,6 @@ public partial class AnimatorWizard : MonoBehaviour
         public string blendShapeName;
         public bool useBool;
         public bool useFloat;
-
         [HideInInspector] public int lastMode; // 0 = Bool, 1 = Float
     }
 
@@ -31,9 +30,10 @@ public partial class AnimatorWizard : MonoBehaviour
     private void InitializeShapePreferences(SkinnedMeshRenderer skin)
     {
         if (!createShapePreferences) return;
+        if (skin == null) return;
 
         // Normalize prefix once so we can safely build parameter names
-        var prefix = string.IsNullOrWhiteSpace(shapePreferencePrefix) ? "pref/body/" : shapePreferencePrefix;
+        var prefix = string.IsNullOrWhiteSpace(shapePreferencePrefix) ? "pref/body/" : shapePreferencePrefix.Trim();
         if (!prefix.EndsWith("/")) prefix += "/";
 
         var fxDriverLayer = _aac.CreateSupportingFxLayer("preferences drivers").WithAvatarMask(fxMask);
@@ -55,13 +55,19 @@ public partial class AnimatorWizard : MonoBehaviour
         for (var i = 0; i < shapePreferences.Count; i++)
         {
             var entry = shapePreferences[i];
-            if (string.IsNullOrWhiteSpace(entry.blendShapeName)) continue;
+            var input = entry.blendShapeName?.Trim();
+            if (string.IsNullOrWhiteSpace(input)) continue;
+
+            // Accept both "SomeShape" and "pref/body/SomeShape"
+            var shortName = input.StartsWith(prefix, StringComparison.Ordinal) ? input.Substring(prefix.Length) : input;
+            shortName = shortName.TrimStart('/').Trim();
+            if (string.IsNullOrWhiteSpace(shortName)) continue;
 
             // Full blendshape name on the mesh (includes prefix)
-            var fullBlendShapeName = prefix + entry.blendShapeName;
+            var fullBlendShapeName = prefix + shortName;
 
-            var boolParamName = $"{prefix}bool/{entry.blendShapeName}";
-            var floatParamName = $"{prefix}float/{entry.blendShapeName}";
+            var boolParamName = $"{prefix}bool/{shortName}";
+            var floatParamName = $"{prefix}float/{shortName}";
 
             // If the blendshape exists on multiple meshes, drive all of them together
             var targets = GetSkinsWithBlendshape(fullBlendShapeName);
@@ -93,69 +99,63 @@ public partial class AnimatorWizard : MonoBehaviour
             }
         }
     }
-}
 
-[CustomPropertyDrawer(typeof(AnimatorWizard.ShapePreferenceEntry))]
-public class ShapePreferenceEntryDrawer : PropertyDrawer
-{
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    [CustomPropertyDrawer(typeof(AnimatorWizard.ShapePreferenceEntry))]
+    public class ShapePreferenceEntryDrawer : PropertyDrawer
     {
-        return EditorGUIUtility.singleLineHeight;
-    }
-
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-        var blendShapeName = property.FindPropertyRelative("blendShapeName");
-        var useBool = property.FindPropertyRelative("useBool");
-        var useFloat = property.FindPropertyRelative("useFloat");
-        var lastMode = property.FindPropertyRelative("lastMode");
-
-        EditorGUI.BeginProperty(position, label, property);
-        position = EditorGUI.PrefixLabel(position, label);
-
-        const float spacing = 6f;
-        const float toggleW = 54f;
-
-        var nameRect = new Rect(position.x, position.y, position.width - (toggleW * 2 + spacing * 2), position.height);
-        var boolRect = new Rect(nameRect.xMax + spacing, position.y, toggleW, position.height);
-        var floatRect = new Rect(boolRect.xMax + spacing, position.y, toggleW, position.height);
-
-        EditorGUI.PropertyField(nameRect, blendShapeName, GUIContent.none);
-
-        // Make Bool/Float mutually exclusive
-        EditorGUI.BeginChangeCheck();
-        var newBool = EditorGUI.ToggleLeft(boolRect, "Bool", useBool.boolValue);
-        if (EditorGUI.EndChangeCheck())
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            useBool.boolValue = newBool;
-            if (newBool)
+            return EditorGUIUtility.singleLineHeight;
+        }
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var blendShapeName = property.FindPropertyRelative("blendShapeName");
+            var useBool = property.FindPropertyRelative("useBool");
+            var useFloat = property.FindPropertyRelative("useFloat");
+            var lastMode = property.FindPropertyRelative("lastMode");
+
+            EditorGUI.BeginProperty(position, label, property);
+            position = EditorGUI.PrefixLabel(position, label);
+
+            const float spacing = 6f;
+            const float toggleW = 54f;
+
+            var nameRect = new Rect(position.x, position.y, position.width - (toggleW * 2 + spacing * 2), position.height);
+            var boolRect = new Rect(nameRect.xMax + spacing, position.y, toggleW, position.height);
+            var floatRect = new Rect(boolRect.xMax + spacing, position.y, toggleW, position.height);
+
+            EditorGUI.PropertyField(nameRect, blendShapeName, GUIContent.none);
+
+            // Make Bool/Float mutually exclusive
+            EditorGUI.BeginChangeCheck();
+            var newBool = EditorGUI.ToggleLeft(boolRect, "Bool", useBool.boolValue);
+            if (EditorGUI.EndChangeCheck())
             {
-                useFloat.boolValue = false;
+                useBool.boolValue = newBool;
+                if (newBool) useFloat.boolValue = false;
                 lastMode.intValue = 0;
             }
-        }
 
-        EditorGUI.BeginChangeCheck();
-        var newFloat = EditorGUI.ToggleLeft(floatRect, "Float", useFloat.boolValue);
-        if (EditorGUI.EndChangeCheck())
-        {
-            useFloat.boolValue = newFloat;
-            if (newFloat)
+            EditorGUI.BeginChangeCheck();
+            var newFloat = EditorGUI.ToggleLeft(floatRect, "Float", useFloat.boolValue);
+            if (EditorGUI.EndChangeCheck())
             {
-                useBool.boolValue = false;
+                useFloat.boolValue = newFloat;
+                if (newFloat) useBool.boolValue = false;
                 lastMode.intValue = 1;
             }
-        }
 
-        //safety for edge cases (multi-edit / serialized state)
-        if (useBool.boolValue && useFloat.boolValue)
-        {
-            var keepFloat = lastMode.intValue == 1;
-            useFloat.boolValue = keepFloat;
-            useBool.boolValue = !keepFloat;
-        }
+            //safety for edge cases (multi-edit / serialized state)
+            if (useBool.boolValue && useFloat.boolValue)
+            {
+                var keepFloat = lastMode.intValue == 1;
+                useFloat.boolValue = keepFloat;
+                useBool.boolValue = !keepFloat;
+            }
 
-        EditorGUI.EndProperty();
+            EditorGUI.EndProperty();
+        }
     }
 }
 

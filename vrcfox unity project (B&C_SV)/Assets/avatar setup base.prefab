@@ -664,6 +664,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 2
       addedObject: {fileID: 7737872136624440742}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 235787063898737056}
     - targetCorrespondingSourceObject: {fileID: 1427564092133216371, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       insertIndex: -1
@@ -672,18 +676,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3284048132199788074}
-    - targetCorrespondingSourceObject: {fileID: 3969733803137257870, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6813427734237417390}
-    - targetCorrespondingSourceObject: {fileID: 3969733803137257870, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8051361830333894575}
-    - targetCorrespondingSourceObject: {fileID: 3969733803137257870, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1948768082431430220}
     - targetCorrespondingSourceObject: {fileID: 447309283742961736, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       insertIndex: -1
@@ -1626,6 +1618,34 @@ MonoBehaviour:
   contentType: 0
   assetBundleUnityVersion: 
   fallbackStatus: 3
+--- !u!114 &235787063898737056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710452768664031646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e94e501a2d4c95bff3d5601013d923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 3
+  unityVersion: 2022.3.22f1
+  vrcfuryVersion: 1.1279.0
+  somethingIsBroken: 0
+  config:
+    features: []
+  content:
+    rid: 7796586700795281414
+  references:
+    version: 2
+    RefIds:
+    - rid: 7796586700795281414
+      type: {class: FixWriteDefaults, ns: VF.Model.Feature, asm: VRCFury}
+      data:
+        version: 0
+        mode: 2
 --- !u!137 &1422257553560203677 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
@@ -2090,149 +2110,6 @@ MonoBehaviour:
   receiverType: 0
   parameter: contact/confuse
   minVelocity: 0.05
---- !u!114 &6813427734237417390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3605750569861381441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1450912254, guid: 80f1b8067b0760e4bb45023bc2e9de66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootTransform: {fileID: 0}
-  shapeType: 0
-  radius: 0.0003
-  height: 2
-  position: {x: 0, y: 0.000206, z: 0.001755}
-  rotation: {x: 0, y: 0, z: 0, w: 1}
-  localOnly: 0
-  contentTypes: -1
-  collisionTags:
-  - Head
-  - Hand
-  - Finger
-  allowSelf: 0
-  allowOthers: 1
-  receiverType: 0
-  parameter: contact/nose
-  minVelocity: 0.05
---- !u!82 &8051361830333894575
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3605750569861381441}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 1
-  SpatializePostEffects: 0
-  Priority: 0
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 2
-  Pan2D: 0
-  rolloffMode: 1
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.123181164
-      value: 0.9636116
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -5.0000005
-      outSlope: -5.0000005
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &1948768082431430220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3605750569861381441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1610797297, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Gain: 1
-  Far: 2
-  Near: 0
-  VolumetricRadius: 0
-  EnableSpatialization: 1
-  UseAudioSourceVolumeCurve: 1
 --- !u!4 &4405562359383961109 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4052909026358133466, guid: 1a1022667c449ad4ea3340db6aa363c8,
