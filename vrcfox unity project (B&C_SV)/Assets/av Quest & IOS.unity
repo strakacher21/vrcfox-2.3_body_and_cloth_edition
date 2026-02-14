@@ -209,6 +209,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6277035691913620115}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1656305525
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1656305527}
+  - component: {fileID: 1656305526}
+  m_Layer: 0
+  m_Name: nadena.dev.ndmf__Activator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1656305526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656305525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c432a5ed00a04259997c23712bcf2186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1656305527
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656305525}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1889319037 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1227330909385755637, guid: c901be5fd0387e04a86ff8d3496cfbcc,
@@ -3078,6 +3122,12 @@ PrefabInstance:
       propertyPath: platformOverrides.Array.data[5].platform
       value: 19
       objectReference: {fileID: 0}
+    - target: {fileID: 2426585206583491368, guid: 7d3022ffd96e70644ad21296c5d339cf,
+        type: 3}
+      propertyPath: config
+      value: 
+      objectReference: {fileID: 11400000, guid: 713b448edaab79b47a79fce515f694e7,
+        type: 2}
     - target: {fileID: 4158848567289530126, guid: 7d3022ffd96e70644ad21296c5d339cf,
         type: 3}
       propertyPath: settings.vrMode
@@ -3212,6 +3262,7 @@ PrefabInstance:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 2426585206583491368, guid: 7d3022ffd96e70644ad21296c5d339cf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 186857242104548132, guid: 7d3022ffd96e70644ad21296c5d339cf,
@@ -3225,3 +3276,4 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 6277035691913620115}
+  - {fileID: 1656305527}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5745010746917710464}
   - component: {fileID: 4158848567289530126}
   - component: {fileID: 3522312049661199825}
+  - component: {fileID: 2426585206583491368}
   m_Layer: 0
   m_Name: avatar setup base
   m_TagString: Untagged
@@ -404,6 +405,19 @@ MonoBehaviour:
     useBool: 0
     useFloat: 1
     lastMode: 1
+--- !u!114 &2426585206583491368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974705988007904448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0722284fee9817b45ac70aa8393037e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 643071a0c38b8154faff349944519215, type: 2}
 --- !u!1001 &223477691778790266
 PrefabInstance:
   m_ObjectHideFlags: 0
