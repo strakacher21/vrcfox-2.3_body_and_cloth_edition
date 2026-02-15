@@ -38,8 +38,8 @@ public class AnimatorGeneratorEditor : Editor
     private SerializedProperty localSmoothness;
     private SerializedProperty remoteSmoothness;
 
-    private SerializedProperty shapePreferenceSliderPrefix;
-    private SerializedProperty shapePreferenceTogglesPrefix;
+    private SerializedProperty shapePreferencePrefix;
+    private SerializedProperty shapePreferences;
 
     private SerializedProperty mouthPrefix;
     private SerializedProperty browPrefix;
@@ -115,8 +115,8 @@ public class AnimatorGeneratorEditor : Editor
         localSmoothness = serializedObject.FindProperty("localSmoothness");
         remoteSmoothness = serializedObject.FindProperty("remoteSmoothness");
 
-        shapePreferenceSliderPrefix = serializedObject.FindProperty("shapePreferenceSliderPrefix");
-        shapePreferenceTogglesPrefix = serializedObject.FindProperty("shapePreferenceTogglesPrefix");
+        shapePreferencePrefix = serializedObject.FindProperty("shapePreferencePrefix");
+        shapePreferences = serializedObject.FindProperty("shapePreferences");
 
         mouthPrefix = serializedObject.FindProperty("mouthPrefix");
         browPrefix = serializedObject.FindProperty("browPrefix");
@@ -267,10 +267,10 @@ public class AnimatorGeneratorEditor : Editor
         if (wizard.createShapePreferences)
         {
             GUILayout.Label("Shape Preferences", headerStyle);
-            GUILayout.Label("Creates VRC params for blendshapes with these prefixes.", headerStyle2);
+            GUILayout.Label("Creates VRC params for blendshapes with bool/float behaviour.", headerStyle2);
             GUILayout.Space(10);
-            EditorGUILayout.PropertyField(shapePreferenceSliderPrefix);
-            EditorGUILayout.PropertyField(shapePreferenceTogglesPrefix);
+            EditorGUILayout.PropertyField(shapePreferencePrefix);
+            EditorGUILayout.PropertyField(shapePreferences, new GUIContent("Shape Preferences List"), true);
         }
 
         // Cloths customization
