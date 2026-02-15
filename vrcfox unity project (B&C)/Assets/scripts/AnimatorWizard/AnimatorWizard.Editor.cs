@@ -47,10 +47,7 @@ public class AnimatorGeneratorEditor : Editor
     private SerializedProperty FullFaceTrackingPrefix;
     private SerializedProperty ClothTogglesPrefix;
 
-    private SerializedProperty primaryColor0;
-    private SerializedProperty primaryColor1;
-    private SerializedProperty secondColor0;
-    private SerializedProperty secondColor1;
+    private SerializedProperty ColorProfiles;
 
     private SerializedProperty maxEyeMotionValue;
 
@@ -144,10 +141,7 @@ public class AnimatorGeneratorEditor : Editor
         FaceTrackingBlockParamNames = serializedObject.FindProperty("FaceTrackingBlockParamNames");
         EyeTrackingBlockParamNames = serializedObject.FindProperty("EyeTrackingBlockParamNames");
 
-        primaryColor0 = serializedObject.FindProperty("primaryColor0");
-        secondColor0 = serializedObject.FindProperty("secondColor0");
-        primaryColor1 = serializedObject.FindProperty("primaryColor1");
-        secondColor1 = serializedObject.FindProperty("secondColor1");
+        ColorProfiles = serializedObject.FindProperty("ColorProfiles");
 
         maxEyeMotionValue = serializedObject.FindProperty("maxEyeMotionValue");
 
@@ -297,13 +291,10 @@ public class AnimatorGeneratorEditor : Editor
         // Color customization
         if (wizard.createColorCustomization)
         {
-            GUILayout.Label("Color customization UV-offset animations", headerStyle);
-            GUILayout.Label("Animations controlling color palette texture UV-offsets (ToonLit shader)" +
-                "\nfor in-game color customization.", headerStyle2);
-            EditorGUILayout.PropertyField(primaryColor0);
-            EditorGUILayout.PropertyField(primaryColor1);
-            EditorGUILayout.PropertyField(secondColor0);
-            EditorGUILayout.PropertyField(secondColor1);
+            GUILayout.Label("Color customization", headerStyle);
+            GUILayout.Label("Each element defines a name and four color animations.", headerStyle2);
+
+            EditorGUILayout.PropertyField(ColorProfiles, new GUIContent("Profiles"), true);
         }
 
         // Face Toggle
