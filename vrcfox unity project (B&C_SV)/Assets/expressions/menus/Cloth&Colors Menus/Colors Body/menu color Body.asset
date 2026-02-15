@@ -12,8 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
   m_Name: menu color Body
   m_EditorClassIdentifier: 
-  Parameters: {fileID: 11400000, guid: 05750a732cedb2a459d660dfeaf9b305, type: 2}
+  Parameters: {fileID: 11400000, guid: 80f4c75a61e59f14e8566b53f104c9a9, type: 2}
   controls:
+  - name: <b><color=yellow>Hair
+    icon: {fileID: 2800000, guid: 83e91fdbf6d02be4c88e827ac3eaaa9c, type: 3}
+    type: 103
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 11400000, guid: 8c8f3b1e422a43b4c8bbf776d48131bb, type: 2}
+    subParameters:
+    - name: 
+    labels: []
   - name: <b><color=yellow>Eyes
     icon: {fileID: 2800000, guid: b714bd044fa846549945cc900ecfd964, type: 3}
     type: 103
