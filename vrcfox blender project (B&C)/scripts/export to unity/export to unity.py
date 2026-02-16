@@ -7,7 +7,6 @@ from bpy.app.handlers import persistent
 
 _export_to_unity_owner_filepath = None
 
-
 @persistent
 def _export_to_unity_autounload(_dummy):
     global _export_to_unity_owner_filepath
@@ -28,9 +27,7 @@ def _export_to_unity_autounload(_dummy):
         except Exception:
             pass
 
-
-# Separate meshes (UI)
-
+# Separate meshes UI
 class EXPORT_TO_UNITY_PG_separate_mesh_item(bpy.types.PropertyGroup):
     obj: bpy.props.PointerProperty(
         name="Object",
@@ -38,39 +35,49 @@ class EXPORT_TO_UNITY_PG_separate_mesh_item(bpy.types.PropertyGroup):
         poll=lambda self, o: bool(o) and o.type == "MESH"
     )
 
-
-# Settings storage (UI)
-
+# Settings storage UI
 class EXPORT_TO_UNITY_PG_settings(bpy.types.PropertyGroup):
     export_path: bpy.props.StringProperty(
         name="Export path",
         subtype='DIR_PATH',
         default=r"//../vrcfox unity project (B&C)/Assets"
     )
+    
     file_name: bpy.props.StringProperty(
         name="File name",
         default="vrcfox model (B&C).fbx"
     )
+    
     desired_model_name: bpy.props.StringProperty(
         name="Mesh name",
         default="Body"
     )
+    
     rig_name: bpy.props.StringProperty(
         name="Rig name",
         default="rig"
     )
+    
     export_uv_map: bpy.props.StringProperty(
         name="UV map",
         default="ColorMap"
     )
+    
+    triangulate: bpy.props.BoolProperty(
+    name="Triangulate",
+    default=False
+    )
+    
     export_vertex_colors: bpy.props.BoolProperty(
         name="Vertex colors",
         default=True
     )
+    
     export_vertex_colors_name: bpy.props.StringProperty(
         name="",
         default="Col"
     )
+    
     export_collection_name: bpy.props.StringProperty(
         name="Export collection",
         default="main"
@@ -80,18 +87,18 @@ class EXPORT_TO_UNITY_PG_settings(bpy.types.PropertyGroup):
         name="Separate meshes",
         default=False
     )
+    
     separate_meshes: bpy.props.CollectionProperty(
         name="Separate meshes list",
         type=EXPORT_TO_UNITY_PG_separate_mesh_item
     )
+    
     separate_meshes_index: bpy.props.IntProperty(
         name="",
         default=0
     )
 
-
 # Separate meshes UI list
-
 class EXPORT_TO_UNITY_UL_separate_meshes(bpy.types.UIList):
     def draw_item(
         self,
@@ -112,7 +119,6 @@ class EXPORT_TO_UNITY_UL_separate_meshes(bpy.types.UIList):
         elif self.layout_type == 'GRID':
             layout.alignment = 'CENTER'
             layout.label(text="", icon='MESH_DATA')
-
 
 class EXPORT_TO_UNITY_OT_separate_mesh_add(bpy.types.Operator):
     bl_idname = "export_to_unity.separate_mesh_add"
@@ -150,7 +156,6 @@ class EXPORT_TO_UNITY_OT_separate_mesh_add(bpy.types.Operator):
 
         return {'FINISHED'}
 
-
 class EXPORT_TO_UNITY_OT_separate_mesh_remove(bpy.types.Operator):
     bl_idname = "export_to_unity.separate_mesh_remove"
     bl_label = "Remove separate mesh"
@@ -168,9 +173,7 @@ class EXPORT_TO_UNITY_OT_separate_mesh_remove(bpy.types.Operator):
 
         return {'FINISHED'}
 
-
 # Export operator
-
 class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
     bl_idname = "export_to_unity.export"
     bl_label = "Export to Unity"
@@ -183,21 +186,22 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
         desired_model_name = s.desired_model_name
         rig_name = s.rig_name
         export_uv_map = s.export_uv_map
+        triangulate = s.triangulate
         export_vertex_colors = s.export_vertex_colors
         export_vertex_colors_name = s.export_vertex_colors_name
         export_collection_name = s.export_collection_name
         export_separate_meshes = s.export_separate_meshes
-
+        
         saved = {
             "export_path": s.export_path,
-            "file_name": s.file_name,
+            "file_name": s.file_name,    
             "desired_model_name": s.desired_model_name,
             "rig_name": s.rig_name,
             "export_uv_map": s.export_uv_map,
+            "triangulate": s.triangulate,
             "export_vertex_colors": s.export_vertex_colors,
             "export_vertex_colors_name": s.export_vertex_colors_name,
             "export_collection_name": s.export_collection_name,
-
             "export_separate_meshes": s.export_separate_meshes,
             "separate_meshes_index": s.separate_meshes_index,
             "separate_meshes_names": [it.obj.name for it in s.separate_meshes if it.obj],
@@ -232,9 +236,6 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
             obj.hide_set(False)
 
         # Join objects
-        #
-        # If 'Separate meshes' is enabled, objects listed in 'Separate meshes list'
-        # will be exported as their own meshes in FBX (not joined into the main Body mesh).
         separate_objects = []
         if export_separate_meshes:
             separate_set = set()
@@ -266,20 +267,6 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
         else:
             body_obj = None
 
-        # Triangulation
-        if body_obj:
-            mesh = body_obj.data
-            bm = bmesh.new()
-            bm.from_mesh(mesh)
-            bmesh.ops.triangulate(
-                bm,
-                faces=bm.faces,
-                quad_method='FIXED',
-                ngon_method='BEAUTY'
-            )
-            bm.to_mesh(mesh)
-            bm.free()
-
         # Rename rig
         rig_obj = None
 
@@ -296,7 +283,6 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
             ]
             rig_obj = rigs[0] if rigs else None
 
-        # Rename rig
         if rig_obj:
             # free object name
             other_obj = bpy.data.objects.get(rig_name)
@@ -313,7 +299,7 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
             rig_obj.data.name = rig_name
             
         # Delete all UV maps except the selected one
-        def _cleanup_uvs_and_triangulate(obj):
+        def process_mesh(obj):
             if not obj or obj.type != "MESH":
                 return
 
@@ -365,23 +351,24 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
                     color_attrs.active_color = color_attrs.get(target_color_name)
 
             # Triangulation
-            mesh = obj.data
-            bm = bmesh.new()
-            bm.from_mesh(mesh)
-            bmesh.ops.triangulate(
-                bm,
-                faces=bm.faces,
-                quad_method='FIXED',
-                ngon_method='BEAUTY'
-            )
-            bm.to_mesh(mesh)
-            bm.free()
+            if triangulate:
+                mesh = obj.data
+                bm = bmesh.new()
+                bm.from_mesh(mesh)
+                bmesh.ops.triangulate(
+                    bm,
+                    faces=bm.faces,
+                    quad_method='FIXED',
+                    ngon_method='BEAUTY'
+                )
+                bm.to_mesh(mesh)
+                bm.free()
 
-        _cleanup_uvs_and_triangulate(body_obj)
+        process_mesh(body_obj)
 
         # Separate meshes
         for obj in separate_objects:
-            _cleanup_uvs_and_triangulate(obj)
+            process_mesh(obj)
 
         # Set export collection as active layer collection
         export_layer_collection = bpy.context.view_layer.layer_collection.children[export_collection_name]
@@ -421,7 +408,6 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
         bpy.ops.export_scene.fbx(**fbx_kwargs)
 
         # keep unchanged after export
-
         bpy.ops.ed.undo_push()
         bpy.ops.ed.undo()
 
@@ -449,7 +435,6 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
 
 
 # UI (Header popover)
-
 class VIEW3D_PT_export_to_unity(bpy.types.Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'HEADER'
@@ -478,11 +463,10 @@ class VIEW3D_PT_export_to_unity(bpy.types.Panel):
         col.prop(s, "rig_name")
         col.prop(s, "export_collection_name")
         col.prop(s, "export_uv_map")
-
+        col.prop(s, "triangulate")
         row = col.row(align=True)
         row.prop(s, "export_vertex_colors")
         row.prop(s, "export_vertex_colors_name")
-
         col.prop(s, "export_separate_meshes")
 
         if s.export_separate_meshes:
@@ -528,7 +512,6 @@ def export_to_unity_header_button(self, context):
 
 
 # Register
-
 classes = (
     EXPORT_TO_UNITY_PG_separate_mesh_item,
     EXPORT_TO_UNITY_PG_settings,
@@ -556,8 +539,7 @@ def register():
     if not hasattr(bpy.types.Scene, "export_to_unity_settings"):
         bpy.types.Scene.export_to_unity_settings = bpy.props.PointerProperty(type=EXPORT_TO_UNITY_PG_settings)
 
-    # prevent duplicates on Revert:
-    # store previous draw func reference on the header type itself
+    # prevent duplicates on Revert
     try:
         old = getattr(bpy.types.VIEW3D_HT_header, "_export_to_unity_draw_func", None)
         if old:
@@ -568,8 +550,7 @@ def register():
     bpy.types.VIEW3D_HT_header._export_to_unity_draw_func = export_to_unity_header_button
 
     # Put button on the left/right
-
-    # bpy.types.VIEW3D_HT_header.prepend(bpy.types.VIEW3D_HT_header._export_to_unity_draw_func)
+    #bpy.types.VIEW3D_HT_header.prepend(bpy.types.VIEW3D_HT_header._export_to_unity_draw_func)
     bpy.types.VIEW3D_HT_header.append(bpy.types.VIEW3D_HT_header._export_to_unity_draw_func)
 
     _export_to_unity_owner_filepath = bpy.data.filepath
