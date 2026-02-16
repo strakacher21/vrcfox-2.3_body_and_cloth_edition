@@ -52,7 +52,9 @@ MonoBehaviour:
     favourite: {fileID: 0}
     initialPose: 0
     userIndex: 0
+    cullingDistance: 0
     isOnFriendsList: 0
+    simulateCulling: 0
     loadStored: 0
     isRemote: 0
     vrMode: 0
@@ -83,10 +85,12 @@ MonoBehaviour:
   - boots
   - slaps
   createColorCustomization: 1
-  primaryColor0: {fileID: 7400000, guid: 8421033fab3bd4941a54cc533287898b, type: 2}
-  primaryColor1: {fileID: 7400000, guid: 1ee5d60bcc1f77a47b1e79f2944139e3, type: 2}
-  secondColor0: {fileID: 7400000, guid: de7942e8683b2d34ea22c50b83f37f9b, type: 2}
-  secondColor1: {fileID: 7400000, guid: b7ba98e9f6ffbba43a2ed420efb56037, type: 2}
+  ColorProfiles:
+  - name: Body
+    primaryColor0: {fileID: 7400000, guid: 8421033fab3bd4941a54cc533287898b, type: 2}
+    primaryColor1: {fileID: 7400000, guid: 1ee5d60bcc1f77a47b1e79f2944139e3, type: 2}
+    secondColor0: {fileID: 7400000, guid: de7942e8683b2d34ea22c50b83f37f9b, type: 2}
+    secondColor1: {fileID: 7400000, guid: b7ba98e9f6ffbba43a2ed420efb56037, type: 2}
   assetContainer: {fileID: 9100000, guid: 6750ab3460cb8f748844b5ac096220fd, type: 2}
   fxMask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
   saveVRCExpressionParameters: 1
@@ -288,6 +292,68 @@ MonoBehaviour:
   localSmoothness: 0.1
   remoteSmoothness: 0.7
   createShapePreferences: 1
+  shapePreferencePrefix: pref/body/
+  shapePreferences:
+  - blendShapeName: ears[more]
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: ears[less]
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: hair[more]
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: hair[less]
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: lashes
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: fluff
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: muzzle[more]
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: muzzle[less]
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: arms
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: breast[male]
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: breast[female]
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: belly
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: legs
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: tail[more]
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
+  - blendShapeName: tail[less]
+    useBool: 1
+    useFloat: 0
+    lastMode: 0
 --- !u!114 &68112461687237920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,11 +588,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.056729216
-      objectReference: {fileID: 0}
-    - target: {fileID: 5866666021909216657, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7067194956783848370, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
@@ -1538,7 +1599,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45da21a324e147228aaee066e399bff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformOverrides: []
+  platformOverrides:
+  - avatar: {fileID: 1682622176408159109}
+    platform: 19
 --- !u!137 &1422257553560203677 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,

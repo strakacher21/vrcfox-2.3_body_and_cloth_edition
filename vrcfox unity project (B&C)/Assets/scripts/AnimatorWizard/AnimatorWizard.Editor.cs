@@ -38,8 +38,8 @@ public class AnimatorGeneratorEditor : Editor
     private SerializedProperty localSmoothness;
     private SerializedProperty remoteSmoothness;
 
-    private SerializedProperty shapePreferenceSliderPrefix;
-    private SerializedProperty shapePreferenceTogglesPrefix;
+    private SerializedProperty shapePreferencePrefix;
+    private SerializedProperty shapePreferences;
 
     private SerializedProperty mouthPrefix;
     private SerializedProperty browPrefix;
@@ -47,10 +47,7 @@ public class AnimatorGeneratorEditor : Editor
     private SerializedProperty FullFaceTrackingPrefix;
     private SerializedProperty ClothTogglesPrefix;
 
-    private SerializedProperty primaryColor0;
-    private SerializedProperty primaryColor1;
-    private SerializedProperty secondColor0;
-    private SerializedProperty secondColor1;
+    private SerializedProperty ColorProfiles;
 
     private SerializedProperty maxEyeMotionValue;
 
@@ -118,8 +115,8 @@ public class AnimatorGeneratorEditor : Editor
         localSmoothness = serializedObject.FindProperty("localSmoothness");
         remoteSmoothness = serializedObject.FindProperty("remoteSmoothness");
 
-        shapePreferenceSliderPrefix = serializedObject.FindProperty("shapePreferenceSliderPrefix");
-        shapePreferenceTogglesPrefix = serializedObject.FindProperty("shapePreferenceTogglesPrefix");
+        shapePreferencePrefix = serializedObject.FindProperty("shapePreferencePrefix");
+        shapePreferences = serializedObject.FindProperty("shapePreferences");
 
         mouthPrefix = serializedObject.FindProperty("mouthPrefix");
         browPrefix = serializedObject.FindProperty("browPrefix");
@@ -144,10 +141,7 @@ public class AnimatorGeneratorEditor : Editor
         FaceTrackingBlockParamNames = serializedObject.FindProperty("FaceTrackingBlockParamNames");
         EyeTrackingBlockParamNames = serializedObject.FindProperty("EyeTrackingBlockParamNames");
 
-        primaryColor0 = serializedObject.FindProperty("primaryColor0");
-        secondColor0 = serializedObject.FindProperty("secondColor0");
-        primaryColor1 = serializedObject.FindProperty("primaryColor1");
-        secondColor1 = serializedObject.FindProperty("secondColor1");
+        ColorProfiles = serializedObject.FindProperty("ColorProfiles");
 
         maxEyeMotionValue = serializedObject.FindProperty("maxEyeMotionValue");
 
@@ -273,10 +267,10 @@ public class AnimatorGeneratorEditor : Editor
         if (wizard.createShapePreferences)
         {
             GUILayout.Label("Shape Preferences", headerStyle);
-            GUILayout.Label("Creates VRC params for blendshapes with these prefixes.", headerStyle2);
+            GUILayout.Label("Creates VRC params for blendshapes with bool/float behaviour.", headerStyle2);
             GUILayout.Space(10);
-            EditorGUILayout.PropertyField(shapePreferenceSliderPrefix);
-            EditorGUILayout.PropertyField(shapePreferenceTogglesPrefix);
+            EditorGUILayout.PropertyField(shapePreferencePrefix);
+            EditorGUILayout.PropertyField(shapePreferences, new GUIContent("Shape Preferences List"), true);
         }
 
         // Cloths customization
@@ -297,13 +291,10 @@ public class AnimatorGeneratorEditor : Editor
         // Color customization
         if (wizard.createColorCustomization)
         {
-            GUILayout.Label("Color customization UV-offset animations", headerStyle);
-            GUILayout.Label("Animations controlling color palette texture UV-offsets (ToonLit shader)" +
-                "\nfor in-game color customization.", headerStyle2);
-            EditorGUILayout.PropertyField(primaryColor0);
-            EditorGUILayout.PropertyField(primaryColor1);
-            EditorGUILayout.PropertyField(secondColor0);
-            EditorGUILayout.PropertyField(secondColor1);
+            GUILayout.Label("Color customization", headerStyle);
+            GUILayout.Label("Each element defines a name and four color animations.", headerStyle2);
+
+            EditorGUILayout.PropertyField(ColorProfiles, new GUIContent("Profiles"), true);
         }
 
         // Face Toggle

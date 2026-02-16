@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: body prefs-2
+  m_EditorClassIdentifier: 
+  Parameters: {fileID: 11400000, guid: 81db426d2d57e2649b743a4a6f77e921, type: 2}
+  controls:
+  - name: <b>Arms
+    icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
+    type: 102
+    parameter:
+      name: pref/body/bool/arms
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Breast <color=orange>[male]
+    icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
+    type: 102
+    parameter:
+      name: pref/body/bool/breast[male]
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Breast <color=orange>[female]
+    icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
+    type: 102
+    parameter:
+      name: pref/body/bool/breast[female]
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Belly
+    icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
+    type: 102
+    parameter:
+      name: pref/body/bool/belly
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Legs
+    icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
+    type: 102
+    parameter:
+      name: pref/body/bool/legs
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Tail <color=orange>[more]
+    icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
+    type: 102
+    parameter:
+      name: pref/body/bool/tail[more]
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Tail <color=orange>[less]
+    icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
+    type: 102
+    parameter:
+      name: pref/body/bool/tail[less]
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
+  - name: <b>Fluff
+    icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
+    type: 102
+    parameter:
+      name: pref/body/bool/fluff
+    value: 1
+    style: 0
+    subMenu: {fileID: 0}
+    subParameters: []
+    labels: []
