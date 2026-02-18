@@ -757,13 +757,13 @@ MonoBehaviour:
   foldout_limits: 1
   foldout_grabpose: 1
   foldout_options: 1
-  foldout_gizmos: 0
+  foldout_gizmos: 1
   version: 1
   integrationType: 0
   rootTransform: {fileID: 2266373983763475509}
   ignoreTransforms: []
   ignoreOtherPhysBones: 0
-  endpointPosition: {x: 0, y: 0, z: 0}
+  endpointPosition: {x: 0, y: 0, z: -0}
   multiChildType: 0
   pull: 0.7
   pullCurve:
@@ -801,10 +801,28 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   immobileType: 0
-  immobile: 0
+  immobile: 0.175
   immobileCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.08932495
+      inSlope: -1.6273395
+      outSlope: -1.6273395
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07261413
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -813,15 +831,33 @@ MonoBehaviour:
     allowSelf: 1
     allowOthers: 1
     contentTypes: -1
-  radius: 0.0005
+  radius: 0.0006
   radiusCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.275
+      inSlope: -2.2572048
+      outSlope: -2.2572048
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06639004
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   colliders: []
-  limitType: 1
+  limitType: 3
   maxAngleX: 135
   maxAngleXCurve:
     serializedVersion: 2
@@ -847,7 +883,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxAngleZ: 45
+  maxAngleZ: 90
   maxAngleZCurve:
     serializedVersion: 2
     m_Curve: []
@@ -878,14 +914,14 @@ MonoBehaviour:
     allowSelf: 1
     allowOthers: 1
     contentTypes: -1
-  allowPosing: 2
+  allowPosing: 0
   poseFilter:
     allowSelf: 1
     allowOthers: 0
     contentTypes: -1
   snapToHand: 0
   grabMovement: 1
-  maxStretch: 0
+  maxStretch: 0.25
   maxStretchCurve:
     serializedVersion: 2
     m_Curve: []
@@ -943,13 +979,13 @@ MonoBehaviour:
   foldout_limits: 1
   foldout_grabpose: 1
   foldout_options: 1
-  foldout_gizmos: 0
+  foldout_gizmos: 1
   version: 1
   integrationType: 0
   rootTransform: {fileID: 6324991587851692904}
   ignoreTransforms: []
   ignoreOtherPhysBones: 0
-  endpointPosition: {x: 0, y: 0, z: 0}
+  endpointPosition: {x: 0, y: 0, z: -0}
   multiChildType: 0
   pull: 0.7
   pullCurve:
@@ -987,10 +1023,28 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   immobileType: 0
-  immobile: 0
+  immobile: 0.175
   immobileCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.08932495
+      inSlope: -1.6273395
+      outSlope: -1.6273395
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07261413
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -999,15 +1053,33 @@ MonoBehaviour:
     allowSelf: 1
     allowOthers: 1
     contentTypes: -1
-  radius: 0.0005
+  radius: 0.0006
   radiusCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.275
+      inSlope: -2.2572048
+      outSlope: -2.2572048
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06639004
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   colliders: []
-  limitType: 1
+  limitType: 3
   maxAngleX: 135
   maxAngleXCurve:
     serializedVersion: 2
@@ -1033,7 +1105,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxAngleZ: 45
+  maxAngleZ: 90
   maxAngleZCurve:
     serializedVersion: 2
     m_Curve: []
@@ -1064,14 +1136,14 @@ MonoBehaviour:
     allowSelf: 1
     allowOthers: 1
     contentTypes: -1
-  allowPosing: 2
+  allowPosing: 0
   poseFilter:
     allowSelf: 1
     allowOthers: 0
     contentTypes: -1
   snapToHand: 0
   grabMovement: 1
-  maxStretch: 0
+  maxStretch: 0.25
   maxStretchCurve:
     serializedVersion: 2
     m_Curve: []
@@ -1729,7 +1801,7 @@ MonoBehaviour:
   foldout_limits: 1
   foldout_grabpose: 1
   foldout_options: 1
-  foldout_gizmos: 1
+  foldout_gizmos: 0
   version: 1
   integrationType: 0
   rootTransform: {fileID: 140371982033344436}
@@ -1747,18 +1819,54 @@ MonoBehaviour:
   spring: 0.8
   springCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  stiffness: 0.2
+  stiffness: 0.25
   stiffnessCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.1383273
+      inSlope: -1.7594819
+      outSlope: -1.7594819
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06224066
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  gravity: 1
+  gravity: 0.4
   gravityCurve:
     serializedVersion: 2
     m_Curve: []
@@ -1773,10 +1881,28 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   immobileType: 0
-  immobile: 0.5
+  immobile: 0.15
   immobileCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2.2572048
+      outSlope: -2.2572048
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06639004
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1785,33 +1911,69 @@ MonoBehaviour:
     allowSelf: 1
     allowOthers: 1
     contentTypes: -1
-  radius: 0.001
+  radius: 0.0015
   radiusCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.65
+      inSlope: 1.81906
+      outSlope: 1.81906
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.05035971
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: -1.4054166
+      outSlope: -1.4054166
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.058992803
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   colliders:
-  - {fileID: 6380489134133188330}
-  - {fileID: 832457148506859346}
-  - {fileID: 8220114656490812864}
-  limitType: 0
-  maxAngleX: 90
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  limitType: 1
+  maxAngleX: 60
   maxAngleXCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.35
+      inSlope: 0.05446003
+      outSlope: 0.05446003
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.10580913
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.2588253
+      outSlope: 1.2588253
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06639004
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxAngleZ: 90
+  maxAngleZ: 45
   maxAngleZCurve:
     serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  limitRotation: {x: 53.33, y: 0, z: 0}
+  limitRotation: {x: 0, y: 0, z: 0}
   limitRotationXCurve:
     serializedVersion: 2
     m_Curve: []
@@ -1842,7 +2004,7 @@ MonoBehaviour:
     contentTypes: -1
   snapToHand: 0
   grabMovement: 1
-  maxStretch: 0
+  maxStretch: 0.15
   maxStretchCurve:
     serializedVersion: 2
     m_Curve: []
@@ -1929,7 +2091,7 @@ MonoBehaviour:
   ignoreOtherPhysBones: 0
   endpointPosition: {x: 0, y: 0, z: 0}
   multiChildType: 0
-  pull: 0.2
+  pull: 0.45
   pullCurve:
     serializedVersion: 2
     m_Curve: []
@@ -1950,7 +2112,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  gravity: 1
+  gravity: 0.325
   gravityCurve:
     serializedVersion: 2
     m_Curve: []
@@ -1977,16 +2139,34 @@ MonoBehaviour:
     allowSelf: 1
     allowOthers: 1
     contentTypes: -1
-  radius: 0.0006
+  radius: 0.00065
   radiusCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.60783386
+      inSlope: -1.3448642
+      outSlope: -1.3448642
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.066187024
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   colliders: []
   limitType: 1
-  maxAngleX: 30
+  maxAngleX: 45
   maxAngleXCurve:
     serializedVersion: 2
     m_Curve: []
@@ -2030,8 +2210,8 @@ MonoBehaviour:
     allowOthers: 1
     contentTypes: -1
   snapToHand: 0
-  grabMovement: 0.5
-  maxStretch: 0
+  grabMovement: 1
+  maxStretch: 0.1
   maxStretchCurve:
     serializedVersion: 2
     m_Curve: []
