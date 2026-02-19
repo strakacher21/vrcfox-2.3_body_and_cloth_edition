@@ -146,6 +146,11 @@ MonoBehaviour:
     primaryColor1: {fileID: 7400000, guid: 06ecb6188ee5f744ab4613dae1cbd302, type: 2}
     secondColor0: {fileID: 0}
     secondColor1: {fileID: 0}
+  - name: Round_glasses
+    primaryColor0: {fileID: 7400000, guid: 731b153207ab7fd458db7c5eebafb023, type: 2}
+    primaryColor1: {fileID: 7400000, guid: 757ecb7923eba1e428f4768eb9bccde5, type: 2}
+    secondColor0: {fileID: 7400000, guid: b1f8946bc8304d246802db358e1e329e, type: 2}
+    secondColor1: {fileID: 7400000, guid: 48ea333136cf90e4bbf972a77267a6dd, type: 2}
   assetContainer: {fileID: 9100000, guid: 6750ab3460cb8f748844b5ac096220fd, type: 2}
   fxMask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
   saveVRCExpressionParameters: 1
@@ -649,11 +654,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.056729216
-      objectReference: {fileID: 0}
-    - target: {fileID: 5866666021909216657, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7067194956783848370, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
@@ -1220,7 +1220,7 @@ MonoBehaviour:
   networkIDs: []
   customExpressions: 1
   expressionsMenu: {fileID: 11400000, guid: f01c13e840b714f8288e053a90b13b50, type: 2}
-  expressionParameters: {fileID: 11400000, guid: 80f4c75a61e59f14e8566b53f104c9a9,
+  expressionParameters: {fileID: 11400000, guid: 57914b58ffd326341b7c7251ee812f3f,
     type: 2}
   enableEyeLook: 1
   customEyeLookSettings:
@@ -1318,7 +1318,7 @@ MonoBehaviour:
     isDefault: 1
   - isEnabled: 0
     type: 5
-    animatorController: {fileID: 9100000, guid: 2eae2b810083bec40be78291238fc211,
+    animatorController: {fileID: 9100000, guid: 8dc8f8ee50adecc45bc0e6940322a068,
       type: 2}
     mask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
     isDefault: 0

@@ -1,0 +1,406 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1506855854, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: param_backup_2026-02-19_22-00.
+  m_EditorClassIdentifier: 
+  isEmpty: 0
+  parameters:
+  - name: tail/Colliders
+    valueType: 2
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: tail/anim/WAG
+    valueType: 1
+    saved: 1
+    defaultValue: 0.25
+    networkSynced: 1
+  - name: v2/anim/FacePresets
+    valueType: 0
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: cloth/toggle/coat
+    valueType: 2
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: cloth/toggle/coat_v2
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: cloth/toggle/T-shirt
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: cloth/toggle/jeans
+    valueType: 2
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: cloth/toggle/pants
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: cloth/toggle/shorts
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: cloth/toggle/shoes
+    valueType: 2
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: cloth/toggle/boots
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: cloth/toggle/slaps
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: items/Round_glasses
+    valueType: 2
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: pref/body/float/ears[more]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/ears[less]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/hair[more]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/hair[less]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/bool/lashes
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/fluff
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/muzzle[more]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/muzzle[less]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/arms
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/breast[male]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/breast[female]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/belly
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/legs
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/tail[more]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/body/float/tail[less]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/color/Body/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.2579152
+    networkSynced: 1
+  - name: pref/color/Body/slider/scol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.2451509
+    networkSynced: 1
+  - name: pref/color/eyes/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.1602151
+    networkSynced: 1
+  - name: pref/color/hair/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.25
+    networkSynced: 1
+  - name: pref/color/coat/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.9728906
+    networkSynced: 1
+  - name: pref/color/coat/slider/scol
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/color/coat_v2/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.03913194
+    networkSynced: 1
+  - name: pref/color/coat_v2/slider/scol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.6416375
+    networkSynced: 1
+  - name: pref/color/T-shirt/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.2042606
+    networkSynced: 1
+  - name: pref/color/jeans/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.4602147
+    networkSynced: 1
+  - name: pref/color/pants/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.03942985
+    networkSynced: 1
+  - name: pref/color/shorts/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.9577932
+    networkSynced: 1
+  - name: pref/color/shoes/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.04139626
+    networkSynced: 1
+  - name: pref/color/shoes/slider/scol
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: pref/color/boots/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.02972043
+    networkSynced: 1
+  - name: pref/color/boots/slider/scol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.02244605
+    networkSynced: 1
+  - name: pref/color/slaps/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.5957887
+    networkSynced: 1
+  - name: pref/color/slaps/slider/scol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.4960029
+    networkSynced: 1
+  - name: pref/color/Round_glasses/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.04187836
+    networkSynced: 1
+  - name: pref/color/Round_glasses/slider/scol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.03141648
+    networkSynced: 1
+  - name: anim/ears
+    valueType: 2
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: v2/LipSyncTrackingActive
+    valueType: 2
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: v2/ExpressionTrackingActive
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: exp/pet
+    valueType: 2
+    saved: 1
+    defaultValue: 1
+    networkSynced: 1
+  - name: v2/LipTrackingActive
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/EyeTrackingActive
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/JawOpen
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/LipFunnel
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/LipPucker
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/MouthClosed
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/MouthStretch
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/MouthUpperUpLeft
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/MouthUpperUpRight
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/MouthX
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/MouthLowerDownLeft
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/MouthLowerDownRight
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/MouthRaiserLower
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/SmileSad
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/JawX
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/JawZ
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/BrowExpressionLeft
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/BrowExpressionRight
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/EyeX
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/EyeY
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/EyeLidLeft
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/EyeLidRight
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/EyeSquintLeft
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/EyeSquintRight
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/CheekPuffSuck
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/TongueOut
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1

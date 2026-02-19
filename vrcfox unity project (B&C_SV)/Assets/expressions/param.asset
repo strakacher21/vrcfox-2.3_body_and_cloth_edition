@@ -28,7 +28,7 @@ MonoBehaviour:
     valueType: 0
     saved: 0
     defaultValue: 0
-    networkSynced: 1
+    networkSynced: 0
   - name: cloth/toggle/coat
     valueType: 2
     saved: 1
@@ -73,6 +73,11 @@ MonoBehaviour:
     valueType: 2
     saved: 1
     defaultValue: 0
+    networkSynced: 0
+  - name: items/Round_glasses
+    valueType: 2
+    saved: 1
+    defaultValue: 1
     networkSynced: 0
   - name: pref/body/float/ears[more]
     valueType: 1
@@ -238,6 +243,16 @@ MonoBehaviour:
     valueType: 1
     saved: 1
     defaultValue: 0.4960029
+    networkSynced: 0
+  - name: pref/color/Round_glasses/slider/pcol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.04187836
+    networkSynced: 0
+  - name: pref/color/Round_glasses/slider/scol
+    valueType: 1
+    saved: 1
+    defaultValue: 0.03141648
     networkSynced: 0
   - name: anim/ears
     valueType: 2
