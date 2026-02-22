@@ -35,6 +35,13 @@ class EXPORT_TO_UNITY_PG_separate_mesh_item(bpy.types.PropertyGroup):
         poll=lambda self, o: bool(o) and o.type == "MESH"
     )
 
+# UV Maps UI
+class EXPORT_TO_UNITY_PG_uv_map_item(bpy.types.PropertyGroup):
+    name: bpy.props.StringProperty(
+        name="UV Map Name",
+        default="UVMap"
+    )
+
 # Settings storage UI
 class EXPORT_TO_UNITY_PG_settings(bpy.types.PropertyGroup):
     export_path: bpy.props.StringProperty(
@@ -49,7 +56,7 @@ class EXPORT_TO_UNITY_PG_settings(bpy.types.PropertyGroup):
     )
     
     desired_model_name: bpy.props.StringProperty(
-        name="Mesh name",
+        name="Main mesh name",
         default="Body"
     )
     
@@ -58,9 +65,20 @@ class EXPORT_TO_UNITY_PG_settings(bpy.types.PropertyGroup):
         default="rig"
     )
     
-    export_uv_map: bpy.props.StringProperty(
-        name="UV map",
-        default="ColorMap"
+    export_uv_maps_active: bpy.props.BoolProperty(
+        name="Export UV maps",
+        default=True
+    )
+
+
+    export_uv_maps: bpy.props.CollectionProperty(
+        name="UV Maps List",
+        type=EXPORT_TO_UNITY_PG_uv_map_item
+    )
+    
+    export_uv_maps_index: bpy.props.IntProperty(
+        name="",
+        default=0
     )
     
     triangulate: bpy.props.BoolProperty(
@@ -113,12 +131,31 @@ class EXPORT_TO_UNITY_UL_separate_meshes(bpy.types.UIList):
     ):
         if self.layout_type in {'DEFAULT', 'COMPACT'}:
             if item.obj:
-                layout.prop(item, "obj", text="", emboss=False, icon='MESH_DATA')
+                layout.label(text=item.obj.name, icon='MESH_DATA')
             else:
                 layout.label(text="(Missing object)", icon='ERROR')
         elif self.layout_type == 'GRID':
             layout.alignment = 'CENTER'
             layout.label(text="", icon='MESH_DATA')
+
+# UV Maps UI list
+class EXPORT_TO_UNITY_UL_uv_maps(bpy.types.UIList):
+    def draw_item(
+        self,
+        _context,
+        layout,
+        _data,
+        item,
+        _icon,
+        _active_data,
+        _active_propname,
+        _index
+    ):
+        if self.layout_type in {'DEFAULT', 'COMPACT'}:
+            layout.prop(item, "name", text="", emboss=False, icon='GROUP_UVS')
+        elif self.layout_type == 'GRID':
+            layout.alignment = 'CENTER'
+            layout.label(text="", icon='GROUP_UVS')
 
 class EXPORT_TO_UNITY_OT_separate_mesh_add(bpy.types.Operator):
     bl_idname = "export_to_unity.separate_mesh_add"
@@ -173,6 +210,43 @@ class EXPORT_TO_UNITY_OT_separate_mesh_remove(bpy.types.Operator):
 
         return {'FINISHED'}
 
+class EXPORT_TO_UNITY_OT_uv_map_add(bpy.types.Operator):
+    bl_idname = "export_to_unity.uv_map_add"
+    bl_label = "Add UV map"
+    bl_description = "Add a UV map name to the export list"
+
+    def execute(self, context):
+        s = context.scene.export_to_unity_settings
+
+        # Try to get active UV map name from active object
+        default_name = "UVMap"
+        if context.active_object and context.active_object.type == 'MESH':
+            if context.active_object.data.uv_layers.active:
+                default_name = context.active_object.data.uv_layers.active.name
+
+        it = s.export_uv_maps.add()
+        it.name = default_name
+        s.export_uv_maps_index = len(s.export_uv_maps) - 1
+
+        return {'FINISHED'}
+
+class EXPORT_TO_UNITY_OT_uv_map_remove(bpy.types.Operator):
+    bl_idname = "export_to_unity.uv_map_remove"
+    bl_label = "Remove UV map"
+    bl_description = "Remove the active item from the UV maps list"
+
+    def execute(self, context):
+        s = context.scene.export_to_unity_settings
+        idx = s.export_uv_maps_index
+
+        if idx < 0 or idx >= len(s.export_uv_maps):
+            return {'CANCELLED'}
+
+        s.export_uv_maps.remove(idx)
+        s.export_uv_maps_index = min(idx, max(0, len(s.export_uv_maps) - 1))
+
+        return {'FINISHED'}
+
 # Export operator
 class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
     bl_idname = "export_to_unity.export"
@@ -185,7 +259,10 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
         file_name = s.file_name
         desired_model_name = s.desired_model_name
         rig_name = s.rig_name
-        export_uv_map = s.export_uv_map
+        
+        export_uv_maps_active = s.export_uv_maps_active
+        export_uv_map_names = [it.name.strip() for it in s.export_uv_maps if it.name.strip()]
+        
         triangulate = s.triangulate
         export_vertex_colors = s.export_vertex_colors
         export_vertex_colors_name = s.export_vertex_colors_name
@@ -197,7 +274,7 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
             "file_name": s.file_name,    
             "desired_model_name": s.desired_model_name,
             "rig_name": s.rig_name,
-            "export_uv_map": s.export_uv_map,
+            "export_uv_maps_active": s.export_uv_maps_active,
             "triangulate": s.triangulate,
             "export_vertex_colors": s.export_vertex_colors,
             "export_vertex_colors_name": s.export_vertex_colors_name,
@@ -205,6 +282,7 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
             "export_separate_meshes": s.export_separate_meshes,
             "separate_meshes_index": s.separate_meshes_index,
             "separate_meshes_names": [it.obj.name for it in s.separate_meshes if it.obj],
+            "uv_maps_names": export_uv_map_names,
         }
 
         # Get collections
@@ -298,31 +376,43 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
 
             rig_obj.data.name = rig_name
             
-        # Delete all UV maps except the selected one
+        # Delete all UV maps except the selected ones
         def process_mesh(obj):
             if not obj or obj.type != "MESH":
                 return
 
             # UV cleanup
             uv_layers = obj.data.uv_layers
-            target_name = export_uv_map.strip()
-            target = uv_layers.get(target_name)
 
-            if target is None:
-                raise ValueError(
-                    f"UV map '{export_uv_map}' not found on '{obj.name}'. "
-                    f"Existing: {[uv.name for uv in uv_layers]}"
-                )
+            if not export_uv_maps_active or not export_uv_map_names:
+                #Remove all UV maps if disabled or list is empty
+                while uv_layers:
+                    uv_layers.remove(uv_layers[0])
+            else:
+                targets = []
+                for name in export_uv_map_names:
+                    target = uv_layers.get(name)
+                    if target:
+                        targets.append(target)
 
-            uv_layers.active = target
+                if not targets:
+                    print(
+                        f"Warning: none of the specified UV maps found on '{obj.name}'. "
+                        f"Existing: {[uv.name for uv in uv_layers]}"
+                    )
+                else:
+                    uv_layers.active = targets[0]
 
-            names_to_remove = [uv.name for uv in uv_layers if uv.name != target.name]
-            for name in names_to_remove:
-                uv = uv_layers.get(name)
-                if uv is not None:
-                    uv_layers.remove(uv)
+                    allowed_names = {t.name for t in targets}
+                    names_to_remove = [uv.name for uv in uv_layers if uv.name not in allowed_names]
 
-            uv_layers.active = uv_layers.get(target.name)
+                    for name in names_to_remove:
+                        uv = uv_layers.get(name)
+                        if uv is not None:
+                            uv_layers.remove(uv)
+
+                    if uv_layers.get(targets[0].name):
+                        uv_layers.active = uv_layers.get(targets[0].name)
 
             # Vertex color cleanup
             if export_vertex_colors:
@@ -415,7 +505,7 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
 
         # restore simple properties
         for k, v in saved.items():
-            if k in {'separate_meshes_names', 'separate_meshes_index'}:
+            if k in {'separate_meshes_names', 'separate_meshes_index', 'uv_maps_names'}:
                 continue
             setattr(s, k, v)
 
@@ -432,7 +522,6 @@ class EXPORT_TO_UNITY_OT_export(bpy.types.Operator):
         s.separate_meshes_index = min(idx, max(0, len(s.separate_meshes) - 1))
 
         return {'FINISHED'}
-
 
 # UI (Header popover)
 class VIEW3D_PT_export_to_unity(bpy.types.Panel):
@@ -462,7 +551,27 @@ class VIEW3D_PT_export_to_unity(bpy.types.Panel):
         col.prop(s, "desired_model_name")
         col.prop(s, "rig_name")
         col.prop(s, "export_collection_name")
-        col.prop(s, "export_uv_map")
+
+        col.separator()
+        col.prop(s, "export_uv_maps_active")
+        
+        if s.export_uv_maps_active:
+            row = col.row()
+            row.template_list(
+                "EXPORT_TO_UNITY_UL_uv_maps",
+                "",
+                s,
+                "export_uv_maps",
+                s,
+                "export_uv_maps_index",
+                rows=3
+            )
+            col_buttons = row.column(align=True)
+            col_buttons.operator("export_to_unity.uv_map_add", icon='ADD', text="")
+            col_buttons.operator("export_to_unity.uv_map_remove", icon='REMOVE', text="")
+        
+        col.separator()
+
         col.prop(s, "triangulate")
         row = col.row(align=True)
         row.prop(s, "export_vertex_colors")
@@ -471,13 +580,7 @@ class VIEW3D_PT_export_to_unity(bpy.types.Panel):
 
         if s.export_separate_meshes:
             col.separator(type='LINE')
-
-            box = col.box()
-
-            row = box.row()
-            row.label(text="Separate from Body")
-
-            row = box.row()
+            row = col.row()
             row.template_list(
                 "EXPORT_TO_UNITY_UL_separate_meshes",
                 "",
@@ -492,10 +595,10 @@ class VIEW3D_PT_export_to_unity(bpy.types.Panel):
             col_buttons.operator("export_to_unity.separate_mesh_add", icon='ADD', text="")
             col_buttons.operator("export_to_unity.separate_mesh_remove", icon='REMOVE', text="")
 
+        col.separator()
         row = col.row(align=True)
         row.scale_y = 2.0
         row.operator("export_to_unity.export", text="Export to Unity!", icon='EXPORT')
-
 
 def export_to_unity_header_button(self, context):
     if not (context.workspace and context.workspace.name == "Layout"):
@@ -510,20 +613,22 @@ def export_to_unity_header_button(self, context):
         icon='EXPORT'
     )
 
-
 # Register
 classes = (
     EXPORT_TO_UNITY_PG_separate_mesh_item,
+    EXPORT_TO_UNITY_PG_uv_map_item,
     EXPORT_TO_UNITY_PG_settings,
 
     EXPORT_TO_UNITY_UL_separate_meshes,
+    EXPORT_TO_UNITY_UL_uv_maps,
     EXPORT_TO_UNITY_OT_separate_mesh_add,
     EXPORT_TO_UNITY_OT_separate_mesh_remove,
+    EXPORT_TO_UNITY_OT_uv_map_add,
+    EXPORT_TO_UNITY_OT_uv_map_remove,
 
     EXPORT_TO_UNITY_OT_export,
     VIEW3D_PT_export_to_unity,
 )
-
 
 def register():
     global _export_to_unity_owner_filepath
@@ -558,7 +663,6 @@ def register():
     if _export_to_unity_autounload not in bpy.app.handlers.load_post:
         bpy.app.handlers.load_post.append(_export_to_unity_autounload)
 
-
 def unregister():
     global _export_to_unity_owner_filepath
 
@@ -589,7 +693,6 @@ def unregister():
             pass
 
     _export_to_unity_owner_filepath = None
-
 
 if __name__ == "__main__":
     register()
