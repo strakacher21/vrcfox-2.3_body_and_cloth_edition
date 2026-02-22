@@ -56,7 +56,7 @@ class EXPORT_TO_UNITY_PG_settings(bpy.types.PropertyGroup):
     )
     
     desired_model_name: bpy.props.StringProperty(
-        name="Main mesh name",
+        name="Mesh name",
         default="Body"
     )
     
