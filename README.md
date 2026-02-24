@@ -28,12 +28,11 @@ The project includes the **Blend 5.0** file itself and the **Unity 2022.3.22f1**
 The easiest way to adjust the colors is to vertex paint rather than using a texture. This works well for solid colors, but is not suitable for fancy patterns. Your avatar file size will stay small and load quickly without texture files. If you prefer to use a texture, the model has a set of **UVs**. You will need to change the **active UV layer** of each mesh to **‘UVMap (atlas) / UVMap’** and apply the texture yourself. You will also need to erase all vertex colors, as they will still appear on the default material in the Unity project!
 
 > [!WARNING]
->**To properly export a model from Blender to Unity, you need to use the `export to unity` script in Blender!** 
+> **To properly export a model from Blender to Unity, use the built-in `Blender auto fbx export` custom tool in Blender!** <br>
+> Click **FBX Export** in Blender’s 3D Viewport header (Workspace: **Layout**) to open the export popover.
+> Press **Export FBX!** to export to Unity in one click.
 >
->Simply click the '▶' button in Blender to export the model correctly to Unity </br>
->*(Without — the colors of the model in Unity look faded and the clothes are exported incorrectly, and other problems may occur!)*
->
-> You can also adjust the export settings in the script.
+> To properly configure your Unity project, use this **[:bulb:Unity project setup guide](Unity-setup.md)**.
 
 The Unity project has a prefab model, as well as two scenes for **PC** and **Quest&IOS**. All prefab changes go into changing the scene. Аlso includes a script **AnimatorWizard**, that allows you to customise facial expressions, avatar blend preferences, cloth/color customisation, eye/face tracking, etc. You can disable some features to save [VRChat parameters](https://creators.vrchat.com/avatars/animator-parameters/).<br/>
 
