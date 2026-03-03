@@ -48,8 +48,8 @@ ___
 | **Triangles** | < 10k |
 | **Bones** | < 75 |
 | **Phys Bones** | 4|
-| **Material** | 12 |
-| **Mesh** | 12 |
+| **Material** | 16 |
+| **Mesh** | 16 |
 | **Contact Receivers** | 1 |
 | **Contact Colliders** | 3 |
 | **Download size** | ± 1 MB |

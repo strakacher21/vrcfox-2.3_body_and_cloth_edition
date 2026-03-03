@@ -151,6 +151,11 @@ MonoBehaviour:
     primaryColor1: {fileID: 7400000, guid: 757ecb7923eba1e428f4768eb9bccde5, type: 2}
     secondColor0: {fileID: 7400000, guid: b1f8946bc8304d246802db358e1e329e, type: 2}
     secondColor1: {fileID: 7400000, guid: 48ea333136cf90e4bbf972a77267a6dd, type: 2}
+  - name: Square glasses
+    primaryColor0: {fileID: 7400000, guid: 550b969c4c9a5754cba4869623e495d3, type: 2}
+    primaryColor1: {fileID: 7400000, guid: c7561c934e9d15c4894589e6420c6c4a, type: 2}
+    secondColor0: {fileID: 7400000, guid: 3a5ee09c3f71d2e4a9b0e3e003c03243, type: 2}
+    secondColor1: {fileID: 7400000, guid: 909927e740df9c1438bc863aaf05f2d2, type: 2}
   assetContainer: {fileID: 9100000, guid: 6750ab3460cb8f748844b5ac096220fd, type: 2}
   fxMask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
   saveVRCExpressionParameters: 1
@@ -570,6 +575,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.4779859
       objectReference: {fileID: 0}
+    - target: {fileID: -3523138356049608426, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -3107824568456337282, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[0]
@@ -654,6 +664,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.056729216
+      objectReference: {fileID: 0}
+    - target: {fileID: 6593893147025035968, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7067194956783848370, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
@@ -1224,7 +1239,7 @@ MonoBehaviour:
   networkIDs: []
   customExpressions: 1
   expressionsMenu: {fileID: 11400000, guid: f01c13e840b714f8288e053a90b13b50, type: 2}
-  expressionParameters: {fileID: 11400000, guid: 51c5db20e7c14b14bb736c5d2b45eb56,
+  expressionParameters: {fileID: 11400000, guid: 1e8559cb3db7db34897da5841559dd2f,
     type: 2}
   enableEyeLook: 1
   customEyeLookSettings:
@@ -1322,7 +1337,7 @@ MonoBehaviour:
     isDefault: 1
   - isEnabled: 0
     type: 5
-    animatorController: {fileID: 9100000, guid: 1e7ac1a7fb8ae3f4686fc8d047af6f70,
+    animatorController: {fileID: 9100000, guid: dc9d03bb279e3794787d1882a4b238dc,
       type: 2}
     mask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
     isDefault: 0
