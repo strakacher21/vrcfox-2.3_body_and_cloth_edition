@@ -151,7 +151,7 @@ MonoBehaviour:
     primaryColor1: {fileID: 7400000, guid: 757ecb7923eba1e428f4768eb9bccde5, type: 2}
     secondColor0: {fileID: 7400000, guid: b1f8946bc8304d246802db358e1e329e, type: 2}
     secondColor1: {fileID: 7400000, guid: 48ea333136cf90e4bbf972a77267a6dd, type: 2}
-  - name: Square glasses
+  - name: Square_glasses
     primaryColor0: {fileID: 7400000, guid: 550b969c4c9a5754cba4869623e495d3, type: 2}
     primaryColor1: {fileID: 7400000, guid: c7561c934e9d15c4894589e6420c6c4a, type: 2}
     secondColor0: {fileID: 7400000, guid: 3a5ee09c3f71d2e4a9b0e3e003c03243, type: 2}
@@ -417,6 +417,22 @@ MonoBehaviour:
     useFloat: 1
     lastMode: 1
   - blendShapeName: tail[less]
+    useBool: 0
+    useFloat: 1
+    lastMode: 1
+  - blendShapeName: round_glasses[Forward]
+    useBool: 0
+    useFloat: 1
+    lastMode: 1
+  - blendShapeName: round_glasses[Backward]
+    useBool: 0
+    useFloat: 1
+    lastMode: 1
+  - blendShapeName: square_glasses[Forward]
+    useBool: 0
+    useFloat: 1
+    lastMode: 1
+  - blendShapeName: square_glasses[Backward]
     useBool: 0
     useFloat: 1
     lastMode: 1
@@ -1239,7 +1255,7 @@ MonoBehaviour:
   networkIDs: []
   customExpressions: 1
   expressionsMenu: {fileID: 11400000, guid: f01c13e840b714f8288e053a90b13b50, type: 2}
-  expressionParameters: {fileID: 11400000, guid: c7a229ffc686c804f8b81cf9c58f2b5f,
+  expressionParameters: {fileID: 11400000, guid: d056baeefacb61344ba780cbbc80ad66,
     type: 2}
   enableEyeLook: 1
   customEyeLookSettings:
@@ -1337,7 +1353,7 @@ MonoBehaviour:
     isDefault: 1
   - isEnabled: 0
     type: 5
-    animatorController: {fileID: 9100000, guid: 519b44afc20c21349993fbafb58b62b6,
+    animatorController: {fileID: 9100000, guid: 96765658c795c84449b51051cb631e1f,
       type: 2}
     mask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
     isDefault: 0
