@@ -281,6 +281,8 @@ MonoBehaviour:
     leftAndRightShapes: 0
   - shapeName: EyeSquint
     leftAndRightShapes: 1
+  - shapeName: NoseSneer
+    leftAndRightShapes: 0
   DualFtShapes:
   - paramName: SmileSad
     minShapeName: MouthSad
@@ -428,11 +430,19 @@ MonoBehaviour:
     useBool: 0
     useFloat: 1
     lastMode: 1
+  - blendShapeName: round_glasses[Bigger]
+    useBool: 0
+    useFloat: 1
+    lastMode: 1
   - blendShapeName: square_glasses[Forward]
     useBool: 0
     useFloat: 1
     lastMode: 1
   - blendShapeName: square_glasses[Backward]
+    useBool: 0
+    useFloat: 1
+    lastMode: 1
+  - blendShapeName: square_glasses[Bigger]
     useBool: 0
     useFloat: 1
     lastMode: 1
@@ -1255,7 +1265,7 @@ MonoBehaviour:
   networkIDs: []
   customExpressions: 1
   expressionsMenu: {fileID: 11400000, guid: f01c13e840b714f8288e053a90b13b50, type: 2}
-  expressionParameters: {fileID: 11400000, guid: d056baeefacb61344ba780cbbc80ad66,
+  expressionParameters: {fileID: 11400000, guid: 777e481f406d92a468ce246b01371843,
     type: 2}
   enableEyeLook: 1
   customEyeLookSettings:
@@ -1353,7 +1363,7 @@ MonoBehaviour:
     isDefault: 1
   - isEnabled: 0
     type: 5
-    animatorController: {fileID: 9100000, guid: 96765658c795c84449b51051cb631e1f,
+    animatorController: {fileID: 9100000, guid: 2d1907f45dd30a94497c22e4406f50fa,
       type: 2}
     mask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
     isDefault: 0
@@ -1758,7 +1768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 3
   unityVersion: 2022.3.22f1
-  vrcfuryVersion: 1.1280.0
+  vrcfuryVersion: 1.1286.0
   somethingIsBroken: 0
   config:
     features: []

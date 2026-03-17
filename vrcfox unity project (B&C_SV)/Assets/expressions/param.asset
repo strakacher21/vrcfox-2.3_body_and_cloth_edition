@@ -169,12 +169,22 @@ MonoBehaviour:
     saved: 1
     defaultValue: 0
     networkSynced: 0
+  - name: pref/body/float/round_glasses[Bigger]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 0
   - name: pref/body/float/square_glasses[Forward]
     valueType: 1
     saved: 1
     defaultValue: 0
     networkSynced: 0
   - name: pref/body/float/square_glasses[Backward]
+    valueType: 1
+    saved: 1
+    defaultValue: 0
+    networkSynced: 0
+  - name: pref/body/float/square_glasses[Bigger]
     valueType: 1
     saved: 1
     defaultValue: 0
@@ -435,6 +445,11 @@ MonoBehaviour:
     defaultValue: 0
     networkSynced: 1
   - name: v2/TongueOut
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: v2/NoseSneer
     valueType: 1
     saved: 0
     defaultValue: 0
