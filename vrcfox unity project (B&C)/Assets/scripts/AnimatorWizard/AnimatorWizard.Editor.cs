@@ -314,10 +314,10 @@ public class AnimatorGeneratorEditor : Editor
         }
 
         // Parameter Compressor
-        if (wizard.createParamsCompressor)
-        {
-            GUILayout.Label("Parameter Compressor", headerStyle);
-        }
+        //if (wizard.createParamsCompressor)
+        //{
+        //    GUILayout.Label("Parameter Compressor", headerStyle);
+        //}
 
         // OSC smooth
         if ((wizard.createFaceTracking || wizard.createEyeTracking) && wizard.createOSCsmooth)
