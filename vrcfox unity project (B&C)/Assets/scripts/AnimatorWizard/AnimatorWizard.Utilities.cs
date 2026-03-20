@@ -184,16 +184,13 @@ public partial class AnimatorWizard : MonoBehaviour
         set.Add(systemName + "__tree");
         set.Add(systemName + "__brow expressions");
         set.Add(systemName + "__mouth expressions");
-
         set.Add(systemName + "__preferences drivers");
-
         set.Add(systemName + "__clothupperbody");
         set.Add(systemName + "__clothlowerbody");
         set.Add(systemName + "__clothfoot");
-
         set.Add(systemName + "__face tracking toggle");
         set.Add(systemName + "__OSC smoothing");
-
+        set.Add(systemName + " CompressedParams");
         set.Add(systemName + "__Left hand");
         set.Add(systemName + "__Right hand");
         set.Add(systemName + "__Eye Left Tracking");

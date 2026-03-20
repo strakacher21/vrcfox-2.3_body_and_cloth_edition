@@ -12,7 +12,7 @@ public partial class AnimatorWizard : MonoBehaviour
     public float localSmoothness = 0.1f;
     public float remoteSmoothness = 0.7f;
 
-    partial void ApplyOSCSmoothing(
+    partial void ApplyOSCSmooth(
         AacFlLayer layer,
         float localSmoothness,
         float remoteSmoothness,
