@@ -12,6 +12,7 @@ public partial class AnimatorWizard : MonoBehaviour
     private AacFlLayer cpLayer;
     private AacFlState cpLastStabilization;
     private AacFlStateMachine cpSender;
+    private AacFlStateMachine cpRecipient;
     private int cpSenderStateY = 0;
     private AacFlBase cpAacSnapshot;
 
@@ -22,6 +23,7 @@ public partial class AnimatorWizard : MonoBehaviour
         cpLayer = null;
         cpLastStabilization = null;
         cpSender = null;
+        cpRecipient = null;
         cpSenderStateY = 0;
         cpAacSnapshot = _aac;
 
@@ -32,12 +34,12 @@ public partial class AnimatorWizard : MonoBehaviour
 
         var isLocal = cpLayer.Av3().IsLocal;
 
-        var waiting = cpLayer.NewState("Waiting command", 2, 0);
-        cpSender = cpLayer.NewSubStateMachine("Sender", 1, 1);
-        var recipient = cpLayer.NewSubStateMachine("Recipient", 3, 1);
+        var waiting = cpLayer.NewState("Waiting command", 3, 0);
+        cpSender = cpLayer.NewSubStateMachine("Sender", 2, 1);
+        cpRecipient = cpLayer.NewSubStateMachine("Recipient", 4, 1);
 
         waiting.TransitionsTo(cpSender).When(isLocal.IsTrue());
-        waiting.TransitionsTo(recipient).When(isLocal.IsFalse());
+        waiting.TransitionsTo(cpRecipient).When(isLocal.IsFalse());
     }
 
     private void ApplyCompressedParams(string paramName)
@@ -47,11 +49,11 @@ public partial class AnimatorWizard : MonoBehaviour
         InitCompressedParamsLayer();
         var syncParam = cpLayer.BoolParameter("CompressedParams/Enabled");
         var n = cpSenderStateY + 1;
-        var senderState = cpSender.NewState($"Sender №{n}", 0, cpSenderStateY);
-        var stabilizationState = cpSender.NewState($"Stabilization №{n}", 1, cpSenderStateY);
+        var senderState = cpSender.NewState($"Sender №{n}", 3, cpSenderStateY);
+        var stabilizationState = cpSender.NewState($"Stabilization №{n}", 4, cpSenderStateY);
 
-        var driver = senderState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-        driver.parameters = new System.Collections.Generic.List<VRCAvatarParameterDriver.Parameter>
+        var SenderDriver = senderState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
+        SenderDriver.parameters = new System.Collections.Generic.List<VRCAvatarParameterDriver.Parameter>
         {
             new VRCAvatarParameterDriver.Parameter
             {
@@ -85,6 +87,33 @@ public partial class AnimatorWizard : MonoBehaviour
         .WithTransitionDurationSeconds(0f);
 
         cpSenderStateY++;
+
+        var paramValue = cpLayer.IntParameter("CompressedParams/ParamValue");
+
+        var recipientState = cpRecipient.NewState($"Recipient №{n}", 3, cpSenderStateY);
+
+        var RecipientDriver = recipientState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
+        RecipientDriver.parameters = new System.Collections.Generic.List<VRCAvatarParameterDriver.Parameter>
+        {
+            new VRCAvatarParameterDriver.Parameter
+            {
+                type         = VRCAvatarParameterDriver.ChangeType.Copy,
+                source       = "CompressedParams/ParamPack",
+                name         = paramName,
+                convertRange = true,
+                sourceMin    = 0f,
+                sourceMax    = 254f,
+                destMin      = -1f,
+                destMax      =  1f
+            }
+        };
+        cpRecipient.EntryTransitionsTo(recipientState)
+            .When(paramValue.IsEqualTo(n));
+
+        recipientState.Exits()
+            .WithTransitionDurationSeconds(0f)
+            .When(syncParam.IsFalse());
+
     }
 }
 #endif
