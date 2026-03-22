@@ -79,6 +79,7 @@ public partial class AnimatorWizard : MonoBehaviour
         InitializeClothingCustomization(skin);
         InitializeColorCustomization();
         InitializeFaceToggle();
+        InitializeCustomCompressedParams();
         InitializeEyeTracking(skin, avatar);
         InitializeFaceTracking(skin, avatar);
 

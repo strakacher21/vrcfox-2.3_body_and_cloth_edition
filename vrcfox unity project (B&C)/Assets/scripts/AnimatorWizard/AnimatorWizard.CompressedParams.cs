@@ -2,8 +2,9 @@
 using AnimatorAsCode.V1;
 using AnimatorAsCode.V1.VRC;
 using AnimatorAsCode.V1.VRCDestructiveWorkflow;
-using VRC.SDK3.Avatars.Components;
+using System.Collections.Generic;
 using UnityEngine;
+using VRC.SDK3.Avatars.Components;
 
 public partial class AnimatorWizard : MonoBehaviour
 {
@@ -58,6 +59,12 @@ public partial class AnimatorWizard : MonoBehaviour
             source = paramName,
             name = "CompressedParams/ParamPack"
         };
+
+        if (isInt)
+            cpLayer.IntParameter(paramName);
+        else
+            cpLayer.FloatParameter(paramName);
+
         if (!isInt)
         {
             senderDriverCopyParam.convertRange = true;
@@ -123,6 +130,85 @@ public partial class AnimatorWizard : MonoBehaviour
             .WithTransitionDurationSeconds(0f)
             .When(syncParam.IsFalse());
     }
+    [System.Serializable]
+    public struct CompressedParamEntry
+    {
+        public string paramName;
+        public bool useFloat;
+        public bool useInt;
+        [HideInInspector] public int lastMode;
+    }
 
+    public List<CompressedParamEntry> compressedParamEntries = new List<CompressedParamEntry>();
+
+    private void InitializeCustomCompressedParams()
+    {
+        if (!createParamsCompressor) return;
+
+        foreach (var entry in compressedParamEntries)
+        {
+            var name = entry.paramName?.Trim();
+            if (string.IsNullOrWhiteSpace(name)) continue;
+
+            if (entry.useFloat)
+                ApplyCompressedParams(name, false);
+            else if (entry.useInt)
+                ApplyCompressedParams(name, true);
+        }
+    }
+
+    [UnityEditor.CustomPropertyDrawer(typeof(AnimatorWizard.CompressedParamEntry))]
+    public class CompressedParamEntryDrawer : UnityEditor.PropertyDrawer
+    {
+        public override float GetPropertyHeight(UnityEditor.SerializedProperty property, GUIContent label)
+            => UnityEditor.EditorGUIUtility.singleLineHeight;
+
+        public override void OnGUI(Rect position, UnityEditor.SerializedProperty property, GUIContent label)
+        {
+            var paramName = property.FindPropertyRelative("paramName");
+            var useFloat = property.FindPropertyRelative("useFloat");
+            var useInt = property.FindPropertyRelative("useInt");
+            var lastMode = property.FindPropertyRelative("lastMode");
+
+            UnityEditor.EditorGUI.BeginProperty(position, label, property);
+            position = UnityEditor.EditorGUI.PrefixLabel(position, label);
+
+            const float spacing = 6f;
+            const float toggleW = 54f;
+
+            var nameRect = new Rect(position.x, position.y, position.width - (toggleW * 2 + spacing * 2), position.height);
+            var floatRect = new Rect(nameRect.xMax + spacing, position.y, toggleW, position.height);
+            var intRect = new Rect(floatRect.xMax + spacing, position.y, toggleW, position.height);
+
+            UnityEditor.EditorGUI.PropertyField(nameRect, paramName, GUIContent.none);
+
+            UnityEditor.EditorGUI.BeginChangeCheck();
+            var newFloat = UnityEditor.EditorGUI.ToggleLeft(floatRect, "Float", useFloat.boolValue);
+            if (UnityEditor.EditorGUI.EndChangeCheck())
+            {
+                useFloat.boolValue = newFloat;
+                if (newFloat) useInt.boolValue = false;
+                lastMode.intValue = 0;
+            }
+
+            UnityEditor.EditorGUI.BeginChangeCheck();
+            var newInt = UnityEditor.EditorGUI.ToggleLeft(intRect, "Int", useInt.boolValue);
+            if (UnityEditor.EditorGUI.EndChangeCheck())
+            {
+                useInt.boolValue = newInt;
+                if (newInt) useFloat.boolValue = false;
+                lastMode.intValue = 1;
+            }
+
+            if (useFloat.boolValue && useInt.boolValue)
+            {
+                var keepInt = lastMode.intValue == 1;
+                useInt.boolValue = keepInt;
+                useFloat.boolValue = !keepInt;
+            }
+
+            UnityEditor.EditorGUI.EndProperty();
+        }
+    }
 }
 #endif

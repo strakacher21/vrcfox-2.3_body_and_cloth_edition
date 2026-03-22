@@ -32,6 +32,7 @@ public class AnimatorGeneratorEditor : Editor
     private SerializedProperty createEyeTracking;
     private SerializedProperty createFaceTracking;
     private SerializedProperty createParamsCompressor;
+    private SerializedProperty compressedParamEntries;
 
     private SerializedProperty createFTLipSyncControl;
     private SerializedProperty createOSCsmooth;
@@ -110,6 +111,7 @@ public class AnimatorGeneratorEditor : Editor
         createEyeTracking = serializedObject.FindProperty("createEyeTracking");
         createFaceTracking = serializedObject.FindProperty("createFaceTracking");
         createParamsCompressor = serializedObject.FindProperty("createParamsCompressor");
+        compressedParamEntries = serializedObject.FindProperty("compressedParamEntries");
 
         createFTLipSyncControl = serializedObject.FindProperty("createFTLipSyncControl");
         createOSCsmooth = serializedObject.FindProperty("createOSCsmooth");
@@ -314,10 +316,11 @@ public class AnimatorGeneratorEditor : Editor
         }
 
         // Parameter Compressor
-        //if (wizard.createParamsCompressor)
-        //{
-        //    GUILayout.Label("Parameter Compressor", headerStyle);
-        //}
+        if (wizard.createParamsCompressor)
+        {
+            GUILayout.Label("Parameter Compressor", headerStyle);
+            EditorGUILayout.PropertyField(compressedParamEntries, new GUIContent("Custom Params List"), true);
+        }
 
         // OSC smooth
         if ((wizard.createFaceTracking || wizard.createEyeTracking) && wizard.createOSCsmooth)
