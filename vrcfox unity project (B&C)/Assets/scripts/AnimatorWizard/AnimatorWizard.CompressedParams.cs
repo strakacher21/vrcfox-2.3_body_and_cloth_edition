@@ -27,7 +27,7 @@ public partial class AnimatorWizard : MonoBehaviour
         cpSenderStateY = 0;
         cpAacSnapshot = _aac;
 
-        cpLayer = _aac.CreateSupportingFxLayer("CompressedParams").WithAvatarMask(fxMask);
+        cpLayer = _aac.CreateSupportingFxLayer("Compressed params").WithAvatarMask(fxMask);
 
         cpLayer.IntParameter("CompressedParams/ParamValue");
         cpLayer.IntParameter("CompressedParams/ParamPack");
@@ -42,7 +42,7 @@ public partial class AnimatorWizard : MonoBehaviour
         waiting.TransitionsTo(cpRecipient).When(isLocal.IsFalse());
     }
 
-    private void ApplyCompressedParams(string paramName)
+    private void ApplyCompressedParams(string paramName, bool isInt)
     {
         if (!createParamsCompressor) return;
 
@@ -52,28 +52,32 @@ public partial class AnimatorWizard : MonoBehaviour
         var senderState = cpSender.NewState($"Sender №{n}", 3, cpSenderStateY);
         var stabilizationState = cpSender.NewState($"Stabilization №{n}", 4, cpSenderStateY);
 
+        var senderDriverCopyParam = new VRCAvatarParameterDriver.Parameter
+        {
+            type = VRCAvatarParameterDriver.ChangeType.Copy,
+            source = paramName,
+            name = "CompressedParams/ParamPack"
+        };
+        if (!isInt)
+        {
+            senderDriverCopyParam.convertRange = true;
+            senderDriverCopyParam.sourceMin = -1f;
+            senderDriverCopyParam.sourceMax = 1f;
+            senderDriverCopyParam.destMin = 0f;
+            senderDriverCopyParam.destMax = 254f;
+        }
+
         var SenderDriver = senderState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
         SenderDriver.parameters = new System.Collections.Generic.List<VRCAvatarParameterDriver.Parameter>
+    {
+        new VRCAvatarParameterDriver.Parameter
         {
-            new VRCAvatarParameterDriver.Parameter
-            {
-                type  = VRCAvatarParameterDriver.ChangeType.Set,
-                name  = "CompressedParams/ParamValue",
-                value = n
-            },
-
-            new VRCAvatarParameterDriver.Parameter
-            {
-                type         = VRCAvatarParameterDriver.ChangeType.Copy,
-                source       = paramName,
-                name         = "CompressedParams/ParamPack",
-                convertRange = true,
-                sourceMin    = -1f,
-                sourceMax    =  1f,
-                destMin      =  0f,
-                destMax      = 254f
-            }
-        };
+            type  = VRCAvatarParameterDriver.ChangeType.Set,
+            name  = "CompressedParams/ParamValue",
+            value = n
+        },
+        senderDriverCopyParam
+    };
 
         if (cpLastStabilization != null)
             cpLastStabilization.TransitionsTo(senderState)
@@ -82,38 +86,43 @@ public partial class AnimatorWizard : MonoBehaviour
 
         cpLastStabilization = stabilizationState;
 
-            senderState.TransitionsTo(stabilizationState)
-        .AfterAnimationIsAtLeastAtNormalized(0.1f)
-        .WithTransitionDurationSeconds(0f);
+        senderState.TransitionsTo(stabilizationState)
+            .AfterAnimationIsAtLeastAtNormalized(0.1f)
+            .WithTransitionDurationSeconds(0f);
 
         cpSenderStateY++;
 
         var paramValue = cpLayer.IntParameter("CompressedParams/ParamValue");
-
         var recipientState = cpRecipient.NewState($"Recipient №{n}", 3, cpSenderStateY);
+
+        var recipientDriverCopyParam = new VRCAvatarParameterDriver.Parameter
+        {
+            type = VRCAvatarParameterDriver.ChangeType.Copy,
+            source = "CompressedParams/ParamPack",
+            name = paramName
+        };
+        if (!isInt)
+        {
+            recipientDriverCopyParam.convertRange = true;
+            recipientDriverCopyParam.sourceMin = 0f;
+            recipientDriverCopyParam.sourceMax = 254f;
+            recipientDriverCopyParam.destMin = -1f;
+            recipientDriverCopyParam.destMax = 1f;
+        }
 
         var RecipientDriver = recipientState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
         RecipientDriver.parameters = new System.Collections.Generic.List<VRCAvatarParameterDriver.Parameter>
-        {
-            new VRCAvatarParameterDriver.Parameter
-            {
-                type         = VRCAvatarParameterDriver.ChangeType.Copy,
-                source       = "CompressedParams/ParamPack",
-                name         = paramName,
-                convertRange = true,
-                sourceMin    = 0f,
-                sourceMax    = 254f,
-                destMin      = -1f,
-                destMax      =  1f
-            }
-        };
+    {
+        recipientDriverCopyParam
+    };
+
         cpRecipient.EntryTransitionsTo(recipientState)
             .When(paramValue.IsEqualTo(n));
 
         recipientState.Exits()
             .WithTransitionDurationSeconds(0f)
             .When(syncParam.IsFalse());
-
     }
+
 }
 #endif

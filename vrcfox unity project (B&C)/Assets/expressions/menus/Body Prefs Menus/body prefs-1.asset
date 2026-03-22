@@ -16,63 +16,69 @@ MonoBehaviour:
   controls:
   - name: <b>Ears <color=orange>[More]
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/ears[more]
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/ears[more]
     labels: []
   - name: <b>Ears <color=orange>[Less]
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/ears[less]
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/ears[less]
     labels: []
   - name: <b>Hair <color=orange>[More]
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/hair[more]
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/hair[more]
     labels: []
   - name: <b>Hair <color=orange>[Less]
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/hair[less]
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/hair[less]
     labels: []
   - name: <b>Muzzle <color=orange>[more]
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/muzzle[more]
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/muzzle[more]
     labels: []
   - name: <b>Muzzle <color=orange>[less]
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/muzzle[less]
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/muzzle[less]
     labels: []
   - name: <b>Eyelashes
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}

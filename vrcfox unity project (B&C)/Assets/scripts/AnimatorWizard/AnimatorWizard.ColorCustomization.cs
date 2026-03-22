@@ -54,7 +54,7 @@ public partial class AnimatorWizard : MonoBehaviour
                         new[] { 0f, 1f },
                         pcolParam
                     ));
-                    ApplyCompressedParams(pcolParam.Name);
+                    ApplyCompressedParams(pcolParam.Name, false);
                 }
 
                 if (profile.secondColor0 != null && profile.secondColor1 != null)
@@ -66,7 +66,7 @@ public partial class AnimatorWizard : MonoBehaviour
                         new[] { 0f, 1f },
                         scolParam
                     ));
-                    ApplyCompressedParams(scolParam.Name);
+                    ApplyCompressedParams(scolParam.Name, false);
                 }
             }
 

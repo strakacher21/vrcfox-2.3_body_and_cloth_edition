@@ -28,6 +28,7 @@ public partial class AnimatorWizard : MonoBehaviour
 
         var FaceToggleActive = FaceToggleLayer.BoolParameter("FaceToggleActive");
         var FaceToggleActiveParam = CreateIntParam(FaceToggleLayer, FullFaceTrackingPrefix + "anim/FacePresets", false, 0);
+        ApplyCompressedParams(FaceToggleActiveParam.Name, true);
 
         var ftActiveParam = FaceToggleLayer.BoolParameter(FullFaceTrackingPrefix + "LipTrackingActive");
 
