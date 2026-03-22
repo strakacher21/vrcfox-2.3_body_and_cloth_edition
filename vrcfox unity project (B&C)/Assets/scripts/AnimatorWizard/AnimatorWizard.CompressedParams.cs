@@ -13,6 +13,7 @@ public partial class AnimatorWizard : MonoBehaviour
     private AacFlLayer cpLayer;
     private AacFlState cpLastStabilization;
     private AacFlStateMachine cpSender;
+    private AacFlState cpFirstSender;
     private AacFlStateMachine cpRecipient;
     private int cpSenderStateY = 0;
     private AacFlBase cpAacSnapshot;
@@ -24,6 +25,7 @@ public partial class AnimatorWizard : MonoBehaviour
         cpLayer = null;
         cpLastStabilization = null;
         cpSender = null;
+        cpFirstSender = null;
         cpRecipient = null;
         cpSenderStateY = 0;
         cpAacSnapshot = _aac;
@@ -49,9 +51,13 @@ public partial class AnimatorWizard : MonoBehaviour
 
         InitCompressedParamsLayer();
         var syncParam = cpLayer.BoolParameter("CompressedParams/Enabled");
+        cpLayer.OverrideValue(syncParam, true);
         var n = cpSenderStateY + 1;
         var senderState = cpSender.NewState($"Sender №{n}", 3, cpSenderStateY);
         var stabilizationState = cpSender.NewState($"Stabilization №{n}", 4, cpSenderStateY);
+
+        if (cpFirstSender == null)
+            cpFirstSender = senderState;
 
         var senderDriverCopyParam = new VRCAvatarParameterDriver.Parameter
         {
@@ -128,7 +134,7 @@ public partial class AnimatorWizard : MonoBehaviour
 
         recipientState.Exits()
             .WithTransitionDurationSeconds(0f)
-            .When(syncParam.IsFalse());
+            .When(syncParam.IsTrue());
     }
     [System.Serializable]
     public struct CompressedParamEntry
@@ -140,7 +146,6 @@ public partial class AnimatorWizard : MonoBehaviour
     }
 
     public List<CompressedParamEntry> compressedParamEntries = new List<CompressedParamEntry>();
-
     private void InitializeCustomCompressedParams()
     {
         if (!createParamsCompressor) return;
@@ -154,6 +159,14 @@ public partial class AnimatorWizard : MonoBehaviour
                 ApplyCompressedParams(name, false);
             else if (entry.useInt)
                 ApplyCompressedParams(name, true);
+        }
+
+        if (cpLastStabilization != null && cpFirstSender != null)
+        {
+            var syncParam = cpLayer.BoolParameter("CompressedParams/Enabled");
+            cpLastStabilization.TransitionsTo(cpFirstSender)
+                .WithTransitionDurationSeconds(0f)
+                .When(syncParam.IsTrue());
         }
     }
 
