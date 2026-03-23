@@ -53,7 +53,7 @@ public partial class AnimatorWizard : MonoBehaviour
         {
             var allEyeParams = new List<string> { EyeXParam.Name, EyeYParam.Name };
             var OSCLayerEye = _aac.CreateSupportingIdleLayer("OSC smoothing");
-            ApplyOSCSmoothing(OSCLayerEye, localSmoothness, remoteSmoothness, allEyeParams, new List<BlendTree> { leftEyeTree, rightEyeTree });
+            ApplyOSCSmooth(OSCLayerEye, localSmoothness, remoteSmoothness, allEyeParams, new List<BlendTree> { leftEyeTree, rightEyeTree });
         }
     }
     private BlendTree setupEyeTracking(
@@ -133,7 +133,7 @@ public partial class AnimatorWizard : MonoBehaviour
 
         return EyeTrackingTree;
     }
-    partial void ApplyOSCSmoothing(
+    partial void ApplyOSCSmooth(
         AacFlLayer layer,
         float localSmoothness,
         float remoteSmoothness,

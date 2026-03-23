@@ -75,14 +75,13 @@ public partial class AnimatorWizard : MonoBehaviour
 
         InitializeGestureLayers();
         InitializeGestureExpressions(skin, ftActiveParam);
-
-        InitializeEyeTracking(skin, avatar);
-        InitializeFaceTracking(skin, avatar);
-
+        InitializeShapePreferences(skin);
         InitializeClothingCustomization(skin);
         InitializeColorCustomization();
-        InitializeShapePreferences(skin);
         InitializeFaceToggle();
+        InitializeCustomCompressedParams();
+        InitializeEyeTracking(skin, avatar);
+        InitializeFaceTracking(skin, avatar);
 
         if (!saveVRCExpressionParameters)
         {

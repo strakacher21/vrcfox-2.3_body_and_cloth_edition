@@ -18,12 +18,12 @@ MonoBehaviour:
     valueType: 0
     saved: 0
     defaultValue: 0
-    networkSynced: 1
+    networkSynced: 0
   - name: tail/anim/WAG
     valueType: 1
     saved: 1
     defaultValue: 0.25
-    networkSynced: 1
+    networkSynced: 0
   - name: cloth/toggle/coat
     valueType: 2
     saved: 1
@@ -99,91 +99,91 @@ MonoBehaviour:
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: pref/body/bool/ears[more]
-    valueType: 2
+  - name: pref/body/float/ears[more]
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/ears[less]
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/ears[less]
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/hair[more]
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/hair[more]
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/hair[less]
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/hair[less]
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
+    networkSynced: 0
   - name: pref/body/bool/lashes
     valueType: 2
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: pref/body/bool/fluff
-    valueType: 2
+  - name: pref/body/float/fluff
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/muzzle[more]
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/muzzle[more]
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/muzzle[less]
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/muzzle[less]
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/arms
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/arms
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/breast[male]
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/breast[male]
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/breast[female]
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/breast[female]
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/belly
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/belly
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/legs
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/legs
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/tail[more]
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/tail[more]
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
-  - name: pref/body/bool/tail[less]
-    valueType: 2
+    networkSynced: 0
+  - name: pref/body/float/tail[less]
+    valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
+    networkSynced: 0
   - name: pref/color/Body/slider/pcol
     valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
+    networkSynced: 0
   - name: pref/color/Body/slider/scol
     valueType: 1
     saved: 1
     defaultValue: 0
-    networkSynced: 1
+    networkSynced: 0
   - name: v2/LipTrackingActive
     valueType: 2
     saved: 1
@@ -274,6 +274,11 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 1
+  - name: v2/NoseSneer
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
   - name: v2/EyeX
     valueType: 1
     saved: 0
@@ -311,6 +316,16 @@ MonoBehaviour:
     networkSynced: 1
   - name: v2/TongueOut
     valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: CompressedParams/ParamValue
+    valueType: 0
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: CompressedParams/ParamPack
+    valueType: 0
     saved: 0
     defaultValue: 0
     networkSynced: 1

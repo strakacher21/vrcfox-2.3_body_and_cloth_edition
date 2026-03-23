@@ -31,6 +31,8 @@ public class AnimatorGeneratorEditor : Editor
     private SerializedProperty createFaceToggle;
     private SerializedProperty createEyeTracking;
     private SerializedProperty createFaceTracking;
+    private SerializedProperty createParamsCompressor;
+    private SerializedProperty compressedParamEntries;
 
     private SerializedProperty createFTLipSyncControl;
     private SerializedProperty createOSCsmooth;
@@ -108,6 +110,8 @@ public class AnimatorGeneratorEditor : Editor
         createFaceToggle = serializedObject.FindProperty("createFaceToggle");
         createEyeTracking = serializedObject.FindProperty("createEyeTracking");
         createFaceTracking = serializedObject.FindProperty("createFaceTracking");
+        createParamsCompressor = serializedObject.FindProperty("createParamsCompressor");
+        compressedParamEntries = serializedObject.FindProperty("compressedParamEntries");
 
         createFTLipSyncControl = serializedObject.FindProperty("createFTLipSyncControl");
         createOSCsmooth = serializedObject.FindProperty("createOSCsmooth");
@@ -258,6 +262,7 @@ public class AnimatorGeneratorEditor : Editor
         EditorGUILayout.PropertyField(createClothCustomization);
         EditorGUILayout.PropertyField(createColorCustomization);
         EditorGUILayout.PropertyField(createFaceToggle);
+        EditorGUILayout.PropertyField(createParamsCompressor);
         if (wizard.createFaceTracking || wizard.createEyeTracking)
             EditorGUILayout.PropertyField(createOSCsmooth);
         EditorGUILayout.PropertyField(createEyeTracking);
@@ -308,6 +313,13 @@ public class AnimatorGeneratorEditor : Editor
                 PopUpLabel("Face Toggle Block bool list", "Each element is a VRC bool parameter name. When any is True, Face Toggle won't work."));
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(FaceToggleNames);
+        }
+
+        // Parameter Compressor
+        if (wizard.createParamsCompressor)
+        {
+            GUILayout.Label("Parameter Compressor", headerStyle);
+            EditorGUILayout.PropertyField(compressedParamEntries, new GUIContent("Custom Params List"), true);
         }
 
         // OSC smooth

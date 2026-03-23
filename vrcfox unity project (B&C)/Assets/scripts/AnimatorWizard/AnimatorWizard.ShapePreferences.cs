@@ -41,8 +41,8 @@ public partial class AnimatorWizard : MonoBehaviour
         // Toggle drivers (common to prefs and cloth)
         // this state transitions to itself every half second to update toggles. it sucks
         // TODO: not use this awful driver updating
-        var fxDriverLayer = _aac.CreateSupportingFxLayer("preferences drivers").WithAvatarMask(fxMask);
-        var fxDriverState = fxDriverLayer.NewState("preferences drivers");
+        var fxDriverLayer = _aac.CreateSupportingFxLayer("bool preferences drivers").WithAvatarMask(fxMask);
+        var fxDriverState = fxDriverLayer.NewState("bool preferences drivers");
         fxDriverState.TransitionsTo(fxDriverState)
             .AfterAnimationFinishes()
             .WithTransitionDurationSeconds(0.5f)
@@ -77,6 +77,7 @@ public partial class AnimatorWizard : MonoBehaviour
             {
                 var param = CreateFloatParam(_fxTreeLayer, floatParamName, true, 0);
                 tree.AddChild(BlendshapeTree(_fxTreeLayer, skin, fullBlendShapeName, param));
+                ApplyCompressedParams(floatParamName, false);
             }
             else if (entry.useBool)
             {

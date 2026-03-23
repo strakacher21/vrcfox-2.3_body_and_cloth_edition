@@ -16,81 +16,89 @@ MonoBehaviour:
   controls:
   - name: <b>Arms
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/arms
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/arms
     labels: []
   - name: <b>Breast <color=orange>[male]
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/breast[male]
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/breast[male]
     labels: []
   - name: <b>Breast <color=orange>[female]
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/breast[female]
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/breast[female]
     labels: []
   - name: <b>Belly
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/belly
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/belly
     labels: []
   - name: <b>Legs
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/legs
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/legs
     labels: []
   - name: <b>Tail <color=orange>[more]
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/tail[more]
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/tail[more]
     labels: []
   - name: <b>Tail <color=orange>[less]
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/tail[less]
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/tail[less]
     labels: []
   - name: <b>Fluff
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
-    type: 102
+    type: 203
     parameter:
-      name: pref/body/bool/fluff
+      name: 
     value: 1
     style: 0
     subMenu: {fileID: 0}
-    subParameters: []
+    subParameters:
+    - name: pref/body/float/fluff
     labels: []
