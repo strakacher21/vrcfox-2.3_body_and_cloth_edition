@@ -46,20 +46,23 @@ public partial class AnimatorWizard : MonoBehaviour
     };
 
     protected void InitializeGestureExpressions(
-        SkinnedMeshRenderer skin,
+        SkinnedMeshRenderer[] skins,
         AacFlBoolParameter ftActiveParam
         )
     {
+        if (skins == null || skins.Length == 0)
+            return;
+
         // brow Gesture expressions
-        MapHandPosesToShapes("brow expressions", skin, browShapeNames, browPrefix, false, ftActiveParam, GestureExpressionsBlockParamNames);
+        MapHandPosesToShapes("brow expressions", skins, browShapeNames, browPrefix, false, ftActiveParam, GestureExpressionsBlockParamNames);
 
         // mouth Gesture expressions
-        MapHandPosesToShapes("mouth expressions", skin, mouthShapeNames, mouthPrefix, true, ftActiveParam, GestureExpressionsBlockParamNames);
+        MapHandPosesToShapes("mouth expressions", skins, mouthShapeNames, mouthPrefix, true, ftActiveParam, GestureExpressionsBlockParamNames);
     }
 
     private void MapHandPosesToShapes(
         string layerName,
-        SkinnedMeshRenderer skin,
+        SkinnedMeshRenderer[] skins,
         string[] shapeNames,
         string prefix,
         bool rightHand,
@@ -87,7 +90,7 @@ public partial class AnimatorWizard : MonoBehaviour
 
             foreach (var shapeName in shapeNames)
             {
-                clip.BlendShape(skin, prefix + shapeName, shapeName == shapeNames[i] ? 100 : 0);
+                AddGestureBlendShapeOnAllMatchingMeshes(clip, skins, prefix + shapeName, shapeName == shapeNames[i] ? 100 : 0);
             }
 
             var state = layer.NewState(shapeNames[i], 1, i).WithAnimation(clip);
@@ -121,6 +124,20 @@ public partial class AnimatorWizard : MonoBehaviour
                     else { enter.And(block.IsFalse()); exit.Or().When(block.IsTrue()); }
                 }
             }
+        }
+    }
+
+    private void AddGestureBlendShapeOnAllMatchingMeshes(AacFlClip clip, SkinnedMeshRenderer[] skins, string blendShapeName, float value)
+    {
+        foreach (var skin in skins)
+        {
+            if (skin == null || skin.sharedMesh == null)
+                continue;
+
+            if (skin.sharedMesh.GetBlendShapeIndex(blendShapeName) < 0)
+                continue;
+
+            clip.BlendShape(skin, blendShapeName, value);
         }
     }
 }
