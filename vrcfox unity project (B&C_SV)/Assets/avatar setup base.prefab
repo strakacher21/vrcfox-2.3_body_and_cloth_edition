@@ -156,6 +156,12 @@ MonoBehaviour:
     primaryColor1: {fileID: 7400000, guid: c7561c934e9d15c4894589e6420c6c4a, type: 2}
     secondColor0: {fileID: 7400000, guid: 3a5ee09c3f71d2e4a9b0e3e003c03243, type: 2}
     secondColor1: {fileID: 7400000, guid: 909927e740df9c1438bc863aaf05f2d2, type: 2}
+  createParamsCompressor: 1
+  compressedParamEntries:
+  - paramName: tail/anim/WAG
+    useFloat: 1
+    useInt: 0
+    lastMode: 0
   assetContainer: {fileID: 9100000, guid: 6750ab3460cb8f748844b5ac096220fd, type: 2}
   fxMask: {fileID: 31900000, guid: a2a2b3490f538480bbd472b54282c586, type: 2}
   saveVRCExpressionParameters: 1
@@ -358,7 +364,6 @@ MonoBehaviour:
   createOSCsmooth: 1
   localSmoothness: 0.1
   remoteSmoothness: 0.7
-  UseSeparateClothMeshes: 1
   createShapePreferences: 1
   shapePreferencePrefix: pref/body/
   shapePreferences:
@@ -1768,7 +1773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 3
   unityVersion: 2022.3.22f1
-  vrcfuryVersion: 1.1286.0
+  vrcfuryVersion: 1.1288.0
   somethingIsBroken: 0
   config:
     features: []
