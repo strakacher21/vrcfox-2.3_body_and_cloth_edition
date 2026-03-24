@@ -27,7 +27,7 @@ public partial class AnimatorWizard : MonoBehaviour
         "AFK"
     };
 
-    private void InitializeEyeTracking(SkinnedMeshRenderer skin, VRCAvatarDescriptor avatar)
+    private void InitializeEyeTracking(VRCAvatarDescriptor avatar)
     {
         if (!createEyeTracking)
             return;

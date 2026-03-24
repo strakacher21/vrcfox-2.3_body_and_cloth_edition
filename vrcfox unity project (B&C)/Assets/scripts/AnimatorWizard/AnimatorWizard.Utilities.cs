@@ -14,40 +14,40 @@ public partial class AnimatorWizard : MonoBehaviour
     protected const string Left = "Left";
     protected const string Right = "Right";
 
-    protected BlendTree BlendshapeTree(AacFlLayer layer, SkinnedMeshRenderer skin, AacFlParameter param, float min = 0, float max = 100)
+    protected BlendTree BlendshapeTree(AacFlLayer layer, SkinnedMeshRenderer[] skins, AacFlParameter param, float min = 0, float max = 100)
     {
-        return BlendshapeTree(layer, skin, param.Name, param, min, max);
+        return BlendshapeTree(layer, skins, param.Name, param, min, max);
     }
 
-    protected BlendTree BlendshapeTree(AacFlLayer layer, SkinnedMeshRenderer skin, string shapeName, AacFlParameter param, float min = 0, float max = 100)
+    protected BlendTree BlendshapeTree(AacFlLayer layer, SkinnedMeshRenderer[] skins, string shapeName, AacFlParameter param, float min = 0, float max = 100)
     {
-        var state000 = _aac.NewClip().BlendShape(skin, shapeName, min);
+        var state000 = _aac.NewClip().BlendShape(skins, shapeName, min);
         state000.Clip.name = param.Name + ":0";
 
-        var state100 = _aac.NewClip().BlendShape(skin, shapeName, max);
+        var state100 = _aac.NewClip().BlendShape(skins, shapeName, max);
         state100.Clip.name = param.Name + ":1";
 
         return Subtree(new Motion[] { state000.Clip, state100.Clip }, new[] { 0f, 1f }, param);
     }
 
     protected BlendTree DualBlendshapeTree(
-        AacFlLayer layer, AacFlParameter param, SkinnedMeshRenderer skin,
+        AacFlLayer layer, AacFlParameter param, SkinnedMeshRenderer[] skins,
         string minShapeName, string maxShapeName,
         float minValue, float neutralValue, float maxValue)
     {
         var minClip = _aac.NewClip()
-            .BlendShape(skin, minShapeName, 100)
-            .BlendShape(skin, maxShapeName, 0);
+            .BlendShape(skins, minShapeName, 100)
+            .BlendShape(skins, maxShapeName, 0);
         minClip.Clip.name = param.Name + ":" + minShapeName;
 
         var neutralClip = _aac.NewClip()
-            .BlendShape(skin, minShapeName, 0)
-            .BlendShape(skin, maxShapeName, 0);
+            .BlendShape(skins, minShapeName, 0)
+            .BlendShape(skins, maxShapeName, 0);
         neutralClip.Clip.name = param.Name + ":neutral";
 
         var maxClip = _aac.NewClip()
-            .BlendShape(skin, minShapeName, 0)
-            .BlendShape(skin, maxShapeName, 100);
+            .BlendShape(skins, minShapeName, 0)
+            .BlendShape(skins, maxShapeName, 100);
         maxClip.Clip.name = param.Name + ":" + maxShapeName;
 
         return Subtree(new Motion[] { minClip.Clip, neutralClip.Clip, maxClip.Clip },

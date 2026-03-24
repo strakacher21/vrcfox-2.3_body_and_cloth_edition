@@ -93,9 +93,12 @@ public partial class AnimatorWizard : MonoBehaviour
         new DualFtShape("CheekPuffSuck", "CheekSuck", "CheekPuff"),
     };
 
-    private void InitializeFaceTracking(SkinnedMeshRenderer skin, VRCAvatarDescriptor avatar)
+    private void InitializeFaceTracking(SkinnedMeshRenderer[] skins, VRCAvatarDescriptor avatar)
     {
         if (!createFaceTracking)
+            return;
+
+        if (skins == null || skins.Length == 0)
             return;
 
         var layer = _aac.CreateSupportingFxLayer("face tracking toggle").WithAvatarMask(fxMask);
@@ -209,20 +212,29 @@ public partial class AnimatorWizard : MonoBehaviour
                 var rightName = baseName + Right;
 
                 var leftParam = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + leftName, false, 0);
-                tree.AddChild(BlendshapeTree(_fxTreeLayer, skin, leftParam));
-                if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + leftName);
+                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, leftParam.Name))
+                {
+                    tree.AddChild(BuildFaceTrackingBlendshapeTreeForSkins(leftParam.Name, leftParam, skins));
+                    if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + leftName);
+                }
 
                 var rightParam = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + rightName, false, 0);
-                tree.AddChild(BlendshapeTree(_fxTreeLayer, skin, rightParam));
-                if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + rightName);
+                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, rightParam.Name))
+                {
+                    tree.AddChild(BuildFaceTrackingBlendshapeTreeForSkins(rightParam.Name, rightParam, skins));
+                    if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + rightName);
+                }
             }
             else
             {
                 var param = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + shapeName, false, 0);
-                tree.AddChild(BlendshapeTree(_fxTreeLayer, skin, param));
+                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, param.Name))
+                {
+                    tree.AddChild(BuildFaceTrackingBlendshapeTreeForSkins(param.Name, param, skins));
 
-                if (createOSCsmooth)
-                    allShapes.Add(FullFaceTrackingPrefix + shapeName);
+                    if (createOSCsmooth)
+                        allShapes.Add(FullFaceTrackingPrefix + shapeName);
+                }
             }
         }
 
@@ -240,48 +252,60 @@ public partial class AnimatorWizard : MonoBehaviour
 
                 var leftParamName = baseParam + Left;
                 var leftParam = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + leftParamName, false, 0);
-                tree.AddChild(DualBlendshapeTree(
-                    _fxTreeLayer,
-                    leftParam,
-                    skin,
-                    FullFaceTrackingPrefix + baseMin + Left,
-                    FullFaceTrackingPrefix + baseMax + Left,
-                    dualshape.minValue,
-                    dualshape.neutralValue,
-                    dualshape.maxValue
-                ));
-                if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + leftParamName);
+                var leftMinShape = FullFaceTrackingPrefix + baseMin + Left;
+                var leftMaxShape = FullFaceTrackingPrefix + baseMax + Left;
+                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, leftMinShape) || HasFaceTrackingBlendShapeOnAnyMesh(skins, leftMaxShape))
+                {
+                    tree.AddChild(BuildFaceTrackingDualBlendshapeTreeForSkins(
+                        leftParam,
+                        skins,
+                        leftMinShape,
+                        leftMaxShape,
+                        dualshape.minValue,
+                        dualshape.neutralValue,
+                        dualshape.maxValue
+                    ));
+                    if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + leftParamName);
+                }
 
                 var rightParamName = baseParam + Right;
                 var rightParam = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + rightParamName, false, 0);
-                tree.AddChild(DualBlendshapeTree(
-                    _fxTreeLayer,
-                    rightParam,
-                    skin,
-                    FullFaceTrackingPrefix + baseMin + Right,
-                    FullFaceTrackingPrefix + baseMax + Right,
-                    dualshape.minValue,
-                    dualshape.neutralValue,
-                    dualshape.maxValue
-                ));
-                if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + rightParamName);
+                var rightMinShape = FullFaceTrackingPrefix + baseMin + Right;
+                var rightMaxShape = FullFaceTrackingPrefix + baseMax + Right;
+                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, rightMinShape) || HasFaceTrackingBlendShapeOnAnyMesh(skins, rightMaxShape))
+                {
+                    tree.AddChild(BuildFaceTrackingDualBlendshapeTreeForSkins(
+                        rightParam,
+                        skins,
+                        rightMinShape,
+                        rightMaxShape,
+                        dualshape.minValue,
+                        dualshape.neutralValue,
+                        dualshape.maxValue
+                    ));
+                    if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + rightParamName);
+                }
             }
             else
             {
                 var param = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + dualshapeName, false, 0);
-                tree.AddChild(DualBlendshapeTree(
-                    _fxTreeLayer,
-                    param,
-                    skin,
-                    FullFaceTrackingPrefix + dualshape.minShapeName,
-                    FullFaceTrackingPrefix + dualshape.maxShapeName,
-                    dualshape.minValue,
-                    dualshape.neutralValue,
-                    dualshape.maxValue
-                ));
+                var minShape = FullFaceTrackingPrefix + dualshape.minShapeName;
+                var maxShape = FullFaceTrackingPrefix + dualshape.maxShapeName;
+                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, minShape) || HasFaceTrackingBlendShapeOnAnyMesh(skins, maxShape))
+                {
+                    tree.AddChild(BuildFaceTrackingDualBlendshapeTreeForSkins(
+                        param,
+                        skins,
+                        minShape,
+                        maxShape,
+                        dualshape.minValue,
+                        dualshape.neutralValue,
+                        dualshape.maxValue
+                    ));
 
-                if (createOSCsmooth)
-                    allShapes.Add(FullFaceTrackingPrefix + dualshapeName);
+                    if (createOSCsmooth)
+                        allShapes.Add(FullFaceTrackingPrefix + dualshapeName);
+                }
             }
         }
 
@@ -294,6 +318,74 @@ public partial class AnimatorWizard : MonoBehaviour
         {
             var oscLayer = _aac.CreateSupportingFxLayer("OSC smoothing").WithAvatarMask(fxMask);
             ApplyOSCSmooth(oscLayer, localSmoothness, remoteSmoothness, allShapes, new List<BlendTree> { _masterTree });
+        }
+    }
+
+    private BlendTree BuildFaceTrackingBlendshapeTreeForSkins(string shapeName, AacFlParameter param, SkinnedMeshRenderer[] skins, float min = 0f, float max = 100f)
+    {
+        var state000 = _aac.NewClip();
+        AddFaceTrackingBlendShapeOnAllMatchingMeshes(state000, skins, shapeName, min);
+        state000.Clip.name = param.Name + " 0";
+
+        var state100 = _aac.NewClip();
+        AddFaceTrackingBlendShapeOnAllMatchingMeshes(state100, skins, shapeName, max);
+        state100.Clip.name = param.Name + " 1";
+
+        return Subtree(new Motion[] { state000.Clip, state100.Clip }, new[] { 0f, 1f }, param);
+    }
+
+    private BlendTree BuildFaceTrackingDualBlendshapeTreeForSkins(
+        AacFlParameter param,
+        SkinnedMeshRenderer[] skins,
+        string minShapeName,
+        string maxShapeName,
+        float minValue,
+        float neutralValue,
+        float maxValue)
+    {
+        var minClip = _aac.NewClip();
+        AddFaceTrackingBlendShapeOnAllMatchingMeshes(minClip, skins, minShapeName, 100f);
+        AddFaceTrackingBlendShapeOnAllMatchingMeshes(minClip, skins, maxShapeName, 0f);
+        minClip.Clip.name = param.Name + " " + minShapeName;
+
+        var neutralClip = _aac.NewClip();
+        AddFaceTrackingBlendShapeOnAllMatchingMeshes(neutralClip, skins, minShapeName, 0f);
+        AddFaceTrackingBlendShapeOnAllMatchingMeshes(neutralClip, skins, maxShapeName, 0f);
+        neutralClip.Clip.name = param.Name + " neutral";
+
+        var maxClip = _aac.NewClip();
+        AddFaceTrackingBlendShapeOnAllMatchingMeshes(maxClip, skins, minShapeName, 0f);
+        AddFaceTrackingBlendShapeOnAllMatchingMeshes(maxClip, skins, maxShapeName, 100f);
+        maxClip.Clip.name = param.Name + " " + maxShapeName;
+
+        return Subtree(new Motion[] { minClip.Clip, neutralClip.Clip, maxClip.Clip }, new[] { minValue, neutralValue, maxValue }, param);
+    }
+
+    private bool HasFaceTrackingBlendShapeOnAnyMesh(SkinnedMeshRenderer[] skins, string blendShapeName)
+    {
+        foreach (var skin in skins)
+        {
+            if (skin == null || skin.sharedMesh == null)
+                continue;
+
+            if (skin.sharedMesh.GetBlendShapeIndex(blendShapeName) >= 0)
+                return true;
+        }
+
+        return false;
+    }
+
+    private void AddFaceTrackingBlendShapeOnAllMatchingMeshes(AacFlClip clip, SkinnedMeshRenderer[] skins, string blendShapeName, float value)
+    {
+        foreach (var skin in skins)
+        {
+            if (skin == null || skin.sharedMesh == null)
+                continue;
+
+            if (skin.sharedMesh.GetBlendShapeIndex(blendShapeName) < 0)
+                continue;
+
+            clip.BlendShape(skin, blendShapeName, value);
         }
     }
 }

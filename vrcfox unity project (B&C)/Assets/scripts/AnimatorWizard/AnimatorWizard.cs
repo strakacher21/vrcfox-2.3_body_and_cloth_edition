@@ -33,7 +33,7 @@ public partial class AnimatorWizard : MonoBehaviour
 
     public void Create()
     {
-        SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer[] skins = GetComponentsInChildren<SkinnedMeshRenderer>();
         VRCAvatarDescriptor avatar = GetComponentInChildren<VRCAvatarDescriptor>();
 
         _vrcParams = new List<VRCExpressionParameters.Parameter>();
@@ -74,14 +74,14 @@ public partial class AnimatorWizard : MonoBehaviour
         var faceToggleActiveParam = fxLayer.BoolParameter("FaceToggleActive");
 
         InitializeGestureLayers();
-        InitializeGestureExpressions(skin, ftActiveParam);
-        InitializeShapePreferences(skin);
-        InitializeClothingCustomization(skin);
+        InitializeGestureExpressions(skins, ftActiveParam);
+        InitializeShapePreferences(skins);
+        InitializeClothingCustomization(skins);
         InitializeColorCustomization();
         InitializeFaceToggle();
         InitializeCustomCompressedParams();
-        InitializeEyeTracking(skin, avatar);
-        InitializeFaceTracking(skin, avatar);
+        InitializeEyeTracking(avatar);
+        InitializeFaceTracking(skins, avatar);
 
         if (!saveVRCExpressionParameters)
         {
