@@ -15,7 +15,6 @@ Follow these steps to set up the Unity project:
    This project uses custom packages. In VCC, navigate to Settings > Packages > Add Repository, then paste the following URL:  
    ```
    https://hai-vr.github.io/vpm-listing/index.json
-   https://laurarozier.github.io/LauraVRCUtils/index.json
    https://spokeek.github.io/goloco/index.json
    https://vcc.vrcfury.com/
    https://xnanochip.github.io/VPM-Package-Listing/index.json

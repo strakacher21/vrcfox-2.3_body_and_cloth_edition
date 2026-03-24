@@ -30,9 +30,6 @@
     "com.nanochip.avatarlimbscaling": {
       "version": "1.2.0"
     },
-    "nadena.dev.modular-avatar": {
-      "version": "1.16.2"
-    },
     "com.vrchat.base": {
       "version": "3.10.2"
     },
@@ -40,7 +37,10 @@
       "version": "3.10.2"
     },
     "com.vrcfury.vrcfury": {
-      "version": "1.1286.0"
+      "version": "1.1288.0"
+    },
+    "nadena.dev.modular-avatar": {
+      "version": "1.16.2"
     }
   },
   "locked": {
@@ -103,12 +103,6 @@
         "com.vrcfury.vrcfury": ">=1.1127.0"
       }
     },
-    "nadena.dev.modular-avatar": {
-      "version": "1.16.2",
-      "dependencies": {
-        "nadena.dev.ndmf": ">=1.11.0 <2.0.0-a"
-      }
-    },
     "nadena.dev.ndmf": {
       "version": "1.11.0",
       "dependencies": {}
@@ -124,8 +118,14 @@
       }
     },
     "com.vrcfury.vrcfury": {
-      "version": "1.1286.0",
+      "version": "1.1288.0",
       "dependencies": {}
+    },
+    "nadena.dev.modular-avatar": {
+      "version": "1.16.2",
+      "dependencies": {
+        "nadena.dev.ndmf": ">=1.11.0 <2.0.0-a"
+      }
     }
   }
 }

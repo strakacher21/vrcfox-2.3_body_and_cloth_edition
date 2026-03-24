@@ -29,17 +29,20 @@ public partial class AnimatorWizard : MonoBehaviour
 
     private void InitializeShapePreferences(SkinnedMeshRenderer skin)
     {
-        if (!createShapePreferences) return;
+        if (!createShapePreferences)
+            return;
+
         if (skin == null) return;
 
         // Normalize prefix once so we can safely build parameter names
         var prefix = string.IsNullOrWhiteSpace(shapePreferencePrefix) ? "pref/body/" : shapePreferencePrefix.Trim();
         if (!prefix.EndsWith("/")) prefix += "/";
 
-        var fxDriverLayer = _aac.CreateSupportingFxLayer("preferences drivers").WithAvatarMask(fxMask);
-        var fxDriverState = fxDriverLayer.NewState("preferences drivers");
-
-        // this self-transition is used to re-apply drivers periodically
+        // Toggle drivers (common to prefs and cloth)
+        // this state transitions to itself every half second to update toggles. it sucks
+        // TODO: not use this awful driver updating
+        var fxDriverLayer = _aac.CreateSupportingFxLayer("bool preferences drivers").WithAvatarMask(fxMask);
+        var fxDriverState = fxDriverLayer.NewState("bool preferences drivers");
         fxDriverState.TransitionsTo(fxDriverState)
             .AfterAnimationFinishes()
             .WithTransitionDurationSeconds(0.5f)
@@ -52,6 +55,7 @@ public partial class AnimatorWizard : MonoBehaviour
         tree.name = "Shape Preferences";
         tree.blendType = BlendTreeType.Direct;
 
+        // working with prefs blend shapes
         for (var i = 0; i < shapePreferences.Count; i++)
         {
             var entry = shapePreferences[i];
@@ -69,16 +73,11 @@ public partial class AnimatorWizard : MonoBehaviour
             var boolParamName = $"{prefix}bool/{shortName}";
             var floatParamName = $"{prefix}float/{shortName}";
 
-            // If the blendshape exists on multiple meshes, drive all of them together
-            var targets = GetSkinsWithBlendshape(fullBlendShapeName);
-
             if (entry.useFloat)
             {
                 var param = CreateFloatParam(_fxTreeLayer, floatParamName, true, 0);
-
-                tree.AddChild(targets.Length > 0
-                    ? BlendshapeTree(_fxTreeLayer, targets, fullBlendShapeName, param)
-                    : BlendshapeTree(_fxTreeLayer, skin, fullBlendShapeName, param));
+                tree.AddChild(BlendshapeTree(_fxTreeLayer, skin, fullBlendShapeName, param));
+                ApplyCompressedParams(floatParamName, false);
             }
             else if (entry.useBool)
             {
@@ -93,9 +92,7 @@ public partial class AnimatorWizard : MonoBehaviour
                     name = floatParam.Name
                 });
 
-                tree.AddChild(targets.Length > 0
-                    ? BlendshapeTree(_fxTreeLayer, targets, fullBlendShapeName, floatParam)
-                    : BlendshapeTree(_fxTreeLayer, skin, fullBlendShapeName, floatParam));
+                tree.AddChild(BlendshapeTree(_fxTreeLayer, skin, fullBlendShapeName, floatParam));
             }
         }
     }

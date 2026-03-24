@@ -2,11 +2,8 @@
 
 using AnimatorAsCode.V1;
 using AnimatorAsCode.V1.VRCDestructiveWorkflow;
-
 using System.Collections.Generic;
-
 using UnityEngine;
-
 using VRC.SDK3.Avatars.Components;
 using VRC.SDKBase;
 
@@ -38,7 +35,8 @@ public partial class AnimatorWizard : MonoBehaviour
 
     private void InitializeClothingCustomization(SkinnedMeshRenderer skin)
     {
-        if (!createClothCustomization) return;
+        if (!createClothCustomization)
+            return;
 
         setupClothes(ClothUpperBodyNames, skin, "cloth_upper_body");
         setupClothes(ClothLowerBodyNames, skin, "cloth_lower_body");
@@ -51,8 +49,7 @@ public partial class AnimatorWizard : MonoBehaviour
 
         var waitingState = layer.NewState("Waiting command");
         var waitingTransition = layer.AnyTransitionsTo(waitingState);
-
-        var clothDriverSetsFalse = waitingState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
+        var ClothDriverSetsFalse = waitingState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
 
         var clothStates = new Dictionary<string, AacFlState>();
 
@@ -60,19 +57,14 @@ public partial class AnimatorWizard : MonoBehaviour
 
         List<string> allPossibleClothes = new List<string>();
         foreach (var clothName in clothNames)
-        {
             if (!allPossibleClothes.Contains(clothName))
-            {
                 allPossibleClothes.Add(clothName);
-            }
-        }
 
         foreach (var clothName in allPossibleClothes)
         {
             var clothState = layer.NewState(clothName);
-            var clothDriverSetsTrue = clothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-
-            var clothClip = _aac.NewClip($"Cloth_{clothName}");
+            var ClothDriverSetsTrue = clothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
+            var ClothClip = _aac.NewClip($"Cloth_{clothName}");
 
             AacFlBoolParameter boolParam = null;
 
@@ -84,23 +76,21 @@ public partial class AnimatorWizard : MonoBehaviour
                 {
                     boolParam = CreateBoolParam(layer, ClothTogglesPrefix + clothName, true, false);
 
-                    clothDriverSetsFalse.parameters.Add(new VRCAvatarParameterDriver.Parameter
+                    ClothDriverSetsFalse.parameters.Add(new VRCAvatarParameterDriver.Parameter
                     {
                         name = ClothTogglesPrefix + clothName,
                         type = VRCAvatarParameterDriver.ChangeType.Set,
                         value = 0
                     });
 
-                    clothDriverSetsTrue.parameters.Add(new VRCAvatarParameterDriver.Parameter
+                    ClothDriverSetsTrue.parameters.Add(new VRCAvatarParameterDriver.Parameter
                     {
                         name = ClothTogglesPrefix + clothName,
                         type = VRCAvatarParameterDriver.ChangeType.Set,
                         value = 1
                     });
 
-                    var targets = GetSkinsWithBlendshape(blendShapeName);
-                    if (targets.Length > 0) clothClip.BlendShape(targets, blendShapeName, 100);
-                    else clothClip.BlendShape(skin, blendShapeName, 100);
+                    ClothClip.BlendShape(skin, blendShapeName, 100);
                 }
             }
 
@@ -108,30 +98,27 @@ public partial class AnimatorWizard : MonoBehaviour
             {
                 foreach (var otherClothName in allPossibleClothes)
                 {
-                    if (otherClothName == clothName) continue;
-
-                    clothDriverSetsTrue.parameters.Add(new VRCAvatarParameterDriver.Parameter
+                    if (otherClothName != clothName)
                     {
-                        name = ClothTogglesPrefix + otherClothName,
-                        type = VRCAvatarParameterDriver.ChangeType.Set,
-                        value = 0
-                    });
-
-                    for (int i = 0; i < blendShapeCount; i++)
-                    {
-                        string blendShapeName = skin.sharedMesh.GetBlendShapeName(i);
-
-                        if (blendShapeName.Equals(ClothTogglesPrefix + otherClothName))
+                        ClothDriverSetsTrue.parameters.Add(new VRCAvatarParameterDriver.Parameter
                         {
-                            var targets = GetSkinsWithBlendshape(blendShapeName);
-                            if (targets.Length > 0) clothClip.BlendShape(targets, blendShapeName, 0);
-                            else clothClip.BlendShape(skin, blendShapeName, 0);
+                            name = ClothTogglesPrefix + otherClothName,
+                            type = VRCAvatarParameterDriver.ChangeType.Set,
+                            value = 0
+                        });
+
+                        for (int i = 0; i < blendShapeCount; i++)
+                        {
+                            string blendShapeName = skin.sharedMesh.GetBlendShapeName(i);
+
+                            if (blendShapeName.Equals(ClothTogglesPrefix + otherClothName))
+                                ClothClip.BlendShape(skin, blendShapeName, 0);
                         }
                     }
                 }
             }
 
-            clothState.WithAnimation(clothClip);
+            clothState.WithAnimation(ClothClip);
             clothStates[clothName] = clothState;
 
             waitingTransition.When(layer.BoolParameter(ClothTogglesPrefix + clothName).IsFalse());

@@ -1,14 +1,13 @@
 #if UNITY_EDITOR
 
-using System;
-using UnityEditor;
 using AnimatorAsCode.V1;
-using VRLabs.AV3Manager;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
-using VRC.SDK3.Avatars.ScriptableObjects;
 using VRC.SDK3.Avatars.Components;
+using VRC.SDK3.Avatars.ScriptableObjects;
+using VRLabs.AV3Manager;
 
 public partial class AnimatorWizard : MonoBehaviour
 {
@@ -184,16 +183,13 @@ public partial class AnimatorWizard : MonoBehaviour
         set.Add(systemName + "__tree");
         set.Add(systemName + "__brow expressions");
         set.Add(systemName + "__mouth expressions");
-
-        set.Add(systemName + "__preferences drivers");
-
+        set.Add(systemName + "__bool preferences drivers");
         set.Add(systemName + "__clothupperbody");
         set.Add(systemName + "__clothlowerbody");
         set.Add(systemName + "__clothfoot");
-
         set.Add(systemName + "__face tracking toggle");
         set.Add(systemName + "__OSC smoothing");
-
+        set.Add(systemName + "__Compressed params");
         set.Add(systemName + "__Left hand");
         set.Add(systemName + "__Right hand");
         set.Add(systemName + "__Eye Left Tracking");

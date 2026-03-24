@@ -2,13 +2,10 @@
 
 using AnimatorAsCode.V1;
 using AnimatorAsCode.V1.VRCDestructiveWorkflow;
-
 using System.Collections.Generic;
-
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
-
 using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Avatars.ScriptableObjects;
 
@@ -31,6 +28,7 @@ public partial class AnimatorWizard : MonoBehaviour
 
     public string shapePreferenceSliderPrefix = "pref/slider/";
     public string shapePreferenceTogglesPrefix = "pref/toggle/";
+
     public string FullFaceTrackingPrefix = "v2/";
 
     public void Create()
@@ -49,17 +47,20 @@ public partial class AnimatorWizard : MonoBehaviour
             ContainerMode = AacConfiguration.Container.Everything,
             AssetKey = SystemName,
             DefaultsProvider = new AacDefaultsProvider(UseWriteDefaults),
+            //AssetContainerProvider = null
         }.WithAvatarDescriptor(avatar));
 
+        //_aac.ClearPreviousAssets();
         ClearAssetContainer();
         DeleteAnimatorWizardLayers(avatar, SystemName);
 
-        InitSeparateMeshesCache(avatar);
-
+        // FX layer
         var fxLayer = _aac.CreateMainFxLayer().WithAvatarMask(fxMask);
+
         var blendParam = fxLayer.FloatParameter("Blend");
         fxLayer.OverrideValue(blendParam, 1f);
 
+        // master fx tree
         _fxTreeLayer = _aac.CreateSupportingFxLayer("tree").WithAvatarMask(fxMask);
 
         _masterTree = _aac.NewBlendTreeAsRaw();
@@ -74,20 +75,19 @@ public partial class AnimatorWizard : MonoBehaviour
 
         InitializeGestureLayers();
         InitializeGestureExpressions(skin, ftActiveParam);
-        InitializeEyeTracking(skin, avatar);
-        InitializeFaceTracking(skin, avatar);
-
+        InitializeShapePreferences(skin);
         InitializeClothingCustomization(skin);
         InitializeColorCustomization();
-        InitializeShapePreferences(skin);
         InitializeFaceToggle();
+        InitializeCustomCompressedParams();
+        InitializeEyeTracking(skin, avatar);
+        InitializeFaceTracking(skin, avatar);
 
         if (!saveVRCExpressionParameters)
         {
             avatar.expressionParameters.parameters = _vrcParams.ToArray();
+            EditorUtility.SetDirty(avatar.expressionParameters);
         }
-
-        EditorUtility.SetDirty(avatar.expressionParameters);
 
         RepackAnimatorControllers(avatar);
         SortAnimatorWizardLayers(avatar, SystemName);
@@ -98,9 +98,7 @@ public partial class AnimatorWizard : MonoBehaviour
         foreach (var asset in AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(assetContainer)))
         {
             if (asset is AnimationClip or BlendTree)
-            {
                 AssetDatabase.RemoveObjectFromAsset(asset);
-            }
         }
     }
 }

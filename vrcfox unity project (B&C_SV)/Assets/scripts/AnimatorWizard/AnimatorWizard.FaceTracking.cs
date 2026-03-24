@@ -293,7 +293,7 @@ public partial class AnimatorWizard : MonoBehaviour
         if (createOSCsmooth)
         {
             var oscLayer = _aac.CreateSupportingFxLayer("OSC smoothing").WithAvatarMask(fxMask);
-            ApplyOSCSmoothing(oscLayer, localSmoothness, remoteSmoothness, allShapes, new List<BlendTree> { _masterTree });
+            ApplyOSCSmooth(oscLayer, localSmoothness, remoteSmoothness, allShapes, new List<BlendTree> { _masterTree });
         }
     }
 }
