@@ -7,6 +7,7 @@ public class SceneTextureAsset : ScriptableObject
     public class TextureEntry
     {
         public Texture2D texture;
+
         public enum TextureSize
         {
             _32 = 32,
@@ -20,7 +21,17 @@ public class SceneTextureAsset : ScriptableObject
             _8192 = 8192,
             _16384 = 16384
         }
+
+        public enum TextureCompression
+        {
+            None,
+            LowQuality,
+            NormalQuality,
+            HighQuality
+        }
+
         public TextureSize maxSize = TextureSize._4096;
+        public TextureCompression compression = TextureCompression.NormalQuality;
     }
 
     public TextureEntry[] textures = new TextureEntry[0];
