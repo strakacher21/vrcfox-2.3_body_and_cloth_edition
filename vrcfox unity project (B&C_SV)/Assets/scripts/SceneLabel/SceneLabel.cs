@@ -1,8 +1,8 @@
 ﻿#if UNITY_EDITOR
 
 using UnityEditor;
-using UnityEngine;
 using UnityEditor.SceneManagement;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [InitializeOnLoad]

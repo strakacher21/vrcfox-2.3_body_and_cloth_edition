@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEditor;
-#endif
 
 public class TextureResolutionApplier : MonoBehaviour
 {
@@ -9,7 +8,6 @@ public class TextureResolutionApplier : MonoBehaviour
 
     public void ApplyTextureResolution()
     {
-#if UNITY_EDITOR
         if (config == null) return;
         if (config.textures.Length == 0) return;
 
@@ -23,16 +21,48 @@ public class TextureResolutionApplier : MonoBehaviour
             TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
             if (importer == null) continue;
 
+            bool changed = false;
+
             int newSize = (int)entry.maxSize;
             if (importer.maxTextureSize != newSize)
             {
                 importer.maxTextureSize = newSize;
+                changed = true;
+            }
+
+            TextureImporterCompression newCompression = ToImporterCompression(entry.compression);
+            if (importer.textureCompression != newCompression)
+            {
+                importer.textureCompression = newCompression;
+                changed = true;
+            }
+
+            if (changed)
+            {
                 EditorUtility.SetDirty(importer);
                 importer.SaveAndReimport();
             }
         }
 
         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-#endif
+    }
+
+    private static TextureImporterCompression ToImporterCompression(
+        SceneTextureAsset.TextureEntry.TextureCompression compression)
+    {
+        switch (compression)
+        {
+            case SceneTextureAsset.TextureEntry.TextureCompression.None:
+                return TextureImporterCompression.Uncompressed;
+            case SceneTextureAsset.TextureEntry.TextureCompression.LowQuality:
+                return TextureImporterCompression.CompressedLQ;
+            case SceneTextureAsset.TextureEntry.TextureCompression.NormalQuality:
+                return TextureImporterCompression.Compressed;
+            case SceneTextureAsset.TextureEntry.TextureCompression.HighQuality:
+                return TextureImporterCompression.CompressedHQ;
+            default:
+                return TextureImporterCompression.Compressed;
+        }
     }
 }
+#endif
