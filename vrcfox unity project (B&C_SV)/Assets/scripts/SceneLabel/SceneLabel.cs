@@ -3,52 +3,40 @@
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [InitializeOnLoad]
 public class SceneLabel
 {
     private const string PrefKey = "SceneLabel_SwitcherAssetPath";
-    private static GUIStyle style = new GUIStyle();
-    private static SceneSwitcherAsset switcherAsset;
+
+    private static SceneSwitcherAsset _switcherAsset;
+    private static bool _searchedOnce;
+    private static GUIStyle _style;
+
+    private static GUIStyle Style => _style ??= new GUIStyle
+    {
+        normal = { textColor = Color.yellow },
+        fontSize = 50,
+        fontStyle = FontStyle.Bold,
+        alignment = TextAnchor.MiddleCenter
+    };
 
     static SceneLabel()
     {
-        style.normal.textColor = Color.yellow;
-        style.fontSize = 50;
-        style.fontStyle = FontStyle.Bold;
-        style.alignment = TextAnchor.MiddleCenter;
-
         SceneView.duringSceneGui += OnScene;
-
-        string savedPath = EditorPrefs.GetString(PrefKey, "");
-        if (!string.IsNullOrEmpty(savedPath))
-        {
-            var asset = AssetDatabase.LoadAssetAtPath(savedPath, typeof(SceneSwitcherAsset));
-            if (asset != null)
-            {
-                switcherAsset = asset as SceneSwitcherAsset;
-            }
-            else
-            {
-                EditorPrefs.DeleteKey(PrefKey);
-            }
-        }
+        EnsureSwitcherAssetLoaded();
     }
 
-    private static void OnScene(SceneView sceneview)
+    private static void OnScene(SceneView sceneView)
     {
         EnsureSwitcherAssetLoaded();
 
         Handles.BeginGUI();
 
-        float pixelWidth = sceneview.camera.pixelWidth;
-        float pixelHeight = sceneview.camera.pixelHeight;
-        float ppp = EditorGUIUtility.pixelsPerPoint;
-        float width = pixelWidth / ppp;
-        float height = pixelHeight / ppp;
+        float width = sceneView.camera.pixelWidth / EditorGUIUtility.pixelsPerPoint;
+        float height = sceneView.camera.pixelHeight / EditorGUIUtility.pixelsPerPoint;
 
-        GUI.Label(new Rect(0, 0, width, 100), SceneManager.GetActiveScene().name, style);
+        GUI.Label(new Rect(0, 0, width, 100), EditorSceneManager.GetActiveScene().name, Style);
 
         const float LEFT_MARGIN = 10f;
         const float BOTTOM_MARGIN = 10f;
@@ -56,44 +44,15 @@ public class SceneLabel
         const float BUTTON_HEIGHT = 30f;
         const float SPACING = 5f;
 
-        //float singleH = EditorGUIUtility.singleLineHeight;
-        float y = height - BOTTOM_MARGIN;
-        //y -= singleH;
-
-        //Rect fieldRect = new Rect(LEFT_MARGIN, y, BUTTON_WIDTH, singleH);
-
-        //EditorGUI.BeginChangeCheck();
-        //var newAsset = (SceneSwitcherAsset)EditorGUI.ObjectField(
-        //    fieldRect,
-        //    switcherAsset,
-        //    typeof(SceneSwitcherAsset),
-        //    false
-        //);
-
-        //if (EditorGUI.EndChangeCheck())
-        //{
-        //    switcherAsset = newAsset;
-        //    if (switcherAsset != null)
-        //    {
-        //        string path = AssetDatabase.GetAssetPath(switcherAsset);
-        //        EditorPrefs.SetString(PrefKey, path);
-        //    }
-        //    else
-        //    {
-        //        EditorPrefs.DeleteKey(PrefKey);
-        //    }
-        //}
-
-        if (switcherAsset != null && switcherAsset.scenes != null && switcherAsset.scenes.Length > 0)
+        if (_switcherAsset != null && _switcherAsset.Scenes != null && _switcherAsset.Scenes.Length > 0)
         {
-            int sceneCount = switcherAsset.scenes.Length;
+            int sceneCount = _switcherAsset.Scenes.Length;
             float totalHeight = sceneCount * (BUTTON_HEIGHT + SPACING) - SPACING;
-            float startY = y - SPACING - totalHeight;
-            //string activePath = EditorSceneManager.GetActiveScene().path;
+            float startY = height - BOTTOM_MARGIN - SPACING - totalHeight;
 
             for (int i = 0; i < sceneCount; i++)
             {
-                var sceneAsset = switcherAsset.scenes[i];
+                var sceneAsset = _switcherAsset.Scenes[i];
                 if (sceneAsset == null) continue;
 
                 float btnY = startY + i * (BUTTON_HEIGHT + SPACING);
@@ -102,61 +61,48 @@ public class SceneLabel
                 {
                     var activeScene = EditorSceneManager.GetActiveScene();
                     if (activeScene.isDirty)
-                    {
                         EditorSceneManager.SaveScene(activeScene);
-                    }
 
-                    string scenePath = AssetDatabase.GetAssetPath(sceneAsset);
-                    EditorSceneManager.OpenScene(scenePath);
+                    EditorSceneManager.OpenScene(AssetDatabase.GetAssetPath(sceneAsset));
 
+                    //run scene-dependent logic on the next editor tick after the new scene is fully opened
                     EditorApplication.delayCall += () =>
                     {
-                        var applier = Object.FindObjectOfType<TextureResolutionApplier>();
-                        if (applier != null)
-                        {
-                            applier.ApplyTextureResolution();
-                        }
+                        var applier = Object.FindAnyObjectByType<TextureResolutionApplier>();
+                        applier?.ApplyTextureResolution();
                     };
                 }
-
-                //Color originalBg = GUI.backgroundColor;
-                //Color originalContent = GUI.contentColor;
-                //bool isActive = AssetDatabase.GetAssetPath(sceneAsset) == activePath;
-                //if (isActive)
-                //{
-                // GUI.backgroundColor = new Color(70f/255f, 96f/255f, 124f/255f);
-                // GUI.contentColor = Color.white;
-                //}
-
-                //GUI.backgroundColor = originalBg;
-                //GUI.contentColor = originalContent;
             }
         }
 
         Handles.EndGUI();
     }
+
     private static void EnsureSwitcherAssetLoaded()
     {
-        if (switcherAsset != null) return;
+        if (_switcherAsset != null) return;
+        if (_searchedOnce) return;
 
         string path = EditorPrefs.GetString(PrefKey, "");
 
         if (!string.IsNullOrEmpty(path))
-            switcherAsset = AssetDatabase.LoadAssetAtPath<SceneSwitcherAsset>(path);
+            _switcherAsset = AssetDatabase.LoadAssetAtPath<SceneSwitcherAsset>(path);
 
-        if (switcherAsset == null)
+        if (_switcherAsset == null)
         {
             EditorPrefs.DeleteKey(PrefKey);
-
+            // avoid scanning the project on every sceneview repaint if the asset was not found
             string[] guids = AssetDatabase.FindAssets("t:SceneSwitcherAsset");
+            _searchedOnce = true;
             if (guids == null || guids.Length == 0) return;
 
             path = AssetDatabase.GUIDToAssetPath(guids[0]);
-            switcherAsset = AssetDatabase.LoadAssetAtPath<SceneSwitcherAsset>(path);
+            _switcherAsset = AssetDatabase.LoadAssetAtPath<SceneSwitcherAsset>(path);
         }
 
-        if (switcherAsset != null)
-            EditorPrefs.SetString(PrefKey, AssetDatabase.GetAssetPath(switcherAsset));
+        if (_switcherAsset != null)
+            EditorPrefs.SetString(PrefKey, AssetDatabase.GetAssetPath(_switcherAsset));
     }
 }
+
 #endif

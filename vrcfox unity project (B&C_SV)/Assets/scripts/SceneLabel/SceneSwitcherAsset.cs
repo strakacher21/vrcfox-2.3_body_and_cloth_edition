@@ -1,10 +1,14 @@
 #if UNITY_EDITOR
+
 using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Scene Switcher", menuName = "Scene Switcher/Scene Asset")]
-public class SceneSwitcherAsset : ScriptableObject
+public sealed class SceneSwitcherAsset : ScriptableObject
 {
-    public SceneAsset[] scenes;
+    [SerializeField] private SceneAsset[] scenes;
+
+    public SceneAsset[] Scenes => scenes;
 }
+
 #endif

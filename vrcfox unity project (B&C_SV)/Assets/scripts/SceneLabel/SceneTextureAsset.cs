@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Texture Switcher", menuName = "Scene Switcher/Texture Asset")]
-public class SceneTextureAsset : ScriptableObject
+public sealed class SceneTextureAsset : ScriptableObject
 {
-    [System.Serializable]
-    public class TextureEntry
+    [Serializable]
+    public sealed class TextureEntry
     {
         public Texture2D texture;
 
@@ -34,5 +35,7 @@ public class SceneTextureAsset : ScriptableObject
         public TextureCompression compression = TextureCompression.NormalQuality;
     }
 
-    public TextureEntry[] textures = new TextureEntry[0];
+    [SerializeField] private TextureEntry[] textures = Array.Empty<TextureEntry>();
+
+    public TextureEntry[] Textures => textures;
 }

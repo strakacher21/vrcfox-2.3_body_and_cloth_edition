@@ -2,67 +2,62 @@
 using UnityEngine;
 using UnityEditor;
 
-public class TextureResolutionApplier : MonoBehaviour
+
+public sealed class TextureResolutionApplier : MonoBehaviour
 {
-    public SceneTextureAsset config;
+    [SerializeField] private SceneTextureAsset config;
 
     public void ApplyTextureResolution()
     {
-        if (config == null) return;
-        if (config.textures.Length == 0) return;
+        if (config == null || config.Textures == null || config.Textures.Length == 0)
+            return;
 
-        foreach (SceneTextureAsset.TextureEntry entry in config.textures)
+        foreach (var entry in config.Textures)
         {
-            if (entry.texture == null) continue;
+            if (entry == null || entry.texture == null)
+                continue;
 
-            string path = AssetDatabase.GetAssetPath(entry.texture);
-            if (string.IsNullOrEmpty(path)) continue;
+            var path = AssetDatabase.GetAssetPath(entry.texture);
+            if (string.IsNullOrEmpty(path))
+                continue;
 
-            TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
-            if (importer == null) continue;
+            if (AssetImporter.GetAtPath(path) is not TextureImporter importer)
+                continue;
 
-            bool changed = false;
+            var changed = false;
 
-            int newSize = (int)entry.maxSize;
+            var newSize = (int)entry.maxSize;
             if (importer.maxTextureSize != newSize)
             {
                 importer.maxTextureSize = newSize;
                 changed = true;
             }
 
-            TextureImporterCompression newCompression = ToImporterCompression(entry.compression);
+            var newCompression = ToImporterCompression(entry.compression);
             if (importer.textureCompression != newCompression)
             {
                 importer.textureCompression = newCompression;
                 changed = true;
             }
 
+            // reimport only when importer settings actually changed
             if (changed)
-            {
-                EditorUtility.SetDirty(importer);
                 importer.SaveAndReimport();
-            }
         }
-
-        AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
     }
 
     private static TextureImporterCompression ToImporterCompression(
         SceneTextureAsset.TextureEntry.TextureCompression compression)
     {
-        switch (compression)
+        return compression switch
         {
-            case SceneTextureAsset.TextureEntry.TextureCompression.None:
-                return TextureImporterCompression.Uncompressed;
-            case SceneTextureAsset.TextureEntry.TextureCompression.LowQuality:
-                return TextureImporterCompression.CompressedLQ;
-            case SceneTextureAsset.TextureEntry.TextureCompression.NormalQuality:
-                return TextureImporterCompression.Compressed;
-            case SceneTextureAsset.TextureEntry.TextureCompression.HighQuality:
-                return TextureImporterCompression.CompressedHQ;
-            default:
-                return TextureImporterCompression.Compressed;
-        }
+            SceneTextureAsset.TextureEntry.TextureCompression.None => TextureImporterCompression.Uncompressed,
+            SceneTextureAsset.TextureEntry.TextureCompression.LowQuality => TextureImporterCompression.CompressedLQ,
+            SceneTextureAsset.TextureEntry.TextureCompression.NormalQuality => TextureImporterCompression.Compressed,
+            SceneTextureAsset.TextureEntry.TextureCompression.HighQuality => TextureImporterCompression.CompressedHQ,
+            _ => TextureImporterCompression.Compressed
+        };
     }
 }
+
 #endif
