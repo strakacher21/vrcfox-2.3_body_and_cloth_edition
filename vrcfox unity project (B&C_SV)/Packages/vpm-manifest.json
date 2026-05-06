@@ -21,20 +21,14 @@
     "vrchat.blackstartx.gesture-manager": {
       "version": "3.9.8"
     },
-    "com.nanochip.avatarlimbscaling": {
-      "version": "1.2.0"
-    },
-    "com.vrchat.base": {
-      "version": "3.10.2"
-    },
-    "com.vrchat.avatars": {
-      "version": "3.10.2"
-    },
     "nadena.dev.modular-avatar": {
       "version": "1.16.2"
     },
-    "com.vrcfury.vrcfury": {
-      "version": "1.1298.0"
+    "com.vrchat.avatars": {
+      "version": "3.10.3"
+    },
+    "nadena.dev.ndmf": {
+      "version": "1.12.0"
     }
   },
   "locked": {
@@ -78,35 +72,24 @@
         "com.vrchat.avatars": ">=3.5.2 < 3.11.X"
       }
     },
-    "com.nanochip.avatarlimbscaling": {
-      "version": "1.2.0",
-      "dependencies": {
-        "com.vrchat.avatars": "^3.x.x",
-        "com.vrcfury.vrcfury": ">=1.1127.0"
-      }
-    },
-    "nadena.dev.ndmf": {
-      "version": "1.11.0",
-      "dependencies": {}
-    },
-    "com.vrchat.base": {
-      "version": "3.10.2",
-      "dependencies": {}
-    },
-    "com.vrchat.avatars": {
-      "version": "3.10.2",
-      "dependencies": {
-        "com.vrchat.base": "3.10.2"
-      }
-    },
     "nadena.dev.modular-avatar": {
       "version": "1.16.2",
       "dependencies": {
         "nadena.dev.ndmf": ">=1.11.0 <2.0.0-a"
       }
     },
-    "com.vrcfury.vrcfury": {
-      "version": "1.1298.0",
+    "com.vrchat.avatars": {
+      "version": "3.10.3",
+      "dependencies": {
+        "com.vrchat.base": "3.10.3"
+      }
+    },
+    "com.vrchat.base": {
+      "version": "3.10.3",
+      "dependencies": {}
+    },
+    "nadena.dev.ndmf": {
+      "version": "1.12.0",
       "dependencies": {}
     }
   }
