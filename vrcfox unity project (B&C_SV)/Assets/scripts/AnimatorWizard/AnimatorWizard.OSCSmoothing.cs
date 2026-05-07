@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 
 using AnimatorAsCode.V1;
+using AnimatorAsCode.V1.VRC;
 using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -29,9 +30,8 @@ public partial class AnimatorWizard : MonoBehaviour
         List<string> list,
         List<BlendTree> trees)
     {
-        AacFlBoolParameter isLocalParam = layer.BoolParameter("IsLocal");
 
-        AacFlFloatParameter BlendOSC = layer.FloatParameter("OSCsmooth/Blend");
+        var BlendOSC = layer.FloatParameter("OSCsmooth/Blend");
         layer.OverrideValue(BlendOSC, 1.0f);
 
         var localTree = _aac.NewBlendTreeAsRaw();
@@ -45,8 +45,8 @@ public partial class AnimatorWizard : MonoBehaviour
         var localState = layer.NewState("OSC Local").WithAnimation(localTree);
         var remoteState = layer.NewState("OSC Remote").WithAnimation(remoteTree);
 
-        layer.AnyTransitionsTo(localState).When(isLocalParam.IsTrue());
-        layer.AnyTransitionsTo(remoteState).When(isLocalParam.IsFalse());
+        layer.AnyTransitionsTo(localState).When(layer.Av3().ItIsLocal());
+        layer.AnyTransitionsTo(remoteState).When(layer.Av3().ItIsRemote());
 
         foreach (var shape in list)
         {

@@ -46,18 +46,17 @@ public partial class AnimatorWizard : MonoBehaviour
     };
 
     protected void InitializeGestureExpressions(
-        SkinnedMeshRenderer[] skins,
-        AacFlBoolParameter ftActiveParam
+        SkinnedMeshRenderer[] skins
         )
     {
         if (skins == null || skins.Length == 0)
             return;
 
         // brow Gesture expressions
-        MapHandPosesToShapes("brow expressions", skins, browShapeNames, browPrefix, false, ftActiveParam, GestureExpressionsBlockParamNames);
+        MapHandPosesToShapes("brow expressions", skins, browShapeNames, browPrefix, false, GestureExpressionsBlockParamNames);
 
         // mouth Gesture expressions
-        MapHandPosesToShapes("mouth expressions", skins, mouthShapeNames, mouthPrefix, true, ftActiveParam, GestureExpressionsBlockParamNames);
+        MapHandPosesToShapes("mouth expressions", skins, mouthShapeNames, mouthPrefix, true, GestureExpressionsBlockParamNames);
     }
 
     private void MapHandPosesToShapes(
@@ -66,7 +65,6 @@ public partial class AnimatorWizard : MonoBehaviour
         string[] shapeNames,
         string prefix,
         bool rightHand,
-        AacFlBoolParameter ftActiveParam,
         IEnumerable<string> blockNames
         )
     {
@@ -74,11 +72,10 @@ public partial class AnimatorWizard : MonoBehaviour
         var customGestureBlocksNames = BuildBlockBoolListParams(layer, blockNames);
         var Gesture = layer.IntParameter("Gesture" + (rightHand ? Right : Left));
 
-        List<string> allExpressions = new List<string>();
-        foreach (var shapeName in shapeNames)
+        AacFlBoolParameter ftActiveParam = null;
+        if (createFaceTracking)
         {
-            if (!allExpressions.Contains(shapeName))
-                allExpressions.Add(shapeName);
+            ftActiveParam = layer.BoolParameter(FullFaceTrackingPrefix + "LipTrackingActive");
         }
 
         if (shapeNames.Length != 8)
@@ -88,9 +85,10 @@ public partial class AnimatorWizard : MonoBehaviour
         {
             var clip = _aac.NewClip();
 
-            foreach (var shapeName in shapeNames)
+            foreach (var name in shapeNames)
             {
-                AddGestureBlendShapeOnAllMatchingMeshes(clip, skins, prefix + shapeName, shapeName == shapeNames[i] ? 100 : 0);
+                AddBlendShapeOnAllMatchingMeshes(clip, skins, prefix + name, 0f);
+                AddBlendShapeOnAllMatchingMeshes(clip, skins, prefix + shapeNames[i], 100f);
             }
 
             var state = layer.NewState(shapeNames[i], 1, i).WithAnimation(clip);
@@ -100,7 +98,7 @@ public partial class AnimatorWizard : MonoBehaviour
                 .WithTransitionDurationSeconds(TransitionSpeed)
                 .When(Gesture.IsNotEqualTo(i));
 
-            if (createFaceTracking)
+            if (ftActiveParam != null)
             {
                 if (i == 0)
                 {
@@ -124,20 +122,6 @@ public partial class AnimatorWizard : MonoBehaviour
                     else { enter.And(block.IsFalse()); exit.Or().When(block.IsTrue()); }
                 }
             }
-        }
-    }
-
-    private void AddGestureBlendShapeOnAllMatchingMeshes(AacFlClip clip, SkinnedMeshRenderer[] skins, string blendShapeName, float value)
-    {
-        foreach (var skin in skins)
-        {
-            if (skin == null || skin.sharedMesh == null)
-                continue;
-
-            if (skin.sharedMesh.GetBlendShapeIndex(blendShapeName) < 0)
-                continue;
-
-            clip.BlendShape(skin, blendShapeName, value);
         }
     }
 }
