@@ -2,6 +2,7 @@
 
 using AnimatorAsCode.V1;
 using AnimatorAsCode.V1.VRCDestructiveWorkflow;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -33,8 +34,10 @@ public partial class AnimatorWizard : MonoBehaviour
 
     public void Create()
     {
-        SkinnedMeshRenderer[] skins = GetComponentsInChildren<SkinnedMeshRenderer>();
-        VRCAvatarDescriptor avatar = GetComponentInChildren<VRCAvatarDescriptor>();
+        var skins = GetComponentsInChildren<SkinnedMeshRenderer>();
+        var avatar = GetComponentInChildren<VRCAvatarDescriptor>();
+        if (avatar == null)
+            throw new Exception("VRCAvatarDescriptor not found in children!");
 
         _vrcParams = new List<VRCExpressionParameters.Parameter>();
 
@@ -70,11 +73,8 @@ public partial class AnimatorWizard : MonoBehaviour
 
         _fxTreeLayer.NewState(_masterTree.name).WithAnimation(_masterTree);
 
-        var ftActiveParam = fxLayer.BoolParameter(FullFaceTrackingPrefix + "LipTrackingActive");
-        var faceToggleActiveParam = fxLayer.BoolParameter("FaceToggleActive");
-
         InitializeGestureLayers();
-        InitializeGestureExpressions(skins, ftActiveParam);
+        InitializeGestureExpressions(skins);
         InitializeShapePreferences(skins);
         InitializeClothingCustomization(skins);
         InitializeColorCustomization();
@@ -100,6 +100,7 @@ public partial class AnimatorWizard : MonoBehaviour
             if (asset is AnimationClip or BlendTree)
                 AssetDatabase.RemoveObjectFromAsset(asset);
         }
+        AssetDatabase.SaveAssets();
     }
 }
 

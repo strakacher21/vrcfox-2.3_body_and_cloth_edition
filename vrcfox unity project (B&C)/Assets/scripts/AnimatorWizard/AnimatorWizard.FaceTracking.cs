@@ -109,11 +109,7 @@ public partial class AnimatorWizard : MonoBehaviour
         // States with Lip Sync Control
         if (createFTLipSyncControl)
         {
-            AacFlBoolParameter lipSyncActiveParam;
-            if (createFTLipSyncControl)
-                lipSyncActiveParam = CreateBoolParam(layer, FullFaceTrackingPrefix + lipSyncName, true, false);
-            else
-                lipSyncActiveParam = layer.BoolParameter(FullFaceTrackingPrefix + lipSyncName);
+            var lipSyncActiveParam = CreateBoolParam(layer, FullFaceTrackingPrefix + lipSyncName, true, false);
 
             var offFaceTrackingLipSyncTrackingAnimatesState = layer.NewState("face tracking off")
             .Drives(ftBlendParam, 0)
@@ -200,9 +196,8 @@ public partial class AnimatorWizard : MonoBehaviour
         var allShapes = new List<string>();
 
         // adding blend shapes
-        for (int i = 0; i < SingleFtShapes.Length; i++)
+        foreach (var entry in SingleFtShapes)
         {
-            var entry = SingleFtShapes[i];
             string shapeName = entry.shapeName;
 
             if (entry.leftAndRightShapes)
@@ -212,14 +207,14 @@ public partial class AnimatorWizard : MonoBehaviour
                 var rightName = baseName + Right;
 
                 var leftParam = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + leftName, false, 0);
-                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, leftParam.Name))
+                if (HasBlendShapeOnAnyMatchingMesh(skins, leftParam.Name))
                 {
                     tree.AddChild(BuildFaceTrackingBlendshapeTreeForSkins(leftParam.Name, leftParam, skins));
                     if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + leftName);
                 }
 
                 var rightParam = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + rightName, false, 0);
-                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, rightParam.Name))
+                if (HasBlendShapeOnAnyMatchingMesh(skins, rightParam.Name))
                 {
                     tree.AddChild(BuildFaceTrackingBlendshapeTreeForSkins(rightParam.Name, rightParam, skins));
                     if (createOSCsmooth) allShapes.Add(FullFaceTrackingPrefix + rightName);
@@ -228,7 +223,7 @@ public partial class AnimatorWizard : MonoBehaviour
             else
             {
                 var param = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + shapeName, false, 0);
-                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, param.Name))
+                if (HasBlendShapeOnAnyMatchingMesh(skins, param.Name))
                 {
                     tree.AddChild(BuildFaceTrackingBlendshapeTreeForSkins(param.Name, param, skins));
 
@@ -239,9 +234,8 @@ public partial class AnimatorWizard : MonoBehaviour
         }
 
         // adding dual blend shapes
-        for (int i = 0; i < DualFtShapes.Length; i++)
+        foreach (var dualshape in DualFtShapes)
         {
-            DualFtShape dualshape = DualFtShapes[i];
             string dualshapeName = dualshape.paramName;
 
             if (dualshape.leftAndRightShapes)
@@ -254,7 +248,7 @@ public partial class AnimatorWizard : MonoBehaviour
                 var leftParam = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + leftParamName, false, 0);
                 var leftMinShape = FullFaceTrackingPrefix + baseMin + Left;
                 var leftMaxShape = FullFaceTrackingPrefix + baseMax + Left;
-                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, leftMinShape) || HasFaceTrackingBlendShapeOnAnyMesh(skins, leftMaxShape))
+                if (HasBlendShapeOnAnyMatchingMesh(skins, leftMinShape) || HasBlendShapeOnAnyMatchingMesh(skins, leftMaxShape))
                 {
                     tree.AddChild(BuildFaceTrackingDualBlendshapeTreeForSkins(
                         leftParam,
@@ -272,7 +266,7 @@ public partial class AnimatorWizard : MonoBehaviour
                 var rightParam = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + rightParamName, false, 0);
                 var rightMinShape = FullFaceTrackingPrefix + baseMin + Right;
                 var rightMaxShape = FullFaceTrackingPrefix + baseMax + Right;
-                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, rightMinShape) || HasFaceTrackingBlendShapeOnAnyMesh(skins, rightMaxShape))
+                if (HasBlendShapeOnAnyMatchingMesh(skins, rightMinShape) || HasBlendShapeOnAnyMatchingMesh(skins, rightMaxShape))
                 {
                     tree.AddChild(BuildFaceTrackingDualBlendshapeTreeForSkins(
                         rightParam,
@@ -291,7 +285,7 @@ public partial class AnimatorWizard : MonoBehaviour
                 var param = CreateFloatParam(_fxTreeLayer, FullFaceTrackingPrefix + dualshapeName, false, 0);
                 var minShape = FullFaceTrackingPrefix + dualshape.minShapeName;
                 var maxShape = FullFaceTrackingPrefix + dualshape.maxShapeName;
-                if (HasFaceTrackingBlendShapeOnAnyMesh(skins, minShape) || HasFaceTrackingBlendShapeOnAnyMesh(skins, maxShape))
+                if (HasBlendShapeOnAnyMatchingMesh(skins, minShape) || HasBlendShapeOnAnyMatchingMesh(skins, maxShape))
                 {
                     tree.AddChild(BuildFaceTrackingDualBlendshapeTreeForSkins(
                         param,
@@ -324,11 +318,11 @@ public partial class AnimatorWizard : MonoBehaviour
     private BlendTree BuildFaceTrackingBlendshapeTreeForSkins(string shapeName, AacFlParameter param, SkinnedMeshRenderer[] skins, float min = 0f, float max = 100f)
     {
         var state000 = _aac.NewClip();
-        AddFaceTrackingBlendShapeOnAllMatchingMeshes(state000, skins, shapeName, min);
+        AddBlendShapeOnAllMatchingMeshes(state000, skins, shapeName, min);
         state000.Clip.name = param.Name + " 0";
 
         var state100 = _aac.NewClip();
-        AddFaceTrackingBlendShapeOnAllMatchingMeshes(state100, skins, shapeName, max);
+        AddBlendShapeOnAllMatchingMeshes(state100, skins, shapeName, max);
         state100.Clip.name = param.Name + " 1";
 
         return Subtree(new Motion[] { state000.Clip, state100.Clip }, new[] { 0f, 1f }, param);
@@ -344,49 +338,21 @@ public partial class AnimatorWizard : MonoBehaviour
         float maxValue)
     {
         var minClip = _aac.NewClip();
-        AddFaceTrackingBlendShapeOnAllMatchingMeshes(minClip, skins, minShapeName, 100f);
-        AddFaceTrackingBlendShapeOnAllMatchingMeshes(minClip, skins, maxShapeName, 0f);
+        AddBlendShapeOnAllMatchingMeshes(minClip, skins, minShapeName, 100f);
+        AddBlendShapeOnAllMatchingMeshes(minClip, skins, maxShapeName, 0f);
         minClip.Clip.name = param.Name + " " + minShapeName;
 
         var neutralClip = _aac.NewClip();
-        AddFaceTrackingBlendShapeOnAllMatchingMeshes(neutralClip, skins, minShapeName, 0f);
-        AddFaceTrackingBlendShapeOnAllMatchingMeshes(neutralClip, skins, maxShapeName, 0f);
+        AddBlendShapeOnAllMatchingMeshes(neutralClip, skins, minShapeName, 0f);
+        AddBlendShapeOnAllMatchingMeshes(neutralClip, skins, maxShapeName, 0f);
         neutralClip.Clip.name = param.Name + " neutral";
 
         var maxClip = _aac.NewClip();
-        AddFaceTrackingBlendShapeOnAllMatchingMeshes(maxClip, skins, minShapeName, 0f);
-        AddFaceTrackingBlendShapeOnAllMatchingMeshes(maxClip, skins, maxShapeName, 100f);
+        AddBlendShapeOnAllMatchingMeshes(maxClip, skins, minShapeName, 0f);
+        AddBlendShapeOnAllMatchingMeshes(maxClip, skins, maxShapeName, 100f);
         maxClip.Clip.name = param.Name + " " + maxShapeName;
 
         return Subtree(new Motion[] { minClip.Clip, neutralClip.Clip, maxClip.Clip }, new[] { minValue, neutralValue, maxValue }, param);
-    }
-
-    private bool HasFaceTrackingBlendShapeOnAnyMesh(SkinnedMeshRenderer[] skins, string blendShapeName)
-    {
-        foreach (var skin in skins)
-        {
-            if (skin == null || skin.sharedMesh == null)
-                continue;
-
-            if (skin.sharedMesh.GetBlendShapeIndex(blendShapeName) >= 0)
-                return true;
-        }
-
-        return false;
-    }
-
-    private void AddFaceTrackingBlendShapeOnAllMatchingMeshes(AacFlClip clip, SkinnedMeshRenderer[] skins, string blendShapeName, float value)
-    {
-        foreach (var skin in skins)
-        {
-            if (skin == null || skin.sharedMesh == null)
-                continue;
-
-            if (skin.sharedMesh.GetBlendShapeIndex(blendShapeName) < 0)
-                continue;
-
-            clip.BlendShape(skin, blendShapeName, value);
-        }
     }
 }
 #endif

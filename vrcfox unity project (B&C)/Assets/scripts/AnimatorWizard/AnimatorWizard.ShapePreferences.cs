@@ -1,14 +1,13 @@
 #if UNITY_EDITOR
 
 using AnimatorAsCode.V1;
+using AnimatorAsCode.V1.VRC;
 using AnimatorAsCode.V1.VRCDestructiveWorkflow;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
-using VRC.SDK3.Avatars.Components;
-using VRC.SDKBase;
 
 public partial class AnimatorWizard : MonoBehaviour
 {
@@ -50,17 +49,13 @@ public partial class AnimatorWizard : MonoBehaviour
             .WithTransitionDurationSeconds(0.5f)
             .WithTransitionToSelf();
 
-        var drivers = fxDriverState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
-        drivers.parameters ??= new List<VRCAvatarParameterDriver.Parameter>();
-
         var tree = _masterTree.CreateBlendTreeChild(0);
         tree.name = "Shape Preferences";
         tree.blendType = BlendTreeType.Direct;
 
         // working with prefs blend shapes
-        for (var i = 0; i < shapePreferences.Count; i++)
+        foreach (var entry in shapePreferences)
         {
-            var entry = shapePreferences[i];
             var input = entry.blendShapeName?.Trim();
             if (string.IsNullOrWhiteSpace(input)) continue;
 
@@ -72,7 +67,7 @@ public partial class AnimatorWizard : MonoBehaviour
             // Full blendshape name on the mesh (includes prefix)
             var fullBlendShapeName = prefix + shortName;
 
-            if (!HasBlendShapeOnAnyMesh(skins, fullBlendShapeName))
+            if (!HasBlendShapeOnAnyMatchingMesh(skins, fullBlendShapeName))
                 continue;
 
             var boolParamName = $"{prefix}bool/{shortName}";
@@ -90,12 +85,7 @@ public partial class AnimatorWizard : MonoBehaviour
                 var boolParam = CreateBoolParam(_fxTreeLayer, boolParamName, true, false);
                 var floatParam = _fxTreeLayer.FloatParameter(floatParamName);
 
-                drivers.parameters.Add(new VRCAvatarParameterDriver.Parameter
-                {
-                    type = VRCAvatarParameterDriver.ChangeType.Copy,
-                    source = boolParam.Name,
-                    name = floatParam.Name
-                });
+                fxDriverState.DrivingCopies(boolParam, floatParam);
 
                 tree.AddChild(BuildBlendshapeTreeForSkins(fullBlendShapeName, floatParam, skins));
             }
@@ -105,42 +95,14 @@ public partial class AnimatorWizard : MonoBehaviour
     private BlendTree BuildBlendshapeTreeForSkins(string shapeName, AacFlParameter param, SkinnedMeshRenderer[] skins, float min = 0f, float max = 100f)
     {
         var state000 = _aac.NewClip();
-        AddPreferenceBlendShapeOnAllMatchingMeshes(state000, skins, shapeName, min);
+        AddBlendShapeOnAllMatchingMeshes(state000, skins, shapeName, min);
         state000.Clip.name = $"{param.Name} 0";
 
         var state100 = _aac.NewClip();
-        AddPreferenceBlendShapeOnAllMatchingMeshes(state100, skins, shapeName, max);
+        AddBlendShapeOnAllMatchingMeshes(state100, skins, shapeName, max);
         state100.Clip.name = $"{param.Name} 1";
 
         return Subtree(new Motion[] { state000.Clip, state100.Clip }, new[] { 0f, 1f }, param);
-    }
-
-    private bool HasBlendShapeOnAnyMesh(SkinnedMeshRenderer[] skins, string blendShapeName)
-    {
-        foreach (var skin in skins)
-        {
-            if (skin == null || skin.sharedMesh == null)
-                continue;
-
-            if (skin.sharedMesh.GetBlendShapeIndex(blendShapeName) >= 0)
-                return true;
-        }
-
-        return false;
-    }
-
-    private void AddPreferenceBlendShapeOnAllMatchingMeshes(AacFlClip clip, SkinnedMeshRenderer[] skins, string blendShapeName, float value)
-    {
-        foreach (var skin in skins)
-        {
-            if (skin == null || skin.sharedMesh == null)
-                continue;
-
-            if (skin.sharedMesh.GetBlendShapeIndex(blendShapeName) < 0)
-                continue;
-
-            clip.BlendShape(skin, blendShapeName, value);
-        }
     }
 
     [CustomPropertyDrawer(typeof(AnimatorWizard.ShapePreferenceEntry))]

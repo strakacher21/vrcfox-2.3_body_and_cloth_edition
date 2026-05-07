@@ -2,10 +2,10 @@
 
 using AnimatorAsCode.V1;
 using AnimatorAsCode.V1.VRCDestructiveWorkflow;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
-using VRC.SDKBase;
 
 public partial class AnimatorWizard : MonoBehaviour
 {
@@ -45,31 +45,38 @@ public partial class AnimatorWizard : MonoBehaviour
 
     private void setupClothes(string[] clothNames, SkinnedMeshRenderer[] skins, string layerName)
     {
+        if (clothNames == null || clothNames.Length == 0 || skins == null || skins.Length == 0)
+            return;
+
         var layer = _aac.CreateSupportingFxLayer(layerName).WithAvatarMask(fxMask);
 
         var waitingState = layer.NewState("Waiting command");
         var waitingTransition = layer.AnyTransitionsTo(waitingState);
+
         var clothDriverSetsFalse = waitingState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
         if (clothDriverSetsFalse.parameters == null)
             clothDriverSetsFalse.parameters = new List<VRCAvatarParameterDriver.Parameter>();
 
-        var clothStates = new Dictionary<string, AacFlState>();
-
-        List<string> allPossibleClothes = new List<string>();
-        foreach (var clothName in clothNames)
+        var seen = new HashSet<string>(StringComparer.Ordinal);
+        var allPossibleClothes = new List<string>(clothNames.Length);
+        foreach (var name in clothNames)
         {
-            if (!allPossibleClothes.Contains(clothName))
-                allPossibleClothes.Add(clothName);
+            if (string.IsNullOrWhiteSpace(name))
+                continue;
+
+            if (seen.Add(name))
+                allPossibleClothes.Add(name);
         }
 
         foreach (var clothName in allPossibleClothes)
         {
-            string fullBlendShapeName = ClothTogglesPrefix + clothName;
+            var fullBlendShapeName = ClothTogglesPrefix + clothName;
             var clothClip = _aac.NewClip($"Cloth_{clothName}");
 
-            bool foundMainShape = AddClothBlendShapeOnAllMatchingMeshes(clothClip, skins, fullBlendShapeName, 100f);
-            if (!foundMainShape)
+            if (!HasBlendShapeOnAnyMatchingMesh(skins, fullBlendShapeName))
                 continue;
+
+            AddBlendShapeOnAllMatchingMeshes(clothClip, skins, fullBlendShapeName, 100f);
 
             var clothState = layer.NewState(clothName);
             var clothDriverSetsTrue = clothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
@@ -97,7 +104,7 @@ public partial class AnimatorWizard : MonoBehaviour
                 if (otherClothName == clothName)
                     continue;
 
-                string otherFullBlendShapeName = ClothTogglesPrefix + otherClothName;
+                var otherFullBlendShapeName = ClothTogglesPrefix + otherClothName;
 
                 clothDriverSetsTrue.parameters.Add(new VRCAvatarParameterDriver.Parameter
                 {
@@ -106,39 +113,14 @@ public partial class AnimatorWizard : MonoBehaviour
                     value = 0
                 });
 
-                AddClothBlendShapeOnAllMatchingMeshes(clothClip, skins, otherFullBlendShapeName, 0f);
+                AddBlendShapeOnAllMatchingMeshes(clothClip, skins, otherFullBlendShapeName, 0f);
             }
 
             clothState.WithAnimation(clothClip);
-            clothStates[clothName] = clothState;
 
             waitingTransition.When(boolParam.IsFalse());
             layer.AnyTransitionsTo(clothState).When(boolParam.IsTrue());
         }
-    }
-
-    private bool AddClothBlendShapeOnAllMatchingMeshes(AacFlClip clip, SkinnedMeshRenderer[] skins, string blendShapeName, float value)
-    {
-        bool found = false;
-
-        foreach (var skin in skins)
-        {
-            if (skin == null || skin.sharedMesh == null)
-                continue;
-
-            int blendShapeCount = skin.sharedMesh.blendShapeCount;
-            for (int i = 0; i < blendShapeCount; i++)
-            {
-                if (!skin.sharedMesh.GetBlendShapeName(i).Equals(blendShapeName))
-                    continue;
-
-                clip.BlendShape(skin, blendShapeName, value);
-                found = true;
-                break;
-            }
-        }
-
-        return found;
     }
 }
 

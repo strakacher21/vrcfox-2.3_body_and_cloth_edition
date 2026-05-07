@@ -35,14 +35,12 @@ public partial class AnimatorWizard : MonoBehaviour
         cpLayer.IntParameter("CompressedParams/ParamValue");
         cpLayer.IntParameter("CompressedParams/ParamPack");
 
-        var isLocal = cpLayer.Av3().IsLocal;
-
         var waiting = cpLayer.NewState("Waiting command", 3, 0);
         cpSender = cpLayer.NewSubStateMachine("Sender", 2, 1);
         cpRecipient = cpLayer.NewSubStateMachine("Recipient", 4, 1);
 
-        waiting.TransitionsTo(cpSender).When(isLocal.IsTrue());
-        waiting.TransitionsTo(cpRecipient).When(isLocal.IsFalse());
+        waiting.TransitionsTo(cpSender).When(cpLayer.Av3().ItIsLocal());
+        waiting.TransitionsTo(cpRecipient).When(cpLayer.Av3().ItIsRemote());
     }
 
     private void ApplyCompressedParams(string paramName, bool isInt)
@@ -103,10 +101,9 @@ public partial class AnimatorWizard : MonoBehaviour
             .AfterAnimationIsAtLeastAtNormalized(0.1f)
             .WithTransitionDurationSeconds(0f);
 
-        cpSenderStateY++;
-
         var paramValue = cpLayer.IntParameter("CompressedParams/ParamValue");
-        var recipientState = cpRecipient.NewState($"Recipient №{n}", 3, cpSenderStateY);
+        var recipientState = cpRecipient.NewState($"Recipient №{n}", 3, n - 1);
+        cpSenderStateY++;
 
         var recipientDriverCopyParam = new VRCAvatarParameterDriver.Parameter
         {

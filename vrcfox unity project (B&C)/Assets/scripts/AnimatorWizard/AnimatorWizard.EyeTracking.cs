@@ -83,34 +83,25 @@ public partial class AnimatorWizard : MonoBehaviour
         // add motions to the blend tree
         var positions = new[]
         {
-            new Vector2(-maxMotionValue,  maxMotionValue), // LeftUp
-            new Vector2(0,               maxMotionValue), // Up
-            new Vector2( maxMotionValue, maxMotionValue), // RightUp
+            new Vector2(-maxMotionValue, maxMotionValue), // LeftUp
+            new Vector2(0, maxMotionValue),               // Up
+            new Vector2(maxMotionValue, maxMotionValue),  // RightUp
             new Vector2(-maxMotionValue, 0),              // Left
             Vector2.zero,                                 // Neutral
-            new Vector2( maxMotionValue, 0),              // Right
+            new Vector2(maxMotionValue, 0),               // Right
             new Vector2(-maxMotionValue, -maxMotionValue),// LeftDown
-            new Vector2(0,               -maxMotionValue),// Down
-            new Vector2( maxMotionValue, -maxMotionValue) // RightDown
+            new Vector2(0, -maxMotionValue),              // Down
+            new Vector2(maxMotionValue, -maxMotionValue)  // RightDown
         };
 
+        var children = new ChildMotion[poses.Length];
         for (int i = 0; i < poses.Length; i++)
         {
             if (poses[i] == null)
                 throw new Exception($"Eye tracking animation at index {i} is missing!");
-
-            var child = new ChildMotion
-            {
-                motion = poses[i],
-                position = positions[i],
-                timeScale = 1f
-            };
-
-            var newChildren = new ChildMotion[EyeTrackingTree.children.Length + 1];
-            Array.Copy(EyeTrackingTree.children, newChildren, EyeTrackingTree.children.Length);
-            newChildren[EyeTrackingTree.children.Length] = child;
-            EyeTrackingTree.children = newChildren;
+            children[i] = new ChildMotion { motion = poses[i], position = positions[i], timeScale = 1f };
         }
+        EyeTrackingTree.children = children;
 
         var EyeTrackingState = layer.NewState($"Eye {side} Tracking")
             .WithAnimation(EyeTrackingTree)

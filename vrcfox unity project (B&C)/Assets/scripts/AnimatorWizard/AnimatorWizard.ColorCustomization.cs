@@ -35,42 +35,40 @@ public partial class AnimatorWizard : MonoBehaviour
         colorRoot.name = "Color Customization";
         colorRoot.blendType = BlendTreeType.Direct;
 
-        if (ColorProfiles != null && ColorProfiles.Length > 0)
+        if (ColorProfiles == null || ColorProfiles.Length == 0)
+            return;
+
+        foreach (var profile in ColorProfiles)
         {
-            foreach (var profile in ColorProfiles)
+            if (string.IsNullOrEmpty(profile.name)) continue;
+
+            var profileTree = colorRoot.CreateBlendTreeChild(0);
+            profileTree.name = profile.name;
+            profileTree.blendType = BlendTreeType.Direct;
+
+            if (profile.primaryColor0 != null && profile.primaryColor1 != null)
             {
-                if (string.IsNullOrEmpty(profile.name)) continue;
+                var pcolParam = CreateFloatParam(_fxTreeLayer, $"{ColorParamPrefix}{profile.name}/slider/pcol", true, 0f);
 
-                var profileTree = colorRoot.CreateBlendTreeChild(0);
-                profileTree.name = profile.name;
-                profileTree.blendType = BlendTreeType.Direct;
-
-                if (profile.primaryColor0 != null && profile.primaryColor1 != null)
-                {
-                    var pcolParam = CreateFloatParam(_fxTreeLayer, $"{ColorParamPrefix}{profile.name}/slider/pcol", true, 0f);
-
-                    profileTree.AddChild(Subtree(
-                        new Motion[] { profile.primaryColor0, profile.primaryColor1 },
-                        new[] { 0f, 1f },
-                        pcolParam
-                    ));
-                    ApplyCompressedParams(pcolParam.Name, false);
-                }
-
-                if (profile.secondColor0 != null && profile.secondColor1 != null)
-                {
-                    var scolParam = CreateFloatParam(_fxTreeLayer, $"{ColorParamPrefix}{profile.name}/slider/scol", true, 0f);
-
-                    profileTree.AddChild(Subtree(
-                        new Motion[] { profile.secondColor0, profile.secondColor1 },
-                        new[] { 0f, 1f },
-                        scolParam
-                    ));
-                    ApplyCompressedParams(scolParam.Name, false);
-                }
+                profileTree.AddChild(Subtree(
+                    new Motion[] { profile.primaryColor0, profile.primaryColor1 },
+                    new[] { 0f, 1f },
+                    pcolParam
+                ));
+                ApplyCompressedParams(pcolParam.Name, false);
             }
 
-            return;
+            if (profile.secondColor0 != null && profile.secondColor1 != null)
+            {
+                var scolParam = CreateFloatParam(_fxTreeLayer, $"{ColorParamPrefix}{profile.name}/slider/scol", true, 0f);
+
+                profileTree.AddChild(Subtree(
+                    new Motion[] { profile.secondColor0, profile.secondColor1 },
+                    new[] { 0f, 1f },
+                    scolParam
+                ));
+                ApplyCompressedParams(scolParam.Name, false);
+            }
         }
     }
 }

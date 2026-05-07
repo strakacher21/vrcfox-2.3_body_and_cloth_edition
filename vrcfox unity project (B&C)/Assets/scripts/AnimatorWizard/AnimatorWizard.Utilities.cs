@@ -95,6 +95,43 @@ public partial class AnimatorWizard : MonoBehaviour
         return result;
     }
 
+    protected static bool HasBlendShapeOnAnyMatchingMesh(SkinnedMeshRenderer[] skins, string blendShapeName)
+    {
+        if (skins == null || string.IsNullOrWhiteSpace(blendShapeName))
+            return false;
+
+        foreach (var skin in skins)
+        {
+            if (skin == null || skin.sharedMesh == null)
+                continue;
+
+            if (skin.sharedMesh.GetBlendShapeIndex(blendShapeName) >= 0)
+                return true;
+        }
+
+        return false;
+    }
+
+    protected static void AddBlendShapeOnAllMatchingMeshes(
+        AacFlClip clip,
+        SkinnedMeshRenderer[] skins,
+        string blendShapeName,
+        float value)
+    {
+        if (clip == null || skins == null || string.IsNullOrWhiteSpace(blendShapeName))
+            return;
+
+        foreach (var skin in skins)
+        {
+            if (skin == null || skin.sharedMesh == null)
+                continue;
+
+            if (skin.sharedMesh.GetBlendShapeIndex(blendShapeName) < 0)
+                continue;
+
+            clip.BlendShape(skin, blendShapeName, value);
+        }
+    }
 
     protected static string StripSide(string str)
     {

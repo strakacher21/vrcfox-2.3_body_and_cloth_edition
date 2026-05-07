@@ -78,6 +78,26 @@ public class AnimatorGeneratorEditor : Editor
 
     private AnimatorWizard wizard;
 
+    private GUIStyle headerStyle;
+    private GUIStyle headerStyle2;
+    private GUIStyle HeaderStyle => headerStyle ??= new GUIStyle
+    {
+        richText = false,
+        fontStyle = FontStyle.Bold,
+        fontSize = EditorStyles.label.fontSize + 5,
+        padding = new RectOffset(3, 3, 40, 8),
+        normal = new GUIStyleState { textColor = EditorStyles.label.normal.textColor }
+    };
+
+    private GUIStyle HeaderStyle2 => headerStyle2 ??= new GUIStyle
+    {
+        richText = false,
+        fontStyle = FontStyle.Bold,
+        fontSize = EditorStyles.label.fontSize + 1,
+        padding = new RectOffset(3, 3, 0, 5),
+        normal = new GUIStyleState { textColor = EditorStyles.label.normal.textColor }
+    };
+
     private const string AlertMsg =
         "Running this will destroy any manual animator changes. Are you sure you want to continue?";
 
@@ -158,24 +178,6 @@ public class AnimatorGeneratorEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        GUIStyle headerStyle = new GUIStyle
-        {
-            richText = false,
-            fontStyle = FontStyle.Bold,
-            fontSize = EditorStyles.label.fontSize + 5,
-            padding = new RectOffset(3, 3, 40, 8),
-            normal = new GUIStyleState { textColor = EditorStyles.label.normal.textColor }
-        };
-
-        GUIStyle headerStyle2 = new GUIStyle
-        {
-            richText = false,
-            fontStyle = FontStyle.Bold,
-            fontSize = EditorStyles.label.fontSize + 1,
-            padding = new RectOffset(3, 3, 0, 5),
-            normal = new GUIStyleState { textColor = EditorStyles.label.normal.textColor }
-        };
-
         serializedObject.Update();
 
         GUILayout.Space(10);
@@ -204,12 +206,12 @@ public class AnimatorGeneratorEditor : Editor
         EditorGUILayout.PropertyField(SystemName, PopUpLabel("Layers start name", ""));
 
         // Asset Container
-        GUILayout.Label("Asset Container", headerStyle);
+        GUILayout.Label("Asset Container", HeaderStyle);
         EditorGUILayout.PropertyField(assetContainer,
         PopUpLabel("Asset Container", "Asset Container stores all generated animations and Blend Trees."));
 
         // Avatar animator masks
-        GUILayout.Label("Avatar animator masks", headerStyle);
+        GUILayout.Label("Avatar animator masks", HeaderStyle);
         EditorGUILayout.PropertyField(fxMask);
         if (wizard.createEyeTracking)
         {
@@ -221,8 +223,8 @@ public class AnimatorGeneratorEditor : Editor
         EditorGUILayout.PropertyField(GestureRightMask);
 
         // Hand Poses
-        GUILayout.Label("Hand Poses", headerStyle);
-        GUILayout.Label("Array index maps to hand gesture parameter. Array length should be 8!", headerStyle2);
+        GUILayout.Label("Hand Poses", HeaderStyle);
+        GUILayout.Label("Array index maps to hand gesture parameter. Array length should be 8!", HeaderStyle2);
         EditorGUILayout.PropertyField(UseSameHandAnimationsForBothHands, PopUpLabel("Same Animations", "Use the same animations for both hands"));
         GUILayout.Space(10);
 
@@ -239,9 +241,9 @@ public class AnimatorGeneratorEditor : Editor
         }
 
         // Facial expressions
-        GUILayout.Label("Facial expressions", headerStyle);
+        GUILayout.Label("Facial expressions", HeaderStyle);
         GUILayout.Label("Brow and mouth blendshapes controlled by left and right hands." +
-            "\nArray index maps to hand Gesture parameter. Array length should be 8!", headerStyle2);
+            "\nArray index maps to hand Gesture parameter. Array length should be 8!", HeaderStyle2);
         // Custom gesture blocks
         GUILayout.Space(5);
         EditorGUILayout.PropertyField(GestureExpressionsBlockParamNames,
@@ -254,9 +256,9 @@ public class AnimatorGeneratorEditor : Editor
         EditorGUILayout.PropertyField(browShapeNames);
 
         // Animator creation flags
-        GUILayout.Label("Animator creation flags", headerStyle);
+        GUILayout.Label("Animator creation flags", HeaderStyle);
         GUILayout.Label("Choose what parts of the animator are generated." +
-            "\nDisabling features saves VRC params budget!", headerStyle2);
+            "\nDisabling features saves VRC params budget!", HeaderStyle2);
         GUILayout.Space(10);
         EditorGUILayout.PropertyField(createShapePreferences);
         EditorGUILayout.PropertyField(createClothCustomization);
@@ -271,8 +273,8 @@ public class AnimatorGeneratorEditor : Editor
         // Shape Preferences
         if (wizard.createShapePreferences)
         {
-            GUILayout.Label("Shape Preferences", headerStyle);
-            GUILayout.Label("Creates VRC params for blendshapes with bool/float behaviour.", headerStyle2);
+            GUILayout.Label("Shape Preferences", HeaderStyle);
+            GUILayout.Label("Creates VRC params for blendshapes with bool/float behaviour.", HeaderStyle2);
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(shapePreferencePrefix);
             EditorGUILayout.PropertyField(shapePreferences, new GUIContent("Shape Preferences List"), true);
@@ -281,8 +283,8 @@ public class AnimatorGeneratorEditor : Editor
         // Cloths customization
         if (wizard.createClothCustomization)
         {
-            GUILayout.Label("Cloths customization", headerStyle);
-            GUILayout.Label("Creates an algorithm to switch clothes, animations \nand VRC params with these prefixes.", headerStyle2);
+            GUILayout.Label("Cloths customization", HeaderStyle);
+            GUILayout.Label("Creates an algorithm to switch clothes, animations \nand VRC params with these prefixes.", HeaderStyle2);
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(ClothTogglesPrefix,
             PopUpLabel("Cloth Toggles Prefix", "Prefixes roll up clothes and body into \"tube\",\n" +
@@ -296,8 +298,8 @@ public class AnimatorGeneratorEditor : Editor
         // Color customization
         if (wizard.createColorCustomization)
         {
-            GUILayout.Label("Color customization", headerStyle);
-            GUILayout.Label("Each element defines a name and four color animations.", headerStyle2);
+            GUILayout.Label("Color customization", HeaderStyle);
+            GUILayout.Label("Each element defines a name and four color animations.", HeaderStyle2);
 
             EditorGUILayout.PropertyField(ColorProfiles, new GUIContent("Profiles"), true);
         }
@@ -305,8 +307,8 @@ public class AnimatorGeneratorEditor : Editor
         // Face Toggle
         if (wizard.createFaceToggle)
         {
-            GUILayout.Label("FaceToggle setup animations", headerStyle);
-            GUILayout.Label("Creates an algorithm to switch face animations.", headerStyle2);
+            GUILayout.Label("FaceToggle setup animations", HeaderStyle);
+            GUILayout.Label("Creates an algorithm to switch face animations.", HeaderStyle2);
             // Custom Face Toggle blocks
             GUILayout.Space(5);
             EditorGUILayout.PropertyField(FaceToggleBlockParamNames,
@@ -318,24 +320,24 @@ public class AnimatorGeneratorEditor : Editor
         // Parameter Compressor
         if (wizard.createParamsCompressor)
         {
-            GUILayout.Label("Parameter Compressor", headerStyle);
+            GUILayout.Label("Parameter Compressor", HeaderStyle);
             EditorGUILayout.PropertyField(compressedParamEntries, new GUIContent("Custom Params List"), true);
         }
 
         // OSC smooth
         if ((wizard.createFaceTracking || wizard.createEyeTracking) && wizard.createOSCsmooth)
         {
-            GUILayout.Label("OSC smooth setup", headerStyle);
+            GUILayout.Label("OSC smooth setup", HeaderStyle);
             GUILayout.Label("OSC smooth is needed to fix Face/Eye Tracking params in-game, " +
-                "\nas without it animation is choppy and jerky, as if it's lacking FPS.", headerStyle2);
+                "\nas without it animation is choppy and jerky, as if it's lacking FPS.", HeaderStyle2);
             EditorGUILayout.PropertyField(localSmoothness);
             EditorGUILayout.PropertyField(remoteSmoothness);
         }
         // Eye Tracking
         if (wizard.createEyeTracking)
         {
-            GUILayout.Label("Eye Tracking (Simplified Eye Parameters) settings", headerStyle);
-            GUILayout.Label("Creates Eye Tracking with these animations.", headerStyle2);
+            GUILayout.Label("Eye Tracking (Simplified Eye Parameters) settings", HeaderStyle);
+            GUILayout.Label("Creates Eye Tracking with these animations.", HeaderStyle2);
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(FullFaceTrackingPrefix);
             EditorGUILayout.PropertyField(maxEyeMotionValue);
@@ -359,8 +361,8 @@ public class AnimatorGeneratorEditor : Editor
         // Face Tracking
         if (wizard.createFaceTracking)
         {
-            GUILayout.Label("Face Tracking (Universal Shapes) settings", headerStyle);
-            GUILayout.Label("Creates Face Tracking with these animations.", headerStyle2);
+            GUILayout.Label("Face Tracking (Universal Shapes) settings", HeaderStyle);
+            GUILayout.Label("Creates Face Tracking with these animations.", HeaderStyle2);
             EditorGUILayout.PropertyField(FullFaceTrackingPrefix);
             EditorGUILayout.PropertyField(createFTLipSyncControl,
             PopUpLabel("Face Tracking LipSync Control", "Adds LypSync off/on feature."));
