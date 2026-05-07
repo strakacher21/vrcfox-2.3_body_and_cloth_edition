@@ -156,6 +156,11 @@ MonoBehaviour:
     primaryColor1: {fileID: 7400000, guid: c7561c934e9d15c4894589e6420c6c4a, type: 2}
     secondColor0: {fileID: 7400000, guid: 3a5ee09c3f71d2e4a9b0e3e003c03243, type: 2}
     secondColor1: {fileID: 7400000, guid: 909927e740df9c1438bc863aaf05f2d2, type: 2}
+  - name: Spiked_collar
+    primaryColor0: {fileID: 7400000, guid: 3644f64b56cccbe4f907d066a5afad1c, type: 2}
+    primaryColor1: {fileID: 7400000, guid: b72e355a143a5134f99b2798267af649, type: 2}
+    secondColor0: {fileID: 7400000, guid: 144b4eb5fa4caa248829790a08d6d7d2, type: 2}
+    secondColor1: {fileID: 7400000, guid: 04ffaaf00672df14f82096212ccedc4c, type: 2}
   createParamsCompressor: 1
   compressedParamEntries:
   - paramName: tail/anim/WAG
@@ -163,6 +168,10 @@ MonoBehaviour:
     useInt: 0
     lastMode: 0
   - paramName: items/Glasses
+    useFloat: 0
+    useInt: 1
+    lastMode: 1
+  - paramName: items/Neck
     useFloat: 0
     useInt: 1
     lastMode: 1
@@ -621,7 +630,7 @@ PrefabInstance:
     - target: {fileID: -3523138356049608426, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -3107824568456337282, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
@@ -708,10 +717,15 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.056729216
       objectReference: {fileID: 0}
+    - target: {fileID: 5156568544206687488, guid: 1a1022667c449ad4ea3340db6aa363c8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6593893147025035968, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7067194956783848370, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
