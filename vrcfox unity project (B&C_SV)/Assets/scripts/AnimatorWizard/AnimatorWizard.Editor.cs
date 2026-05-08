@@ -63,6 +63,7 @@ public class AnimatorGeneratorEditor : Editor
     private SerializedProperty ClothUpperBodyNames;
     private SerializedProperty ClothLowerBodyNames;
     private SerializedProperty ClothFootNames;
+    private SerializedProperty ClothSyncParamsOptimizedAlgorithm;
 
     private SerializedProperty FaceToggleNames;
 
@@ -157,6 +158,7 @@ public class AnimatorGeneratorEditor : Editor
         ClothUpperBodyNames = serializedObject.FindProperty("ClothUpperBodyNames");
         ClothLowerBodyNames = serializedObject.FindProperty("ClothLowerBodyNames");
         ClothFootNames = serializedObject.FindProperty("ClothFootNames");
+        ClothSyncParamsOptimizedAlgorithm = serializedObject.FindProperty("ClothSyncParamsOptimizedAlgorithm");
 
         FaceToggleNames = serializedObject.FindProperty("FaceToggleNames");
 
@@ -290,6 +292,8 @@ public class AnimatorGeneratorEditor : Editor
             PopUpLabel("Cloth Toggles Prefix", "Prefixes roll up clothes and body into \"tube\",\n" +
             "as well as regulates the fit of the cloth lower body to the cloth upper body."));
             GUILayout.Space(10);
+            EditorGUILayout.PropertyField(ClothSyncParamsOptimizedAlgorithm, 
+                PopUpLabel("Sync Params Optimized Algorithm", "Use bool algorithm to switch clothes. Uncheck to use Int algorithm."));
             EditorGUILayout.PropertyField(ClothUpperBodyNames);
             EditorGUILayout.PropertyField(ClothLowerBodyNames);
             EditorGUILayout.PropertyField(ClothFootNames);

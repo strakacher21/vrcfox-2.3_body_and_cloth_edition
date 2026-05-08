@@ -3,9 +3,6 @@
     "com.vrchat.core.vpm-resolver": {
       "version": "0.1.29"
     },
-    "dev.hai-vr.animator-as-code.v1": {
-      "version": "1.2.0"
-    },
     "dev.hai-vr.animator-as-code.v1.vrchat": {
       "version": "1.1.2"
     },
@@ -24,20 +21,13 @@
     "nadena.dev.modular-avatar": {
       "version": "1.16.2"
     },
-    "com.vrchat.avatars": {
-      "version": "3.10.3"
-    },
-    "nadena.dev.ndmf": {
-      "version": "1.12.0"
+    "com.nanochip.avatarlimbscaling": {
+      "version": "1.2.0"
     }
   },
   "locked": {
     "com.vrchat.core.vpm-resolver": {
       "version": "0.1.29",
-      "dependencies": {}
-    },
-    "dev.hai-vr.animator-as-code.v1": {
-      "version": "1.2.0",
       "dependencies": {}
     },
     "dev.hai-vr.animator-as-code.v1.vrchat": {
@@ -46,6 +36,20 @@
         "dev.hai-vr.animator-as-code.v1": ">=1.1.0 <2.0.0-a",
         "com.vrchat.avatars": ">=3.5.2 <999.0.0-a"
       }
+    },
+    "dev.hai-vr.animator-as-code.v1": {
+      "version": "1.2.0",
+      "dependencies": {}
+    },
+    "com.vrchat.avatars": {
+      "version": "3.10.3",
+      "dependencies": {
+        "com.vrchat.base": "3.10.3"
+      }
+    },
+    "com.vrchat.base": {
+      "version": "3.10.3",
+      "dependencies": {}
     },
     "dev.hai-vr.animator-as-code.v1.vrchat-destructive-workflow": {
       "version": "1.1.2",
@@ -78,18 +82,19 @@
         "nadena.dev.ndmf": ">=1.11.0 <2.0.0-a"
       }
     },
-    "com.vrchat.avatars": {
-      "version": "3.10.3",
-      "dependencies": {
-        "com.vrchat.base": "3.10.3"
-      }
-    },
-    "com.vrchat.base": {
-      "version": "3.10.3",
-      "dependencies": {}
-    },
     "nadena.dev.ndmf": {
       "version": "1.12.0",
+      "dependencies": {}
+    },
+    "com.nanochip.avatarlimbscaling": {
+      "version": "1.2.0",
+      "dependencies": {
+        "com.vrchat.avatars": "^3.x.x",
+        "com.vrcfury.vrcfury": ">=1.1127.0"
+      }
+    },
+    "com.vrcfury.vrcfury": {
+      "version": "1.1334.0",
       "dependencies": {}
     }
   }
