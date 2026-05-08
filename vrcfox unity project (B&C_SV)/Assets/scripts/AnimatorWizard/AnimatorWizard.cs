@@ -25,7 +25,8 @@ public partial class AnimatorWizard : MonoBehaviour
     public AvatarMask fxMask;
 
     public bool saveVRCExpressionParameters = false;
-    public string SystemName = "AnimatorWizard";
+    public string SystemName = "AnimatorWizardLayer";
+    private const string AnimatorWizardLayerMarker = " [AW]";
 
     public string shapePreferenceSliderPrefix = "pref/slider/";
     public string shapePreferenceTogglesPrefix = "pref/toggle/";
@@ -41,21 +42,23 @@ public partial class AnimatorWizard : MonoBehaviour
 
         _vrcParams = new List<VRCExpressionParameters.Parameter>();
 
+        var wizardSystemName = GetAnimatorWizardSystemName();
+
         _aac = AacV1.Create(new AacConfiguration
         {
-            SystemName = SystemName,
+            SystemName = wizardSystemName,
             AnimatorRoot = avatar.transform,
             DefaultValueRoot = avatar.transform,
             AssetContainer = assetContainer,
             ContainerMode = AacConfiguration.Container.Everything,
-            AssetKey = SystemName,
+            AssetKey = wizardSystemName,
             DefaultsProvider = new AacDefaultsProvider(UseWriteDefaults),
             //AssetContainerProvider = null
         }.WithAvatarDescriptor(avatar));
 
         //_aac.ClearPreviousAssets();
         ClearAssetContainer();
-        DeleteAnimatorWizardLayers(avatar, SystemName);
+        DeleteAnimatorWizardLayers(avatar);
 
         // FX layer
         var fxLayer = _aac.CreateMainFxLayer().WithAvatarMask(fxMask);
@@ -90,7 +93,15 @@ public partial class AnimatorWizard : MonoBehaviour
         }
 
         RepackAnimatorControllers(avatar);
-        SortAnimatorWizardLayers(avatar, SystemName);
+        SortAnimatorWizardLayers(avatar);
+    }
+
+    private string GetAnimatorWizardSystemName()
+    {
+        if (string.IsNullOrWhiteSpace(SystemName))
+            return AnimatorWizardLayerMarker;
+
+        return SystemName.Trim() + AnimatorWizardLayerMarker;
     }
 
     private void ClearAssetContainer()

@@ -73,18 +73,41 @@ MonoBehaviour:
   createClothCustomization: 1
   ClothSyncParamsOptimizedAlgorithm: 0
   ClothTogglesPrefix: cloth/toggle/
-  ClothUpperBodyNames:
-  - coat
-  - coat_v2
-  - T-shirt
-  ClothLowerBodyNames:
-  - jeans
-  - pants
-  - shorts
-  ClothFootNames:
-  - shoes
-  - boots
-  - slaps
+  ClothGroups:
+  - layerName: cloth/upper_body
+    clothEntries:
+    - clothName: coat
+      invertAnimation: 0
+    - clothName: coat_v2
+      invertAnimation: 0
+    - clothName: T-shirt
+      invertAnimation: 0
+  - layerName: cloth/lower_body
+    clothEntries:
+    - clothName: jeans
+      invertAnimation: 0
+    - clothName: pants
+      invertAnimation: 0
+    - clothName: shorts
+      invertAnimation: 0
+  - layerName: cloth/foot
+    clothEntries:
+    - clothName: shoes
+      invertAnimation: 0
+    - clothName: boots
+      invertAnimation: 0
+    - clothName: slaps
+      invertAnimation: 0
+  - layerName: items/Glasses
+    clothEntries:
+    - clothName: round_glasses
+      invertAnimation: 1
+    - clothName: square_glasses
+      invertAnimation: 1
+  - layerName: items/Neck
+    clothEntries:
+    - clothName: spiked_collar
+      invertAnimation: 1
   createColorCustomization: 1
   ColorProfiles:
   - name: Body
@@ -168,14 +191,6 @@ MonoBehaviour:
     useFloat: 1
     useInt: 0
     lastMode: 0
-  - paramName: items/Glasses
-    useFloat: 0
-    useInt: 1
-    lastMode: 1
-  - paramName: items/Neck
-    useFloat: 0
-    useInt: 1
-    lastMode: 1
   - paramName: AvatarLimbScaling_Arms
     useFloat: 1
     useInt: 0

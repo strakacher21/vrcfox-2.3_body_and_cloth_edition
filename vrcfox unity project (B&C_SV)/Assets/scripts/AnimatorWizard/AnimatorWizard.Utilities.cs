@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 
 using AnimatorAsCode.V1;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -50,8 +51,10 @@ public partial class AnimatorWizard : MonoBehaviour
             .BlendShape(skins, maxShapeName, 100);
         maxClip.Clip.name = param.Name + ":" + maxShapeName;
 
-        return Subtree(new Motion[] { minClip.Clip, neutralClip.Clip, maxClip.Clip },
-            new[] { minValue, neutralValue, maxValue }, param);
+        return Subtree(
+            new Motion[] { minClip.Clip, neutralClip.Clip, maxClip.Clip },
+            new[] { minValue, neutralValue, maxValue },
+            param);
     }
 
     protected BlendTree Subtree(Motion[] motions, float[] thresholds, AacFlParameter param)
@@ -61,7 +64,12 @@ public partial class AnimatorWizard : MonoBehaviour
 
         for (int i = 0; i < motions.Length; i++)
         {
-            children[i] = new ChildMotion { motion = motions[i], threshold = thresholds[i], timeScale = 1 };
+            children[i] = new ChildMotion
+            {
+                motion = motions[i],
+                threshold = thresholds[i],
+                timeScale = 1
+            };
         }
 
         tree.children = children;
@@ -79,16 +87,21 @@ public partial class AnimatorWizard : MonoBehaviour
         tree.blendType = BlendTreeType.Simple1D;
         return tree;
     }
+
     protected static List<AacFlBoolParameter> BuildBlockBoolListParams(AacFlLayer layer, IEnumerable<string> names)
     {
         var result = new List<AacFlBoolParameter>();
-        if (layer == null || names == null) return result;
+        if (layer == null || names == null)
+            return result;
 
-        var seen = new HashSet<string>();
+        var seen = new HashSet<string>(StringComparer.Ordinal);
         foreach (var name in names)
         {
-            if (string.IsNullOrWhiteSpace(name)) continue;
-            if (!seen.Add(name)) continue; // avoid duplicate parameter names
+            if (string.IsNullOrWhiteSpace(name))
+                continue;
+            if (!seen.Add(name))
+                continue; // avoid duplicate parameter names
+
             result.Add(layer.BoolParameter(name));
         }
 
@@ -135,8 +148,10 @@ public partial class AnimatorWizard : MonoBehaviour
 
     protected static string StripSide(string str)
     {
-        if (str.EndsWith(Right)) return str.Substring(0, str.Length - Right.Length);
-        if (str.EndsWith(Left)) return str.Substring(0, str.Length - Left.Length);
+        if (str.EndsWith(Right))
+            return str.Substring(0, str.Length - Right.Length);
+        if (str.EndsWith(Left))
+            return str.Substring(0, str.Length - Left.Length);
         return str;
     }
 
@@ -210,37 +225,16 @@ public partial class AnimatorWizard : MonoBehaviour
 
         return layer.BoolParameter(paramName);
     }
-    private HashSet<string> GetAnimatorWizardLayerNames(string systemName)
+
+    private static bool IsAnimatorWizardLayerName(string layerName)
     {
-        if (string.IsNullOrEmpty(systemName)) return new HashSet<string>();
-        //Superset of all possible Wizard layer names (so reruns with different flags can still clean old layers)
-        var set = new HashSet<string>(16);
-
-        set.Add(systemName);
-        set.Add(systemName + "__tree");
-        set.Add(systemName + "__brow expressions");
-        set.Add(systemName + "__mouth expressions");
-        set.Add(systemName + "__bool preferences drivers");
-        set.Add(systemName + "__clothupperbody");
-        set.Add(systemName + "__clothlowerbody");
-        set.Add(systemName + "__clothfoot");
-        set.Add(systemName + "__face tracking toggle");
-        set.Add(systemName + "__OSC smoothing");
-        set.Add(systemName + "__Compressed params");
-        set.Add(systemName + "__Left hand");
-        set.Add(systemName + "__Right hand");
-        set.Add(systemName + "__Eye Left Tracking");
-        set.Add(systemName + "__Eye Right Tracking");
-
-        return set;
+        return !string.IsNullOrWhiteSpace(layerName) &&
+               layerName.IndexOf(" [AW]", StringComparison.Ordinal) >= 0;
     }
 
-    protected void DeleteAnimatorWizardLayers(VRCAvatarDescriptor avatar, string systemName)
+    protected void DeleteAnimatorWizardLayers(VRCAvatarDescriptor avatar)
     {
         if (avatar == null) return;
-
-        var wizardLayerNames = GetAnimatorWizardLayerNames(systemName);
-        if (wizardLayerNames.Count == 0) return;
 
         UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
         AssetDatabase.StartAssetEditing();
@@ -262,10 +256,12 @@ public partial class AnimatorWizard : MonoBehaviour
 
                     var controller = l.animatorController as AnimatorController;
                     if (controller == null) continue;
-                    // delete only exact Wizard layers (never prefix-based) to avoid nuking user custom layers
+                    // delete only marked Wizard layers to avoid nuking user custom layers
                     for (int i = controller.layers.Length - 1; i >= 0; i--)
-                        if (wizardLayerNames.Contains(controller.layers[i].name))
+                    {
+                        if (IsAnimatorWizardLayerName(controller.layers[i].name))
                             controller.RemoveLayer(i);
+                    }
 
                     EditorUtility.SetDirty(controller);
                 }
@@ -280,12 +276,9 @@ public partial class AnimatorWizard : MonoBehaviour
         }
     }
 
-    protected void SortAnimatorWizardLayers(VRCAvatarDescriptor avatar, string systemName)
+    protected void SortAnimatorWizardLayers(VRCAvatarDescriptor avatar)
     {
         if (avatar == null) return;
-
-        var wizardLayerNames = GetAnimatorWizardLayerNames(systemName);
-        if (wizardLayerNames.Count == 0) return;
 
         UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
         AssetDatabase.StartAssetEditing();
@@ -299,7 +292,6 @@ public partial class AnimatorWizard : MonoBehaviour
                 foreach (var l in animLayers)
                 {
                     if (l.isDefault) continue;
-
                     if (l.type != VRCAvatarDescriptor.AnimLayerType.FX &&
                         l.type != VRCAvatarDescriptor.AnimLayerType.Gesture &&
                         l.type != VRCAvatarDescriptor.AnimLayerType.Additive)
@@ -316,7 +308,7 @@ public partial class AnimatorWizard : MonoBehaviour
                     for (int i = 0; i < oldLayers.Length; i++)
                     {
                         var name = oldLayers[i].name;
-                        if (wizardLayerNames.Contains(name))
+                        if (IsAnimatorWizardLayerName(name))
                             wizardLayers.Add(oldLayers[i]);
                         else
                             userLayers.Add(oldLayers[i]);
@@ -458,7 +450,6 @@ public partial class AnimatorWizard : MonoBehaviour
             UnityEditor.AssetDatabase.Refresh();
         }
     }
-
 }
 
 #endif

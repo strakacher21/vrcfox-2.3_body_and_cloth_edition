@@ -60,9 +60,7 @@ public class AnimatorGeneratorEditor : Editor
     private SerializedProperty browShapeNames;
 
     private SerializedProperty expTrackName;
-    private SerializedProperty ClothUpperBodyNames;
-    private SerializedProperty ClothLowerBodyNames;
-    private SerializedProperty ClothFootNames;
+    private SerializedProperty ClothGroups;
     private SerializedProperty ClothSyncParamsOptimizedAlgorithm;
 
     private SerializedProperty FaceToggleNames;
@@ -155,9 +153,7 @@ public class AnimatorGeneratorEditor : Editor
         mouthShapeNames = serializedObject.FindProperty("mouthShapeNames");
         browShapeNames = serializedObject.FindProperty("browShapeNames");
 
-        ClothUpperBodyNames = serializedObject.FindProperty("ClothUpperBodyNames");
-        ClothLowerBodyNames = serializedObject.FindProperty("ClothLowerBodyNames");
-        ClothFootNames = serializedObject.FindProperty("ClothFootNames");
+        ClothGroups = serializedObject.FindProperty("ClothGroups");
         ClothSyncParamsOptimizedAlgorithm = serializedObject.FindProperty("ClothSyncParamsOptimizedAlgorithm");
 
         FaceToggleNames = serializedObject.FindProperty("FaceToggleNames");
@@ -286,17 +282,19 @@ public class AnimatorGeneratorEditor : Editor
         if (wizard.createClothCustomization)
         {
             GUILayout.Label("Cloths customization", HeaderStyle);
-            GUILayout.Label("Creates an algorithm to switch clothes, animations \nand VRC params with these prefixes.", HeaderStyle2);
+            GUILayout.Label("Creates an algorithm to switch clothes, animations and VRC params with these prefixes.", HeaderStyle2);
             GUILayout.Space(10);
+
             EditorGUILayout.PropertyField(ClothTogglesPrefix,
-            PopUpLabel("Cloth Toggles Prefix", "Prefixes roll up clothes and body into \"tube\",\n" +
-            "as well as regulates the fit of the cloth lower body to the cloth upper body."));
+                PopUpLabel("Cloth Toggles Prefix", "Prefixes roll up clothes and body into \"tube\",\n" +
+                "as well as regulates the fit of the cloth lower body to the cloth upper body."));
+
             GUILayout.Space(10);
-            EditorGUILayout.PropertyField(ClothSyncParamsOptimizedAlgorithm, 
+            EditorGUILayout.PropertyField(ClothSyncParamsOptimizedAlgorithm,
                 PopUpLabel("Sync Params Optimized Algorithm", "Use bool algorithm to switch clothes. Uncheck to use Int algorithm."));
-            EditorGUILayout.PropertyField(ClothUpperBodyNames);
-            EditorGUILayout.PropertyField(ClothLowerBodyNames);
-            EditorGUILayout.PropertyField(ClothFootNames);
+
+            GUILayout.Space(10);
+            EditorGUILayout.PropertyField(ClothGroups, new GUIContent("Cloth Groups"), true);
         }
 
         // Color customization

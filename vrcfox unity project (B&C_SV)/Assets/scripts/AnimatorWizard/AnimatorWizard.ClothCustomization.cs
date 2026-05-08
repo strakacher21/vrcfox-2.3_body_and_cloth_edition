@@ -4,71 +4,145 @@ using AnimatorAsCode.V1;
 using AnimatorAsCode.V1.VRCDestructiveWorkflow;
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
 
 public partial class AnimatorWizard : MonoBehaviour
 {
+    [Serializable]
+    public class ClothEntry
+    {
+        public string clothName;
+        public bool invertAnimation;
+    }
+
+    [Serializable]
+    public class ClothGroup
+    {
+        public string layerName = "cloth_upper_body";
+        public List<ClothEntry> clothEntries = new List<ClothEntry>();
+    }
+
     public bool createClothCustomization = true;
     public bool ClothSyncParamsOptimizedAlgorithm = true;
     public string ClothTogglesPrefix = "cloth/";
 
-    public string[] ClothUpperBodyNames =
+    public List<ClothGroup> ClothGroups = new List<ClothGroup>
     {
-        "coat",
-        "coat_v2",
-        "T-shirt",
-    };
-
-    public string[] ClothLowerBodyNames =
-    {
-        "jeans",
-        "pants",
-        "shorts",
-    };
-
-    public string[] ClothFootNames =
-    {
-        "shoes",
-        "boots",
-        "slaps",
+        new ClothGroup
+        {
+            layerName = "cloth_upper_body",
+            clothEntries = new List<ClothEntry>
+            {
+                new ClothEntry { clothName = "coat", invertAnimation = false },
+                new ClothEntry { clothName = "coat_v2", invertAnimation = false },
+                new ClothEntry { clothName = "T-shirt", invertAnimation = false },
+            }
+        },
+        new ClothGroup
+        {
+            layerName = "cloth_lower_body",
+            clothEntries = new List<ClothEntry>
+            {
+                new ClothEntry { clothName = "jeans", invertAnimation = false },
+                new ClothEntry { clothName = "pants", invertAnimation = false },
+                new ClothEntry { clothName = "shorts", invertAnimation = false },
+            }
+        },
+        new ClothGroup
+        {
+            layerName = "cloth_foot",
+            clothEntries = new List<ClothEntry>
+            {
+                new ClothEntry { clothName = "shoes", invertAnimation = false },
+                new ClothEntry { clothName = "boots", invertAnimation = false },
+                new ClothEntry { clothName = "slaps", invertAnimation = false },
+            }
+        }
     };
 
     private void InitializeClothingCustomization(SkinnedMeshRenderer[] skins)
     {
-        if (!createClothCustomization || skins == null || skins.Length == 0)
+        if (!createClothCustomization || skins == null || skins.Length == 0 || ClothGroups == null)
             return;
 
-        SetupClothes(ClothUpperBodyNames, skins, "cloth_upper_body", ClothSyncParamsOptimizedAlgorithm);
-        SetupClothes(ClothLowerBodyNames, skins, "cloth_lower_body", ClothSyncParamsOptimizedAlgorithm);
-        SetupClothes(ClothFootNames, skins, "cloth_foot", ClothSyncParamsOptimizedAlgorithm);
+        foreach (var group in ClothGroups)
+        {
+            if (group == null || string.IsNullOrWhiteSpace(group.layerName) || group.clothEntries == null || group.clothEntries.Count == 0)
+                continue;
+
+            SetupClothes(group.clothEntries, skins, group.layerName, ClothSyncParamsOptimizedAlgorithm);
+        }
     }
 
-    private void SetupClothes(string[] clothNames, SkinnedMeshRenderer[] skins, string layerName, bool ClothSyncParamsOptimizedAlgorithm)
+    private static List<ClothEntry> CollectUniqueClothes(List<ClothEntry> clothEntries)
     {
-        if (clothNames == null || clothNames.Length == 0 || skins == null || skins.Length == 0)
+        var result = new List<ClothEntry>();
+        if (clothEntries == null)
+            return result;
+
+        var seen = new HashSet<string>(StringComparer.Ordinal);
+
+        foreach (var entry in clothEntries)
+        {
+            if (entry == null || string.IsNullOrWhiteSpace(entry.clothName))
+                continue;
+
+            var trimmedName = entry.clothName.Trim();
+            if (!seen.Add(trimmedName))
+                continue;
+
+            result.Add(new ClothEntry
+            {
+                clothName = trimmedName,
+                invertAnimation = entry.invertAnimation
+            });
+        }
+
+        return result;
+    }
+
+    private static float GetEnabledValue(ClothEntry entry)
+    {
+        return entry != null && entry.invertAnimation ? 0f : 100f;
+    }
+
+    private static float GetDisabledValue(ClothEntry entry)
+    {
+        return entry != null && entry.invertAnimation ? 100f : 0f;
+    }
+
+    private void SetupClothes(List<ClothEntry> clothEntries, SkinnedMeshRenderer[] skins, string layerName, bool clothSyncParamsOptimizedAlgorithm)
+    {
+        if (clothEntries == null || clothEntries.Count == 0 || skins == null || skins.Length == 0 || string.IsNullOrWhiteSpace(layerName))
+            return;
+
+        var allPossibleClothes = CollectUniqueClothes(clothEntries);
+        if (allPossibleClothes.Count == 0)
             return;
 
         var layer = _aac.CreateSupportingFxLayer(layerName).WithAvatarMask(fxMask);
         var waitingState = layer.NewState("Waiting command");
 
-        var seen = new HashSet<string>(StringComparer.Ordinal);
-        var allPossibleClothes = new List<string>(clothNames.Length);
-        foreach (var name in clothNames)
+        var waitingClip = _aac.NewClip($"{layerName}_Waiting");
+        foreach (var clothEntry in allPossibleClothes)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                continue;
-
-            if (seen.Add(name))
-                allPossibleClothes.Add(name);
+            AddBlendShapeOnAllMatchingMeshes(
+                waitingClip,
+                skins,
+                ClothTogglesPrefix + clothEntry.clothName,
+                GetDisabledValue(clothEntry)
+            );
         }
+        waitingState.WithAnimation(waitingClip);
 
         VRCAvatarParameterDriver clothDriverSetsFalse = null;
         AacFlTransition waitingTransition = null;
         AacFlIntParameter intParam = null;
         var stateIndex = 1;
 
-        if (ClothSyncParamsOptimizedAlgorithm)
+        if (clothSyncParamsOptimizedAlgorithm)
         {
             waitingTransition = layer.AnyTransitionsTo(waitingState);
             clothDriverSetsFalse = waitingState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
@@ -77,39 +151,37 @@ public partial class AnimatorWizard : MonoBehaviour
         }
         else
         {
-            var waitingClip = _aac.NewClip($"{layerName}_Waiting");
-            foreach (var clothName in allPossibleClothes)
-                AddBlendShapeOnAllMatchingMeshes(waitingClip, skins, ClothTogglesPrefix + clothName, 0f);
-
-            waitingState.WithAnimation(waitingClip);
-
-            intParam = CreateIntParam(layer, "cloth/" + layerName.Substring("cloth_".Length), true, 0);
+            intParam = CreateIntParam(layer, layerName, true, 0);
             ApplyCompressedParams(intParam.Name, true);
             layer.AnyTransitionsTo(waitingState).When(intParam.IsEqualTo(0));
         }
 
-        foreach (var clothName in allPossibleClothes)
+        foreach (var clothEntry in allPossibleClothes)
         {
-            var fullBlendShapeName = ClothTogglesPrefix + clothName;
+            var fullBlendShapeName = ClothTogglesPrefix + clothEntry.clothName;
             if (!HasBlendShapeOnAnyMatchingMesh(skins, fullBlendShapeName))
                 continue;
 
-            var clothClip = _aac.NewClip($"Cloth_{clothName}");
-            AddBlendShapeOnAllMatchingMeshes(clothClip, skins, fullBlendShapeName, 100f);
+            var clothClip = _aac.NewClip($"Cloth_{layerName}_{clothEntry.clothName}");
 
-            foreach (var otherClothName in allPossibleClothes)
+            foreach (var otherEntry in allPossibleClothes)
             {
-                if (otherClothName == clothName)
-                    continue;
+                var value = otherEntry.clothName == clothEntry.clothName
+                    ? GetEnabledValue(otherEntry)
+                    : GetDisabledValue(otherEntry);
 
-                var otherFullBlendShapeName = ClothTogglesPrefix + otherClothName;
-                AddBlendShapeOnAllMatchingMeshes(clothClip, skins, otherFullBlendShapeName, 0f);
+                AddBlendShapeOnAllMatchingMeshes(
+                    clothClip,
+                    skins,
+                    ClothTogglesPrefix + otherEntry.clothName,
+                    value
+                );
             }
 
-            var clothState = layer.NewState(clothName);
+            var clothState = layer.NewState(clothEntry.clothName);
             clothState.WithAnimation(clothClip);
 
-            if (ClothSyncParamsOptimizedAlgorithm)
+            if (clothSyncParamsOptimizedAlgorithm)
             {
                 var clothDriverSetsTrue = clothState.State.AddStateMachineBehaviour<VRCAvatarParameterDriver>();
                 if (clothDriverSetsTrue.parameters == null)
@@ -131,14 +203,14 @@ public partial class AnimatorWizard : MonoBehaviour
                     value = 1
                 });
 
-                foreach (var otherClothName in allPossibleClothes)
+                foreach (var otherEntry in allPossibleClothes)
                 {
-                    if (otherClothName == clothName)
+                    if (otherEntry.clothName == clothEntry.clothName)
                         continue;
 
                     clothDriverSetsTrue.parameters.Add(new VRCAvatarParameterDriver.Parameter
                     {
-                        name = ClothTogglesPrefix + otherClothName,
+                        name = ClothTogglesPrefix + otherEntry.clothName,
                         type = VRCAvatarParameterDriver.ChangeType.Set,
                         value = 0
                     });
@@ -153,6 +225,82 @@ public partial class AnimatorWizard : MonoBehaviour
                 stateIndex++;
             }
         }
+    }
+}
+
+[CustomPropertyDrawer(typeof(AnimatorWizard.ClothEntry))]
+public class ClothEntryDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        return EditorGUIUtility.singleLineHeight;
+    }
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        var clothName = property.FindPropertyRelative("clothName");
+        var invertAnimation = property.FindPropertyRelative("invertAnimation");
+
+        EditorGUI.BeginProperty(position, label, property);
+        position = EditorGUI.PrefixLabel(position, label);
+
+        const float spacing = 6f;
+        const float buttonWidth = 80f;
+
+        var nameRect = new Rect(position.x, position.y, position.width - buttonWidth - spacing, position.height);
+        var buttonRect = new Rect(nameRect.xMax + spacing, position.y, buttonWidth, position.height);
+
+        EditorGUI.PropertyField(nameRect, clothName, GUIContent.none);
+
+        var buttonLabel = invertAnimation.boolValue ? "Inverted" : "Default";
+        var buttonTooltip = invertAnimation.boolValue
+            ? "Use the inverted animation direction."
+            : "Use the default animation direction.";
+        if (GUI.Button(buttonRect, new GUIContent(buttonLabel, buttonTooltip)))
+            invertAnimation.boolValue = !invertAnimation.boolValue;
+
+        EditorGUI.EndProperty();
+    }
+}
+
+[CustomPropertyDrawer(typeof(AnimatorWizard.ClothGroup))]
+public class ClothGroupDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        var layerName = property.FindPropertyRelative("layerName");
+        var clothEntries = property.FindPropertyRelative("clothEntries");
+
+        var height = 0f;
+        height += EditorGUI.GetPropertyHeight(layerName);
+        height += 4f;
+        height += EditorGUI.GetPropertyHeight(clothEntries, true);
+
+        return height;
+    }
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        var layerName = property.FindPropertyRelative("layerName");
+        var clothEntries = property.FindPropertyRelative("clothEntries");
+
+        var layerRect = new Rect(
+            position.x,
+            position.y,
+            position.width,
+            EditorGUI.GetPropertyHeight(layerName)
+        );
+
+        EditorGUI.PropertyField(layerRect, layerName, new GUIContent("Layer Name"));
+
+        var entriesRect = new Rect(
+            position.x,
+            layerRect.yMax + 4f,
+            position.width,
+            EditorGUI.GetPropertyHeight(clothEntries, true)
+        );
+
+        EditorGUI.PropertyField(entriesRect, clothEntries, new GUIContent("Cloth Entries"), true);
     }
 }
 
