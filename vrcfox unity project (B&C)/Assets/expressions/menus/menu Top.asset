@@ -14,6 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Parameters: {fileID: 11400000, guid: 81db426d2d57e2649b743a4a6f77e921, type: 2}
   controls:
+  - name: <b>GoGo Loco
+    icon: {fileID: 2800000, guid: 712238f917172e24081f7eede9f36482, type: 3}
+    type: 103
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 11400000, guid: a0468df435f5a544ab277df24d7fe17d, type: 2}
+    subParameters: []
+    labels: []
   - name: '<b><color=orange>Tail Control '
     icon: {fileID: 2800000, guid: 25c0480fe355ea940abf1dd7e635f4c4, type: 3}
     type: 103
@@ -24,7 +34,7 @@ MonoBehaviour:
     subMenu: {fileID: 11400000, guid: a9668ea386b38bf44aaf75e168a99b98, type: 2}
     subParameters: []
     labels: []
-  - name: <b>Body Prefs
+  - name: <b><color=purple>Body Prefs
     icon: {fileID: 2800000, guid: c76354ac99b656848928547de182dff6, type: 3}
     type: 103
     parameter:

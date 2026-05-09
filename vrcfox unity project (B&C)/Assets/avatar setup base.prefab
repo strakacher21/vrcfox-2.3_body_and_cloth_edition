@@ -1267,7 +1267,7 @@ MonoBehaviour:
   baseAnimationLayers:
   - isEnabled: 0
     type: 0
-    animatorController: {fileID: 9100000, guid: 42274d587c7e872478d3f2b56b51548f,
+    animatorController: {fileID: 9100000, guid: 3fe95311f8402e147bd99d7fa91e2d7c,
       type: 2}
     mask: {fileID: 0}
     isDefault: 0
@@ -1285,9 +1285,10 @@ MonoBehaviour:
     isDefault: 0
   - isEnabled: 0
     type: 4
-    animatorController: {fileID: 0}
+    animatorController: {fileID: 9100000, guid: f094f2181f4e52b478200609d93196ae,
+      type: 2}
     mask: {fileID: 0}
-    isDefault: 1
+    isDefault: 0
   - isEnabled: 0
     type: 5
     animatorController: {fileID: 9100000, guid: 373087e67ca76c843a08aa0c78515340,
@@ -1297,15 +1298,16 @@ MonoBehaviour:
   specialAnimationLayers:
   - isEnabled: 0
     type: 6
-    animatorController: {fileID: 9100000, guid: fd35465402b778b429a3fd7db69f06a6,
+    animatorController: {fileID: 9100000, guid: 4d3257c455716f848b472f8c98b22fd0,
       type: 2}
     mask: {fileID: 0}
     isDefault: 0
   - isEnabled: 0
     type: 7
-    animatorController: {fileID: 0}
+    animatorController: {fileID: 9100000, guid: 12855f79f39fc34499e5aa0d0c40e3b2,
+      type: 2}
     mask: {fileID: 0}
-    isDefault: 1
+    isDefault: 0
   - isEnabled: 0
     type: 8
     animatorController: {fileID: 0}
@@ -1569,19 +1571,20 @@ MonoBehaviour:
     rotation: {x: 0.029763144, y: 0, z: -0.0000000070960793, w: 0.999557}
   collider_footR:
     isMirrored: 1
-    state: 0
+    state: 1
     transform: {fileID: 419453965623154722}
-    radius: 0.00092728814
+    radius: 0.00085
     height: 0
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
+    position: {x: -2.0562613e-10, y: 4.365573e-10, z: 0.00034999778}
+    rotation: {x: -0.000000084293696, y: -0.000000039899756, z: -0.0000000094471995,
+      w: 1}
   collider_footL:
     isMirrored: 1
-    state: 0
+    state: 1
     transform: {fileID: 6646395292762021990}
-    radius: 0.00092728826
+    radius: 0.00085
     height: 0
-    position: {x: 0, y: 0, z: 0}
+    position: {x: 0, y: 0, z: 0.00035}
     rotation: {x: 0, y: 0, z: 0, w: 1}
   collider_handR:
     isMirrored: 1
@@ -2253,8 +2256,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTransform: {fileID: 0}
   shapeType: 1
-  radius: 0.00125
-  height: 0.00325
+  radius: 0.0013
+  height: 0.0032
   position: {x: 0, y: 0.0006, z: 0.0004}
   rotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
   localOnly: 0
