@@ -30,7 +30,7 @@ public partial class AnimatorWizard : MonoBehaviour
         cpSenderStateY = 0;
         cpAacSnapshot = _aac;
 
-        cpLayer = _aac.CreateSupportingFxLayer("Compressed params").WithAvatarMask(fxMask);
+        cpLayer = _aac.CreateSupportingFxLayer("compressed params").WithAvatarMask(fxMask);
 
         cpLayer.IntParameter("CompressedParams/ParamValue");
         cpLayer.IntParameter("CompressedParams/ParamPack");

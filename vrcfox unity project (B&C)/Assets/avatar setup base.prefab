@@ -71,19 +71,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   createClothCustomization: 1
+  ClothSyncParamsOptimizedAlgorithm: 0
   ClothTogglesPrefix: cloth/toggle/
-  ClothUpperBodyNames:
-  - coat
-  - coat_v2
-  - T-shirt
-  ClothLowerBodyNames:
-  - jeans
-  - pants
-  - shorts
-  ClothFootNames:
-  - shoes
-  - boots
-  - slaps
+  ClothGroups:
+  - layerName: cloth/upper_body
+    clothEntries:
+    - clothName: coat
+      invertAnimation: 0
+    - clothName: coat_v2
+      invertAnimation: 0
+    - clothName: T-shirt
+      invertAnimation: 0
+  - layerName: cloth/lower_body
+    clothEntries:
+    - clothName: jeans
+      invertAnimation: 0
+    - clothName: pants
+      invertAnimation: 0
+    - clothName: shorts
+      invertAnimation: 0
+  - layerName: cloth/foot
+    clothEntries:
+    - clothName: shoes
+      invertAnimation: 0
+    - clothName: boots
+      invertAnimation: 0
+    - clothName: slaps
+      invertAnimation: 0
   createColorCustomization: 1
   ColorProfiles:
   - name: Body
