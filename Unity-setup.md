@@ -13,12 +13,23 @@ Follow these steps to set up the Unity project:
 
 3. **Add Custom Package Repository**  
    This project uses custom packages. In VCC, navigate to Settings > Packages > Add Repository, then paste the following URL:  
+
    ```
    https://hai-vr.github.io/vpm-listing/index.json
+   ```
+
+   ```
    https://spokeek.github.io/goloco/index.json
+   ```
+   
+   ```
    https://xnanochip.github.io/VPM-Package-Listing/index.json
+   ```
+
+   ```
    https://vpm.nadena.dev/vpm.json
    ```
+
 4. **Confirm Repository Addition**  
    A dialog box will appear in VCC. Click **I Understand, Add Repository** and verify that the repository has been successfully added in the VCC settings.
 
