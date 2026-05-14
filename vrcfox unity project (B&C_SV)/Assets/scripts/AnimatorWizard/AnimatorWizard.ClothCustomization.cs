@@ -4,7 +4,6 @@ using AnimatorAsCode.V1;
 using AnimatorAsCode.V1.VRCDestructiveWorkflow;
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
 
@@ -225,82 +224,6 @@ public partial class AnimatorWizard : MonoBehaviour
                 stateIndex++;
             }
         }
-    }
-}
-
-[CustomPropertyDrawer(typeof(AnimatorWizard.ClothEntry))]
-public class ClothEntryDrawer : PropertyDrawer
-{
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        return EditorGUIUtility.singleLineHeight;
-    }
-
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-        var clothName = property.FindPropertyRelative("clothName");
-        var invertAnimation = property.FindPropertyRelative("invertAnimation");
-
-        EditorGUI.BeginProperty(position, label, property);
-        position = EditorGUI.PrefixLabel(position, label);
-
-        const float spacing = 6f;
-        const float buttonWidth = 80f;
-
-        var nameRect = new Rect(position.x, position.y, position.width - buttonWidth - spacing, position.height);
-        var buttonRect = new Rect(nameRect.xMax + spacing, position.y, buttonWidth, position.height);
-
-        EditorGUI.PropertyField(nameRect, clothName, GUIContent.none);
-
-        var buttonLabel = invertAnimation.boolValue ? "Inverted" : "Default";
-        var buttonTooltip = invertAnimation.boolValue
-            ? "Use the inverted animation direction."
-            : "Use the default animation direction.";
-        if (GUI.Button(buttonRect, new GUIContent(buttonLabel, buttonTooltip)))
-            invertAnimation.boolValue = !invertAnimation.boolValue;
-
-        EditorGUI.EndProperty();
-    }
-}
-
-[CustomPropertyDrawer(typeof(AnimatorWizard.ClothGroup))]
-public class ClothGroupDrawer : PropertyDrawer
-{
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        var layerName = property.FindPropertyRelative("layerName");
-        var clothEntries = property.FindPropertyRelative("clothEntries");
-
-        var height = 0f;
-        height += EditorGUI.GetPropertyHeight(layerName);
-        height += 4f;
-        height += EditorGUI.GetPropertyHeight(clothEntries, true);
-
-        return height;
-    }
-
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-        var layerName = property.FindPropertyRelative("layerName");
-        var clothEntries = property.FindPropertyRelative("clothEntries");
-
-        var layerRect = new Rect(
-            position.x,
-            position.y,
-            position.width,
-            EditorGUI.GetPropertyHeight(layerName)
-        );
-
-        EditorGUI.PropertyField(layerRect, layerName, new GUIContent("Layer Name"));
-
-        var entriesRect = new Rect(
-            position.x,
-            layerRect.yMax + 4f,
-            position.width,
-            EditorGUI.GetPropertyHeight(clothEntries, true)
-        );
-
-        EditorGUI.PropertyField(entriesRect, clothEntries, new GUIContent("Cloth Entries"), true);
     }
 }
 

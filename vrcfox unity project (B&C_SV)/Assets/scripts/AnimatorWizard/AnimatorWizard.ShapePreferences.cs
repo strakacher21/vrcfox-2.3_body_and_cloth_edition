@@ -5,7 +5,6 @@ using AnimatorAsCode.V1.VRC;
 using AnimatorAsCode.V1.VRCDestructiveWorkflow;
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -105,63 +104,6 @@ public partial class AnimatorWizard : MonoBehaviour
         return Subtree(new Motion[] { state000.Clip, state100.Clip }, new[] { 0f, 1f }, param);
     }
 
-    [CustomPropertyDrawer(typeof(AnimatorWizard.ShapePreferenceEntry))]
-    public class ShapePreferenceEntryDrawer : PropertyDrawer
-    {
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return EditorGUIUtility.singleLineHeight;
-        }
-
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            var blendShapeName = property.FindPropertyRelative("blendShapeName");
-            var useBool = property.FindPropertyRelative("useBool");
-            var useFloat = property.FindPropertyRelative("useFloat");
-            var lastMode = property.FindPropertyRelative("lastMode");
-
-            EditorGUI.BeginProperty(position, label, property);
-            position = EditorGUI.PrefixLabel(position, label);
-
-            const float spacing = 6f;
-            const float toggleW = 54f;
-
-            var nameRect = new Rect(position.x, position.y, position.width - (toggleW * 2 + spacing * 2), position.height);
-            var boolRect = new Rect(nameRect.xMax + spacing, position.y, toggleW, position.height);
-            var floatRect = new Rect(boolRect.xMax + spacing, position.y, toggleW, position.height);
-
-            EditorGUI.PropertyField(nameRect, blendShapeName, GUIContent.none);
-
-            // Make Bool/Float mutually exclusive
-            EditorGUI.BeginChangeCheck();
-            var newBool = EditorGUI.ToggleLeft(boolRect, "Bool", useBool.boolValue);
-            if (EditorGUI.EndChangeCheck())
-            {
-                useBool.boolValue = newBool;
-                if (newBool) useFloat.boolValue = false;
-                lastMode.intValue = 0;
-            }
-
-            EditorGUI.BeginChangeCheck();
-            var newFloat = EditorGUI.ToggleLeft(floatRect, "Float", useFloat.boolValue);
-            if (EditorGUI.EndChangeCheck())
-            {
-                useFloat.boolValue = newFloat;
-                if (newFloat) useBool.boolValue = false;
-                lastMode.intValue = 1;
-            }
-
-            //safety for edge cases (multi-edit / serialized state)
-            if (useBool.boolValue && useFloat.boolValue)
-            {
-                var keepFloat = lastMode.intValue == 1;
-                useFloat.boolValue = keepFloat;
-                useBool.boolValue = !keepFloat;
-            }
-
-            EditorGUI.EndProperty();
-        }
-    }
 }
 
 #endif
