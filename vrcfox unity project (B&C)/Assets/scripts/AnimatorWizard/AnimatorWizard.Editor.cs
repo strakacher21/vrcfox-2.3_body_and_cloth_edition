@@ -255,8 +255,7 @@ public class AnimatorGeneratorEditor : Editor
 
         // Animator creation flags
         GUILayout.Label("Animator creation flags", HeaderStyle);
-        GUILayout.Label("Choose what parts of the animator are generated." +
-            "\nDisabling features saves VRC params budget!", HeaderStyle2);
+        GUILayout.Label("Choose what parts of the animator are generated.");
         GUILayout.Space(10);
         EditorGUILayout.PropertyField(createShapePreferences);
         EditorGUILayout.PropertyField(createClothCustomization);
@@ -387,4 +386,134 @@ public class AnimatorGeneratorEditor : Editor
     }
 }
 
+// Shared UI logic for drawing an entry with a text field and a toggle button
+public static class DrawerUIHelper
+{
+    public static void DrawEntryWithButton(Rect position, SerializedProperty nameProp, SerializedProperty stateProp, string trueLabel, string falseLabel, string trueTooltip, string falseTooltip)
+    {
+        const float spacing = 6f;
+        const float buttonWidth = 90f;
+
+        var nameRect = new Rect(position.x, position.y, position.width - buttonWidth - spacing, position.height);
+        var buttonRect = new Rect(nameRect.xMax + spacing, position.y, buttonWidth, position.height);
+
+        EditorGUI.PropertyField(nameRect, nameProp, GUIContent.none);
+
+        var buttonLabel = stateProp.boolValue ? trueLabel : falseLabel;
+        var buttonTooltip = stateProp.boolValue ? trueTooltip : falseTooltip;
+
+        if (GUI.Button(buttonRect, new GUIContent(buttonLabel, buttonTooltip)))
+        {
+            stateProp.boolValue = !stateProp.boolValue;
+        }
+    }
+}
+
+[CustomPropertyDrawer(typeof(AnimatorWizard.ClothEntry))]
+public class ClothEntryDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => EditorGUIUtility.singleLineHeight;
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        var clothName = property.FindPropertyRelative("clothName");
+        var invertAnimation = property.FindPropertyRelative("invertAnimation");
+
+        EditorGUI.BeginProperty(position, label, property);
+        position = EditorGUI.PrefixLabel(position, label);
+
+        DrawerUIHelper.DrawEntryWithButton(
+            position, clothName, invertAnimation,
+            "Inverted", "Default",
+            "Use the inverted animation direction.",
+            "Use the default animation direction."
+        );
+
+        EditorGUI.EndProperty();
+    }
+}
+
+[CustomPropertyDrawer(typeof(AnimatorWizard.ClothGroup))]
+public class ClothGroupDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        var layerName = property.FindPropertyRelative("layerName");
+        var clothEntries = property.FindPropertyRelative("clothEntries");
+        return EditorGUI.GetPropertyHeight(layerName) + 4f + EditorGUI.GetPropertyHeight(clothEntries, true);
+    }
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        var layerName = property.FindPropertyRelative("layerName");
+        var clothEntries = property.FindPropertyRelative("clothEntries");
+
+        var layerRect = new Rect(position.x, position.y, position.width, EditorGUI.GetPropertyHeight(layerName));
+        EditorGUI.PropertyField(layerRect, layerName, new GUIContent("Layer Name"));
+
+        var entriesRect = new Rect(position.x, layerRect.yMax + 4f, position.width, EditorGUI.GetPropertyHeight(clothEntries, true));
+        EditorGUI.PropertyField(entriesRect, clothEntries, new GUIContent("Cloth Entries"), true);
+    }
+}
+
+[CustomPropertyDrawer(typeof(AnimatorWizard.ShapePreferenceEntry))]
+public class ShapePreferenceEntryDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => EditorGUIUtility.singleLineHeight;
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        var blendShapeName = property.FindPropertyRelative("blendShapeName");
+        var useBool = property.FindPropertyRelative("useBool");
+        var useFloat = property.FindPropertyRelative("useFloat");
+        var lastMode = property.FindPropertyRelative("lastMode");
+
+        EditorGUI.BeginProperty(position, label, property);
+        position = EditorGUI.PrefixLabel(position, label);
+
+        // Treat useFloat as the primary toggleable state to match the button UI
+        DrawerUIHelper.DrawEntryWithButton(
+            position, blendShapeName, useFloat,
+            "Float", "Bool",
+            "Use Float for this blendshape.",
+            "Use Bool for this blendshape."
+        );
+
+        // Make Bool/Float mutually exclusive and sync states
+        // safety for edge cases (multi-edit serialized state)
+        useBool.boolValue = !useFloat.boolValue;
+        lastMode.intValue = useFloat.boolValue ? 1 : 0;
+
+        EditorGUI.EndProperty();
+    }
+}
+
+[CustomPropertyDrawer(typeof(AnimatorWizard.CompressedParamEntry))]
+public class CompressedParamEntryDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => EditorGUIUtility.singleLineHeight;
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        var paramName = property.FindPropertyRelative("paramName");
+        var useFloat = property.FindPropertyRelative("useFloat");
+        var useInt = property.FindPropertyRelative("useInt");
+        var lastMode = property.FindPropertyRelative("lastMode");
+
+        EditorGUI.BeginProperty(position, label, property);
+        position = EditorGUI.PrefixLabel(position, label);
+
+        DrawerUIHelper.DrawEntryWithButton(
+            position, paramName, useFloat,
+            "Float", "Int",
+            "Use Float for this parameter.",
+            "Use Int for this parameter."
+        );
+
+        useInt.boolValue = !useFloat.boolValue;
+        lastMode.intValue = useFloat.boolValue ? 1 : 0;
+
+        EditorGUI.EndProperty();
+    }
+}
 #endif
