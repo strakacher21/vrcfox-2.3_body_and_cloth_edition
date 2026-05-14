@@ -17,10 +17,6 @@ I will also be grateful if you could indicate my and trev3d's authorship (if you
 
 ### [:arrow_forward:Link to the VRChat avatar](https://vrchat.com/home/avatar/avtr_a09f0f5f-18da-425c-89e1-7e4e6b319778)
 
-# Guides
-### [:bulb:Unity project setup](Unity-setup.md)
-### [:bulb:VRM in Unity project setup](VRM-setup.md)
-
 # Customization
 The project includes the **Blend 5.0** file itself and the **Unity 2022.3.22f1** project.
 
