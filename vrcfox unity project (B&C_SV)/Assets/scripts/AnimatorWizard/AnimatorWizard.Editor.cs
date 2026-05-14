@@ -386,13 +386,13 @@ public class AnimatorGeneratorEditor : Editor
     }
 }
 
+// Shared UI logic for drawing an entry with a text field and a toggle button
 public static class DrawerUIHelper
 {
-    // Shared UI logic for drawing an entry with a text field and a toggle button
     public static void DrawEntryWithButton(Rect position, SerializedProperty nameProp, SerializedProperty stateProp, string trueLabel, string falseLabel, string trueTooltip, string falseTooltip)
     {
         const float spacing = 6f;
-        const float buttonWidth = 90f; // Adjusted for text fit
+        const float buttonWidth = 90f;
 
         var nameRect = new Rect(position.x, position.y, position.width - buttonWidth - spacing, position.height);
         var buttonRect = new Rect(nameRect.xMax + spacing, position.y, buttonWidth, position.height);
