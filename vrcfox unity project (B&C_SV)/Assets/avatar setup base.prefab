@@ -222,6 +222,10 @@ MonoBehaviour:
       invertAnimation: 1
     - clothName: square_glasses
       invertAnimation: 1
+  - layerName: items/Hats
+    clothEntries:
+    - clothName: panama
+      invertAnimation: 0
   - layerName: items/Neck
     clothEntries:
     - clothName: spiked_collar
@@ -307,6 +311,11 @@ MonoBehaviour:
     primaryColor1: {fileID: 7400000, guid: b72e355a143a5134f99b2798267af649, type: 2}
     secondColor0: {fileID: 7400000, guid: 144b4eb5fa4caa248829790a08d6d7d2, type: 2}
     secondColor1: {fileID: 7400000, guid: 04ffaaf00672df14f82096212ccedc4c, type: 2}
+  - name: Panama
+    primaryColor0: {fileID: 7400000, guid: 38fa6bd9cb45a6c43b3e555bca45565c, type: 2}
+    primaryColor1: {fileID: 7400000, guid: 1be1eb7b334e1ea488ec1ad186a35c08, type: 2}
+    secondColor0: {fileID: 0}
+    secondColor1: {fileID: 0}
   createParamsCompressor: 1
   compressedParamEntries:
   - paramName: tail/anim/WAG
