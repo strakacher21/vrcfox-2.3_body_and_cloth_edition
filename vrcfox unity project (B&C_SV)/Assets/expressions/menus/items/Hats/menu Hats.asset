@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -340790334, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: menu Hats
+  m_EditorClassIdentifier: 
+  Parameters: {fileID: 11400000, guid: 9374e6a7b75036d4992a6afd14b9153a, type: 2}
+  controls:
+  - name: <b><color=orange>Cap
+    icon: {fileID: 2800000, guid: 862edc2039e07f2469d0a2ccd8895470, type: 3}
+    type: 103
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 11400000, guid: d0fc45f981d52d144b882edff783a750, type: 2}
+    subParameters: []
+    labels: []
+  - name: <b><color=orange>Panama
+    icon: {fileID: 2800000, guid: f50c5e67b362ad74db7e493a47a23c01, type: 3}
+    type: 103
+    parameter:
+      name: 
+    value: 1
+    style: 0
+    subMenu: {fileID: 11400000, guid: 06ebf118680d8f549a5676646792e056, type: 2}
+    subParameters: []
+    labels: []
