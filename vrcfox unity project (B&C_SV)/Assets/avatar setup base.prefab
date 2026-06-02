@@ -185,12 +185,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6974705988007904448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5233619ea40ff14a8f36911e534b24d, type: 3}
+  m_Script: {fileID: 11500000, guid: 596ea5619628d5a4cbf2567f60f659a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   createClothCustomization: 1
-  ClothSyncParamsOptimizedAlgorithm: 0
-  ClothTogglesPrefix: cloth/toggle/
+  ClothSyncParamsOptimizedAlgorithm: 1
+  ClothTogglesPrefix: cloth/
   ClothGroups:
   - layerName: cloth/upper_body
     clothEntries:
@@ -349,7 +349,7 @@ MonoBehaviour:
   - FaceToggleActive
   - contact/confuse
   - AFK
-  createFacialExpressionsControl: 1
+  createFacialExpressionsControl: 0
   expTrackName: ExpressionTrackingActive
   mouthPrefix: exp/mouth/
   mouthShapeNames:
@@ -386,16 +386,7 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 930b2e2a422ccbb4fb29655b1686ce42, type: 2}
   - {fileID: 7400000, guid: ffe7bfda0c46fa64b89b8669e23871f9, type: 2}
   - {fileID: 7400000, guid: fabaa03842dea1346b36860ebff4c25a, type: 2}
-  RightEyePoses:
-  - {fileID: 7400000, guid: 38516e689f55a6f44ab492e0efcabfd4, type: 2}
-  - {fileID: 7400000, guid: d4d847e27156e1a45916a7a0fff5ed71, type: 2}
-  - {fileID: 7400000, guid: f3c788404e5bad34b8f25f8a5c367302, type: 2}
-  - {fileID: 7400000, guid: cdb2ee8d508e6764fa1a67ddc8e777e8, type: 2}
-  - {fileID: 7400000, guid: 3120e85eb2940074a9e03f97ee4a77bd, type: 2}
-  - {fileID: 7400000, guid: 0652075c7a43ce2419b2fbe08166217e, type: 2}
-  - {fileID: 7400000, guid: 930b2e2a422ccbb4fb29655b1686ce42, type: 2}
-  - {fileID: 7400000, guid: ffe7bfda0c46fa64b89b8669e23871f9, type: 2}
-  - {fileID: 7400000, guid: fabaa03842dea1346b36860ebff4c25a, type: 2}
+  RightEyePoses: []
   EyeTrackingBlockParamNames:
   - AFK
   createFaceToggle: 1
@@ -437,7 +428,7 @@ MonoBehaviour:
   - AFK
   createFaceTracking: 1
   MirrorFTparams: 0
-  createFTLipSyncControl: 1
+  createFTLipSyncControl: 0
   lipSyncName: LipSyncTrackingActive
   FaceTrackingBlockParamNames:
   - AFK
@@ -599,30 +590,6 @@ MonoBehaviour:
     useFloat: 1
     lastMode: 1
   - blendShapeName: tail[less]
-    useBool: 0
-    useFloat: 1
-    lastMode: 1
-  - blendShapeName: round_glasses[Forward]
-    useBool: 0
-    useFloat: 1
-    lastMode: 1
-  - blendShapeName: round_glasses[Backward]
-    useBool: 0
-    useFloat: 1
-    lastMode: 1
-  - blendShapeName: round_glasses[Bigger]
-    useBool: 0
-    useFloat: 1
-    lastMode: 1
-  - blendShapeName: square_glasses[Forward]
-    useBool: 0
-    useFloat: 1
-    lastMode: 1
-  - blendShapeName: square_glasses[Backward]
-    useBool: 0
-    useFloat: 1
-    lastMode: 1
-  - blendShapeName: square_glasses[Bigger]
     useBool: 0
     useFloat: 1
     lastMode: 1
