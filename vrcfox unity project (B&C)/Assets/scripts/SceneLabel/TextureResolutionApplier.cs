@@ -1,38 +1,63 @@
-﻿using UnityEngine;
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEditor;
-#endif
 
-public class TextureResolutionApplier : MonoBehaviour
+
+public sealed class TextureResolutionApplier : MonoBehaviour
 {
-    public SceneTextureAsset config;
+    [SerializeField] private SceneTextureAsset config;
 
     public void ApplyTextureResolution()
     {
-#if UNITY_EDITOR
-        if (config == null) return;
-        if (config.textures.Length == 0) return;
+        if (config == null || config.Textures == null || config.Textures.Length == 0)
+            return;
 
-        foreach (SceneTextureAsset.TextureEntry entry in config.textures)
+        foreach (var entry in config.Textures)
         {
-            if (entry.texture == null) continue;
+            if (entry == null || entry.texture == null)
+                continue;
 
-            string path = AssetDatabase.GetAssetPath(entry.texture);
-            if (string.IsNullOrEmpty(path)) continue;
+            var path = AssetDatabase.GetAssetPath(entry.texture);
+            if (string.IsNullOrEmpty(path))
+                continue;
 
-            TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
-            if (importer == null) continue;
+            if (AssetImporter.GetAtPath(path) is not TextureImporter importer)
+                continue;
 
-            int newSize = (int)entry.maxSize;
+            var changed = false;
+
+            var newSize = (int)entry.maxSize;
             if (importer.maxTextureSize != newSize)
             {
                 importer.maxTextureSize = newSize;
-                EditorUtility.SetDirty(importer);
-                importer.SaveAndReimport();
+                changed = true;
             }
-        }
 
-        AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-#endif
+            var newCompression = ToImporterCompression(entry.compression);
+            if (importer.textureCompression != newCompression)
+            {
+                importer.textureCompression = newCompression;
+                changed = true;
+            }
+
+            // reimport only when importer settings actually changed
+            if (changed)
+                importer.SaveAndReimport();
+        }
+    }
+
+    private static TextureImporterCompression ToImporterCompression(
+        SceneTextureAsset.TextureEntry.TextureCompression compression)
+    {
+        return compression switch
+        {
+            SceneTextureAsset.TextureEntry.TextureCompression.None => TextureImporterCompression.Uncompressed,
+            SceneTextureAsset.TextureEntry.TextureCompression.LowQuality => TextureImporterCompression.CompressedLQ,
+            SceneTextureAsset.TextureEntry.TextureCompression.NormalQuality => TextureImporterCompression.Compressed,
+            SceneTextureAsset.TextureEntry.TextureCompression.HighQuality => TextureImporterCompression.CompressedHQ,
+            _ => TextureImporterCompression.Compressed
+        };
     }
 }
+
+#endif

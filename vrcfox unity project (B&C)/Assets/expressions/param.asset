@@ -18,57 +18,12 @@ MonoBehaviour:
     valueType: 0
     saved: 0
     defaultValue: 0
-    networkSynced: 0
+    networkSynced: 1
   - name: tail/anim/WAG
     valueType: 1
     saved: 1
     defaultValue: 0.25
     networkSynced: 0
-  - name: cloth/toggle/coat
-    valueType: 2
-    saved: 1
-    defaultValue: 1
-    networkSynced: 1
-  - name: cloth/toggle/coat_v2
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: cloth/toggle/T-shirt
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: cloth/toggle/jeans
-    valueType: 2
-    saved: 1
-    defaultValue: 1
-    networkSynced: 1
-  - name: cloth/toggle/pants
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: cloth/toggle/shorts
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: cloth/toggle/shoes
-    valueType: 2
-    saved: 1
-    defaultValue: 1
-    networkSynced: 1
-  - name: cloth/toggle/boots
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
-  - name: cloth/toggle/slaps
-    valueType: 2
-    saved: 1
-    defaultValue: 0
-    networkSynced: 1
   - name: v2/LipSyncTrackingActive
     valueType: 2
     saved: 1
@@ -94,6 +49,21 @@ MonoBehaviour:
     saved: 1
     defaultValue: 1
     networkSynced: 1
+  - name: cloth/upper_body
+    valueType: 0
+    saved: 1
+    defaultValue: 1
+    networkSynced: 0
+  - name: cloth/lower_body
+    valueType: 0
+    saved: 1
+    defaultValue: 1
+    networkSynced: 0
+  - name: cloth/foot
+    valueType: 0
+    saved: 1
+    defaultValue: 1
+    networkSynced: 0
   - name: pref/RealisticShading
     valueType: 2
     saved: 1
@@ -329,3 +299,88 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 1
+  - name: VRCEmote
+    valueType: 0
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: Go/Float
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 1
+  - name: Go/PoseRadial
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/Stationary
+    valueType: 2
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/Locomotion
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/Jump&Fall
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/StandIdle
+    valueType: 0
+    saved: 1
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/StandType
+    valueType: 0
+    saved: 1
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/CrouchIdle
+    valueType: 0
+    saved: 1
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/ProneIdle
+    valueType: 0
+    saved: 1
+    defaultValue: 2
+    networkSynced: 0
+  - name: Go/Swimming
+    valueType: 2
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/PuppetX
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/PuppetY
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/Height
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/StandIdleMirror
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/CrouchIdleMirror
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 0
+  - name: Go/ProneIdleMirror
+    valueType: 2
+    saved: 1
+    defaultValue: 0
+    networkSynced: 0

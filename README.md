@@ -31,8 +31,6 @@ The easiest way to adjust the colors is to vertex paint rather than using a text
 > **To properly export a model from Blender to Unity, use the built-in `Blender auto fbx export` custom tool in Blender!** <br>
 > Click **FBX Export** in Blender’s 3D Viewport header (Workspace: **Layout**) to open the export popover.
 > Press **Export FBX!** to export to Unity in one click.
->
-> To properly configure your Unity project, use this **[:bulb:Unity project setup guide](Unity-setup.md)**.
 
 The Unity project has a prefab model, as well as two scenes for **PC** and **Quest&IOS**. All prefab changes go into changing the scene. Аlso includes a script **AnimatorWizard**, that allows you to customise facial expressions, avatar blend preferences, cloth/color customisation, eye/face tracking, etc. You can disable some features to save [VRChat parameters](https://creators.vrchat.com/avatars/animator-parameters/).<br/>
 
@@ -55,9 +53,9 @@ ___
 | **Download size** | ± 1 MB |
 
 ## Attribution
-**AnimatorWizard** script uses the [v3-animator-as-code](https://github.com/hai-vr/av3-animator-as-code) [(hai-vr)](https://github.com/hai-vr) package to set up animators. 
+**AnimatorWizard** script uses the [v3-animator-as-code](https://github.com/hai-vr/av3-animator-as-code) [(hai-vr)](https://github.com/hai-vr) package to set up animators.
 
-**OSC Smooth** in AnimatorWizard is based on the ideas behind [OSCmooth](https://github.com/regzo2/OSCmooth) [(regzo2)](https://github.com/regzo2), and **Parameter Compressor** is based on the ideas behind [LauraParamCompressor](https://github.com/LauraRozier/LauraParamCompressor) [(LauraRozier)](https://github.com/LauraRozier).
+**Parameter Compressor** is based on the ideas behind [LauraParamCompressor](https://github.com/LauraRozier/LauraParamCompressor) [(LauraRozier)](https://github.com/LauraRozier).
 
 Also uses parts of [VRLabs Avatars 3.0 Manager](https://github.com/VRLabs/Avatars-3.0-Manager) [(AnimatorCloner)](https://github.com/VRLabs/Avatars-3.0-Manager/blob/main/Editor/AnimatorCloner.cs) to “reset” AnimatorWizard-generated FX/Gesture/Additive controllers and remove hidden garbage that accumulates in animator assets over time.
 
