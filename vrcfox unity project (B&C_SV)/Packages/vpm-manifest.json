@@ -15,17 +15,14 @@
     "gogoloco": {
       "version": "1.8.6"
     },
-    "vrchat.blackstartx.gesture-manager": {
-      "version": "3.9.8"
-    },
     "com.nanochip.avatarlimbscaling": {
       "version": "1.2.0"
     },
     "nadena.dev.modular-avatar": {
-      "version": "1.17.0"
+      "version": "1.18.1"
     },
-    "nadena.dev.ndmf": {
-      "version": "1.13.0"
+    "vrchat.blackstartx.gesture-manager": {
+      "version": "3.9.9"
     }
   },
   "locked": {
@@ -42,16 +39,6 @@
     },
     "dev.hai-vr.animator-as-code.v1": {
       "version": "1.2.0",
-      "dependencies": {}
-    },
-    "com.vrchat.avatars": {
-      "version": "3.10.3",
-      "dependencies": {
-        "com.vrchat.base": "3.10.3"
-      }
-    },
-    "com.vrchat.base": {
-      "version": "3.10.3",
       "dependencies": {}
     },
     "dev.hai-vr.animator-as-code.v1.vrchat-destructive-workflow": {
@@ -73,12 +60,6 @@
         "com.vrchat.avatars": ">=3.2.2"
       }
     },
-    "vrchat.blackstartx.gesture-manager": {
-      "version": "3.9.8",
-      "dependencies": {
-        "com.vrchat.avatars": ">=3.5.2 < 3.11.X"
-      }
-    },
     "com.nanochip.avatarlimbscaling": {
       "version": "1.2.0",
       "dependencies": {
@@ -86,13 +67,29 @@
       }
     },
     "nadena.dev.modular-avatar": {
-      "version": "1.17.0",
+      "version": "1.18.1",
       "dependencies": {
-        "nadena.dev.ndmf": ">=1.11.0 <2.0.0-a"
+        "nadena.dev.ndmf": ">=1.14.3 <2.0.0-a"
       }
     },
     "nadena.dev.ndmf": {
-      "version": "1.13.0",
+      "version": "1.14.3",
+      "dependencies": {}
+    },
+    "vrchat.blackstartx.gesture-manager": {
+      "version": "3.9.9",
+      "dependencies": {
+        "com.vrchat.avatars": ">=3.10.4 < 3.11.X"
+      }
+    },
+    "com.vrchat.avatars": {
+      "version": "3.10.4",
+      "dependencies": {
+        "com.vrchat.base": "3.10.4"
+      }
+    },
+    "com.vrchat.base": {
+      "version": "3.10.4",
       "dependencies": {}
     }
   }
