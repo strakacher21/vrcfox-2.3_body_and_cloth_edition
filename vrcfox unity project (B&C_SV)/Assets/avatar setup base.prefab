@@ -439,7 +439,7 @@ MonoBehaviour:
   - AFK
   createFaceTracking: 1
   MirrorFTparams: 0
-  createFTLipSyncControl: 0
+  createFTLipSyncControl: 1
   lipSyncName: LipSyncTrackingActive
   FaceTrackingBlockParamNames:
   - AFK
@@ -2140,7 +2140,11 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
   bonesAsSpheres: 0
+  globalCollision: 0
+  globalCollisionAllowSelf: 1
+  globalCollisionAllowOthers: 1
   globalCollisionFlags: 0
+  _globalCollisionSerializationVersion: 1
 --- !u!4 &2266373983763475509 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7318727661179895558, guid: 1a1022667c449ad4ea3340db6aa363c8,
@@ -2428,7 +2432,11 @@ MonoBehaviour:
   position: {x: 0, y: 0.003, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}
   bonesAsSpheres: 0
+  globalCollision: 0
+  globalCollisionAllowSelf: 1
+  globalCollisionAllowOthers: 1
   globalCollisionFlags: 0
+  _globalCollisionSerializationVersion: 1
 --- !u!1 &2533948163957334608 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2753674900279037599, guid: 1a1022667c449ad4ea3340db6aa363c8,
@@ -7941,7 +7949,11 @@ MonoBehaviour:
   position: {x: 0, y: 0.003, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}
   bonesAsSpheres: 0
+  globalCollision: 0
+  globalCollisionAllowSelf: 1
+  globalCollisionAllowOthers: 1
   globalCollisionFlags: 0
+  _globalCollisionSerializationVersion: 1
 --- !u!4 &9051393944661295601 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -540324200656917186, guid: 1a1022667c449ad4ea3340db6aa363c8,
