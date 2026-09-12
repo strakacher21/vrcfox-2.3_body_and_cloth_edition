@@ -26,8 +26,6 @@ The easiest way to adjust the colors is to vertex paint rather than using a text
 > **To properly export a model from Blender to Unity, use the built-in `Blender auto fbx export` custom tool in Blender!** <br>
 > Click **FBX Export** in Blender’s 3D Viewport header (Workspace: **Layout**) to open the export popover.
 > Press **Export FBX!** to export to Unity in one click.
->
-> To properly configure your Unity project, use this **[:bulb:Unity project setup guide](Unity-setup.md)**.
 
 The **Unity project** has a **prefab model**, as well as two **scenes** for **PC** and **Quest&IOS** *(Currently, both scenes are the same. Separate scenes are kept for future platform-specific adjustments)*. <br>
 **Texture quality switching** *(currently disabled on the avatar prefab)*: switching scenes via **SceneLabel** can auto-apply per-scene texture max sizes (e.g., 4K → 2K).<br>
