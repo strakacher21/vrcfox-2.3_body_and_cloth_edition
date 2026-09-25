@@ -204,6 +204,8 @@ MonoBehaviour:
       invertAnimation: 0
     - clothName: T-shirt
       invertAnimation: 0
+    - clothName: shirt
+      invertAnimation: 0
   - layerName: cloth/lower_body
     clothEntries:
     - clothName: jeans
@@ -302,6 +304,11 @@ MonoBehaviour:
   - name: T-shirt
     primaryColor0: {fileID: 7400000, guid: e975082d388276c489bdbf1aebfd3394, type: 2}
     primaryColor1: {fileID: 7400000, guid: 06ecb6188ee5f744ab4613dae1cbd302, type: 2}
+    secondColor0: {fileID: 0}
+    secondColor1: {fileID: 0}
+  - name: shirt
+    primaryColor0: {fileID: 7400000, guid: 64d01e45bbdd6a44aa90a68b1a08d151, type: 2}
+    primaryColor1: {fileID: 7400000, guid: 5e740cd772bf7f54ab9ebaeea1eaca0f, type: 2}
     secondColor0: {fileID: 0}
     secondColor1: {fileID: 0}
   - name: Round_glasses
@@ -894,11 +901,6 @@ PrefabInstance:
       propertyPath: m_ProbeAnchor
       value: 
       objectReference: {fileID: 6186534626256406418}
-    - target: {fileID: 1630794972795428178, guid: 1a1022667c449ad4ea3340db6aa363c8,
-        type: 3}
-      propertyPath: m_BlendShapeWeights.Array.data[91]
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 2341331241534080449, guid: 1a1022667c449ad4ea3340db6aa363c8,
         type: 3}
       propertyPath: m_LocalRotation.w
