@@ -18,7 +18,7 @@ I will also be grateful if you could indicate my and trev3d's authorship (if you
 ### [:arrow_forward:Link to the VRChat avatar](https://vrchat.com/home/avatar/avtr_a09f0f5f-18da-425c-89e1-7e4e6b319778)
 
 # Customization
-The project includes the **Blend 5.0** file itself and the **Unity 2022.3.22f1** project.
+The project includes the **Blend 5.3** file itself and the **Unity 2022.3.22f1** project.
 
 The easiest way to adjust the colors is to vertex paint rather than using a texture. This works well for solid colors, but is not suitable for fancy patterns. Your avatar file size will stay small and load quickly without texture files. If you prefer to use a texture, the model has a set of **UVs**. You will need to change the **active UV layer** of each mesh to **‘UVMap (atlas) / UVMap’** and apply the texture yourself. You will also need to erase all vertex colors, as they will still appear on the default material in the Unity project!
 
